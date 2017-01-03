@@ -2,7 +2,10 @@
 
 function epsilon_customize_register_custom_controls( $wp_customize ) {
 	require_once get_template_directory() . '/epsilon-framework/customizer/controls/epsilon_control_tab.php';
+	require_once get_template_directory() . '/epsilon-framework/customizer/controls/epsilon_control_heading.php';
+
 	$wp_customize->register_control_type( 'Epsilon_Control_Tab' );
+	$wp_customize->register_control_type( 'Epsilon_Control_Heading' );
 }
 
 add_action( 'customize_register', 'epsilon_customize_register_custom_controls', 9 );
@@ -17,6 +20,22 @@ function epsilon_framework_sample_controls( $wp_customize ){
 	        'description'   => __( 'Control various options for contact us section from front page.', 'illdy' ),
 	        'priority'      => 109,
 	    )
+	);
+
+	$wp_customize->add_setting( $prefix . '_contact_heading', array(
+	        'transport'         => 'postMessage'
+	    )
+	);
+
+	$wp_customize->add_control(  new Epsilon_Control_Heading( $wp_customize,
+	    $prefix . '_contact_heading',
+	    array(
+	        'type'      => 'epsilon-heading',
+	        'section'   => $prefix . '_contact_us',
+	        'priority'  => 1,
+	        'label'		=> 'Hello',
+	        'description' => "Aloha",
+	    ) )
 	);
 
 	$wp_customize->add_setting( $prefix . '_contact_tab', array(

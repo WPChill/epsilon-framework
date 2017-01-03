@@ -49,3 +49,21 @@ a.epsilon-tab.active {
 .customize-control.customize-control-epsilon-tab {
     margin-bottom: 0;
 }
+
+/* Epsilon Heading */
+.epsilon-heading h2 {
+    font-size: 14px;
+    margin: 0;
+}
+.epsilon-heading p {
+    font-size: 12px;
+    margin: 0;
+}
+.epsilon-heading {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-top: 50px;
+}
+.accordion-section li.customize-control-epsilon-heading:nth-child(2) .epsilon-heading {
+    margin-top: 0;
+}
