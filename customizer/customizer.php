@@ -3,7 +3,9 @@
 function epsilon_customize_register_custom_controls( $wp_customize ) {
 	require_once get_template_directory() . '/epsilon-framework/customizer/controls/epsilon_control_tab.php';
 	require_once get_template_directory() . '/epsilon-framework/customizer/controls/epsilon_control_heading.php';
+	require_once get_template_directory() . '/epsilon-framework/customizer/controls/epsilon_custom_section.php';
 
+	$wp_customize->register_section_type( 'Epsilon_Custom_Section' );
 	$wp_customize->register_control_type( 'Epsilon_Control_Tab' );
 	$wp_customize->register_control_type( 'Epsilon_Control_Heading' );
 }
@@ -13,6 +15,20 @@ add_action( 'customize_register', 'epsilon_customize_register_custom_controls', 
 function epsilon_framework_sample_controls( $wp_customize ){
 
 	$prefix = 'epsilon_framework';
+
+	// Pro Section
+	$wp_customize->add_section(
+		new Epsilon_Custom_Section(
+			$wp_customize,
+			'epsilon-custom-section',
+			array(
+				'title'    => esc_html__( 'Theme Name', 'illdy' ),
+				'pro_text' => esc_html__( 'Go Pro', 'illdy' ),
+				'pro_url'  => 'https://epsilon.com',
+				'priority' => 0
+			)
+		)
+	);
 
 	$wp_customize->add_section( $prefix . '_contact_us' ,
 	    array(

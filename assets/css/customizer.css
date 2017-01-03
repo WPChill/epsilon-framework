@@ -67,3 +67,19 @@ a.epsilon-tab.active {
 .accordion-section li.customize-control-epsilon-heading:nth-child(2) .epsilon-heading {
     margin-top: 0;
 }
+/* Documentation Section */
+#customize-controls .control-section-epsilon-custom-section .accordion-section-title:hover,
+#customize-controls .control-section-epsilon-custom-section .accordion-section-title:focus {
+    background-color: #fff;
+}
+
+.control-section-epsilon-custom-section .accordion-section-title .button {
+    margin-top:  -4px;
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+.rtl .control-section-epsilon-custom-section .accordion-section-title .button {
+    margin-left:  0;
+    margin-right: 8px;
+}

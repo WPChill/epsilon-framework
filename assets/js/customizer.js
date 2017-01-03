@@ -1,3 +1,19 @@
+( function( api ) {
+
+	// Extends our custom "illdy-pro-section" section.
+	api.sectionConstructor['epsilon-custom-section'] = api.Section.extend( {
+
+		// No events for this type of section.
+		attachEvents: function () {},
+
+		// Always make the section active.
+		isContextuallyActive: function () {
+			return true;
+		}
+	} );
+
+} )( wp.customize );
+
 jQuery( document ).ready( function( $ ) {
 
 	wp.customize.section.each( function ( section ) {
