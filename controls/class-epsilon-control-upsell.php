@@ -17,7 +17,7 @@ if ( class_exists( 'WP_Customize_Control' ) ):
 		public $json = array();
 
 		public function __construct( WP_Customize_Manager $manager, $id, array $args ) {
-			$this->pro_label   = __( 'Pro', 'newsmag-pro' );
+			$this->pro_label   = __( 'Pro', 'epsilon-framework' );
 
 			$manager->register_control_type( 'Epsilon_Control_Upsell' );
 			parent::__construct( $manager, $id, $args );

@@ -141,9 +141,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				<?php if ( in_array( 'font-family', $this->choices ) ): ?>
 					<div class="epsilon-typography-font-family">
 						<label
-							for="<?php echo $this->id; ?>-font-family"><?php echo __( 'Font Family', 'newsmag-pro' ); ?></label>
+							for="<?php echo $this->id; ?>-font-family"><?php echo __( 'Font Family', 'epsilon-framework' ); ?></label>
 						<select id="<?php echo $this->id; ?>-font-family" class="epsilon-typography-input">
-							<option value="default_font"><?php echo __( 'Theme default', 'newsmag-pro' ); ?></option>
+							<option value="default_font"><?php echo __( 'Theme default', 'epsilon-framework' ); ?></option>
 							<?php foreach ( $fonts as $font => $properties ) { ?>
 								<option <?php echo $inputs['font-family'] === $properties->family ? 'selected' : ''; ?>
 									value="<?php echo $properties->family ?>"><?php echo $properties->family ?></option>
@@ -157,9 +157,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 					?>
 					<div class="epsilon-typography-font-weight">
 						<label
-							for="<?php echo $this->id; ?>-font-weight"><?php echo __( 'Font Weight', 'newsmag-pro' ); ?></label>
+							for="<?php echo $this->id; ?>-font-weight"><?php echo __( 'Font Weight', 'epsilon-framework' ); ?></label>
 						<select id="<?php echo $this->id; ?>-font-weight" class="epsilon-typography-input">
-							<option value="initial"><?php echo __( 'Theme default', 'newsmag-pro' ); ?></option>
+							<option value="initial"><?php echo __( 'Theme default', 'epsilon-framework' ); ?></option>
 							<?php
 							if ( ! in_array( $inputs['font-family'], $defaults ) ) {
 								foreach ( $fonts->{$inputs['font-family']}->variants as $variant ) { ?>
@@ -173,14 +173,14 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				<?php if ( in_array( 'font-style', $this->choices ) ): ?>
 					<div class="epsilon-typography-font-style">
 						<label
-							for="<?php echo $this->id; ?>-font-style"><?php echo __( 'Font Style', 'newsmag-pro' ); ?></label>
+							for="<?php echo $this->id; ?>-font-style"><?php echo __( 'Font Style', 'epsilon-framework' ); ?></label>
 						<select id="<?php echo $this->id; ?>-font-style" class="epsilon-typography-input">
-							<option value="initial"><?php echo __( 'Theme default', 'newsmag-pro' ); ?></option>
+							<option value="initial"><?php echo __( 'Theme default', 'epsilon-framework' ); ?></option>
 							<option <?php echo $inputs['font-style'] === 'normal' ? 'selected' : ''; ?>
-								value="normal"><?php echo __( 'Normal', 'newsmag-pro' ); ?>
+								value="normal"><?php echo __( 'Normal', 'epsilon-framework' ); ?>
 							</option>
 							<option <?php echo $inputs['font-style'] === 'italic' ? 'selected' : ''; ?>
-								value="italic"><?php echo __( 'Italic', 'newsmag-pro' ); ?>
+								value="italic"><?php echo __( 'Italic', 'epsilon-framework' ); ?>
 							</option>
 						</select>
 					</div>
@@ -188,7 +188,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				<?php if ( in_array( 'font-size', $this->choices ) ): ?>
 					<div class="epsilon-typography-font-size epsilon-number-field">
 						<label
-							for="<?php echo $this->id; ?>-font-size"><?php echo __( 'Font Size', 'newsmag-pro' ); ?></label>
+							for="<?php echo $this->id; ?>-font-size"><?php echo __( 'Font Size', 'epsilon-framework' ); ?></label>
 						<input class="epsilon-typography-input" id="<?php echo $this->id; ?>-font-size"
 						       value="<?php echo $inputs['font-size'] ?>" type="number" min="0"
 						       step="any"/>
@@ -198,14 +198,14 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				<?php if ( in_array( 'line-height', $this->choices ) ): ?>
 					<div class="epsilon-typography-line-height epsilon-number-field">
 						<label
-							for="<?php echo $this->id; ?>-line-height"><?php echo __( 'Line Height', 'newsmag-pro' ); ?></label>
+							for="<?php echo $this->id; ?>-line-height"><?php echo __( 'Line Height', 'epsilon-framework' ); ?></label>
 						<input class="epsilon-typography-input" id="<?php echo $this->id; ?>-line-height"
 						       value="<?php echo $inputs['line-height'] ?>" type="number" min="0"
 						       step="any"/>
 						<span class="unit <?php echo (int) $inputs['line-height'] > 99 ? 'go-right' : '' ?>">px</span>
 					</div>
 				<?php endif; ?>
-				<a href="#" class="epsilon-typography-default"><?php echo __( 'Reset to default', 'newsmag-pro' ) ?></a>
+				<a href="#" class="epsilon-typography-default"><?php echo __( 'Reset to default', 'epsilon-framework' ) ?></a>
 			</div>
 			<?php
 		}
