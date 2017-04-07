@@ -280,7 +280,7 @@ class Epsilon_Typography {
 		$return = array();
 
 		$family   = $gfonts->{$_POST['args']};
-		$return[] = array( 'text' => esc_html__( 'Theme default', 'epsilon' ), 'value' => 'initial' );
+		$return[] = array( 'text' => esc_html__( 'Theme default', 'epsilon-framework' ), 'value' => 'initial' );
 
 		foreach ( $family->variants as $weight ) {
 			$return[] = array( 'text' => $weight, 'value' => $weight );

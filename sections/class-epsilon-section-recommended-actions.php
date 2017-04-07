@@ -99,11 +99,11 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 		$json['social_text']    = $this->social_text;
 		$json['plugin_text']    = $this->plugin_text;
 		$json['facebook']       = $this->facebook;
-		$json['facebook_text']  = esc_html__( 'Facebook', 'epsilon' );
+		$json['facebook_text']  = esc_html__( 'Facebook', 'epsilon-framework' );
 		$json['twitter']        = $this->twitter;
-		$json['twitter_text']   = esc_html__( 'Twitter', 'epsilon' );
+		$json['twitter_text']   = esc_html__( 'Twitter', 'epsilon-framework' );
 		$json['wp_review']      = $this->wp_review;
-		$json['wp_review_text'] = esc_html__( 'Review this theme on w.org', 'epsilon' );
+		$json['wp_review_text'] = esc_html__( 'Review this theme on w.org', 'epsilon-framework' );
 		if ( $this->wp_review ) {
 			$json['theme_slug'] = $this->theme_slug;
 			if ( empty( $this->theme_slug ) ) {
@@ -285,19 +285,19 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				switch ( $active['needs'] ) {
 					case 'install':
 						$v['button_class'] = 'install-now button';
-						$v['button_label'] = esc_html__( 'Install', 'epsilon' );
+						$v['button_label'] = esc_html__( 'Install', 'epsilon-framework' );
 						break;
 					case 'activate':
 						$v['button_class'] = 'activate-now button button-primary';
-						$v['button_label'] = esc_html__( 'Activate', 'epsilon' );
+						$v['button_label'] = esc_html__( 'Activate', 'epsilon-framework' );
 						break;
 					case 'update':
 						$v['button_class'] = 'update-now button button-primary';
-						$v['button_label'] = esc_html__( 'Update', 'epsilon' );
+						$v['button_label'] = esc_html__( 'Update', 'epsilon-framework' );
 						break;
 					case 'deactivate':
 						$v['button_class'] = 'deactivate-now button';
-						$v['button_label'] = esc_html__( 'Deactivate', 'epsilon' );
+						$v['button_label'] = esc_html__( 'Deactivate', 'epsilon-framework' );
 						break;
 				}
 
@@ -351,19 +351,19 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			switch ( $active['needs'] ) {
 				case 'install':
 					$t['button_class'] = 'install-now button';
-					$t['button_label'] = esc_html__( 'Install', 'epsilon' );
+					$t['button_label'] = esc_html__( 'Install', 'epsilon-framework' );
 					break;
 				case 'activate':
 					$t['button_class'] = 'activate-now button button-primary';
-					$t['button_label'] = esc_html__( 'Activate', 'epsilon' );
+					$t['button_label'] = esc_html__( 'Activate', 'epsilon-framework' );
 					break;
 				case 'update':
 					$t['button_class'] = 'update-now button button-primary';
-					$t['button_label'] = esc_html__( 'Update', 'epsilon' );
+					$t['button_label'] = esc_html__( 'Update', 'epsilon-framework' );
 					break;
 				case 'deactivate':
 					$t['button_class'] = 'deactivate-now button';
-					$t['button_label'] = esc_html__( 'Deactivate', 'epsilon' );
+					$t['button_label'] = esc_html__( 'Deactivate', 'epsilon-framework' );
 					break;
 			}
 
