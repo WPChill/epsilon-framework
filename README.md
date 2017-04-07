@@ -168,8 +168,8 @@ Collect all the options ID and get an instance of the Typography class (this is 
                                   $wp_customize,
                                   'epsilon_control_color_scheme',
                                   array(
-                                    'label'       => esc_html__( 'Epsilon Color Scheme Label', 'newsmag-pro' ),
-                                    'description' => esc_html__( 'Epsilon Color Scheme Description', 'newsmag-pro' ),
+                                    'label'       => esc_html__( 'Epsilon Color Scheme Label', 'text-domain' ),
+                                    'description' => esc_html__( 'Epsilon Color Scheme Description', 'text-domain' ),
                                     'type'        => 'epsilon-color-scheme',
                                     'priority'    => 0,
                                     'default'     => 'red',
