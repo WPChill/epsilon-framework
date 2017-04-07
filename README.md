@@ -18,9 +18,17 @@
 > Recommended action section
 
 ## 2. Installation
+> In the root of the theme, run:
+
+    $ git submodule add https://github.com/MachoThemes/epsilon-framework inc/libraries/epsilon-framework
+
 > Load class-epsilon-autoloader.php
 
 > Initiate new Epsilon_Framework();
+  
+> Updating the framework (You can add the ID if you have more than one submodule)
+  
+    $ git submodule update --remote
   
 ## 3. Using Epsilon
 ### Sections
