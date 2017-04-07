@@ -97,7 +97,10 @@ class Epsilon_Color_Coded_Categories {
 		$categories       = get_categories( $args );
 		$wp_category_list = array();
 
-		$wp_customize->add_setting( 'epsilon_hidden_category_info' );
+		$wp_customize->add_setting( 'epsilon_hidden_category_info',array(
+			'sanitize_callback' => 'esc_html'
+		) );
+		
 		$wp_customize->add_control(
 			'epsilon_hidden_category_info',
 			array(
