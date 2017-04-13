@@ -26,8 +26,8 @@ class Epsilon_Autoloader {
 		);
 
 		foreach ( $directories as $directory ) {
-			if ( file_exists( $directory . '/class-' . strtolower( $bind ) . '.php' ) ) {
-				require_once $directory . '/class-' . strtolower( $bind ) . '.php';
+			if ( file_exists( $directory . 'class-' . strtolower( $bind ) . '.php' ) ) {
+				require_once $directory . 'class-' . strtolower( $bind ) . '.php';
 
 				return;
 			}
