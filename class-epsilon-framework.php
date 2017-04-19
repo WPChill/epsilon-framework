@@ -103,9 +103,6 @@ class Epsilon_Framework {
 	 *
 	 * Dependencies: Customizer Controls script (core)
 	 */
-	/**
-	 *
-	 */
 	public function customizer_enqueue_scripts() {
 		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
 			'jquery',
@@ -116,7 +113,7 @@ class Epsilon_Framework {
 			'theme'   => get_template_directory_uri(),
 			'ajaxurl' => admin_url( 'admin-ajax.php' )
 		) );
-		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
+		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/css/style.css' );
 
 	}
 
