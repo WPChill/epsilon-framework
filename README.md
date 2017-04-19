@@ -2,20 +2,20 @@
 
 ## 1. Getting started
 ### Available controls
-> Toggle
+> [Toggle](https://github.com/MachoThemes/epsilon-framework#toggle)
 
-> Range slider
+> [Range slider](https://github.com/MachoThemes/epsilon-framework#range-slider)
 
-> Typography
+> [Typography](https://github.com/MachoThemes/epsilon-framework#typography)
 
-> Color scheme
+> [Color scheme](https://github.com/MachoThemes/epsilon-framework#color-scheme)
 
-> Upsell
+> [Upsell](https://github.com/MachoThemes/epsilon-framework#upsell)
 
 ### Available sections
-> Upsell pro section
+> [Upsell pro section](https://github.com/MachoThemes/epsilon-framework#upsell-pro-section)
 
-> Recommended action section
+> [Recommended action section](https://github.com/MachoThemes/epsilon-framework#recommended-action-section)
 
 ## 2. Installation
 > In the root of the theme, run:
@@ -24,7 +24,15 @@
 
 > Load class-epsilon-autoloader.php
 
-> Initiate new Epsilon_Framework();
+> Initiate new Epsilon_Framework( $args = array() ); E.g.
+
+		$args = array(
+			'controls' => array( 'slider', 'toggle', 'typography', 'color-scheme' ), // array of controls to load
+			'sections' => array( 'recommended-actions' ), // array of sections to load
+			'path'     => '/inc/libraries' // path to your epsilon framework in your theme, e.g. theme-name*/inc/libraries*/epsilon-framework
+		);
+        
+        new Epsilon_Framework( $args );
   
 > Updating the framework (You can add the ID if you have more than one submodule)
   
