@@ -420,7 +420,8 @@
 							/**
 							 * If it's the last element, show plugins
 							 */
-							if ( total === (index + 1) ) {
+
+							if ( total <= (index + 1) ) {
 								var replace = title.find('.section-title'),
 										replaceText = replace.attr('data-plugin_text');
 

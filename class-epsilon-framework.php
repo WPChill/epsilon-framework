@@ -5,11 +5,38 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once dirname( __FILE__ ) . '/class-epsilon-autoloader.php';
 
+/**
+ * Class Epsilon_Framework
+ */
 class Epsilon_Framework {
 	/**
-	 * Epsilon_Framework constructor.
+	 * @var array|mixed
 	 */
-	public function __construct() {
+	private $controls = array();
+	/**
+	 * @var array|mixed
+	 */
+	private $sections = array();
+	/**
+	 * @var mixed|string
+	 */
+	private $path = '/inc/libraries';
+
+	/**
+	 * Epsilon_Framework constructor.
+	 *
+	 * @param $args array
+	 */
+	public function __construct( $args ) {
+		foreach ( $args as $k => $v ) {
+
+			if ( ! in_array( $k, array( 'controls', 'sections', 'path' ) ) ) {
+				continue;
+			}
+
+			$this->$k = $v;
+		}
+
 		/**
 		 * Customizer enqueues & controls
 		 */
@@ -39,18 +66,15 @@ class Epsilon_Framework {
 	 * @param object $wp_customize
 	 */
 	public function init_controls( $wp_customize ) {
-		$controls = array( 'slider', 'toggle', 'typography', 'upsell', 'color-scheme' );
-		$sections = array( 'pro', 'recommended-actions' );
+		$path = get_template_directory() . $this->path . '/epsilon-framework';
 
-		$path = get_template_directory() . '/inc/libraries/epsilon-framework';
-
-		foreach ( $controls as $control ) {
+		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/controls/class-epsilon-control-' . $control . '.php' ) ) {
 				require_once $path . '/controls/class-epsilon-control-' . $control . '.php';
 			}
 		}
 
-		foreach ( $sections as $section ) {
+		foreach ( $this->sections as $section ) {
 			if ( file_exists( $path . '/sections/class-epsilon-section-' . $section . '.php' ) ) {
 				require_once $path . '/sections/class-epsilon-section-' . $section . '.php';
 			}
@@ -61,8 +85,8 @@ class Epsilon_Framework {
 	 * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
 	 */
 	public function customize_preview_styles() {
-		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/css/style.css' );
-		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/js/epsilon-previewer.js', array(
+		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
+		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.js', array(
 			'jquery',
 			'customize-preview'
 		), 2, true );
@@ -79,14 +103,20 @@ class Epsilon_Framework {
 	 *
 	 * Dependencies: Customizer Controls script (core)
 	 */
+	/**
+	 *
+	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/js/epsilon.js', array( 'jquery' ) );
+		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
+			'jquery',
+			'customize-controls'
+		) );
 		wp_localize_script( 'epsilon-object', 'WPUrls', array(
 			'siteurl' => get_option( 'siteurl' ),
 			'theme'   => get_template_directory_uri(),
 			'ajaxurl' => admin_url( 'admin-ajax.php' )
 		) );
-		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/css/style.css' );
+		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
 
 	}
 
