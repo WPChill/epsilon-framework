@@ -28,6 +28,11 @@ class Epsilon_Framework {
 	 * @param $args array
 	 */
 	public function __construct( $args ) {
+		
+		if ( isset($args['path']) ) {
+			$this->path = $args['path'];
+		}
+		
 		foreach ( $args as $k => $v ) {
 
 			if ( ! in_array( $k, array( 'controls', 'sections', 'path' ) ) ) {
