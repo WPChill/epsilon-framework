@@ -22,7 +22,7 @@ class Epsilon_Autoloader {
 		$bind  = implode( '-', $parts );
 
 		$directories = array(
-			get_template_directory() . '/inc/libraries/epsilon-framework/',
+			dirname( __FILE__ ).'/',
 		);
 
 		foreach ( $directories as $directory ) {
