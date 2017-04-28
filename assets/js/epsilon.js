@@ -421,12 +421,17 @@
 							 * If it's the last element, show plugins
 							 */
 
-							if ( total <= (index + 1) ) {
+							if ( total <= index ) {
 								var replace = title.find('.section-title'),
-										replaceText = replace.attr('data-plugin_text');
+										plugins = $('.epsilon-recommended-plugins'),
+										replaceText = replace.attr('data-social');
+								if ( plugins.length ) {
+									replaceText = replace.attr('data-plugin_text');
+								}
 
 								title.find('.epsilon-actions-count').remove();
 								replace.text(replaceText);
+
 							}
 							/**
 							 * Else, just change the index

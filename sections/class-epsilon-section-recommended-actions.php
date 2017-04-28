@@ -90,12 +90,21 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 	 * @access public
 	 */
 	public function json() {
-		$json                   = parent::json();
-		$json['action_option']  = $this->theme_specific_option;
-		$json['plugin_option']  = $this->theme_specific_plugin_option;
-		$json['actions']        = $this->get_actions();
-		$json['plugins']        = $this->get_plugins();
-		$json['total_actions']  = count( $this->actions );
+		$json                  = parent::json();
+		$json['action_option'] = $this->theme_specific_option;
+		$json['plugin_option'] = $this->theme_specific_plugin_option;
+		$json['actions']       = $this->get_actions();
+		$json['plugins']       = $this->get_plugins();
+
+		$count = 0;
+		foreach ( $this->actions as $action ) {
+			if ( $action['check'] ) {
+				continue;
+			}
+			$count += 1;
+		}
+
+		$json['total_actions']  = $count;
 		$json['social_text']    = $this->social_text;
 		$json['plugin_text']    = $this->plugin_text;
 		$json['facebook']       = $this->facebook;
@@ -127,8 +136,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
         <li id="accordion-section-{{ data.id }}"
             class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
             <h3 class="accordion-section-title">
-				<span class="section-title" data-social="{{{ data.social_text }}}"
-                      data-plugin_text="{{{ data.plugin_text }}}">
+				<span class="section-title" data-social="{{{ data.social_text }}}" data-plugin_text="{{{ data.plugin_text }}}">
 					<# if( data.actions.length > 0 ){ #>
 						{{{ data.title }}}
 					<# }else{ #>
