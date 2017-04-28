@@ -65,7 +65,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 	 * @param array                $args
 	 */
 	public function __construct( WP_Customize_Manager $manager, $id, array $args = array() ) {
-		$manager->register_control_type( 'Epsilon_Section_Recommended_Actions' );
+		$manager->register_section_type( 'Epsilon_Section_Recommended_Actions' );
 		$this->enqueue();
 		parent::__construct( $manager, $id, $args );
 	}
@@ -122,6 +122,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 	 * @return void
 	 */
 	protected function render_template() {
+//@formatter:off
 		?>
         <li id="accordion-section-{{ data.id }}"
             class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
@@ -140,11 +141,9 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				</span>
                 <# if( data.actions.length > 0 ){ #>
                     <span class="epsilon-actions-count">
-						<span class="current-index" data-total="{{{ data.total_actions }}}">{{{ data.actions[0].index }}}</span>
-						/
-						{{{ data.total_actions }}}
+						<span class="current-index" data-total="{{{ data.total_actions }}}">{{{ data.actions[0].index }}}</span> / {{{ data.total_actions }}}
 					</span>
-                    <# } #>
+                <# } #>
             </h3>
             <div class="recommended-actions_container" id="plugin-filter">
                 <# if( data.actions.length > 0 ){ #>
@@ -168,78 +167,55 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
                                                     data.actions[action].button_label }}}</a>
                                             </p>
                                         </div>
-                                        <# } #>
-                                            <# if( data.actions[action].help ){ #>
-                                                <div class="custom-action">{{{ data.actions[action].help }}}</div>
-                                                <# } #>
+                                    <# } #>
+                                    <# if( data.actions[action].help ){ #>
+                                        <div class="custom-action">{{{ data.actions[action].help }}}</div>
+                                    <# } #>
                                 </div>
-                                <# } #>
-                        </div>
-                        <# } #>
                             <# } #>
+                        </div>
+                    <# } #>
+                <# } #>
 
-                                <# if( data.plugins.length > 0 ){ #>
-                                    <# for (plugin in data.plugins) { #>
-                                        <div class="epsilon-recommended-actions-container epsilon-recommended-plugins"
-                                             data-index="{{ data.plugins[plugin].index }}">
-                                            <# if( !data.plugins[plugin].check ){ #>
-                                                <div class="epsilon-recommended-plugins">
-                                                    <p class="title">{{{ data.plugins[plugin].title }}}</p>
-                                                    <span data-option="{{ data.plugin_option }}" data-action="dismiss"
-                                                          class="dashicons dashicons-visibility epsilon-recommended-plugin-button"
-                                                          id="{{ data.plugins[plugin].id }}"></span>
-                                                    <div class="description">{{{ data.plugins[plugin].description }}}
-                                                    </div>
-                                                    <# if( data.plugins[plugin].plugin_slug ){ #>
-                                                        <div class="custom-plugin">
-                                                            <p class="plugin-card-{{ data.plugins[plugin].plugin_slug }} action_button {{ data.plugins[plugin].class }}">
-                                                                <a data-slug="{{ data.plugins[plugin].plugin_slug }}"
-                                                                   class="{{ data.plugins[plugin].button_class }}"
-                                                                   href="{{ data.plugins[plugin].url }}">{{{
-                                                                    data.plugins[plugin].button_label }}}</a>
-                                                            </p>
-                                                        </div>
-                                                        <# } #>
-                                                            <# if( data.plugins[plugin].help ){ #>
-                                                                <div class="custom-plugin">{{{ data.plugins[plugin].help
-                                                                    }}}
-                                                                </div>
-                                                                <# } #>
-                                                </div>
-                                                <# } #>
-                                        </div>
-                                        <# } #>
-                                            <# } #>
+                <# if( data.plugins.length > 0 ){ #>
+                    <# for (plugin in data.plugins) { #>
+                        <div class="epsilon-recommended-actions-container epsilon-recommended-plugins" data-index="{{ data.plugins[plugin].index }}">
+                        <# if( !data.plugins[plugin].check ){ #>
+                            <div class="epsilon-recommended-plugins">
+                                <p class="title">{{{ data.plugins[plugin].title }}}</p>
+                                <span data-option="{{ data.plugin_option }}" data-action="dismiss" class="dashicons dashicons-visibility epsilon-recommended-plugin-button" id="{{ data.plugins[plugin].id }}"></span>
+                                <div class="description">{{{ data.plugins[plugin].description }}}</div>
+                                <# if( data.plugins[plugin].plugin_slug ){ #>
+                                    <div class="custom-plugin">
+                                        <p class="plugin-card-{{ data.plugins[plugin].plugin_slug }} action_button {{ data.plugins[plugin].class }}">
+                                            <a data-slug="{{ data.plugins[plugin].plugin_slug }}" class="{{ data.plugins[plugin].button_class }}" href="{{ data.plugins[plugin].url }}">{{{ data.plugins[plugin].button_label }}}</a>
+                                        </p>
+                                    </div>
+                                <# } #>
+                                <# if( data.plugins[plugin].help ){ #>
+                                    <div class="custom-plugin">{{{ data.plugins[plugin].help }}}</div>
+                                <# } #>
+                            </div>
+                        <# } #>
+                        </div>
+                    <# } #>
+                <# } #>
 
-                                                <p
-                                                <# if( data.actions.length == 0 && data.plugins.length == 0 ){ #>
-                                                    class="succes"
-                                                    <# } else { #> class="succes hide"
-                                                        <# } #> >
-                                                            <# if( data.facebook ){ #>
-                                                                <a target="_blank" href="{{ data.facebook }}"
-                                                                   class="button social"><span
-                                                                            class="dashicons dashicons-facebook-alt"></span>{{{
-                                                                    data.facebook_text }}}</a>
-                                                                <# } #>
-                                                                    <# if( data.twitter ){ #>
-                                                                        <a target="_blank" href="{{ data.twitter }}"
-                                                                           class="button social"><span
-                                                                                    class="dashicons dashicons-twitter"></span>{{{
-                                                                            data.twitter_text }}}</a>
-                                                                        <# } #>
-                                                                            <# if( data.wp_review ){ #>
-                                                                                <a target="_blank"
-                                                                                   href="https://wordpress.org/support/theme/{{ data.theme_slug }}/reviews/#new-post"
-                                                                                   class="button button-primary epsilon-wordpress"><span
-                                                                                            class="dashicons dashicons-wordpress"></span>{{{
-                                                                                    data.wp_review_text }}}</a>
-                                                                                <# } #>
-                                                                                    </p>
-            </div>
+                <p <# if( data.actions.length == 0 && data.plugins.length == 0 ){ #> class="succes" <# } else { #> class="succes hide" <# } #> >
+                    <# if( data.facebook ){ #>
+                       <a target="_blank" href="{{ data.facebook }}" class="button social"><span class="dashicons dashicons-facebook-alt"></span>{{{ data.facebook_text }}}</a>
+                    <# } #>
+                    <# if( data.twitter ){ #>
+                        <a target="_blank" href="{{ data.twitter }}" class="button social"><span class="dashicons dashicons-twitter"></span>{{{ data.twitter_text }}}</a>
+                    <# } #>
+                    <# if( data.wp_review ){ #>
+                        <a target="_blank" href="https://wordpress.org/support/theme/{{ data.theme_slug }}/reviews/#new-post" class="button button-primary epsilon-wordpress"><span class="dashicons dashicons-wordpress"></span>{{{ data.wp_review_text }}}</a>
+                    <# } #>
+                </p>
             </div>
         </li>
 		<?php
+//@formatter:on
 	}
 
 	/**
