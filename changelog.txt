@@ -1,2 +1,6 @@
+v1.0.1
+	- Backward compatibility for the color coded categories
+	- Fixed an issue with the recommended actions counter
+	
 v1.0.0
 	- Start changelog

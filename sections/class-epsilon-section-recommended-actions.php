@@ -149,15 +149,16 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				</span>
                 <# if( data.actions.length > 0 ){ #>
                     <span class="epsilon-actions-count">
-						<span class="current-index" data-total="{{{ data.total_actions }}}">{{{ data.actions[0].index }}}</span> / {{{ data.total_actions }}}
+						<span class="current-index" data-total="{{{ data.total_actions }}}">1</span> / {{{ data.total_actions }}}
 					</span>
                 <# } #>
             </h3>
             <div class="recommended-actions_container" id="plugin-filter">
                 <# if( data.actions.length > 0 ){ #>
+                    <# i = 1 #>
                     <# for (action in data.actions) { #>
                         <div class="epsilon-recommended-actions-container"
-                             data-index="{{ data.actions[action].index }}">
+                             data-index="{{ i }}">
                             <# if( !data.actions[action].check ){ #>
                                 <div class="epsilon-recommended-actions">
                                     <p class="title">{{{ data.actions[action].title }}}</p>
@@ -182,6 +183,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
                                 </div>
                             <# } #>
                         </div>
+                    <# i++ #>
                     <# } #>
                 <# } #>
 

@@ -49,26 +49,7 @@ class Epsilon_Color_Coded_Categories {
 
 		$this->add_controls_settings();
 
-		add_action( 'wp_print_styles', function () {
-			if ( ! doing_action( 'wp_head' ) ) { // ensure we are on head
-				return;
-			}
-			global $wp_styles;
-			// empty the scripts and styles queue
-			if ( ( $key = array_search( $this->handler, $wp_styles->queue ) ) !== false ) {
-				unset( $wp_styles->queue[ $key ] );
-			}
-			if ( ( $key = array_search( $this->handler, $wp_styles->to_do ) ) !== false ) {
-				unset( $wp_styles->to_do[ $key ] );
-			}
-
-			add_action( 'wp_footer', function () {
-				// reset the queue to print scripts and styles in footer
-				global $wp_styles;
-				$wp_styles->queue[] = $this->handler;
-				$wp_styles->to_do[] = $this->handler;
-			}, 0 );
-		}, 0 );
+		add_action( 'wp_print_styles', array( $this, 'reset_queue' ), 0 );
 		add_action( 'wp_footer', array( $this, 'proxy_enqueue' ) );
 	}
 
@@ -97,7 +78,7 @@ class Epsilon_Color_Coded_Categories {
 		$categories       = get_categories( $args );
 		$wp_category_list = array();
 
-		$wp_customize->add_setting( 'epsilon_hidden_category_info',array(
+		$wp_customize->add_setting( 'epsilon_hidden_category_info', array(
 			'sanitize_callback' => 'esc_html'
 		) );
 
@@ -135,6 +116,35 @@ class Epsilon_Color_Coded_Categories {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Reset wordpress queue for the current handler
+	 */
+	public function reset_queue() {
+		if ( ! doing_action( 'wp_head' ) ) { // ensure we are on head
+			return;
+		}
+		global $wp_styles;
+		// empty the scripts and styles queue
+		if ( ( $key = array_search( $this->handler, $wp_styles->queue ) ) !== false ) {
+			unset( $wp_styles->queue[ $key ] );
+		}
+		if ( ( $key = array_search( $this->handler, $wp_styles->to_do ) ) !== false ) {
+			unset( $wp_styles->to_do[ $key ] );
+		}
+
+		add_action( 'wp_footer', array( $this, 'readd_in_queue' ), 0 );
+	}
+
+	/**
+	 * Re-add items in queue
+	 */
+	public function readd_in_queue() {
+		// reset the queue to print scripts and styles in footer
+		global $wp_styles;
+		$wp_styles->queue[] = $this->handler;
+		$wp_styles->to_do[] = $this->handler;
 	}
 
 	/**
