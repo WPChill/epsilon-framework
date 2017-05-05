@@ -632,7 +632,9 @@
 	 * Load the range sliders for the widget updates
 	 */
 	$(document).on('widget-updated widget-added', function (a, selector) {
-		EpsilonFramework.rangeSliders(selector);
+		if ( jQuery().slider ) {
+			EpsilonFramework.rangeSliders(selector);
+		}
 	});
 
 	if ( typeof(wp) !== 'undefined' ) {
