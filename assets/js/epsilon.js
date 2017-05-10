@@ -10,33 +10,38 @@
 
 	EpsilonFramework.rangeSliders = function (selector) {
 		var context = $(selector),
-				slider = context.find('.ss-slider'),
-				input = context.find('.rl-slider'),
-				input_id = input.attr('id'),
-				id = slider.attr('id'),
-				min = $('#' + id).attr('data-attr-min'),
-				max = $('#' + id).attr('data-attr-max'),
-				step = $('#' + id).attr('data-attr-step');
+				sliders = context.find('.slider-container'),
+				slider, input, input_id, id, min, max, step;
 
-		$('#' + id).slider({
-			value: $('#' + input_id).attr('value'),
-			range: 'min',
-			min  : parseFloat(min),
-			max  : parseFloat(max),
-			step : parseFloat(step),
-			slide: function (event, ui) {
-				$('#' + input_id).attr('value', ui.value).change();
-			}
-		});
+		$.each(sliders, function () {
+			var slider = $(this).find('.ss-slider'),
+					input = $(this).find('.rl-slider'),
+					input_id = input.attr('id'),
+					id = slider.attr('id'),
+					min = $('#' + id).attr('data-attr-min'),
+					max = $('#' + id).attr('data-attr-max'),
+					step = $('#' + id).attr('data-attr-step');
 
-		$(input).on('focus', function () {
-			$(this).blur();
-		});
-
-		$('#' + input_id).attr('value', ($('#' + id).slider("value")));
-		$('#' + input_id).change(function () {
 			$('#' + id).slider({
-				value: $(this).val()
+				value: $('#' + input_id).attr('value'),
+				range: 'min',
+				min  : parseFloat(min),
+				max  : parseFloat(max),
+				step : parseFloat(step),
+				slide: function (event, ui) {
+					$('#' + input_id).attr('value', ui.value).change();
+				}
+			});
+
+			$(input).on('focus', function () {
+				$(this).blur();
+			});
+
+			$('#' + input_id).attr('value', ($('#' + id).slider("value")));
+			$('#' + input_id).change(function () {
+				$('#' + id).slider({
+					value: $(this).val()
+				});
 			});
 		});
 	};
