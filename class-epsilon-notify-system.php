@@ -29,7 +29,10 @@ class Epsilon_Notify_System {
 		return 'page' == get_option( 'show_on_front' ) ? true : false;
 	}
 
-	public static function _get_plugins(){
+	/**
+	 * @return array
+	 */
+	public static function _get_plugins() {
 
 		if ( ! function_exists( 'get_plugins' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -39,6 +42,11 @@ class Epsilon_Notify_System {
 
 	}
 
+	/**
+	 * @param $slug
+	 *
+	 * @return mixed
+	 */
 	public static function _get_plugin_basename_from_slug( $slug ) {
 
 		if ( empty( self::$plugins ) ) {
@@ -51,21 +59,34 @@ class Epsilon_Notify_System {
 				return $key;
 			}
 		}
+
 		return $slug;
 	}
 
+	/**
+	 * @param $slug
+	 *
+	 * @return bool
+	 */
 	public static function check_plugin_is_installed( $slug ) {
 		$plugin_path = self::_get_plugin_basename_from_slug( $slug );
 		if ( file_exists( ABSPATH . 'wp-content/plugins/' . $plugin_path ) ) {
 			return true;
 		}
+
 		return false;
 	}
 
+	/**
+	 * @param $slug
+	 *
+	 * @return bool
+	 */
 	public static function check_plugin_is_active( $slug ) {
 		$plugin_path = self::_get_plugin_basename_from_slug( $slug );
-		if ( file_exists( ABSPATH . 'wp-content/plugins/' .$plugin_path ) ) {
+		if ( file_exists( ABSPATH . 'wp-content/plugins/' . $plugin_path ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 			return is_plugin_active( $plugin_path );
 		}
 	}
