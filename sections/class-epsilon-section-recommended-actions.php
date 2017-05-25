@@ -131,11 +131,11 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 	 * @return void
 	 */
 	protected function render_template() {
-//@formatter:off
+		//@formatter:off
 		?>
-        <li id="accordion-section-{{ data.id }}"
-            class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
-            <h3 class="accordion-section-title">
+		<li id="accordion-section-{{ data.id }}"
+			class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
+			<h3 class="accordion-section-title">
 				<span class="section-title" data-social="{{{ data.social_text }}}" data-plugin_text="{{{ data.plugin_text }}}">
 					<# if( data.actions.length > 0 ){ #>
 						{{{ data.title }}}
@@ -147,85 +147,85 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 						<# } #>
 					<# } #>
 				</span>
-                <# if( data.actions.length > 0 ){ #>
-                    <span class="epsilon-actions-count">
+				<# if( data.actions.length > 0 ){ #>
+					<span class="epsilon-actions-count">
 						<span class="current-index" data-total="{{{ data.total_actions }}}">1</span> / {{{ data.total_actions }}}
 					</span>
-                <# } #>
-            </h3>
-            <div class="recommended-actions_container" id="plugin-filter">
-                <# if( data.actions.length > 0 ){ #>
-                    <# i = 1 #>
-                    <# for (action in data.actions) { #>
-                        <div class="epsilon-recommended-actions-container"
-                             data-index="{{ i }}">
-                            <# if( !data.actions[action].check ){ #>
-                                <div class="epsilon-recommended-actions">
-                                    <p class="title">{{{ data.actions[action].title }}}</p>
-                                    <span data-option="{{ data.action_option }}" data-action="dismiss"
-                                          class="dashicons dashicons-visibility epsilon-dismiss-required-action"
-                                          id="{{ data.actions[action].id }}"></span>
-                                    <div class="description">{{{ data.actions[action].description }}}</div>
-                                    <# if( data.actions[action].plugin_slug ){ #>
-                                        <div class="custom-action">
-                                            <p class="plugin-card-{{ data.actions[action].plugin_slug }} action_button {{ data.actions[action].class }}">
-                                                <a data-slug="{{ data.actions[action].plugin_slug }}"
-                                                   data-plugin="{{ data.actions[action].path }}"
-                                                   class="{{ data.actions[action].button_class }}"
-                                                   href="{{ data.actions[action].url }}">{{{
-                                                    data.actions[action].button_label }}}</a>
-                                            </p>
-                                        </div>
-                                    <# } #>
-                                    <# if( data.actions[action].help ){ #>
-                                        <div class="custom-action">{{{ data.actions[action].help }}}</div>
-                                    <# } #>
-                                </div>
-                            <# } #>
-                        </div>
-                    <# i++ #>
-                    <# } #>
-                <# } #>
+				<# } #>
+			</h3>
+			<div class="recommended-actions_container" id="plugin-filter">
+				<# if( data.actions.length > 0 ){ #>
+					<# i = 1 #>
+					<# for (action in data.actions) { #>
+						<div class="epsilon-recommended-actions-container"
+							 data-index="{{ i }}">
+							<# if( !data.actions[action].check ){ #>
+								<div class="epsilon-recommended-actions">
+									<p class="title">{{{ data.actions[action].title }}}</p>
+									<span data-option="{{ data.action_option }}" data-action="dismiss"
+										  class="dashicons dashicons-visibility epsilon-dismiss-required-action"
+										  id="{{ data.actions[action].id }}"></span>
+									<div class="description">{{{ data.actions[action].description }}}</div>
+									<# if( data.actions[action].plugin_slug ){ #>
+										<div class="custom-action">
+											<p class="plugin-card-{{ data.actions[action].plugin_slug }} action_button {{ data.actions[action].class }}">
+												<a data-slug="{{ data.actions[action].plugin_slug }}"
+												   data-plugin="{{ data.actions[action].path }}"
+												   class="{{ data.actions[action].button_class }}"
+												   href="{{ data.actions[action].url }}">{{{
+													data.actions[action].button_label }}}</a>
+											</p>
+										</div>
+									<# } #>
+									<# if( data.actions[action].help ){ #>
+										<div class="custom-action">{{{ data.actions[action].help }}}</div>
+									<# } #>
+								</div>
+							<# } #>
+						</div>
+					<# i++ #>
+					<# } #>
+				<# } #>
 
-                <# if( data.plugins.length > 0 ){ #>
-                    <# for (plugin in data.plugins) { #>
-                        <div class="epsilon-recommended-actions-container epsilon-recommended-plugins" data-index="{{ data.plugins[plugin].index }}">
-                        <# if( !data.plugins[plugin].check ){ #>
-                            <div class="epsilon-recommended-plugins">
-                                <p class="title">{{{ data.plugins[plugin].title }}}</p>
-                                <span data-option="{{ data.plugin_option }}" data-action="dismiss" class="dashicons dashicons-visibility epsilon-recommended-plugin-button" id="{{ data.plugins[plugin].id }}"></span>
-                                <div class="description">{{{ data.plugins[plugin].description }}}</div>
-                                <# if( data.plugins[plugin].plugin_slug ){ #>
-                                    <div class="custom-plugin">
-                                        <p class="plugin-card-{{ data.plugins[plugin].plugin_slug }} action_button {{ data.plugins[plugin].class }}">
-                                            <a data-slug="{{ data.plugins[plugin].plugin_slug }}" class="{{ data.plugins[plugin].button_class }}" href="{{ data.plugins[plugin].url }}">{{{ data.plugins[plugin].button_label }}}</a>
-                                        </p>
-                                    </div>
-                                <# } #>
-                                <# if( data.plugins[plugin].help ){ #>
-                                    <div class="custom-plugin">{{{ data.plugins[plugin].help }}}</div>
-                                <# } #>
-                            </div>
-                        <# } #>
-                        </div>
-                    <# } #>
-                <# } #>
+				<# if( data.plugins.length > 0 ){ #>
+					<# for (plugin in data.plugins) { #>
+						<div class="epsilon-recommended-actions-container epsilon-recommended-plugins" data-index="{{ data.plugins[plugin].index }}">
+						<# if( !data.plugins[plugin].check ){ #>
+							<div class="epsilon-recommended-plugins">
+								<p class="title">{{{ data.plugins[plugin].title }}}</p>
+								<span data-option="{{ data.plugin_option }}" data-action="dismiss" class="dashicons dashicons-visibility epsilon-recommended-plugin-button" id="{{ data.plugins[plugin].id }}"></span>
+								<div class="description">{{{ data.plugins[plugin].description }}}</div>
+								<# if( data.plugins[plugin].plugin_slug ){ #>
+									<div class="custom-plugin">
+										<p class="plugin-card-{{ data.plugins[plugin].plugin_slug }} action_button {{ data.plugins[plugin].class }}">
+											<a data-slug="{{ data.plugins[plugin].plugin_slug }}" class="{{ data.plugins[plugin].button_class }}" href="{{ data.plugins[plugin].url }}">{{{ data.plugins[plugin].button_label }}}</a>
+										</p>
+									</div>
+								<# } #>
+								<# if( data.plugins[plugin].help ){ #>
+									<div class="custom-plugin">{{{ data.plugins[plugin].help }}}</div>
+								<# } #>
+							</div>
+						<# } #>
+						</div>
+					<# } #>
+				<# } #>
 
-                <p <# if( data.actions.length == 0 && data.plugins.length == 0 ){ #> class="succes" <# } else { #> class="succes hide" <# } #> >
-                    <# if( data.facebook ){ #>
-                       <a target="_blank" href="{{ data.facebook }}" class="button social"><span class="dashicons dashicons-facebook-alt"></span>{{{ data.facebook_text }}}</a>
-                    <# } #>
-                    <# if( data.twitter ){ #>
-                        <a target="_blank" href="{{ data.twitter }}" class="button social"><span class="dashicons dashicons-twitter"></span>{{{ data.twitter_text }}}</a>
-                    <# } #>
-                    <# if( data.wp_review ){ #>
-                        <a target="_blank" href="https://wordpress.org/support/theme/{{ data.theme_slug }}/reviews/#new-post" class="button button-primary epsilon-wordpress"><span class="dashicons dashicons-wordpress"></span>{{{ data.wp_review_text }}}</a>
-                    <# } #>
-                </p>
-            </div>
-        </li>
+				<p <# if( data.actions.length == 0 && data.plugins.length == 0 ){ #> class="succes" <# } else { #> class="succes hide" <# } #> >
+					<# if( data.facebook ){ #>
+					   <a target="_blank" href="{{ data.facebook }}" class="button social"><span class="dashicons dashicons-facebook-alt"></span>{{{ data.facebook_text }}}</a>
+					<# } #>
+					<# if( data.twitter ){ #>
+						<a target="_blank" href="{{ data.twitter }}" class="button social"><span class="dashicons dashicons-twitter"></span>{{{ data.twitter_text }}}</a>
+					<# } #>
+					<# if( data.wp_review ){ #>
+						<a target="_blank" href="https://wordpress.org/support/theme/{{ data.theme_slug }}/reviews/#new-post" class="button button-primary epsilon-wordpress"><span class="dashicons dashicons-wordpress"></span>{{{ data.wp_review_text }}}</a>
+					<# } #>
+				</p>
+			</div>
+		</li>
 		<?php
-//@formatter:on
+		//@formatter:on
 	}
 
 	/**
@@ -260,11 +260,12 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				$v['url']   = $this->_create_action_link( $active['needs'], $v['plugin_slug'] );
 				$v['class'] = '';
 
-				if ( $active['needs'] == 'deactivate' && ! $this->_check_plugin_update( $v['plugin_slug'] ) ) {
+				$plugin_update = $this->_check_plugin_update( $v['plugin_slug'] );
+				if ( 'deactivate' == $active['needs'] && ! $plugin_update ) {
 					$active['needs'] = 'update';
 				}
 
-				if ( $active['needs'] !== 'install' && $active['status'] ) {
+				if ( 'install' !== $active['needs'] && $active['status'] ) {
 					$v['class'] = 'active';
 				}
 
@@ -291,7 +292,8 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			}
 
 			$arr[] = $v;
-		};
+		}// End foreach().
+		;
 
 		return $arr;
 	}
@@ -325,12 +327,12 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				'class'       => '',
 				'id'          => $k,
 				'path'        => $active['plugin_path'],
-				'plugin_slug' => $k
+				'plugin_slug' => $k,
 			);
 
 			$t['url'] = $this->_create_action_link( $active['needs'], $k );
 
-			if ( $active['needs'] !== 'install' && $active['status'] ) {
+			if ( 'install' !== $active['needs'] && $active['status'] ) {
 				$t['class'] = 'active';
 			}
 
@@ -359,7 +361,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			$t['title']       = $t['button_label'] . ': ' . $info->name;
 
 			$arr[] = $t;
-		}
+		}// End foreach().
 
 		return $arr;
 	}
@@ -379,11 +381,15 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			return array(
 				'status'      => is_plugin_active( $plugin_path ),
 				'needs'       => $needs,
-				'plugin_path' => $plugin_path
+				'plugin_path' => $plugin_path,
 			);
 		}
 
-		return array( 'status' => false, 'needs' => 'install', 'plugin_path' => false );
+		return array(
+			'status'      => false,
+			'needs'       => 'install',
+			'plugin_path' => false,
+		);
 	}
 
 	/**
@@ -399,7 +405,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 					add_query_arg(
 						array(
 							'action' => 'install-plugin',
-							'plugin' => $plugin_slug
+							'plugin' => $plugin_slug,
 						),
 						network_admin_url( 'update.php' )
 					),
@@ -407,22 +413,28 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				);
 				break;
 			case 'deactivate':
-				return add_query_arg( array(
-					                      'action'        => 'deactivate',
-					                      'plugin'        => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
-					                      'plugin_status' => 'all',
-					                      'paged'         => '1',
-					                      '_wpnonce'      => wp_create_nonce( 'deactivate-plugin_' . $plugin_slug . '/' . $plugin_slug . '.php' ),
-				                      ), network_admin_url( 'plugins.php' ) );
+				return add_query_arg(
+					array(
+						'action'        => 'deactivate',
+						'plugin'        => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
+						'plugin_status' => 'all',
+						'paged'         => '1',
+						'_wpnonce'      => wp_create_nonce( 'deactivate-plugin_' . $plugin_slug . '/' . $plugin_slug . '.php' ),
+					),
+					network_admin_url( 'plugins.php' )
+				);
 				break;
 			case 'activate':
-				return add_query_arg( array(
-					                      'action'        => 'activate',
-					                      'plugin'        => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
-					                      'plugin_status' => 'all',
-					                      'paged'         => '1',
-					                      '_wpnonce'      => wp_create_nonce( 'activate-plugin_' . $plugin_slug . '/' . $plugin_slug . '.php' ),
-				                      ), network_admin_url( 'plugins.php' ) );
+				return add_query_arg(
+					array(
+						'action'        => 'activate',
+						'plugin'        => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
+						'plugin_status' => 'all',
+						'paged'         => '1',
+						'_wpnonce'      => wp_create_nonce( 'activate-plugin_' . $plugin_slug . '/' . $plugin_slug . '.php' ),
+					),
+					network_admin_url( 'plugins.php' )
+				);
 				break;
 			case 'update':
 				return wp_nonce_url(
@@ -439,7 +451,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			default:
 				return false;
 				break;
-		}
+		}// End switch().
 	}
 
 	/**
@@ -497,7 +509,8 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 	 */
 	private function _call_plugin_api( $slug ) {
 		include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
-		if ( false === ( $call_api = get_transient( 'epsilon_plugin_information_transient_' . $slug ) ) ) {
+		$call_api = get_transient( 'epsilon_plugin_information_transient_' . $slug );
+		if ( false === $call_api ) {
 			$call_api = plugins_api( 'plugin_information', array(
 				'slug'   => $slug,
 				'fields' => array(
@@ -515,8 +528,8 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 					'tested'            => false,
 					'requires'          => false,
 					'downloadlink'      => false,
-					'icons'             => true
-				)
+					'icons'             => true,
+				),
 			) );
 			set_transient( 'epsilon_plugin_information_transient_' . $slug, $call_api, 30 * MINUTE_IN_SECONDS );
 		}

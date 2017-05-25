@@ -43,11 +43,11 @@ class Epsilon_Color_Scheme {
 
 		add_action( 'wp_ajax_epsilon_generate_color_scheme_css', array(
 			$this,
-			'epsilon_generate_color_scheme_css'
+			'epsilon_generate_color_scheme_css',
 		) );
 		add_action( 'wp_ajax_nopriv_epsilon_generate_color_scheme_css', array(
 			$this,
-			'epsilon_generate_color_scheme_css'
+			'epsilon_generate_color_scheme_css',
 		) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
@@ -91,7 +91,7 @@ class Epsilon_Color_Scheme {
 	 *
 	 * @return Epsilon_Color_Scheme
 	 */
-	public static function get_instance( $handler = NULL, $args = array() ) {
+	public static function get_instance( $handler = null, $args = array() ) {
 		static $inst;
 		if ( ! $inst ) {
 			$inst = new Epsilon_Color_Scheme( $handler, $args );
@@ -106,7 +106,7 @@ class Epsilon_Color_Scheme {
 	 * @param $args
 	 */
 	public function update_colors( $args ) {
-		if ( $args !== NULL ) {
+		if ( null !== $args ) {
 			$array = array_merge( $this->options, $args );
 			foreach ( $this->customizer_controls as $control => $prop ) {
 				if ( ! $prop['hover-state'] ) {

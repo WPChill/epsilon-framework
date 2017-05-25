@@ -47,7 +47,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 				'font-weight' => 'initial',
 				'font-style'  => 'initial',
 				'font-size'   => '16',
-				'line-height' => '18'
+				'line-height' => '18',
 			);
 
 			$arr = array();
@@ -63,7 +63,7 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 
 			$json = get_theme_mod( $values, '' );
 
-			if ( $json === '' ) {
+			if ( '' === $json ) {
 				return $arr;
 			}
 
@@ -117,19 +117,16 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		public function render_content() {
 			?>
 			<label>
-                <span class="customize-control-title">
-                    <?php echo esc_attr( $this->label ); ?>
-	                <?php if ( ! empty( $this->description ) ): ?>
-		                <i class="dashicons dashicons-editor-help"
-		                   style="vertical-align: text-bottom; position: relative;">
+				<span class="customize-control-title">
+					<?php echo esc_attr( $this->label ); ?>
+					<?php if ( ! empty( $this->description ) ) : ?>
+						<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 							<span class="mte-tooltip"><?php echo wp_kses_post( $this->description ); ?></span>
 						</i>
-	                <?php endif; ?>
+					<?php endif; ?>
 				</span>
-				<input disabled type="hidden" id="selectors_<?php echo $this->id ?>"
-				       value="<?php echo $this->set_selectors(); ?>"/>
-				<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_<?php echo $this->id; ?>"
-				       value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
+				<input disabled type="hidden" id="selectors_<?php echo $this->id ?>" value="<?php echo $this->set_selectors(); ?>"/>
+				<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_<?php echo $this->id; ?>" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
 			</label>
 
 			<?php
@@ -138,10 +135,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			?>
 
 			<div class="epsilon-typography-container" data-unique-id="<?php echo $this->id ?>">
-				<?php if ( in_array( 'font-family', $this->choices ) ): ?>
+				<?php if ( in_array( 'font-family', $this->choices ) ) : ?>
 					<div class="epsilon-typography-font-family">
-						<label
-							for="<?php echo $this->id; ?>-font-family"><?php echo __( 'Font Family', 'epsilon-framework' ); ?></label>
+						<label for="<?php echo $this->id; ?>-font-family"><?php echo __( 'Font Family', 'epsilon-framework' ); ?></label>
 						<select id="<?php echo $this->id; ?>-font-family" class="epsilon-typography-input">
 							<option value="default_font"><?php echo __( 'Theme default', 'epsilon-framework' ); ?></option>
 							<?php foreach ( $fonts as $font => $properties ) { ?>
@@ -151,13 +147,11 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 						</select>
 					</div>
 				<?php endif; ?>
-				<?php if ( in_array( 'font-weight', $this->choices ) ): ?>
-					<?php
+				<?php if ( in_array( 'font-weight', $this->choices ) ) : ?><?php
 					$defaults = array( 'Select font', 'Theme default', 'initial' );
 					?>
 					<div class="epsilon-typography-font-weight">
-						<label
-							for="<?php echo $this->id; ?>-font-weight"><?php echo __( 'Font Weight', 'epsilon-framework' ); ?></label>
+						<label for="<?php echo $this->id; ?>-font-weight"><?php echo __( 'Font Weight', 'epsilon-framework' ); ?></label>
 						<select id="<?php echo $this->id; ?>-font-weight" class="epsilon-typography-input">
 							<option value="initial"><?php echo __( 'Theme default', 'epsilon-framework' ); ?></option>
 							<?php
@@ -170,38 +164,31 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 						</select>
 					</div>
 				<?php endif; ?>
-				<?php if ( in_array( 'font-style', $this->choices ) ): ?>
+				<?php if ( in_array( 'font-style', $this->choices ) ) : ?>
 					<div class="epsilon-typography-font-style">
-						<label
-							for="<?php echo $this->id; ?>-font-style"><?php echo __( 'Font Style', 'epsilon-framework' ); ?></label>
+						<label for="<?php echo $this->id; ?>-font-style"><?php echo __( 'Font Style', 'epsilon-framework' ); ?></label>
 						<select id="<?php echo $this->id; ?>-font-style" class="epsilon-typography-input">
 							<option value="initial"><?php echo __( 'Theme default', 'epsilon-framework' ); ?></option>
-							<option <?php echo $inputs['font-style'] === 'normal' ? 'selected' : ''; ?>
+							<option <?php echo 'normal' === $inputs['font-style'] ? 'selected' : ''; ?>
 								value="normal"><?php echo __( 'Normal', 'epsilon-framework' ); ?>
 							</option>
-							<option <?php echo $inputs['font-style'] === 'italic' ? 'selected' : ''; ?>
+							<option <?php echo 'italic' === $inputs['font-style']  ? 'selected' : ''; ?>
 								value="italic"><?php echo __( 'Italic', 'epsilon-framework' ); ?>
 							</option>
 						</select>
 					</div>
 				<?php endif; ?>
-				<?php if ( in_array( 'font-size', $this->choices ) ): ?>
+				<?php if ( in_array( 'font-size', $this->choices ) ) : ?>
 					<div class="epsilon-typography-font-size epsilon-number-field">
-						<label
-							for="<?php echo $this->id; ?>-font-size"><?php echo __( 'Font Size', 'epsilon-framework' ); ?></label>
-						<input class="epsilon-typography-input" id="<?php echo $this->id; ?>-font-size"
-						       value="<?php echo $inputs['font-size'] ?>" type="number" min="0"
-						       step="any"/>
+						<label for="<?php echo $this->id; ?>-font-size"><?php echo __( 'Font Size', 'epsilon-framework' ); ?></label>
+						<input class="epsilon-typography-input" id="<?php echo $this->id; ?>-font-size" value="<?php echo $inputs['font-size'] ?>" type="number" min="0" step="any"/>
 						<span class="unit <?php echo (int) $inputs['font-size'] > 99 ? 'go-right' : '' ?>">px</span>
 					</div>
 				<?php endif; ?>
-				<?php if ( in_array( 'line-height', $this->choices ) ): ?>
+				<?php if ( in_array( 'line-height', $this->choices ) ) : ?>
 					<div class="epsilon-typography-line-height epsilon-number-field">
-						<label
-							for="<?php echo $this->id; ?>-line-height"><?php echo __( 'Line Height', 'epsilon-framework' ); ?></label>
-						<input class="epsilon-typography-input" id="<?php echo $this->id; ?>-line-height"
-						       value="<?php echo $inputs['line-height'] ?>" type="number" min="0"
-						       step="any"/>
+						<label for="<?php echo $this->id; ?>-line-height"><?php echo __( 'Line Height', 'epsilon-framework' ); ?></label>
+						<input class="epsilon-typography-input" id="<?php echo $this->id; ?>-line-height" value="<?php echo $inputs['line-height'] ?>" type="number" min="0" step="any"/>
 						<span class="unit <?php echo (int) $inputs['line-height'] > 99 ? 'go-right' : '' ?>">px</span>
 					</div>
 				<?php endif; ?>
@@ -210,4 +197,4 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			<?php
 		}
 	}
-}
+}// End if().

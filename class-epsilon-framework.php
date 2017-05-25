@@ -50,13 +50,12 @@ class Epsilon_Framework {
 		 */
 		add_action( 'wp_ajax_epsilon_framework_ajax_action', array(
 			$this,
-			'epsilon_framework_ajax_action'
+			'epsilon_framework_ajax_action',
 		) );
 		add_action( 'wp_ajax_nopriv_epsilon_framework_ajax_action', array(
 			$this,
-			'epsilon_framework_ajax_action'
+			'epsilon_framework_ajax_action',
 		) );
-
 
 	}
 
@@ -88,13 +87,13 @@ class Epsilon_Framework {
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
 		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.js', array(
 			'jquery',
-			'customize-preview'
+			'customize-preview',
 		), 2, true );
 
 		wp_localize_script( 'epsilon-previewer', 'WPUrls', array(
 			'siteurl' => get_option( 'siteurl' ),
 			'theme'   => get_template_directory_uri(),
-			'ajaxurl' => admin_url( 'admin-ajax.php' )
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
 	}
 
@@ -106,12 +105,12 @@ class Epsilon_Framework {
 	public function customizer_enqueue_scripts() {
 		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
 			'jquery',
-			'customize-controls'
+			'customize-controls',
 		) );
 		wp_localize_script( 'epsilon-object', 'WPUrls', array(
 			'siteurl' => get_option( 'siteurl' ),
 			'theme'   => get_template_directory_uri(),
-			'ajaxurl' => admin_url( 'admin-ajax.php' )
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
 
@@ -121,16 +120,37 @@ class Epsilon_Framework {
 	 * Ajax handler
 	 */
 	public function epsilon_framework_ajax_action() {
-		if ( $_POST['action'] !== 'epsilon_framework_ajax_action' ) {
-			wp_die( json_encode( array( 'status' => false, 'error' => 'Not allowed' ) ) );
+		if ( 'epsilon_framework_ajax_action' !== $_POST['action'] ) {
+			wp_die(
+				json_encode(
+					array(
+						'status' => false,
+						'error'  => 'Not allowed',
+					)
+				)
+			);
 		}
 
 		if ( count( $_POST['args']['action'] ) !== 2 ) {
-			wp_die( json_encode( array( 'status' => false, 'error' => 'Not allowed' ) ) );
+			wp_die(
+				json_encode(
+					array(
+						'status' => false,
+						'error'  => 'Not allowed',
+					)
+				)
+			);
 		}
 
 		if ( ! class_exists( $_POST['args']['action'][0] ) ) {
-			wp_die( json_encode( array( 'status' => false, 'error' => 'Class does not exist' ) ) );
+			wp_die(
+				json_encode(
+					array(
+						'status' => false,
+						'error'  => 'Class does not exist',
+					)
+				)
+			);
 		}
 
 		$class  = $_POST['args']['action'][0];
@@ -140,10 +160,24 @@ class Epsilon_Framework {
 		$response = $class::$method( $args );
 
 		if ( 'ok' == $response ) {
-			wp_die( json_encode( array( 'status' => true, 'message' => 'ok' ) ) );
+			wp_die(
+				json_encode(
+					array(
+						'status'  => true,
+						'message' => 'ok',
+					)
+				)
+			);
 		}
 
-		wp_die( json_encode( array( 'status' => false, 'message' => 'nok' ) ) );
+		wp_die(
+			json_encode(
+				array(
+					'status'  => false,
+					'message' => 'nok',
+				)
+			)
+		);
 	}
 
 	/**
@@ -154,10 +188,10 @@ class Epsilon_Framework {
 	public static function dismiss_required_action( $args ) {
 		$option = get_option( $args['option'] );
 
-		if ( $option ):
+		if ( $option ) :
 			$option[ $args['id'] ] = false;
 			update_option( $args['option'], $option );
-		else:
+		else :
 			$option = array(
 				$args['id'] => false,
 			);

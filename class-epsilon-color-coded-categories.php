@@ -44,7 +44,7 @@ class Epsilon_Color_Coded_Categories {
 			'id'          => $args['section'],
 			'title'       => $args['section-title'],
 			'description' => $args['section-description'],
-			'panel'       => $args['panel']
+			'panel'       => $args['panel'],
 		);
 
 		$this->add_controls_settings();
@@ -59,7 +59,7 @@ class Epsilon_Color_Coded_Categories {
 	public function add_controls_settings() {
 		global $wp_customize;
 
-		if ( $wp_customize === NULL ) {
+		if ( null === $wp_customize ) {
 			return false;
 		}
 
@@ -72,14 +72,14 @@ class Epsilon_Color_Coded_Categories {
 		$i    = 1;
 		$args = array(
 			'orderby'    => 'id',
-			'hide_empty' => 0
+			'hide_empty' => 0,
 		);
 
 		$categories       = get_categories( $args );
 		$wp_category_list = array();
 
 		$wp_customize->add_setting( 'epsilon_hidden_category_info', array(
-			'sanitize_callback' => 'esc_html'
+			'sanitize_callback' => 'esc_html',
 		) );
 
 		$wp_customize->add_control(
@@ -99,18 +99,18 @@ class Epsilon_Color_Coded_Categories {
 				'capability'           => 'edit_theme_options',
 				'sanitize_callback'    => array(
 					'Epsilon_Color_Coded_Categories',
-					'color_option_hex_sanitize'
+					'color_option_hex_sanitize',
 				),
 				'sanitize_js_callback' => array(
 					'Epsilon_Color_Coded_Categories',
-					'color_escaping_option_sanitize'
+					'color_escaping_option_sanitize',
 				),
 			) );
 			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ), array(
 				'label'    => sprintf( '%s', $wp_category_list[ $category_list->cat_ID ] ),
 				'section'  => $this->section['id'],
 				'settings' => 'epsilon_category_color_' . get_cat_ID( $wp_category_list[ $category_list->cat_ID ] ),
-				'priority' => $i
+				'priority' => $i,
 			) ) );
 			$i ++;
 		}
@@ -119,7 +119,7 @@ class Epsilon_Color_Coded_Categories {
 	}
 
 	/**
-	 * Reset wordpress queue for the current handler
+	 * Reset WordPress queue for the current handler
 	 */
 	public function reset_queue() {
 		if ( ! doing_action( 'wp_head' ) ) { // ensure we are on head
@@ -127,10 +127,12 @@ class Epsilon_Color_Coded_Categories {
 		}
 		global $wp_styles;
 		// empty the scripts and styles queue
-		if ( ( $key = array_search( $this->handler, $wp_styles->queue ) ) !== false ) {
+		$key = array_search( $this->handler, $wp_styles->queue );
+		if ( false !== $key ) {
 			unset( $wp_styles->queue[ $key ] );
 		}
-		if ( ( $key = array_search( $this->handler, $wp_styles->to_do ) ) !== false ) {
+		$key = array_search( $this->handler, $wp_styles->to_do );
+		if ( false !== $key ) {
 			unset( $wp_styles->to_do[ $key ] );
 		}
 
@@ -158,7 +160,7 @@ class Epsilon_Color_Coded_Categories {
 	/**
 	 * Proxy to enqueue files
 	 */
-	public function __enqueue() {
+	public function _enqueue() {
 		foreach ( $this->selectors as $property => $arr ) {
 			$this->css .= $this->parse_arr( $property, $arr );
 		}
@@ -173,7 +175,7 @@ class Epsilon_Color_Coded_Categories {
 	public function parse_arr( $property, $arr ) {
 		$output = '';
 		foreach ( $arr as $selector => $value ) {
-			if ( $value != '' ) {
+			if ( '' !== $value ) {
 				$output .= $selector . '{' . $property . ':' . $value . '}' . "\n";
 			}
 		}
@@ -187,7 +189,7 @@ class Epsilon_Color_Coded_Categories {
 	 *
 	 * @return Epsilon_Color_Coded_Categories
 	 */
-	public static function get_instance( $handler = NULL, $args = array() ) {
+	public static function get_instance( $handler = null, $args = array() ) {
 		static $inst;
 		if ( ! $inst ) {
 			$inst = new Epsilon_Color_Coded_Categories( $handler, $args );
@@ -207,7 +209,7 @@ class Epsilon_Color_Coded_Categories {
 	 * print the styles
 	 */
 	public function enqueue() {
-		$this->__enqueue();
+		$this->_enqueue();
 		wp_add_inline_style( $this->handler, $this->css );
 	}
 
@@ -229,7 +231,8 @@ class Epsilon_Color_Coded_Categories {
 	 * @return string
 	 */
 	public static function color_option_hex_sanitize( $color ) {
-		if ( $unhashed = sanitize_hex_color_no_hash( $color ) ) {
+		$unhashed = sanitize_hex_color_no_hash( $color );
+		if ( $unhashed ) {
 			return '#' . $unhashed;
 		}
 

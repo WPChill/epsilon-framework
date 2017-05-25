@@ -39,20 +39,21 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 * @access public
 		 * @return void
 		 */
-		public function render_content() { ?>
+		public function render_content() {
+	?>
 			<label>
 
-                <span class="customize-control-title">
-                    <?php echo esc_attr( $this->label ); ?>
-	                <?php if ( !empty($this->description) ): ?>
-		                <i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+				<span class="customize-control-title">
+					<?php echo esc_attr( $this->label ); ?>
+					<?php if ( ! empty( $this->description ) ) : ?>
+						<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 						<span class="mte-tooltip"><?php echo wp_kses_post( $this->description ); ?></span>
 					</i>
-	                <?php endif; ?>
-                </span>
+					<?php endif; ?>
+				</span>
 
 				<input disabled type="text" class="rl-slider" id="input_<?php echo $this->id; ?>"
-				       value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
+					   value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
 
 			</label>
 
@@ -80,4 +81,4 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			<?php
 		}
 	}
-}
+}// End if().

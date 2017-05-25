@@ -15,14 +15,12 @@ class Epsilon_Autoloader {
 	 * @param $class
 	 */
 	public function load( $class ) {
-		/**
-		 * All classes are prefixed with Sigma_
-		 */
+
 		$parts = explode( '_', $class );
 		$bind  = implode( '-', $parts );
 
 		$directories = array(
-			dirname( __FILE__ ).'/',
+			dirname( __FILE__ ) . '/',
 		);
 
 		foreach ( $directories as $directory ) {

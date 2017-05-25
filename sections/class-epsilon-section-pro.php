@@ -73,17 +73,18 @@ class Epsilon_Section_Pro extends WP_Customize_Section {
 	 * @access public
 	 * @return void
 	 */
-	protected function render_template() { ?>
-		<?php if ( $this->allowed ): //@formatter:off  ?>
-            <li id="accordion-section-{{ data.id }}"
-                class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
-                <h3 class="accordion-section-title epsilon-pro-section-title"> {{ data.title }}
-                    <# if ( data.button_url ) { #>
-                        <a href="{{ data.button_url }}" class="button alignright" target="_blank"> {{ data.button_text }}</a>
-                    <# } #>
-                </h3>
-            </li>
-        <?php //@formatter:on ?>
+	protected function render_template() {
+	?>
+		<?php if ( $this->allowed ) : //@formatter:off  ?>
+			<li id="accordion-section-{{ data.id }}"
+				class="accordion-section control-section control-section-{{ data.type }} cannot-expand">
+				<h3 class="accordion-section-title epsilon-pro-section-title"> {{ data.title }}
+					<# if ( data.button_url ) { #>
+						<a href="{{ data.button_url }}" class="button alignright" target="_blank"> {{ data.button_text }}</a>
+					<# } #>
+				</h3>
+			</li>
+		<?php //@formatter:on ?>
 		<?php endif; ?>
 	<?php }
 }

@@ -2,7 +2,7 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-if ( class_exists( 'WP_Customize_Control' ) ):
+if ( class_exists( 'WP_Customize_Control' ) ) :
 	/**
 	 * Class Epsilon_Control_Upsell
 	 */
@@ -100,39 +100,40 @@ if ( class_exists( 'WP_Customize_Control' ) ):
 		/**
 		 *
 		 */
-		public function content_template() { //@formatter:off ?>
+		public function content_template() {
+			//@formatter:off ?>
 
-            <# if ( data.allowed ) { #>
-            <div class="epsilon-upsell">
-                <# if ( data.options ) { #>
-                    <ul class="epsilon-upsell-options">
-                        <# _.each(data.options, function( option, index) { #>
-                            <li><span class="wp-ui-notification">{{ data.pro_label }}</span>{{ option.option }}
-                                <i class="dashicons dashicons-editor-help"
-                                   style="vertical-align: text-bottom; position: relative;">
-                                    <span class="mte-tooltip">{{ option.help }}</span>
-                                </i>
-                            </li>
-                            <# }) #>
-                    </ul>
-                <# } #>
+			<# if ( data.allowed ) { #>
+			<div class="epsilon-upsell">
+				<# if ( data.options ) { #>
+					<ul class="epsilon-upsell-options">
+						<# _.each(data.options, function( option, index) { #>
+							<li><span class="wp-ui-notification">{{ data.pro_label }}</span>{{ option.option }}
+								<i class="dashicons dashicons-editor-help"
+								   style="vertical-align: text-bottom; position: relative;">
+									<span class="mte-tooltip">{{ option.help }}</span>
+								</i>
+							</li>
+							<# }) #>
+					</ul>
+				<# } #>
 
-                <div class="epsilon-button-group">
-                    <# if ( data.button_text && data.button_url ) { #>
-                        <a href="{{ data.button_url }}" class="button" target="_blank">{{
-                            data.button_text }}</a>
-                    <# } #>
+				<div class="epsilon-button-group">
+					<# if ( data.button_text && data.button_url ) { #>
+						<a href="{{ data.button_url }}" class="button" target="_blank">{{
+							data.button_text }}</a>
+					<# } #>
 
-                    <# if ( data.separator ) { #>
-                        <span class="button-separator">{{ data.separator }}</span>
-                    <# } #>
+					<# if ( data.separator ) { #>
+						<span class="button-separator">{{ data.separator }}</span>
+					<# } #>
 
-                    <# if ( data.second_button_text && data.second_button_url ) { #>
-                        <a href="{{ data.second_button_url }}" class="button button-primary" target="_blank"> {{data.second_button_text }}</a>
-                    <# } #>
-                </div>
-            </div>
-            <# } #>
+					<# if ( data.second_button_text && data.second_button_url ) { #>
+						<a href="{{ data.second_button_url }}" class="button button-primary" target="_blank"> {{data.second_button_text }}</a>
+					<# } #>
+				</div>
+			</div>
+			<# } #>
 <?php //@formatter:on
 		}
 	}
