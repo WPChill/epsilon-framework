@@ -133,8 +133,8 @@
 
         $.each( self._linkedFonts, function( $id, $target ) {
           $( '#' + $id ).on( 'change', function() {
-            if ( 'Select font' === $( this ).val() ||
-                'default_font' === $( this ).val() ) {
+            if ( 'Select font' == $( this ).val() ||
+                'default_font' == $( this ).val() ) {
               EpsilonFramework.typography._setSelects( $( this ).val(), $target,
                   true );
             }
@@ -318,16 +318,16 @@
 
       switch ( $( el ).attr( 'data-increment' ) ) {
         case 'up':
-          if ( 99 === input.val() ) {
+          if ( 99 == input.val() ) {
             unit.animate( { 'left': 35 }, 10 );
           }
           input.val( parseInt( input.val() ) + 1 ).trigger( 'change' );
           break;
         case 'down':
-          if ( 0 === input.val() ) {
+          if ( 0 == input.val() ) {
             return;
           }
-          if ( 100 === input.val() ) {
+          if ( 100 == input.val() ) {
             unit.animate( { 'left': 25 }, 10 );
           }
           input.val( parseInt( input.val() ) - 1 ).trigger( 'change' );
