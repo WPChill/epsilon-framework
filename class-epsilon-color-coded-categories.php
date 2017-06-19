@@ -14,6 +14,7 @@ class Epsilon_Color_Coded_Categories {
 	protected $selectors = array(
 		'background' => array(),
 		'color'      => array(),
+		'box-shadow' => array(),
 	);
 
 	/**
