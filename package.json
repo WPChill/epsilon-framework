@@ -1,0 +1,11 @@
+{
+  "name": "epsilon-framework",
+  "title": "Epsilon Framework",
+  "author": "Macho Themes",
+  "version": "1.0.3",
+  "homepage": "https://machothemes.com/epsilon-framework",
+  "main": "gruntfile.js",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+  }
+}

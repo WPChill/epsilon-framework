@@ -1,3 +1,7 @@
+v1.0.3
+	- Fixed code sniffer errors
+	- Fixed a small issue with typography controls
+
 v1.0.2
 	- An error was thrown if no range slider option created
 

@@ -19,6 +19,8 @@
     "wp": false,
     "tycheVariables": false,
     "WPUrls": false,
-    "console":false
+    "console": false,
+    "JSON": false,
+    "_": false
   }
 }

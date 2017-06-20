@@ -4,7 +4,7 @@
  *
  * Epsilon Framework
  */
-
+/*jshint -W065 */
 (function( $ ) {
   var EpsilonFramework = {};
 
@@ -63,23 +63,14 @@
      */
     _init: function() {
       var selector = $( '.epsilon-typography-container' ),
-          self,
-          numbers,
-          element,
-          container,
-          uniqueId,
-          selects,
-          inputs;
+          self = this;
 
       if ( selector.length ) {
-        self = this;
-        numbers = $( '.epsilon-number-field' );
-
         $.each( selector, function() {
-          container = $( this );
-          uniqueId = container.attr( 'data-unique-id' );
-          selects = container.find( 'select' );
-          inputs = container.find( '.epsilon-typography-input' );
+          var container = $( this ),
+              uniqueId = container.attr( 'data-unique-id' ),
+              selects = container.find( 'select' ),
+              inputs = container.find( '.epsilon-typography-input' );
 
           /**
            * Instantiate the selectize javascript plugin
@@ -111,7 +102,7 @@
           } );
         } );
 
-        $.each( numbers, function() {
+        $.each( $( '.epsilon-number-field' ), function() {
           EpsilonFramework.typography._number( $( this ) );
         } );
         /**
@@ -125,7 +116,7 @@
         /**
          * Don't allow a value smaller than 0 in number fields
          */
-        numbers.find( 'input' ).on( 'change', function() {
+        $( '.epsilon-number-field' ).find( 'input' ).on( 'change', function() {
           if ( $( this ).val() < 0 ) {
             $( this ).val( 0 ).trigger( 'change' );
           }
@@ -133,8 +124,8 @@
 
         $.each( self._linkedFonts, function( $id, $target ) {
           $( '#' + $id ).on( 'change', function() {
-            if ( 'Select font' == $( this ).val() ||
-                'default_font' == $( this ).val() ) {
+            if ( 'Select font' === $( this ).val() ||
+                'default_font' === $( this ).val() ) {
               EpsilonFramework.typography._setSelects( $( this ).val(), $target,
                   true );
             }
@@ -149,8 +140,7 @@
          */
         $( '.epsilon-typography-default' ).on( 'click', function( e ) {
           e.preventDefault();
-          element = $( this );
-          EpsilonFramework.typography._resetDefault( element );
+          EpsilonFramework.typography._resetDefault( $( this ) );
         } );
       }
     },
@@ -169,15 +159,13 @@
             'args': value
           },
           selectize = $( '#' + target ),
-          instance = selectize[ 0 ].selectize,
-          obj = {},
-          json;
+          instance = selectize[ 0 ].selectize;
 
       if ( reset ) {
         instance.clear();
         instance.clearOptions();
         instance.load( function( callback ) {
-          obj = { 'text': 'Theme default', 'value': 'initial' };
+          var obj = { 'text': 'Theme default', 'value': 'initial' };
           callback( obj );
         } );
         instance.setValue( 'initial' );
@@ -191,11 +179,11 @@
         url: WPUrls.ajaxurl,
         data: data,
         complete: function( json ) {
-          json = $.parseJSON( json.responseText );
+          var jsonResponse = $.parseJSON( json.responseText );
           instance.clear();
           instance.clearOptions();
           instance.load( function( callback ) {
-            callback( json );
+            callback( jsonResponse );
           } );
           instance.setValue( 'initial' );
         }
@@ -219,10 +207,10 @@
           fontStyle = selects[ 2 ].selectize;
 
       var object = {
-            action: 'epsilon_generate_typography_css',
-            class: 'Epsilon_Typography',
-            id: uniqueId,
-            data: {
+            'action': 'epsilon_generate_typography_css',
+            'class': 'Epsilon_Typography',
+            'id': uniqueId,
+            'data': {
               'selectors': $( '#selectors_' + uniqueId ).val(),
               'json': {}
             }
@@ -261,20 +249,19 @@
      */
     _parseJson: function( inputs, id ) {
       var object = {
-            action: 'epsilon_generate_typography_css',
-            class: 'Epsilon_Typography',
-            id: id,
-            data: {
+            'action': 'epsilon_generate_typography_css',
+            'class': 'Epsilon_Typography',
+            'id': id,
+            'data': {
               'selectors': $( '#selectors_' + id ).val(),
               'json': {}
             }
           },
-          api = wp.customize,
-          key, replace;
+          api = wp.customize;
 
       $.each( inputs, function( index, value ) {
-        key = $( value ).attr( 'id' );
-        replace = id + '-';
+        var key = $( value ).attr( 'id' ),
+            replace = id + '-';
         key = key.replace( replace, '' );
 
         object.data.json[ key ] = $( value ).val();
@@ -318,16 +305,16 @@
 
       switch ( $( el ).attr( 'data-increment' ) ) {
         case 'up':
-          if ( 99 == input.val() ) {
+          if ( 99 === parseInt( input.val() ) ) {
             unit.animate( { 'left': 35 }, 10 );
           }
           input.val( parseInt( input.val() ) + 1 ).trigger( 'change' );
           break;
         case 'down':
-          if ( 0 == input.val() ) {
+          if ( 0 === parseInt( input.val() ) ) {
             return;
           }
-          if ( 100 == input.val() ) {
+          if ( 100 === parseInt( input.val() ) ) {
             unit.animate( { 'left': 25 }, 10 );
           }
           input.val( parseInt( input.val() ) - 1 ).trigger( 'change' );
@@ -606,10 +593,10 @@
     api = wp.customize;
     colorSettings = [];
     css = {
-      action: 'epsilon_generate_color_scheme_css',
-      class: 'Epsilon_Color_Scheme',
-      id: '',
-      data: {}
+      'action': 'epsilon_generate_color_scheme_css',
+      'class': 'Epsilon_Color_Scheme',
+      'id': '',
+      'data': {}
     };
 
     $.each( json, function( index, value ) {
