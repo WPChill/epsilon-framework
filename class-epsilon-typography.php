@@ -191,7 +191,6 @@ class Epsilon_Typography {
 	public function generate_css( $options ) {
 		$css      = '';
 		$defaults = array( 'Select font', 'Theme default', 'initial', 'default_font' );
-
 		$css .= $options['selectors'] . '{' . "\n";
 		foreach ( $options['json'] as $property => $value ) {
 			$extra = '';

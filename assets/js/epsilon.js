@@ -200,7 +200,8 @@
       var container = $( element ).parent(),
           uniqueId = container.attr( 'data-unique-id' ),
           selects = container.find( 'select' ),
-          inputs = container.find( 'inputs' );
+          inputs = container.find( 'inputs' ),
+          val;
 
       var fontFamily = selects[ 0 ].selectize,
           fontWeight = selects[ 1 ].selectize,
@@ -221,16 +222,22 @@
       fontStyle.setValue( 'initial' );
 
       if ( $( '#' + uniqueId + '-font-size' ).length ) {
-        $( '#' + uniqueId + '-font-size' ).val( '15' ).trigger( 'blur' );
-        object.data.json[ 'font-size' ] = '15';
+        val = $( '#' + uniqueId + '-font-size' ).
+            attr( 'data-default-font-size' );
+
+        $( '#' + uniqueId + '-font-size' ).val( val ).trigger( 'blur' );
+        object.data.json[ 'font-size' ] = val;
       }
 
       if ( $( '#' + uniqueId + '-line-height' ).length ) {
+        val = $( '#' + uniqueId + '-line-height' ).
+            attr( 'data-default-line-height' );
+
         $( '#' + uniqueId + '-line-height' ).
-            val( '22' ).
+            val( val ).
             trigger( 'change' ).
             trigger( 'blur' );
-        object.data.json[ 'line-height' ] = '22';
+        object.data.json[ 'line-height' ] = '';
       }
 
       object.data.json[ 'font-family' ] = 'default_font';
