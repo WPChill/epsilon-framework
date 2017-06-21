@@ -421,6 +421,10 @@ ul.epsilon-upsell-requirements {
     box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
 }
 
+.epsilon-typography-container .selectize-dropdown {
+    z-index: 20;
+}
+
 .epsilon-font-weight-switch-checkbox,
 .epsilon-font-style-switch-checkbox {
     display: none !important;
