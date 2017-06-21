@@ -21,6 +21,7 @@
     "WPUrls": false,
     "console": false,
     "JSON": false,
-    "_": false
+    "_": false,
+    "EpsilonFramework": false
   }
 }

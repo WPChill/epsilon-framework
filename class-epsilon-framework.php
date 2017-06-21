@@ -103,7 +103,7 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
+		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.min.js', array(
 			'jquery',
 			'customize-controls',
 		) );
