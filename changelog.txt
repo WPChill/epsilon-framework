@@ -1,4 +1,7 @@
 v1.1.0
+	- Layouts control
+
+v1.1.0
 	- Upgraded Typography controls
 	- Minified epsilon.js file
 	- (dev) Framework has been split into "components" for easier maintenance ( run grunt epsilon-concat or grunt watch to concantenate files/minify files )

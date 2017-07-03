@@ -140,7 +140,8 @@
                                       'font-weight',
                                       'font-style',
                                       'font-size',
-                                      'line-height'
+                                      'line-height',
+                                      'letter-spacing',
                                     ),
                                     'selectors'   => array(
                                       '.entry-content h1',
@@ -149,7 +150,12 @@
                                       '.entry-content h4',
                                       '.entry-content h5',
                                       '.entry-content h6'
-                                    )
+                                    ),
+                                    'font_defaults'   => array(
+                                      'font-size' 		=> '18',
+                                      'line-height' 	=> '22',
+                                      'letter-spacing' 	=> '0',
+                                    ),
                                   )
                                 )
                               );

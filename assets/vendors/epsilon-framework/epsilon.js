@@ -20,6 +20,7 @@ if ( 'undefined' !== typeof( wp ) ) {
       EpsilonFramework.typography._init();
       EpsilonFramework.colorSchemes();
       EpsilonFramework.recommendedActions._init();
+      EpsilonFramework.layouts.init( jQuery( '.epsilon-layouts-container' ) );
     } );
 
     wp.customize.sectionConstructor[ 'epsilon-section-pro' ] = wp.customize.Section.extend(

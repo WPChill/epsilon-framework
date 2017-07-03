@@ -33,6 +33,23 @@ module.exports = function( grunt ) {
         dest: 'assets/js/epsilon.min.js'
       }
     },
+
+    sass: {
+      dist: {
+        options: {
+          style: 'expanded',
+          sourcemap: 'none',
+        },
+        files: [
+          {
+            expand: true,
+            cwd: 'assets/css/',
+            src: [ '*.scss' ],
+            dest: 'assets/css/',
+            ext: '.css'
+          } ]
+      }
+    }
   } );
 
   grunt.config('watch', {
@@ -42,6 +59,12 @@ module.exports = function( grunt ) {
       options: {
         spawn: false
       }
+    },
+    scss: {
+      tasks: [ 'sass:dist' ],
+      files: [
+        'assets/css/*.scss',
+      ]
     }
   });
 
@@ -58,7 +81,7 @@ module.exports = function( grunt ) {
     switch ( get_ext(filepath) ) {
         // PHP
       case 'php' :
-        grunt.config('paths.php.files', [ filepath ]);
+        //grunt.config('paths.php.files', [ filepath ]);
         break;
         // JavaScript
       case 'js' :
@@ -66,6 +89,10 @@ module.exports = function( grunt ) {
         break;
     }
   });
+
+  grunt.registerTask( 'startSass', [
+    'sass'
+  ] );
 
   // Concatenate Epsilon
   grunt.registerTask( 'concat-epsilon', [
