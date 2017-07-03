@@ -48,7 +48,7 @@ EpsilonFramework.layouts = {
    * Initiate the layouts functionality (constructor)
    */
   init: function( selector ) {
-    this.context = selector;
+    this.context = jQuery( '.epsilon-layouts-container' );
 
     /**
      * Setup buttons
@@ -58,12 +58,35 @@ EpsilonFramework.layouts = {
     this.resizeButtons = this.context.find( '.epsilon-layouts-setup > .epsilon-column > a' );
 
     this.handle_actions();
+
+    this.context.on( 'epsilon_column_count_changed epsilon_column_size_changed', this._save );
+  },
+
+  /**
+   * Save state in a json
+   * @private
+   */
+  _save: function( e ) {
+    var json = {
+      'columnsCount': e.instance.activeColumns,
+      'columns': {}
+    };
+
+    jQuery.each( e.instance.context.find( '.epsilon-column' ), function( index ) {
+      json.columns[ index + 1 ] = {
+        'index': index + 1,
+        'span': jQuery( this ).attr( 'data-columns' ),
+      };
+    } );
+
+    e.instance.context.find( 'input' ).val( JSON.stringify( json ) );
   },
 
   /**
    * Handle the click events in the control
    */
   handle_actions: function() {
+    var self = this;
     /**
      * Hide / show columns
      */
@@ -160,18 +183,11 @@ EpsilonFramework.layouts = {
           }
 
           /**
-           * Always update buttons
-           *
-           * @type {*}
-           */
-          self.resizeButtons = self.context.find(
-              '.epsilon-layouts-setup > .epsilon-column > a' );
-
-          /**
-           * Trigger event to change
+           * Trigger event to changed
            */
           jQuery( self.context ).trigger( {
-            'type': 'epsilon_column_count_changed'
+            'type': 'epsilon_column_count_changed',
+            'instance': self,
           } );
         } );
   },
@@ -187,8 +203,7 @@ EpsilonFramework.layouts = {
         position,
         elementToSubtractFrom,
         elementToAddOn;
-
-    this.resizeButtons.on( 'click', function( e ) {
+    jQuery( '.epsilon-layouts-setup' ).on( 'click', '.epsilon-column > a', function( e ) {
       elementToAddOn = jQuery( this ).parent();
       position = elementToAddOn.index();
 
@@ -226,8 +241,9 @@ EpsilonFramework.layouts = {
     /**
      * Trigger event to change
      */
-    jQuery( self.context ).trigger( {
-      'type': 'epsilon_column_size_changed'
+    jQuery( this.context ).trigger( {
+      'type': 'epsilon_column_size_changed',
+      'instance': this,
     } );
   },
 
@@ -241,10 +257,6 @@ EpsilonFramework.layouts = {
 
     jQuery( this.context ).
         on( 'epsilon_column_count_changed', function( e ) {
-          /**
-           * Reset column_resize function ( add the new buttons in the
-           * collection )
-           */
           jQuery( '.epsilon-column' ).
               removeClass( self.colClasses ).
               addClass( 'col' + ( 12 / self.activeColumns ) ).
@@ -269,3 +281,12 @@ EpsilonFramework.layouts = {
         } );
   },
 };
+
+/**
+ * WP Customizer Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
+  ready: function() {
+    EpsilonFramework.layouts.init();
+  }
+} );

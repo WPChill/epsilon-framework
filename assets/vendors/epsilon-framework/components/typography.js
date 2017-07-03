@@ -1,3 +1,9 @@
+/**
+ * Typography functions
+ *
+ * @type {{_selectize: null, _linkedFonts: {}, init: EpsilonFramework.typography.init, _resetDefault: EpsilonFramework.typography._resetDefault, _parseJson:
+ *     EpsilonFramework.typography._parseJson}}
+ */
 EpsilonFramework.typography = {
   /**
    * Selectize instance
@@ -11,9 +17,8 @@ EpsilonFramework.typography = {
 
   /**
    * Initiate function
-   * @private
    */
-  _init: function() {
+  init: function() {
     var selector = jQuery( '.epsilon-typography-container' ),
         self = this;
 
@@ -51,7 +56,7 @@ EpsilonFramework.typography = {
       /**
        * Great use of the EpsilonFramework, ahoy!
        */
-      EpsilonFramework.rangeSliders( '.epsilon-typography-container' );
+      EpsilonFramework.rangeSliders.init( '.epsilon-typography-container' );
 
       /**
        * Reset button

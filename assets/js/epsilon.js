@@ -7,85 +7,90 @@ var EpsilonFramework = 'undefined' === typeof( EpsilonFramework ) ? {} : Epsilon
 /**
  * Color scheme generator
  */
-EpsilonFramework.colorSchemes = function() {
+EpsilonFramework.colorSchemes = {
   /**
-   * Set variables
+   * Init wrapper
    */
-  var context = jQuery( '.epsilon-color-scheme' ), options, input, json, api,
-      colorSettings = [], css = {};
-
-  if ( ! context.length ) {
-    return;
-  }
-
-  options = context.find( '.epsilon-color-scheme-option' );
-  input = context.parent().find( '.epsilon-color-scheme-input' );
-  json = jQuery.parseJSON( options.first().find( 'input' ).val() );
-  api = wp.customize;
-  colorSettings = [];
-  css = {
-    'action': 'epsilon_generate_color_scheme_css',
-    'class': 'Epsilon_Color_Scheme',
-    'id': '',
-    'data': {}
-  };
-
-  jQuery.each( json, function( index, value ) {
-    colorSettings.push( index );
-  } );
-
-  function updateCSS() {
-    _.each( colorSettings, function( setting ) {
-      css.data[ setting ] = api( setting )();
-    } );
-    api.previewer.send( 'update-inline-css', css );
-  }
-
-  _.each( colorSettings, function( setting ) {
-    api( setting, function( setting ) {
-      setting.bind( updateCSS );
-    } );
-  } );
-
-  /**
-   * On clicking a color scheme, update the color pickers
-   */
-  jQuery( '.epsilon-color-scheme-option' ).on( 'click', function() {
-    var val = jQuery( this ).attr( 'data-color-id' ),
-        json = jQuery.parseJSON( jQuery( this ).find( 'input' ).val() );
-
+  init: function() {
     /**
-     * Find the customizer options
+     * Set variables
      */
+    var context = jQuery( '.epsilon-color-scheme' ), options, input, json, api,
+        colorSettings = [], css = {};
+
+    if ( ! context.length ) {
+      return;
+    }
+
+    options = context.find( '.epsilon-color-scheme-option' );
+    input = context.parent().find( '.epsilon-color-scheme-input' );
+    json = jQuery.parseJSON( options.first().find( 'input' ).val() );
+    api = wp.customize;
+    colorSettings = [];
+    css = {
+      'action': 'epsilon_generate_color_scheme_css',
+      'class': 'Epsilon_Color_Scheme',
+      'id': '',
+      'data': {}
+    };
+
     jQuery.each( json, function( index, value ) {
       colorSettings.push( index );
-      /**
-       * Set values
-       */
-      wp.customize( index ).set( value );
     } );
 
-    /**
-     * Remove the selected class from siblings
-     */
-    jQuery( this ).
-        siblings( '.epsilon-color-scheme-option' ).
-        removeClass( 'selected' );
-    /**
-     * Make active the current selection
-     */
-    jQuery( this ).addClass( 'selected' );
-    /**
-     * Trigger change
-     */
-    input.val( val ).change();
+    function updateCSS() {
+      _.each( colorSettings, function( setting ) {
+        css.data[ setting ] = api( setting )();
+      } );
+      api.previewer.send( 'update-inline-css', css );
+    }
 
     _.each( colorSettings, function( setting ) {
       api( setting, function( setting ) {
-        setting.bind( updateCSS() );
+        setting.bind( updateCSS );
       } );
     } );
-  } );
+
+    /**
+     * On clicking a color scheme, update the color pickers
+     */
+    jQuery( '.epsilon-color-scheme-option' ).on( 'click', function() {
+      var val = jQuery( this ).attr( 'data-color-id' ),
+          json = jQuery.parseJSON( jQuery( this ).find( 'input' ).val() );
+
+      /**
+       * Find the customizer options
+       */
+      jQuery.each( json, function( index, value ) {
+        colorSettings.push( index );
+        /**
+         * Set values
+         */
+        wp.customize( index ).set( value );
+      } );
+
+      /**
+       * Remove the selected class from siblings
+       */
+      jQuery( this ).
+          siblings( '.epsilon-color-scheme-option' ).
+          removeClass( 'selected' );
+      /**
+       * Make active the current selection
+       */
+      jQuery( this ).addClass( 'selected' );
+      /**
+       * Trigger change
+       */
+      input.val( val ).change();
+
+      _.each( colorSettings, function( setting ) {
+        api( setting, function( setting ) {
+          setting.bind( updateCSS() );
+        } );
+      } );
+    } );
+  }
 };
 /**
  * Initiate the Layouts Control
@@ -137,7 +142,7 @@ EpsilonFramework.layouts = {
    * Initiate the layouts functionality (constructor)
    */
   init: function( selector ) {
-    this.context = selector;
+    this.context = jQuery( '.epsilon-layouts-container' );
 
     /**
      * Setup buttons
@@ -147,12 +152,35 @@ EpsilonFramework.layouts = {
     this.resizeButtons = this.context.find( '.epsilon-layouts-setup > .epsilon-column > a' );
 
     this.handle_actions();
+
+    this.context.on( 'epsilon_column_count_changed epsilon_column_size_changed', this._save );
+  },
+
+  /**
+   * Save state in a json
+   * @private
+   */
+  _save: function( e ) {
+    var json = {
+      'columnsCount': e.instance.activeColumns,
+      'columns': {}
+    };
+
+    jQuery.each( e.instance.context.find( '.epsilon-column' ), function( index ) {
+      json.columns[ index + 1 ] = {
+        'index': index + 1,
+        'span': jQuery( this ).attr( 'data-columns' ),
+      };
+    } );
+
+    e.instance.context.find( 'input' ).val( JSON.stringify( json ) );
   },
 
   /**
    * Handle the click events in the control
    */
   handle_actions: function() {
+    var self = this;
     /**
      * Hide / show columns
      */
@@ -249,18 +277,11 @@ EpsilonFramework.layouts = {
           }
 
           /**
-           * Always update buttons
-           *
-           * @type {*}
-           */
-          self.resizeButtons = self.context.find(
-              '.epsilon-layouts-setup > .epsilon-column > a' );
-
-          /**
-           * Trigger event to change
+           * Trigger event to changed
            */
           jQuery( self.context ).trigger( {
-            'type': 'epsilon_column_count_changed'
+            'type': 'epsilon_column_count_changed',
+            'instance': self,
           } );
         } );
   },
@@ -276,8 +297,7 @@ EpsilonFramework.layouts = {
         position,
         elementToSubtractFrom,
         elementToAddOn;
-
-    this.resizeButtons.on( 'click', function( e ) {
+    jQuery( '.epsilon-layouts-setup' ).on( 'click', '.epsilon-column > a', function( e ) {
       elementToAddOn = jQuery( this ).parent();
       position = elementToAddOn.index();
 
@@ -315,8 +335,9 @@ EpsilonFramework.layouts = {
     /**
      * Trigger event to change
      */
-    jQuery( self.context ).trigger( {
-      'type': 'epsilon_column_size_changed'
+    jQuery( this.context ).trigger( {
+      'type': 'epsilon_column_size_changed',
+      'instance': this,
     } );
   },
 
@@ -330,10 +351,6 @@ EpsilonFramework.layouts = {
 
     jQuery( this.context ).
         on( 'epsilon_column_count_changed', function( e ) {
-          /**
-           * Reset column_resize function ( add the new buttons in the
-           * collection )
-           */
           jQuery( '.epsilon-column' ).
               removeClass( self.colClasses ).
               addClass( 'col' + ( 12 / self.activeColumns ) ).
@@ -358,57 +375,78 @@ EpsilonFramework.layouts = {
         } );
   },
 };
-EpsilonFramework.rangeSliders = function( selector ) {
-  var context = jQuery( selector ),
-      sliders = context.find( '.slider-container' ),
-      slider, input, inputId, id, min, max, step;
 
-  jQuery.each( sliders, function() {
-    var slider = jQuery( this ).find( '.ss-slider' ),
-        input = jQuery( this ).find( '.rl-slider' ),
-        inputId = input.attr( 'id' ),
-        id = slider.attr( 'id' ),
-        min = jQuery( '#' + id ).attr( 'data-attr-min' ),
-        max = jQuery( '#' + id ).attr( 'data-attr-max' ),
-        step = jQuery( '#' + id ).attr( 'data-attr-step' );
+/**
+ * WP Customizer Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
+  ready: function() {
+    EpsilonFramework.layouts.init();
+  }
+} );
+/**
+ * Range Slider Initiator
+ *
+ * @type {{init: EpsilonFramework.rangeSliders.init}}
+ */
+EpsilonFramework.rangeSliders = {
+  /**
+   * Init wrapper
+   *
+   * @param selector
+   */
+  init: function( selector ) {
+    var context = jQuery( selector ),
+        sliders = context.find( '.slider-container' ),
+        slider, input, inputId, id, min, max, step;
 
-    jQuery( '#' + id ).slider( {
-      value: jQuery( '#' + inputId ).attr( 'value' ),
-      range: 'min',
-      min: parseFloat( min ),
-      max: parseFloat( max ),
-      step: parseFloat( step ),
-      /**
-       * Removed Change event because server was flooded with requests from
-       * javascript, sending changesets on each increment.
-       *
-       * @param event
-       * @param ui
-       */
-      slide: function( event, ui ) {
-        jQuery( '#' + inputId ).attr( 'value', ui.value );
-      },
-      /**
-       * Bind the change event to the "actual" stop
-       * @param event
-       * @param ui
-       */
-      stop: function( event, ui ) {
-        jQuery( '#' + inputId ).trigger( 'change' );
-      }
-    } );
+    jQuery.each( sliders, function() {
+      var slider = jQuery( this ).find( '.ss-slider' ),
+          input = jQuery( this ).find( '.rl-slider' ),
+          inputId = input.attr( 'id' ),
+          id = slider.attr( 'id' ),
+          min = jQuery( '#' + id ).attr( 'data-attr-min' ),
+          max = jQuery( '#' + id ).attr( 'data-attr-max' ),
+          step = jQuery( '#' + id ).attr( 'data-attr-step' );
 
-    jQuery( input ).on( 'focus', function() {
-      jQuery( this ).blur();
-    } );
-
-    jQuery( '#' + inputId ).attr( 'value', ( jQuery( '#' + id ).slider( 'value' ) ) );
-    jQuery( '#' + inputId ).on( 'change', function() {
       jQuery( '#' + id ).slider( {
-        value: jQuery( this ).val()
+        value: jQuery( '#' + inputId ).attr( 'value' ),
+        range: 'min',
+        min: parseFloat( min ),
+        max: parseFloat( max ),
+        step: parseFloat( step ),
+        /**
+         * Removed Change event because server was flooded with requests from
+         * javascript, sending changesets on each increment.
+         *
+         * @param event
+         * @param ui
+         */
+        slide: function( event, ui ) {
+          jQuery( '#' + inputId ).attr( 'value', ui.value );
+        },
+        /**
+         * Bind the change event to the "actual" stop
+         * @param event
+         * @param ui
+         */
+        stop: function( event, ui ) {
+          jQuery( '#' + inputId ).trigger( 'change' );
+        }
+      } );
+
+      jQuery( input ).on( 'focus', function() {
+        jQuery( this ).blur();
+      } );
+
+      jQuery( '#' + inputId ).attr( 'value', ( jQuery( '#' + id ).slider( 'value' ) ) );
+      jQuery( '#' + inputId ).on( 'change', function() {
+        jQuery( '#' + id ).slider( {
+          value: jQuery( this ).val()
+        } );
       } );
     } );
-  } );
+  }
 };
 /**
  * Recommended action section scripting
@@ -420,10 +458,8 @@ EpsilonFramework.rangeSliders = function( selector ) {
 EpsilonFramework.recommendedActions = {
   /**
    * Initiate the click actions
-   *
-   * @private
    */
-  _init: function() {
+  init: function() {
     var context = jQuery( '.control-section-epsilon-section-recommended-actions' ),
         dismissPlugin = context.find( '.epsilon-recommended-plugin-button' ),
         dismissAction = context.find( '.epsilon-dismiss-required-action' );
@@ -659,6 +695,20 @@ EpsilonFramework.recommendedActions = {
     } );
   }
 };
+
+wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
+  attachEvents: function() {
+  },
+  isContextuallyActive: function() {
+    return true;
+  }
+} );
+/**
+ * Typography functions
+ *
+ * @type {{_selectize: null, _linkedFonts: {}, init: EpsilonFramework.typography.init, _resetDefault: EpsilonFramework.typography._resetDefault, _parseJson:
+ *     EpsilonFramework.typography._parseJson}}
+ */
 EpsilonFramework.typography = {
   /**
    * Selectize instance
@@ -672,9 +722,8 @@ EpsilonFramework.typography = {
 
   /**
    * Initiate function
-   * @private
    */
-  _init: function() {
+  init: function() {
     var selector = jQuery( '.epsilon-typography-container' ),
         self = this;
 
@@ -712,7 +761,7 @@ EpsilonFramework.typography = {
       /**
        * Great use of the EpsilonFramework, ahoy!
        */
-      EpsilonFramework.rangeSliders( '.epsilon-typography-container' );
+      EpsilonFramework.rangeSliders.init( '.epsilon-typography-container' );
 
       /**
        * Reset button
@@ -856,35 +905,25 @@ EpsilonFramework.typography = {
  */
 jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
   if ( jQuery().slider ) {
-    EpsilonFramework.rangeSliders( selector );
+    EpsilonFramework.rangeSliders.init( selector );
   }
 } );
 
 if ( 'undefined' !== typeof( wp ) ) {
   if ( 'undefined' !== typeof( wp.customize ) ) {
     wp.customize.bind( 'ready', function() {
-      EpsilonFramework.typography._init();
-      EpsilonFramework.colorSchemes();
-      EpsilonFramework.recommendedActions._init();
-      EpsilonFramework.layouts.init( jQuery( '.epsilon-layouts-container' ) );
+      EpsilonFramework.colorSchemes.init();
+      EpsilonFramework.typography.init();
+      EpsilonFramework.recommendedActions.init();
     } );
 
-    wp.customize.sectionConstructor[ 'epsilon-section-pro' ] = wp.customize.Section.extend(
-        {
-          attachEvents: function() {
-          },
-          isContextuallyActive: function() {
-            return true;
-          }
-        } );
 
-    wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend(
-        {
-          attachEvents: function() {
-          },
-          isContextuallyActive: function() {
-            return true;
-          }
-        } );
+    wp.customize.sectionConstructor[ 'epsilon-section-pro' ] = wp.customize.Section.extend( {
+      attachEvents: function() {
+      },
+      isContextuallyActive: function() {
+        return true;
+      }
+    } );
   }
 }

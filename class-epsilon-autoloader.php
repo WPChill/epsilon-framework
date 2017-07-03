@@ -21,6 +21,7 @@ class Epsilon_Autoloader {
 
 		$directories = array(
 			dirname( __FILE__ ) . '/',
+			dirname( __FILE__ ) . '/helpers/',
 		);
 
 		foreach ( $directories as $directory ) {

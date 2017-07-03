@@ -8,10 +8,8 @@
 EpsilonFramework.recommendedActions = {
   /**
    * Initiate the click actions
-   *
-   * @private
    */
-  _init: function() {
+  init: function() {
     var context = jQuery( '.control-section-epsilon-section-recommended-actions' ),
         dismissPlugin = context.find( '.epsilon-recommended-plugin-button' ),
         dismissAction = context.find( '.epsilon-dismiss-required-action' );
@@ -247,3 +245,11 @@ EpsilonFramework.recommendedActions = {
     } );
   }
 };
+
+wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
+  attachEvents: function() {
+  },
+  isContextuallyActive: function() {
+    return true;
+  }
+} );
