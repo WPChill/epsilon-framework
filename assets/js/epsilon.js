@@ -496,20 +496,21 @@ EpsilonFramework.typography = {
               uniqueId );
           jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
         } );
+
+        /**
+         * On clicking the advanced options toggler,
+         */
+        container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
+          var toggle = jQuery( this ).attr( 'data-toggle' );
+          e.preventDefault();
+          jQuery( this ).
+              toggleClass( 'active' ).
+              parent().
+              toggleClass( 'active' );
+          jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
+        } );
       } );
 
-      /**
-       * On clicking the advanced options toggler,
-       */
-      jQuery( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
-        var toggle = jQuery( this ).attr( 'data-toggle' );
-        e.preventDefault();
-        jQuery( this ).
-            toggleClass( 'active' ).
-            parent().
-            toggleClass( 'active' );
-        jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
-      } );
       /**
        * Great use of the EpsilonFramework, ahoy!
        */
@@ -639,7 +640,12 @@ EpsilonFramework.typography = {
 wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
-    EpsilonFramework.typography.init();
+    /**
+     * Save the layout
+     */
+    jQuery( this.container ).find( '.customize-control-content > .epsilon-typography-input' ).on( 'change', function() {
+      control.setting.set( jQuery( this ).val() );
+    } );
   }
 } );
 
@@ -929,6 +935,7 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 
 wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( jQuery( '.epsilon-layouts-container' ) );
+  EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
   EpsilonFramework.recommendedActions.init();
 } );

@@ -144,7 +144,7 @@ class Epsilon_Typography {
 			WP_Filesystem();
 		}
 
-		$path   = dirname( __FILE__ ) . '/assets/data/gfonts.json';
+		$path   = dirname( dirname( __FILE__ ) ) . '/assets/data/gfonts.json';
 		$gfonts = $wp_filesystem->get_contents( $path );
 		$gfonts = json_decode( $gfonts );
 

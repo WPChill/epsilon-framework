@@ -16,6 +16,7 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 
 wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( jQuery( '.epsilon-layouts-container' ) );
+  EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
   EpsilonFramework.recommendedActions.init();
 } );
