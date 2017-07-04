@@ -145,7 +145,8 @@ EpsilonFramework.layouts = {
    * Initiate the layouts functionality (constructor)
    */
   init: function( selector ) {
-    jQuery.each( selector, function() {
+    var context = jQuery( selector );
+    jQuery.each( context, function() {
       new EpsilonFramework.layouts.instance( jQuery( this ) );
     } );
   },
@@ -442,6 +443,21 @@ EpsilonFramework.rangeSliders = {
     } );
   }
 };
+
+/**
+ * WP Customizer Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+
+    control.container.on( 'change', 'input.rl-slider',
+        function() {
+          control.setting.set( jQuery( this ).val() );
+        }
+    );
+  }
+} );
 
 /**
  * WP Customizer Control Constructor
@@ -949,7 +965,9 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 } );
 
 wp.customize.bind( 'ready', function() {
-  EpsilonFramework.layouts.init( jQuery( '.epsilon-layouts-container' ) );
+  EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
+  EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
+
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
   EpsilonFramework.recommendedActions.init();
