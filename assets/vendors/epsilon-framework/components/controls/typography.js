@@ -54,6 +54,18 @@ EpsilonFramework.typography = {
       } );
 
       /**
+       * On clicking the advanced options toggler,
+       */
+      jQuery( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
+        var toggle = jQuery( this ).attr( 'data-toggle' );
+        e.preventDefault();
+        jQuery( this ).
+            toggleClass( 'active' ).
+            parent().
+            toggleClass( 'active' );
+        jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
+      } );
+      /**
        * Great use of the EpsilonFramework, ahoy!
        */
       EpsilonFramework.rangeSliders.init( '.epsilon-typography-container' );
@@ -66,19 +78,6 @@ EpsilonFramework.typography = {
         EpsilonFramework.typography._resetDefault( jQuery( this ) );
       } );
 
-      /**
-       * On clicking the advanced options toggler,
-       */
-      jQuery( '.epsilon-typography-advanced-options-toggler' ).
-          on( 'click', function( e ) {
-            var toggle = jQuery( this ).attr( 'data-toggle' );
-            e.preventDefault();
-            jQuery( this ).
-                toggleClass( 'active' ).
-                parent().
-                toggleClass( 'active' );
-            jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
-          } );
     }
   },
 
@@ -188,3 +187,13 @@ EpsilonFramework.typography = {
     return JSON.stringify( object.data );
   }
 };
+
+/**
+ * WP Customizer Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+    EpsilonFramework.typography.init();
+  }
+} );

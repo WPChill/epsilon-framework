@@ -292,8 +292,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 			}
 
 			$arr[] = $v;
-		}// End foreach().
-		;
+		};// End foreach().
 
 		return $arr;
 	}

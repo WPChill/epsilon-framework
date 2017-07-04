@@ -19,12 +19,28 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	public $type = 'epsilon-layouts';
 
 	/**
-	 * Choices array
+	 * Layouts array
 	 *
 	 * @since 1.2.0
 	 * @var array
 	 */
-	public $choices = array();
+	public $layouts = array();
+
+	/**
+	 * Defaults array
+	 *
+	 * @since 1.2.0
+	 * @var array
+	 */
+	public $default = array();
+
+	/**
+	 * Minimum span ( no column will go lower than this )
+	 *
+	 * @since 1.2.0
+	 * @var int
+	 */
+	public $min_span;
 
 	/**
 	 * Epsilon_Control_Layout constructor.
@@ -48,10 +64,13 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	 */
 	public function json() {
 		$json            = parent::json();
-		$json['choices'] = $this->get_choices();
+		$json['layouts'] = $this->get_layouts();
 		$json['id']      = $this->id;
 		$json['link']    = $this->get_link();
 		$json['value']   = $this->value();
+		$json['default'] = $this->default;
+		$json['columns'] = $this->get_columns();
+		$json['minSpan'] = null === $this->min_span ? 2 : (int) $this->min_span;
 
 		$this->json['inputAttrs'] = '';
 		foreach ( $this->input_attrs as $attr => $value ) {
@@ -62,14 +81,31 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	}
 
 	/**
+	 * Create a custom array so it's easier to setup columns
+	 *
+	 * @since  1.2.0
+	 * @access private
+	 */
+	private function get_columns() {
+		$arr = array();
+		$val = $this->value();
+
+		if ( '' === $val ) {
+			return $this->default;
+		}
+
+		return json_decode( $val );
+	}
+
+	/**
 	 * Create a custom array to hold options
 	 *
 	 * @since 1.2.0
 	 * @acces private
 	 */
-	private function get_choices() {
+	private function get_layouts() {
 		$arr = array();
-		foreach ( $this->choices as $k => $v ) {
+		foreach ( $this->layouts as $k => $v ) {
 			$arr[] = array(
 				'value' => $k,
 				'label' => $v,
@@ -107,18 +143,18 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 			</span>
 		</label>
 
-		<div class="epsilon-layouts-container">
+		<div class="epsilon-layouts-container" data-min-span="{{ data.minSpan }}">
 			<div class="customize-control-content">
-				<input {{{ data.link }}} {{{ data.inputAttrs }}} type="hidden" <# if( data.value ) { value="{{ data.value }} " } #>/>
+				<input {{{ data.link }}} {{{ data.inputAttrs }}} type="hidden" <# if( data.value ) { #> value='{{{ data.value }}}' <# } #> />
 			</div>
 			<div class="epsilon-layouts-container-buttons">
 				<span class="epsilon-button-label"><?php echo esc_html__( 'Columns', 'epsilon-framework' ); ?></span>
 				<div class="epsilon-button-group">
-					<# if( data.choices.length > 0 ){ #>
+					<# if( data.layouts.length > 0 ){ #>
 						<# i = 1 #>
-						<# for (choice in data.choices) { #>
-							<a href="#" data-button-value="{{ data.choices[choice].value }}">
-								<img src="{{ data.choices[choice].label }}" />
+						<# for (layout in data.layouts) { #>
+							<a href="#" data-button-value="{{ data.layouts[layout].value }}" <# if( data.columns.columnsCount === data.layouts[layout].value) { #> class="active" <# } #>>
+								<img src="{{ data.layouts[layout].label }}" />
 							</a>
 						<# } #>
 					<# } #>
@@ -132,22 +168,12 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 			<div class="epsilon-layouts-container-advanced" id="{{{ data.id }}}">
 				<span class="epsilon-layouts-container-label"><?php echo esc_html__( 'Edit column size', 'epsilon-framework' ) ?></span>
 				<div class="epsilon-layouts-setup">
-					<div class="epsilon-column col3" data-columns="3">
+					<# for (column in data.columns.columns) { #>
+					<div class="epsilon-column col{{{ data.columns.columns[column].span }}}" data-columns="{{{ data.columns.columns[column].span }}}">
 						<a href="#" data-action="left"><span class="dashicons dashicons-arrow-left"></span></a>
 						<a href="#" data-action="right"><span class="dashicons dashicons-arrow-right"></span></a>
 					</div>
-					<div class="epsilon-column col3" data-columns="3">
-						<a href="#" data-action="left"><span class="dashicons dashicons-arrow-left"></span></a>
-						<a href="#" data-action="right"><span class="dashicons dashicons-arrow-right"></span></a>
-					</div>
-					<div class="epsilon-column col3" data-columns="3">
-						<a href="#" data-action="left"><span class="dashicons dashicons-arrow-left"></span></a>
-						<a href="#" data-action="right"><span class="dashicons dashicons-arrow-right"></span></a>
-					</div>
-					<div class="epsilon-column col3" data-columns="3">
-						<a href="#" data-action="left"><span class="dashicons dashicons-arrow-left"></span></a>
-						<a href="#" data-action="right"><span class="dashicons dashicons-arrow-right"></span></a>
-					</div>
+					<# } #>
 				</div>
 			</div>
 		</div>

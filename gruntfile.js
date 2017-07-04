@@ -52,10 +52,10 @@ module.exports = function( grunt ) {
     }
   } );
 
-  grunt.config('watch', {
+  grunt.config( 'watch', {
     js: {
-      files  : 'assets/vendors/epsilon-framework/**/*.js',
-      tasks  : [ 'concat-epsilon' ],
+      files: [ 'assets/vendors/epsilon-framework/**/*.js', 'assets/vendors/epsilon-framework/**/**/*.js' ],
+      tasks: [ 'concat-epsilon' ],
       options: {
         spawn: false
       }
@@ -66,29 +66,29 @@ module.exports = function( grunt ) {
         'assets/css/*.scss',
       ]
     }
-  });
+  } );
 
-  grunt.event.on('watch', function (action, filepath) {
+  grunt.event.on( 'watch', function( action, filepath ) {
     // Determine task based on filepath
-    var get_ext = function (path) {
+    var get_ext = function( path ) {
       var ret = '';
-      var i = path.lastIndexOf('.');
-      if ( -1 !== i && i <= path.length ) {
-        ret = path.substr(i + 1);
+      var i = path.lastIndexOf( '.' );
+      if ( - 1 !== i && i <= path.length ) {
+        ret = path.substr( i + 1 );
       }
       return ret;
     };
-    switch ( get_ext(filepath) ) {
+    switch ( get_ext( filepath ) ) {
         // PHP
       case 'php' :
         //grunt.config('paths.php.files', [ filepath ]);
         break;
         // JavaScript
       case 'js' :
-        grunt.config('paths.js.files', [ filepath ]);
+        grunt.config( 'paths.js.files', [ filepath ] );
         break;
     }
-  });
+  } );
 
   grunt.registerTask( 'startSass', [
     'sass'
