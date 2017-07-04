@@ -2,6 +2,7 @@
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
+
 /**
  * Class Epsilon_Color_Scheme
  */
@@ -14,46 +15,107 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 	 * @var    string
 	 */
 	public $type = 'epsilon-color-scheme';
+
 	/**
-	 * Displays the control content.
+	 * Choice array
+	 *
+	 * @since 1.2.0
+	 * @var array
+	 */
+	public $choices = array();
+
+	/**
+	 * Epsilon_Control_Color_Scheme constructor.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param WP_Customize_Manager $manager
+	 * @param string               $id
+	 * @param array                $args
+	 */
+	public function __construct( WP_Customize_Manager $manager, $id, array $args = array() ) {
+		parent::__construct( $manager, $id, $args );
+		$manager->register_control_type( 'Epsilon_Control_Color_Scheme' );
+	}
+
+	/**
+	 * Add custom parameters to pass to the JS via JSON.
+	 *
+	 * @since  1.2.0
+	 * @access public
+	 */
+	public function json() {
+		$json = parent::json();
+
+		$json['id']      = $this->id;
+		$json['link']    = $this->get_link();
+		$json['value']   = $this->value();
+		$json['choices'] = $this->get_choices();
+
+		return $json;
+	}
+
+	/**
+	 * Arrange array so we can handle it easier
+	 *
+	 * @since 1.2.0
+	 */
+	public function get_choices() {
+		foreach ( $this->choices as $index => $choice ) {
+			$this->choices[ $index ]['encodedColors'] = json_encode( $choice['colors'] );
+		}
+
+		return $this->choices;
+	}
+
+	/**
+	 * Display the control content
+	 *
+	 * @since 1.2.0
+	 */
+	public function content_template() {
+		//@formatter:off ?>
+		<label>
+			<span class="customize-control-title">
+				{{{ data.label }}}
+				<# if( data.description ){ #>
+					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ data.description }}}
+						</span>
+					</i>
+				<# } #>
+			</span>
+			<div class="customize-control-content">
+				<input {{{ data.link }}} class="epsilon-color-scheme-input" id="input_{{ data.id }}" type="hidden" <# if( data.value ) { #> value='{{{ data.value }}}' <# } #> />
+			</div>
+			<div id="color_scheme_{{ data.id }}" class="epsilon-color-scheme">
+				<# if( data.choices.length > 0 ){ #>
+					<# for (choice in data.choices) { #>
+				<div class="epsilon-color-scheme-option <# if ( data.value === data.choices[choice].id ) { #> selected <# } #>" data-color-id="{{{ data.choices[choice].id }}}">
+						<input type="hidden" value='{{{ data.choices[choice].encodedColors }}}'/>
+						<span class="epsilon-color-scheme-name"> {{{ data.choices[choice].name }}} </span>
+						<div class="epsilon-color-scheme-palette">
+							<# for (current in data.choices[choice].colors ) { #>
+								<span style="background-color: {{ data.choices[choice].colors[current] }}"></span>
+							<# } #>
+						</div>
+					</div>
+					<# } #>
+				<# } #>
+			</div>
+		</label>
+		<?php //@formatter:on
+	}
+
+	/**
+	 * Empty, as it should be
 	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
 	public function render_content() {
-		if ( empty( $this->choices ) ) {
-			return;
-		}
-		?>
-		<label>
-				<span class="customize-control-title">
-					<?php echo esc_attr( $this->label ); ?>
-					<?php if ( ! empty( $this->description ) ) : ?>
-						<i class="dashicons dashicons-editor-help"
-						   style="vertical-align: text-bottom; position: relative;">
-							<span class="mte-tooltip"><?php echo wp_kses_post( $this->description ); ?></span>
-						</i>
-					<?php endif; ?>
-				</span>
-			<input disabled type="hidden" class="epsilon-color-scheme-input" id="input_<?php echo $this->id; ?>"
-				   value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); ?>/>
-		</label>
 
-		<div id="color_scheme_<?php echo $this->id; ?>" class="epsilon-color-scheme">
-			<?php foreach ( $this->choices as $choice ) { ?>
-				<div class="epsilon-color-scheme-option <?php echo $choice['id'] === $this->value() ? 'selected' : ''; ?>"
-					 data-color-id="<?php echo $choice['id'] ?>">
-					<input type="hidden" value="<?php echo esc_attr( json_encode( $choice['colors'] ) ); ?>"/>
-					<span class="epsilon-color-scheme-name"> <?php echo $choice['name'] ?> </span>
-					<div class="epsilon-color-scheme-palette">
-						<?php foreach ( $choice['colors'] as $color ) { ?>
-							<span style="background-color:<?php echo $color ?>"></span>
-						<?php } ?>
-					</div>
-				</div>
-			<?php } ?>
-		</div>
-		<?php
 	}
 }
