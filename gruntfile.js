@@ -64,6 +64,8 @@ module.exports = function( grunt ) {
       tasks: [ 'sass:dist' ],
       files: [
         'assets/css/*.scss',
+        'assets/css/**/*.scss',
+        'assets/css/**/**/*.scss',
       ]
     }
   } );
