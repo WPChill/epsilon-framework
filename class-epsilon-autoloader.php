@@ -21,7 +21,8 @@ class Epsilon_Autoloader {
 
 		$directories = array(
 			dirname( __FILE__ ) . '/',
-			dirname( __FILE__ ) . '/helpers/',
+			dirname( __FILE__ ) . '/classes/',
+			dirname( __FILE__ ) . '/classes/epsilon-demo-generators/',
 		);
 
 		foreach ( $directories as $directory ) {

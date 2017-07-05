@@ -21,6 +21,10 @@
 
 > [Recommended action section](https://github.com/MachoThemes/epsilon-framework#recommended-action-section)
 
+### Helpers
+
+> [Demo generator](https://github)
+
 ## 2. Installation
 > In the root of the theme, run:
 
@@ -362,3 +366,17 @@ Collect all the options ID and get an instance of the Typography class (this is 
                                   )
                                 )
                               );
+
+### Demo Creator
+Creating random posts with images from flickr
+
+	 $posts = array(
+		 'post_count'     => 5, // Post Count
+		 'image_category' => array( 'dogs' ), // Image categories
+		 'image_size'     => array( 900, 500 ), // Image size ( this should reflect the max size of your content )
+	 );
+
+	 $demo = new Epsilon_Demo_Generator( $posts );
+	 $demo->add_posts();
+	 
+TBA, Widget creation from json and customizer options
