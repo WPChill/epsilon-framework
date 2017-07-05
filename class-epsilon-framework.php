@@ -38,6 +38,12 @@ class Epsilon_Framework {
 		}
 
 		/**
+		 * Define URI and PATH for the framework
+		 */
+		define( 'EPSILON_URI', get_template_directory_uri() . $this->path . '/epsilon-framework' );
+		define( 'EPSILON_PATH', get_template_directory() . $this->path . '/epsilon-framework' );
+
+		/**
 		 * Customizer enqueues & controls
 		 */
 		add_action( 'customize_register', array( $this, 'init_controls' ), 0 );
@@ -46,7 +52,7 @@ class Epsilon_Framework {
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_styles' ), 25 );
 
 		/**
-		 *
+		 * Action for easier AJAX handling
 		 */
 		add_action( 'wp_ajax_epsilon_framework_ajax_action', array(
 			$this,

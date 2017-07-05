@@ -20,5 +20,6 @@ wp.customize.bind( 'ready', function() {
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
+  EpsilonFramework.colorPickers.init();
   EpsilonFramework.recommendedActions.init();
 } );

@@ -60,6 +60,7 @@ EpsilonFramework.colorSchemes = {
         /**
          * Set values
          */
+        jQuery( '#customize-control-' + index + ' .epsilon-color-picker' ).minicolors( 'value', value );
         wp.customize( index ).set( value );
       } );
 

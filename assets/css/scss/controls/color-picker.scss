@@ -1,0 +1,28 @@
+.epsilon-color-picker-title {
+  margin-left: 50px;
+  .epsilon-color-picker-description {
+    font-family: 'Open Sans';
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: initial;
+    color: #959696;
+    display: block;
+  }
+}
+
+.minicolors-theme-default {
+  .epsilon-color-picker {
+    display: none;
+  }
+  .minicolors-input-swatch {
+    width: 31px;
+    height: 21px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+  }
+}
+
+.minicolors-position-left .minicolors-panel {
+  left: 50px;
+}

@@ -14,6 +14,8 @@
 
 > [Layouts](https://github.com/MachoThemes/epsilon-framework#layouts)
 
+> [Color Picker](https://github.com/MachoThemes/epsilon-framework#color-picker)
+
 ### Available sections
 > [Upsell pro section](https://github.com/MachoThemes/epsilon-framework#upsell-pro-section)
 
@@ -345,6 +347,18 @@ Collect all the options ID and get an instance of the Typography class (this is 
                                     'min_span' => 2,
                                     'label'       => esc_html__( 'Label', 'text-domain' ),
                                     'description' => esc_html__( 'Description.', 'text-domain' ),
+                                  )
+                                )
+                              );
+                              
+#### Color Picker               
+    $wp_customize->add_control( new Epsilon_Control_Color_Picker(
+                                  $wp_customize,
+                                  'epsilon_control_color_picker',
+                                  array(
+                                    'section'      => 'section_id',
+                                    'priority'     => 0,
+																		'mode' => 'hex' // can be 'hex' or 'rgba'
                                   )
                                 )
                               );

@@ -96,8 +96,8 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	public function enqueue() {
 		wp_enqueue_script( 'jquery-ui' );
 		wp_enqueue_script( 'jquery-ui-slider' );
-		wp_enqueue_style( 'selectize', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/vendors/selectize/selectize.css' );
-		wp_enqueue_script( 'selectize', get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
+		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
+		wp_enqueue_script( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
 	}
 
 	/**
