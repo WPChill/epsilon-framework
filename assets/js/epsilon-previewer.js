@@ -19,8 +19,7 @@ wp.customize.bind( 'preview-ready', function() {
 
         if ( ! style.length ) {
           style = jQuery( 'body' ).
-              append( '<style type="text/css" id="epsilon-stylesheet-' + sufix +
-                  '" />' ).
+              append( '<style type="text/css" id="epsilon-stylesheet-' + sufix + '" />' ).
               find( '#epsilon-stylesheet-' + sufix );
         }
 

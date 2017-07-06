@@ -87,11 +87,11 @@ class Epsilon_Demo_Generator {
 			'post_status'  => 'publish',
 		);
 
-		return wp_insert_post( $post );
+		return $post;
 	}
 
 	/**
-	 * Run this function to generate an image and asign it to a post
+	 * Run this function to generate an image and assign it to a post
 	 *
 	 * @since 1.2.0
 	 *

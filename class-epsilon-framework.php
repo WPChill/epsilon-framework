@@ -44,6 +44,11 @@ class Epsilon_Framework {
 		define( 'EPSILON_PATH', get_template_directory() . $this->path . '/epsilon-framework' );
 
 		/**
+		 * Admin enqueues
+		 */
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+
+		/**
 		 * Customizer enqueues & controls
 		 */
 		add_action( 'customize_register', array( $this, 'init_controls' ), 0 );
@@ -84,6 +89,13 @@ class Epsilon_Framework {
 				require_once $path . '/sections/class-epsilon-section-' . $section . '.php';
 			}
 		}
+	}
+
+	/**
+	 * @since 1.2.0
+	 */
+	public function enqueue() {
+		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
 	}
 
 	/**

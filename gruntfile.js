@@ -12,15 +12,25 @@ module.exports = function( grunt ) {
       js: 'assets/js'
     },
     concat: {
-      dist: {
+      epsilonFramework: {
         src: [
-          'assets/vendors/epsilon-framework/components/epsilon-object.js',
-          'assets/vendors/epsilon-framework/**/*.js',
-          'assets/vendors/epsilon-framework/epsilon.js',
-          '!assets/vendors/epsilon-framework/epsilon.min.js',
-          '!assets/vendors/epsilon-framework/epsilon-concat.js'
+          'assets/vendors/epsilon-framework/customizer/components/epsilon-object.js',
+          'assets/vendors/epsilon-framework/customizer/**/*.js',
+          'assets/vendors/epsilon-framework/customizer/epsilon.js',
+          '!assets/vendors/epsilon-framework/customizer/epsilon.min.js',
+          '!assets/vendors/epsilon-framework/customizer/epsilon-concat.js'
         ],
         dest: 'assets/js/epsilon.js'
+      },
+      epsilonAdmin: {
+        src: [
+          'assets/vendors/epsilon-framework/admin/components/epsilon-admin-object.js',
+          'assets/vendors/epsilon-framework/admin/**/*.js',
+          'assets/vendors/epsilon-framework/admin/epsilon-admin.js',
+          '!assets/vendors/epsilon-framework/admin/epsilon-admin.min.js',
+          '!assets/vendors/epsilon-framework/admin/epsilon-admin-concat.js'
+        ],
+        dest: 'assets/js/epsilon-admin.js'
       }
     },
     uglify: {
@@ -31,6 +41,14 @@ module.exports = function( grunt ) {
         },
         src: [ 'assets/js/epsilon.js', '!assets/js/epsilon.min.js' ],
         dest: 'assets/js/epsilon.min.js'
+      },
+      epsilonAdmin: {
+        options: {
+          sourceMap: false,
+          sourceMapName: 'sourceMap.map'
+        },
+        src: [ 'assets/js/epsilon-admin.js', '!assets/js/epsilon-admin.min.js' ],
+        dest: 'assets/js/epsilon-admin.min.js'
       }
     },
 
@@ -54,7 +72,7 @@ module.exports = function( grunt ) {
 
   grunt.config( 'watch', {
     js: {
-      files: [ 'assets/vendors/epsilon-framework/**/*.js', 'assets/vendors/epsilon-framework/**/**/*.js' ],
+      files: [ 'assets/vendors/epsilon-framework/**/*.js', 'assets/vendors/epsilon-framework/**/**/*.js', 'assets/vendors/epsilon-framework/**/**/**/*.js' ],
       tasks: [ 'concat-epsilon' ],
       options: {
         spawn: false
@@ -98,7 +116,9 @@ module.exports = function( grunt ) {
 
   // Concatenate Epsilon
   grunt.registerTask( 'concat-epsilon', [
-    'concat:dist',
-    'uglify:epsilon'
+    'concat:epsilonFramework',
+    'concat:epsilonAdmin',
+    'uglify:epsilon',
+    'uglify:epsilonAdmin'
   ] );
 };
