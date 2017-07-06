@@ -1,3 +1,8 @@
+/**
+ * Improved Color Picker
+ *
+ * @type {{init: EpsilonFramework.colorPickers.init}}
+ */
 EpsilonFramework.colorPickers = {
   init: function() {
     var selectors = jQuery( '.epsilon-color-picker' ),
