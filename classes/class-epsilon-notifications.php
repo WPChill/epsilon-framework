@@ -22,7 +22,7 @@ class Epsilon_Notifications {
 	 * @since 1.2.0
 	 * @var array
 	 */
-	public $html = '<div class="epsilon-framework-notice %1$s" data-unique-id="%2$s">%3$s</div>';
+	public $html = '<div class="epsilon-framework-notice is-dismissible %1$s" data-unique-id="%2$s">%3$s</div>';
 
 	/**
 	 * Epsilon_Notifications constructor.
