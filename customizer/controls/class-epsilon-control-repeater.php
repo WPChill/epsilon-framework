@@ -17,6 +17,29 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 * @var    string
 	 */
 	public $type = 'epsilon-repeater';
+	/**
+	 * @since 1.2.0
+	 * @var array
+	 */
+	public $choices = array();
+	/**
+	 * @since 1.2.0
+	 * @var array|mixed
+	 */
+	public $fields = array();
+	/**
+	 * @since 1.2.0
+	 * @var array
+	 */
+	public $row_label = array();
+	/**
+	 * Will store a filtered version of value for advanced fields.
+	 *
+	 * @since  1.2.0
+	 * @access protected
+	 * @var array
+	 */
+	protected $filtered_value = array();
 
 	/**
 	 * Epsilon_Control_Repeater constructor.
@@ -30,6 +53,29 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function __construct( WP_Customize_Manager $manager, $id, array $args = array() ) {
 		parent::__construct( $manager, $id, $args );
 		$manager->register_control_type( 'Epsilon_Control_Repeater' );
+
+		// Set up defaults for row labels.
+		$this->row_label = array(
+			'type'  => 'text',
+			'value' => esc_attr__( 'row', 'kirki' ),
+			'field' => false,
+		);
+
+		if ( empty( $args['fields'] ) || ! is_array( $args['fields'] ) ) {
+			$args['fields'] = array();
+		}
+
+		foreach ( $args['fields'] as $key => $value ) {
+			if ( ! isset( $value['default'] ) ) {
+				$args['fields'][ $key ]['default'] = '';
+			}
+			if ( ! isset( $value['label'] ) ) {
+				$args['fields'][ $key ]['label'] = '';
+			}
+			$args['fields'][ $key ]['id'] = $key;
+		} // End foreach().
+
+		$this->fields = $args['fields'];
 	}
 
 	/**
@@ -41,10 +87,13 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']      = $this->id;
-		$json['link']    = $this->get_link();
-		$json['value']   = $this->value();
-		$json['default'] = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']       = $this->id;
+		$json['link']     = $this->get_link();
+		$json['value']    = $this->value();
+		$json['choices']  = $this->choices;
+		$json['fields']   = $this->fields;
+		$json['rowLabel'] = $this->row_label;
+		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
 	}
@@ -64,13 +113,10 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 * @since 1.2.0
 	 */
 	public function content_template() {
-		/**
-		 * Print templates in footer
-		 */
 		add_action( 'customize_controls_print_footer_scripts', array(
 			$this,
-			'repeater_js_template',
-		), 99 );
+			'js_template',
+		) );
 
 		//@formatter:off  ?>
 		<label>
@@ -89,16 +135,16 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		<ul class="repeater-fields"></ul>
 		<button class="button-secondary epsilon-repeater-add"><?php echo __( 'Add', 'epsilon-framework' ); ?></button>
 		<?php //@formatter:on
+
+		$this->js_template();
 	}
 
 	/**
-	 * Underscore template for this control's content.
-	 *
-	 * @access public
+	 * Render the Javascript Templates
 	 */
-	public function repeater_js_template() {
-		//@formatter:off  ?>
-	<script type="text/html" class="customize-control-epsilon-repeater-content">
+	public function js_template() {
+		//@formatter:off ?>
+		<script type="text/html" class="customize-control-epsilon-repeater-content">
 		<# var field; var index = data.index; #>
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 				<div class="repeater-row-header">
@@ -106,8 +152,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 					<i class="dashicons dashicons-arrow-down repeater-minimize"></i>
 				</div>
 				<div class="repeater-row-content">
-				<# _.each( data, function( field, i ) { #>
-					<div class="repeater-field repeater-field-{{{ field.type }}}">
+					<# _.each( data.fields, function( field, i ) { #>
 						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'date' === field.type || 'number' === field.type ) { #>
 							<# var fieldExtras = ''; #>
 							<# if ( 'link' === field.type ) { #>
@@ -129,15 +174,15 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 							<label>
 								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
-								<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ fieldExtras }}>
+								<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}"{{ fieldExtras }}>
 							</label>
+
 						<# } #>
-					</div>
-					<button type="button" class="button-link epsilon-repeater-row-remove"><?php esc_attr_e( 'Remove', 'kirki' ); ?></button>
-				<# } #>
+					<# } ); #>
+					<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>
 				</div>
 			</li>
-	</script>
-	<?php //@formatter:on
+		</script>
+		<?php //@formatter:on
 	}
 }

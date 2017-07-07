@@ -15,7 +15,10 @@ module.exports = function( grunt ) {
       epsilonFramework: {
         src: [
           'assets/vendors/epsilon-framework/customizer/components/epsilon-object.js',
-          'assets/vendors/epsilon-framework/customizer/**/*.js',
+          'assets/vendors/epsilon-framework/customizer/components/controls/repeater/repeater-object.js',
+          'assets/vendors/epsilon-framework/customizer/components/controls/**/*.js',
+          'assets/vendors/epsilon-framework/customizer/components/sections/**/*.js',
+          'assets/vendors/epsilon-framework/customizer/components/wp-customize-extenders/**/*.js',
           'assets/vendors/epsilon-framework/customizer/epsilon.js',
           '!assets/vendors/epsilon-framework/customizer/epsilon.min.js',
           '!assets/vendors/epsilon-framework/customizer/epsilon-concat.js'
@@ -72,7 +75,11 @@ module.exports = function( grunt ) {
 
   grunt.config( 'watch', {
     js: {
-      files: [ 'assets/vendors/epsilon-framework/**/*.js', 'assets/vendors/epsilon-framework/**/**/*.js', 'assets/vendors/epsilon-framework/**/**/**/*.js' ],
+      files: [
+        'assets/vendors/epsilon-framework/**/*.js',
+        'assets/vendors/epsilon-framework/**/**/*.js',
+        'assets/vendors/epsilon-framework/**/**/**/*.js',
+        'assets/vendors/epsilon-framework/**/**/**/**/*.js' ],
       tasks: [ 'concat-epsilon' ],
       options: {
         spawn: false

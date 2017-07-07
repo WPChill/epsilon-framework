@@ -151,7 +151,6 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 				<span class="epsilon-button-label"><?php echo esc_html__( 'Columns', 'epsilon-framework' ); ?></span>
 				<div class="epsilon-button-group">
 					<# if( data.layouts.length > 0 ){ #>
-						<# i = 1 #>
 						<# for (layout in data.layouts) { #>
 							<a href="#" data-button-value="{{ data.layouts[layout].value }}" <# if( data.columns.columnsCount === data.layouts[layout].value) { #> class="active" <# } #>>
 								<img src="{{ data.layouts[layout].label }}" />

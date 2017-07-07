@@ -4,6 +4,11 @@
 
 var EpsilonFramework = 'undefined' === typeof( EpsilonFramework ) ? {} : EpsilonFramework;
 
+/*
+ EpsilonFramework.Repeater Object
+ */
+EpsilonFramework.repeater = 'undefined' === typeof( EpsilonFramework.repeater ) ? {} : EpsilonFramework.repeater;
+
 /**
  * Improved Color Picker
  *
@@ -32,20 +37,6 @@ EpsilonFramework.colorPickers = {
     } );
   }
 };
-/**
- * WP Customizer Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    control.container.on( 'change', 'input.epsilon-color-picker',
-        function() {
-          control.setting.set( jQuery( this ).val() );
-        }
-    );
-  }
-} );
 /**
  * Color scheme generator
  */
@@ -405,23 +396,6 @@ EpsilonFramework.layouts = {
     } );
   }
 };
-
-/**
- * WP Customizer Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    /**
-     * Save the layout
-     */
-    jQuery( this.container ).find( 'input' ).on( 'change', function() {
-      control.setting.set( jQuery( this ).val() );
-    } );
-  }
-} );
-
 /**
  * Range Slider Initiator
  *
@@ -486,59 +460,383 @@ EpsilonFramework.rangeSliders = {
     } );
   }
 };
-
 /**
- * WP Customizer Control Constructor
+ * Helper object, we can keep here functions that render content or help with UI interaction
  */
-wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    control.container.on( 'change', 'input.rl-slider',
-        function() {
-          control.setting.set( jQuery( this ).val() );
-        }
-    );
-  }
-} );
-
-EpsilonFramework.repeater = {
+EpsilonFramework.repeater.helpers = {
   /**
-   * Initiate the repeater field script
+   * Set the value of the customizer option
+   *
+   * @param instance
+   * @param newValue
+   * @param refresh
+   * @param filtering
    */
-  init: function( control ) {
-    var limit,
-        theNewRow;
+  setValue: function( instance, newValue, refresh, filtering ) {
+    // We need to filter the values after the first load to remove data requrired for diplay but that we don't want to save in DB
+    var filteredValue = newValue,
+        filter = [];
 
-    // Set number of rows to 0
-    this.currentIndex = 0;
-    
+    /**
+     * Filtering
+     */
+    if ( filtering ) {
+      jQuery.each( instance.params.fields, function( index, value ) {
+        if ( 'image' === value.type || 'cropped_image' === value.type || 'upload' === value.type ) {
+          filter.push( index );
+        }
+      } );
+
+      jQuery.each( newValue, function( index, value ) {
+        jQuery.each( filter, function( ind, field ) {
+          if ( ! _.isUndefined( value[ field ] ) && ! _.isUndefined( value[ field ].id ) ) {
+            filteredValue[ index ][ field ] = value[ field ].id;
+          }
+        } );
+      } );
+    }
+
+    instance.setting.set( encodeURI( JSON.stringify( filteredValue ) ) );
+
+    if ( refresh ) {
+      instance.settingField.trigger( 'change' );
+    }
   },
+
+  /**
+   * Get the setting value
+   *
+   * @param instance
+   */
+  getValue: function( instance ) {
+    // The setting is saved in JSON
+    return JSON.parse( decodeURI( instance.setting.get() ) );
+  },
+  /**
+   * Update a single field inside a row.
+   * Triggered when a field has changed
+   *
+   * @param e Event Object
+   */
+  updateField: function( rowIndex, fieldId, element, control ) {
+    var row,
+        currentSettings;
+
+    if ( ! control.rows[ rowIndex ] ) {
+      return;
+    }
+
+    if ( ! control.params.fields[ fieldId ] ) {
+      return;
+    }
+
+    row = control.rows[ rowIndex ];
+    currentSettings = EpsilonFramework.repeater.helpers.getValue( control );
+
+    element = jQuery( element );
+
+    if ( _.isUndefined( currentSettings[ row.rowIndex ][ fieldId ] ) ) {
+      return;
+    }
+
+    if ( 'checkbox' === control.params.fields[ fieldId ].type ) {
+      currentSettings[ row.rowIndex ][ fieldId ] = element.is( ':checked' );
+    } else {
+
+      // Update the settings
+      currentSettings[ row.rowIndex ][ fieldId ] = element.val();
+    }
+    EpsilonFramework.repeater.helpers.setValue( control, currentSettings, true );
+  },
+  /**
+   * Load Underscores template
+   *
+   * @since 1.2.0
+   * @param instance
+   * @returns {Function}
+   */
+  repeaterTemplate: function( instance ) {
+    var compiled,
+        options = {
+          evaluate: /<#([\s\S]+?)#>/g,
+          interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
+          escape: /\{\{([^\}]+?)\}\}(?!\})/g,
+          variable: 'data'
+        };
+
+    return function( data ) {
+      compiled = _.template( instance.container.find( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
+      return compiled( data );
+    };
+
+  }
 };
 
 /**
- * WP Customizer Control Constructor
+ * Row object
  */
-wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-    EpsilonFramework.repeater.init( control );
-  }
-} );
-/**
- * WP Customizer Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
+EpsilonFramework.repeater.row = {
+  /**
+   * Deletes a row from the control
+   *
+   * @param index
+   */
+  delete: function( rowInstance, index, control ) {
+    var currentSettings = EpsilonFramework.repeater.helpers.getValue( control ),
+        row,
+        i,
+        prop;
 
-    control.container.on( 'change', 'input.onoffswitch-checkbox',
-        function() {
-          control.setting.set( jQuery( this ).prop( 'checked' ) );
+    if ( currentSettings[ index ] ) {
+      // Find the row
+      row = control.rows[ index ];
+      if ( row ) {
+
+        // Remove the row settings
+        delete currentSettings[ index ];
+
+        // Remove the row from the rows collection
+        delete control.rows[ index ];
+
+        // Update the new setting values
+        EpsilonFramework.repeater.helpers.setValue( control, currentSettings, true );
+      }
+    }
+
+    // Remap the row numbers
+    i = 1;
+    console.log( control.rows );
+    for ( prop in control.rows ) {
+      if ( control.rows.hasOwnProperty( prop ) && control.rows[ prop ] ) {
+        EpsilonFramework.repeater.row.updateLabel( control.rows[ prop ], control );
+        i ++;
+      }
+    }
+  },
+  /**
+   * Add a new Row to the customizer
+   *
+   * @param instance
+   * @param data
+   * @returns {EpsilonFramework.repeater.row.constructor}
+   */
+  add: function( instance, data ) {
+    var control = instance,
+        template = _.memoize( EpsilonFramework.repeater.helpers.repeaterTemplate( control ) ),
+        settingValue = EpsilonFramework.repeater.helpers.getValue( control ),
+        newRowSetting = {},
+        templateData,
+        newRow,
+        i;
+
+    /**
+     * In case we don`t have a template, we terminate here
+     */
+    if ( ! template ) {
+      return;
+    }
+
+    /**
+     * Extend template data with what we passed in PHP
+     */
+    templateData = jQuery.extend( true, {}, control.params.fields );
+
+    /**
+     * In case we added the row with "known" data, we need to overwrite the array
+     */
+    if ( data ) {
+      for ( i in data ) {
+        if ( data.hasOwnProperty( i ) && templateData.hasOwnProperty( i ) ) {
+          templateData[ i ][ 'default' ] = data[ i ];
         }
+      }
+    }
+
+    /**
+     * Add an index
+     *
+     * @type {number}
+     */
+    templateData.index = control.currentIndex;
+
+    /**
+     * Render the HTML template with underscores
+     */
+    template = template( templateData );
+
+    /**
+     * Initiate a new ROW
+     *
+     * @type {*}
+     */
+    newRow = new EpsilonFramework.repeater.row.constructor(
+        control.currentIndex,
+        jQuery( template ).appendTo( control.repeaterContainer ),
+        control.params.rowLabel,
+        control
     );
-  }
-} );
+
+    /**
+     * Bind events
+     *
+     * 1. Remove row event
+     */
+    newRow.container.on( 'row:remove', function( e, rowIndex ) {
+      EpsilonFramework.repeater.row.delete( this, rowIndex, control );
+    } );
+
+    /**
+     * 2. Update row event
+     */
+    newRow.container.on( 'row:update', function( e, rowIndex, fieldName, element, control ) {
+      EpsilonFramework.repeater.helpers.updateField.call( e, rowIndex, fieldName, element, control );
+      EpsilonFramework.repeater.row.updateLabel( newRow );
+    } );
+
+    /**
+     * Register the new row in the control
+     *
+     * @type {*}
+     */
+    control.rows[ control.currentIndex ] = newRow;
+
+    /**
+     * Add a new "index" to the setting ( easier to render in the frontend )
+     */
+    for ( i in templateData ) {
+      if ( templateData.hasOwnProperty( i ) ) {
+        newRowSetting[ i ] = templateData[ i ][ 'default' ];
+      }
+    }
+
+    /**
+     * Add a value to the setting
+     * @type {{}}
+     */
+    settingValue[ control.currentIndex ] = newRowSetting;
+    /**
+     * Set it
+     */
+    EpsilonFramework.repeater.helpers.setValue( control, settingValue, true );
+
+    /**
+     * Update index
+     */
+    control.currentIndex ++;
+
+    /**
+     * Return constructor
+     */
+    return newRow;
+  },
+
+  /**
+   * Trigger a new row
+   *
+   * @param rowIndex
+   * @param container
+   * @param label
+   * @param control
+   */
+  constructor: function( rowIndex, container, label, control ) {
+    var self = this;
+    this.rowIndex = rowIndex;
+    this.container = container;
+    this.label = label;
+    this.header = this.container.find( '.repeater-row-header' );
+
+    /**
+     * Events
+     */
+    this.header.on( 'click', function() {
+      EpsilonFramework.repeater.row.toggleMinimize( self );
+    } );
+
+    this.container.on( 'click', '.repeater-row-remove', function() {
+      EpsilonFramework.repeater.row.removeRow( self );
+    } );
+
+    this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
+      self.container.trigger( 'row:update', [ self.rowIndex, jQuery( e.target ).data( 'field' ), e.target, control ] );
+    } );
+
+    EpsilonFramework.repeater.row.updateLabel( self, control );
+  },
+
+  /**
+   * Set row's index
+   *
+   * @param rowIndex
+   */
+  setRowIndex: function( instance, rowIndex ) {
+    instance.rowIndex = rowIndex;
+    instance.container.attr( 'data-row', rowIndex );
+    instance.container.data( 'row', rowIndex );
+    instance.updateLabel();
+  },
+
+  /**
+   * Toggle vizibility
+   *
+   * @param instance
+   */
+  toggleMinimize: function( instance ) {
+    // Store the previous state.
+    instance.container.toggleClass( 'minimized' );
+    instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+  },
+
+  /**
+   * Remove a row from the instance
+   *
+   * @param instance
+   */
+  removeRow: function( instance ) {
+    instance.container.slideUp( 300, function() {
+      jQuery( this ).detach();
+    } );
+    instance.container.trigger( 'row:remove', [ instance.rowIndex ] );
+  },
+
+  /**
+   * Update label
+   *
+   * @param instance
+   * @param control
+   */
+  updateLabel: function( instance, control ) {
+    var rowLabelField,
+        rowLabel,
+        rowLabelSelector;
+
+    if ( 'field' === instance.label.type ) {
+      rowLabelField = instance.container.find( '.repeater-field [data-field="' + instance.label.field + '"]' );
+      if ( _.isFunction( rowLabelField.val ) ) {
+        rowLabel = rowLabelField.val();
+        if ( '' !== rowLabel ) {
+          if ( ! _.isUndefined( control.params.fields[ instance.label.field ] ) ) {
+            if ( ! _.isUndefined( control.params.fields[ instance.label.field ].type ) ) {
+              if ( 'select' === control.params.fields[ instance.label.field ].type ) {
+                if ( ! _.isUndefined( control.params.fields[ instance.label.field ].choices ) &&
+                    ! _.isUndefined( control.params.fields[ instance.label.field ].choices[ rowLabelField.val() ] ) ) {
+                  rowLabel = control.params.fields[ instance.label.field ].choices[ rowLabelField.val() ];
+                }
+              } else if ( 'radio' === control.params.fields[ instance.label.field ].type || 'radio-image' === control.params.fields[ instance.label.field ].type ) {
+                rowLabelSelector = control.selector + ' [data-row="' + instance.rowIndex + '"] .repeater-field [data-field="' + instance.label.field + '"]:checked';
+                rowLabel = jQuery( rowLabelSelector ).val();
+              }
+            }
+          }
+
+          instance.header.find( '.repeater-row-label' ).text( rowLabel );
+          return;
+        }
+      }
+    }
+
+    instance.header.find( '.repeater-row-label' ).text( instance.label.value + ' ' + ( instance.rowIndex + 1 ) );
+  },
+};
 
 /**
  * Typography functions
@@ -730,21 +1028,6 @@ EpsilonFramework.typography = {
     return JSON.stringify( object.data );
   }
 };
-
-/**
- * WP Customizer Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-    /**
-     * Save the layout
-     */
-    jQuery( this.container ).find( '.customize-control-content > .epsilon-typography-input' ).on( 'change', function() {
-      control.setting.set( jQuery( this ).val() );
-    } );
-  }
-} );
 
 /**
  * Recommended action section scripting
@@ -993,6 +1276,143 @@ EpsilonFramework.recommendedActions = {
     } );
   }
 };
+/**
+ * Color Picker Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+
+    control.container.on( 'change', 'input.epsilon-color-picker',
+        function() {
+          control.setting.set( jQuery( this ).val() );
+        }
+    );
+  }
+} );
+/**
+ * WP Customizer Layouts Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+
+    /**
+     * Save the layout
+     */
+    jQuery( this.container ).find( 'input' ).on( 'change', function() {
+      control.setting.set( jQuery( this ).val() );
+    } );
+  }
+} );
+
+/**
+ * WP Customizer Range Slider Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+
+    control.container.on( 'change', 'input.rl-slider',
+        function() {
+          control.setting.set( jQuery( this ).val() );
+        }
+    );
+  }
+} );
+
+/**
+ * WP Customizer Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+    this.initRepeater();
+  },
+
+  initRepeater: function() {
+    var control = this,
+        settingValue = this.params.value,
+        limit = false,
+        newRow;
+
+    this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
+
+    /**
+     * Set an initial value to the repeater field
+     */
+    EpsilonFramework.repeater.helpers.setValue( this, [], false );
+
+    /**
+     * Create a reference of the container
+     */
+    this.repeaterContainer = this.container.find( '.repeater-fields' ).first();
+
+    /**
+     * Start incrementing an index
+     *
+     * @type {number}
+     */
+    this.currentIndex = 0;
+
+    /**
+     * Start saving rows
+     * @type {Array}
+     */
+    this.rows = [];
+
+    /**
+     * Setup Limit
+     *
+     * @type {boolean}
+     */
+    if ( ! _.isUndefined( this.params.choices.limit ) ) {
+      limit = ( 0 >= this.params.choices.limit ) ? false : parseInt( this.params.choices.limit );
+    }
+    /**
+     * Bind events for this control
+     *
+     * 1. Click event on the ADD Row button
+     */
+    this.container.on( 'click', 'button.epsilon-repeater-add', function( e ) {
+      e.preventDefault();
+      if ( ! limit || control.currentIndex < limit ) {
+        var newRow = EpsilonFramework.repeater.row.add( control );
+      } else {
+        jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
+      }
+    } );
+  },
+} );
+/**
+ * WP Customizer Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+
+    control.container.on( 'change', 'input.onoffswitch-checkbox',
+        function() {
+          control.setting.set( jQuery( this ).prop( 'checked' ) );
+        }
+    );
+  }
+} );
+
+/**
+ * WP Customizer Typography Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+    /**
+     * Save the layout
+     */
+    jQuery( this.container ).find( '.customize-control-content > .epsilon-typography-input' ).on( 'change', function() {
+      control.setting.set( jQuery( this ).val() );
+    } );
+  }
+} );
 
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
   attachEvents: function() {
@@ -1005,7 +1425,6 @@ wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.cu
 /**
  * Pro Section
  */
-
 wp.customize.sectionConstructor[ 'epsilon-section-pro' ] = wp.customize.Section.extend( {
   attachEvents: function() {
   },
