@@ -102,8 +102,9 @@ EpsilonFramework.repeater.helpers = {
           variable: 'data'
         };
 
+
     return function( data ) {
-      compiled = _.template( instance.container.find( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
+      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
       return compiled( data );
     };
 

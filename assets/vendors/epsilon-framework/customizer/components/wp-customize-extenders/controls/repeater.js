@@ -54,10 +54,34 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     this.container.on( 'click', 'button.epsilon-repeater-add', function( e ) {
       e.preventDefault();
       if ( ! limit || control.currentIndex < limit ) {
-        var newRow = EpsilonFramework.repeater.row.add( control );
+        newRow = EpsilonFramework.repeater.row.add( control );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
     } );
+
+    /**
+     * 2.  REMOVE Row button
+     */
+    this.container.on( 'click', '.repeater-row-remove', function() {
+      control.currentIndex --;
+      if ( ! limit || control.currentIndex < limit ) {
+        jQuery( control.selector + ' .limit' ).removeClass( 'highlight' );
+      }
+    } );
+
+    /**
+     * If we have saved rows, we need to display them
+     */
+    if ( settingValue.length ) {
+      _.each( settingValue, function( subValue ) {
+        newRow = EpsilonFramework.repeater.row.add( control, subValue );
+      } );
+    }
+
+    /**
+     * After display fields, clean the setting
+     */
+    EpsilonFramework.repeater.helpers.setValue( this, settingValue, true, true );
   },
 } );

@@ -78,10 +78,19 @@ class Epsilon_Framework {
 	public function init_controls( $wp_customize ) {
 		$path = get_template_directory() . $this->path . '/epsilon-framework';
 
-		$this->controls[] = 'repeater';
 		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
 				require_once $path . '/customizer/controls/class-epsilon-control-' . $control . '.php';
+			}
+			if ( file_exists( $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php' ) ) {
+				require_once $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php';
+			}
+
+			if ( in_array( 'repeater', $this->controls ) ) {
+				add_action( 'customize_controls_print_footer_scripts', array(
+					'Epsilon_Repeater_Templates',
+					'render_js_template',
+				) );
 			}
 		}
 
@@ -90,51 +99,6 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
 			}
 		}
-		$wp_customize->add_setting(
-			'tyche_slider_bg',
-			array(
-				'default' => '',
-			)
-		);
-
-		$wp_customize->add_control(
-			new Epsilon_Control_Repeater(
-				$wp_customize,
-				'tyche_slider_bg',
-				array(
-					'type'      => 'epsilon-repeater',
-					'label'     => esc_attr__( 'Slider Backgrounds', 'epsilon-framework' ),
-					'section'   => 'newsmag_blog_section',
-					'priority'  => 10,
-					'row_label' => array(
-						'type'  => 'text',
-						'value' => esc_attr__( 'Background Image', 'epsilon-framework' ),
-					),
-					'default'   => array(
-						'cta_text'   => '2016',
-						'button_one' => 'Shop Now',
-						'button_two' => 'Learn More',
-					),
-					'fields'    => array(
-						'cta_text'   => array(
-							'type'    => 'text',
-							'label'   => esc_html__( 'CTA Text', 'epsilon-framework' ),
-							'default' => '2016',
-						),
-						'button_one' => array(
-							'type'    => 'text',
-							'label'   => esc_html__( 'Button #1 Text', 'epsilon-framework' ),
-							'default' => 'Shop Now',
-						),
-						'button_two' => array(
-							'type'    => 'text',
-							'label'   => esc_html__( 'Button #2 URL', 'epsilon-framework' ),
-							'default' => 'https://colorlib.com',
-						),
-					),
-				)
-			)
-		);
 	}
 
 	/**
@@ -167,7 +131,7 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.min.js', array(
+		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
 			'jquery',
 			'customize-controls',
 		) );

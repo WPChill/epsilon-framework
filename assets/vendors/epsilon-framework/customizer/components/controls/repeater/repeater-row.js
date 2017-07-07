@@ -55,6 +55,7 @@ EpsilonFramework.repeater.row = {
         newRow,
         i;
 
+    console.log(template);
     /**
      * In case we don`t have a template, we terminate here
      */
