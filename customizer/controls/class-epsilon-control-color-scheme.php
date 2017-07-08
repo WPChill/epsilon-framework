@@ -92,7 +92,7 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 			<div id="color_scheme_{{ data.id }}" class="epsilon-color-scheme">
 				<# if( data.choices.length > 0 ){ #>
 					<# for (choice in data.choices) { #>
-				<div class="epsilon-color-scheme-option <# if ( data.value === data.choices[choice].id ) { #> selected <# } #>" data-color-id="{{{ data.choices[choice].id }}}">
+					<div class="epsilon-color-scheme-option <# if ( data.value === data.choices[choice].id ) { #> selected <# } #>" data-color-id="{{{ data.choices[choice].id }}}">
 						<input type="hidden" value='{{{ data.choices[choice].encodedColors }}}'/>
 						<span class="epsilon-color-scheme-name"> {{{ data.choices[choice].name }}} </span>
 						<div class="epsilon-color-scheme-palette">

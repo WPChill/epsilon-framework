@@ -606,7 +606,6 @@ EpsilonFramework.repeater.row = {
 
     // Remap the row numbers
     i = 1;
-    console.log( control.rows );
     for ( prop in control.rows ) {
       if ( control.rows.hasOwnProperty( prop ) && control.rows[ prop ] ) {
         EpsilonFramework.repeater.row.updateLabel( control.rows[ prop ], control );
@@ -630,7 +629,6 @@ EpsilonFramework.repeater.row = {
         newRow,
         i;
 
-    console.log(template);
     /**
      * In case we don`t have a template, we terminate here
      */

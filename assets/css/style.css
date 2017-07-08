@@ -762,21 +762,42 @@ ul.epsilon-upsell-requirements li {
 .customize-control-epsilon-repeater {
   position: relative;
 }
+.customize-control-epsilon-repeater .repeater-fields {
+  width: 105%;
+  position: relative;
+  left: -10px;
+}
 .customize-control-epsilon-repeater .repeater-fields .repeater-row {
-  border: 1px solid #e5e5e5;
-  margin-top: 0.5rem;
+  border: none;
+  margin-top: 0;
+  margin-bottom: 0;
   background: #eee;
   position: relative;
+  border-bottom: 1px solid #e1e1e1;
 }
 .customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized {
-  border: 1px solid #dfdfdf;
   padding: 0;
+  border-bottom: none;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized:hover {
-  border: 1px solid #e5e5e5;
+.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized:before {
+  width: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  background: #fff;
+  content: '';
+  z-index: 10;
+  -webkit-transition: all .2s;
+  transition: all .2s;
 }
 .customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized .repeater-row-content {
   display: none;
+}
+.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized:hover:before {
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  background: #006ea3;
 }
 .customize-control-epsilon-repeater .repeater-fields .repeater-row label {
   margin-bottom: 12px;
@@ -851,9 +872,14 @@ ul.epsilon-upsell-requirements li {
   line-height: 30px;
   overflow: hidden;
   word-wrap: break-word;
+  -webkit-transition: all .2s;
+  transition: all .2s;
 }
 .customize-control-epsilon-repeater .repeater-row-header:hover {
+  -webkit-transition: all .2s;
+  transition: all .2s;
   cursor: move;
+  background: #f3f3f5;
 }
 .customize-control-epsilon-repeater .repeater-row-header .dashicons {
   font-size: 18px;
@@ -964,6 +990,11 @@ ul.epsilon-upsell-requirements li {
 .limit.highlight {
   background: #D32F2F;
   color: #fff;
+}
+
+.button-holder {
+  margin-top: 10px;
+  text-align: center;
 }
 
 /* Start Sections */

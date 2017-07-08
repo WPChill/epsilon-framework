@@ -135,7 +135,6 @@ class Epsilon_Color_Scheme {
 				'default'           => $properties['default'],
 				'sanitize_callback' => 'sanitize_hex_color',
 				'transport'         => 'postMessage',
-				'default'           => '#ffffff',
 			) );
 			$wp_customize->add_control( $control, array() );
 			$wp_customize->add_control( new Epsilon_Control_Color_Picker( $wp_customize, $control, array(

@@ -33,6 +33,11 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 */
 	public $row_label = array();
 	/**
+	 * @since 1.2.0
+	 * @var string
+	 */
+	public $button_label = null;
+	/**
 	 * Will store a filtered version of value for advanced fields.
 	 *
 	 * @since  1.2.0
@@ -53,29 +58,6 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function __construct( WP_Customize_Manager $manager, $id, array $args = array() ) {
 		parent::__construct( $manager, $id, $args );
 		$manager->register_control_type( 'Epsilon_Control_Repeater' );
-
-		// Set up defaults for row labels.
-		$this->row_label = array(
-			'type'  => 'text',
-			'value' => esc_attr__( 'row', 'kirki' ),
-			'field' => false,
-		);
-
-		if ( empty( $args['fields'] ) || ! is_array( $args['fields'] ) ) {
-			$args['fields'] = array();
-		}
-
-		foreach ( $args['fields'] as $key => $value ) {
-			if ( ! isset( $value['default'] ) ) {
-				$args['fields'][ $key ]['default'] = '';
-			}
-			if ( ! isset( $value['label'] ) ) {
-				$args['fields'][ $key ]['label'] = '';
-			}
-			$args['fields'][ $key ]['id'] = $key;
-		} // End foreach().
-
-		$this->fields = $args['fields'];
 	}
 
 	/**
@@ -87,15 +69,56 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']       = $this->id;
-		$json['link']     = $this->get_link();
-		$json['value']    = $this->value();
-		$json['choices']  = $this->choices;
-		$json['fields']   = $this->fields;
-		$json['rowLabel'] = $this->row_label;
-		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']          = $this->id;
+		$json['link']        = $this->get_link();
+		$json['value']       = $this->value();
+		$json['choices']     = $this->choices;
+		$json['fields']      = $this->get_fields();
+		$json['rowLabel']    = $this->get_row_label();
+		$json['buttonLabel'] = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'epsilon-framework' );
+		$json['default']     = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
+	}
+
+	/**
+	 * Set defaults, label and add an ID for the fields
+	 *
+	 * @since 1.2.0
+	 * @return array|mixed
+	 */
+	public function get_fields() {
+		if ( empty( $this->fields ) || ! is_array( $this->fields ) ) {
+			$this->fields = array();
+		}
+
+		foreach ( $this->fields as $key => $value ) {
+			if ( ! isset( $value['default'] ) ) {
+				$this->fields[ $key ]['default'] = '';
+			}
+			if ( ! isset( $value['label'] ) ) {
+				$this->fields[ $key ]['label'] = '';
+			}
+			$this->fields[ $key ]['id'] = $key;
+		} // End foreach().
+
+		return $this->fields;
+	}
+
+	/**
+	 * Setup the row's label
+	 *
+	 * @since 1.2.0
+	 * @return array
+	 */
+	public function get_row_label() {
+		$default = array(
+			'type'  => 'text',
+			'value' => esc_html__( 'Row', 'epsilon-framework' ),
+			'field' => false,
+		);
+
+		return wp_parse_args( $this->row_label, $default );
 	}
 
 	/**
@@ -128,7 +151,9 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		</label>
 
 		<ul class="repeater-fields"></ul>
-		<button class="button-secondary epsilon-repeater-add"><?php echo __( 'Add', 'epsilon-framework' ); ?></button>
+		<div class="button-holder">
+			<button class="button-secondary epsilon-repeater-add">{{ data.buttonLabel }}</button>
+		</div>
 		<?php //@formatter:on
 	}
 }
