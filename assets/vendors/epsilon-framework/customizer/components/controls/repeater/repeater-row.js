@@ -119,6 +119,13 @@ EpsilonFramework.repeater.row = {
     } );
 
     /**
+     * 3. Initiate sortable script
+     */
+    newRow.header.on( 'mousedown', function() {
+      newRow.container.trigger( 'row:start-dragging' );
+    } );
+
+    /**
      * Register the new row in the control
      *
      * @type {*}
@@ -193,11 +200,11 @@ EpsilonFramework.repeater.row = {
    *
    * @param rowIndex
    */
-  setRowIndex: function( instance, rowIndex ) {
-    instance.rowIndex = rowIndex;
-    instance.container.attr( 'data-row', rowIndex );
-    instance.container.data( 'row', rowIndex );
-    instance.updateLabel();
+  setRowIndex: function( rowInstance, rowIndex, control ) {
+    rowInstance.rowIndex = rowIndex;
+    rowInstance.container.attr( 'data-row', rowIndex );
+    rowInstance.container.data( 'row', rowIndex );
+    EpsilonFramework.repeater.row.updateLabel( rowInstance, control );
   },
 
   /**

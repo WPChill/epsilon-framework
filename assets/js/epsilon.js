@@ -410,23 +410,20 @@ EpsilonFramework.rangeSliders = {
   init: function( selector ) {
     var context = jQuery( selector ),
         sliders = context.find( '.slider-container' ),
-        slider, input, inputId, id, min, max, step;
+        slider, input, inputId, id;
 
     jQuery.each( sliders, function() {
       var slider = jQuery( this ).find( '.ss-slider' ),
           input = jQuery( this ).find( '.rl-slider' ),
           inputId = input.attr( 'id' ),
-          id = slider.attr( 'id' ),
-          min = jQuery( '#' + id ).attr( 'data-attr-min' ),
-          max = jQuery( '#' + id ).attr( 'data-attr-max' ),
-          step = jQuery( '#' + id ).attr( 'data-attr-step' );
+          id = slider.attr( 'id' );
 
       jQuery( '#' + id ).slider( {
-        value: jQuery( '#' + inputId ).attr( 'value' ),
+        value: parseFloat( jQuery( '#' + inputId ).attr( 'value' ) ),
         range: 'min',
-        min: parseFloat( min ),
-        max: parseFloat( max ),
-        step: parseFloat( step ),
+        min: parseFloat( jQuery( '#' + id ).attr( 'data-attr-min' ) ),
+        max: parseFloat( jQuery( '#' + id ).attr( 'data-attr-max' ) ),
+        step: parseFloat( jQuery( '#' + id ).attr( 'data-attr-step' ) ),
         /**
          * Removed Change event because server was flooded with requests from
          * javascript, sending changesets on each increment.
@@ -539,14 +536,43 @@ EpsilonFramework.repeater.helpers = {
       return;
     }
 
-    if ( 'checkbox' === control.params.fields[ fieldId ].type ) {
-      currentSettings[ row.rowIndex ][ fieldId ] = element.is( ':checked' );
-    } else {
-
-      // Update the settings
-      currentSettings[ row.rowIndex ][ fieldId ] = element.val();
+    switch ( control.params.fields[ fieldId ].type ) {
+      case 'checkbox':
+      case 'epsilon-toggle':
+        currentSettings[ row.rowIndex ][ fieldId ] = element.prop( 'checked' );
+        break;
+      default:
+        currentSettings[ row.rowIndex ][ fieldId ] = element.val();
+        break;
     }
+
     EpsilonFramework.repeater.helpers.setValue( control, currentSettings, true );
+  },
+
+  /**
+   * Drag and drop functionality
+   * @param control
+   */
+  sort: function( control ) {
+    var rows = control.repeaterContainer.find( '.repeater-row' ),
+        settings = EpsilonFramework.repeater.helpers.getValue( control ),
+        newOrder = [],
+        newRows = [],
+        newSettings = [];
+
+    rows.each( function( i, element ) {
+      newOrder.push( jQuery( element ).data( 'row' ) );
+    } );
+
+    jQuery.each( newOrder, function( newPosition, oldPosition ) {
+      newRows[ newPosition ] = control.rows[ oldPosition ];
+
+      EpsilonFramework.repeater.row.setRowIndex( newRows[ newPosition ], newPosition, control );
+      newSettings[ newPosition ] = settings[ oldPosition ];
+    } );
+
+    control.rows = newRows;
+    EpsilonFramework.repeater.helpers.setValue( control, newSettings );
   },
   /**
    * Load Underscores template
@@ -563,7 +589,6 @@ EpsilonFramework.repeater.helpers = {
           escape: /\{\{([^\}]+?)\}\}(?!\})/g,
           variable: 'data'
         };
-
 
     return function( data ) {
       compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
@@ -694,6 +719,13 @@ EpsilonFramework.repeater.row = {
     } );
 
     /**
+     * 3. Initiate sortable script
+     */
+    newRow.header.on( 'mousedown', function() {
+      newRow.container.trigger( 'row:start-dragging' );
+    } );
+
+    /**
      * Register the new row in the control
      *
      * @type {*}
@@ -768,11 +800,11 @@ EpsilonFramework.repeater.row = {
    *
    * @param rowIndex
    */
-  setRowIndex: function( instance, rowIndex ) {
-    instance.rowIndex = rowIndex;
-    instance.container.attr( 'data-row', rowIndex );
-    instance.container.data( 'row', rowIndex );
-    instance.updateLabel();
+  setRowIndex: function( rowInstance, rowIndex, control ) {
+    rowInstance.rowIndex = rowIndex;
+    rowInstance.container.attr( 'data-row', rowIndex );
+    rowInstance.container.data( 'row', rowIndex );
+    EpsilonFramework.repeater.row.updateLabel( rowInstance, control );
   },
 
   /**
@@ -1378,6 +1410,10 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       e.preventDefault();
       if ( ! limit || control.currentIndex < limit ) {
         newRow = EpsilonFramework.repeater.row.add( control );
+        /**
+         * init the range sliders
+         */
+        EpsilonFramework.rangeSliders.init( newRow.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -1399,6 +1435,10 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     if ( settingValue.length ) {
       _.each( settingValue, function( subValue ) {
         newRow = EpsilonFramework.repeater.row.add( control, subValue );
+        /**
+         * init the range sliders
+         */
+        EpsilonFramework.rangeSliders.init( newRow.container );
       } );
     }
 
@@ -1406,6 +1446,13 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      * After display fields, clean the setting
      */
     EpsilonFramework.repeater.helpers.setValue( this, settingValue, true, true );
+
+    this.repeaterContainer.sortable( {
+      handle: '.repeater-row-header',
+      update: function() {
+        EpsilonFramework.repeater.helpers.sort( control );
+      }
+    } );
   },
 } );
 /**

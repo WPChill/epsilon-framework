@@ -55,6 +55,10 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       e.preventDefault();
       if ( ! limit || control.currentIndex < limit ) {
         newRow = EpsilonFramework.repeater.row.add( control );
+        /**
+         * init the range sliders
+         */
+        EpsilonFramework.rangeSliders.init( newRow.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -76,6 +80,10 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     if ( settingValue.length ) {
       _.each( settingValue, function( subValue ) {
         newRow = EpsilonFramework.repeater.row.add( control, subValue );
+        /**
+         * init the range sliders
+         */
+        EpsilonFramework.rangeSliders.init( newRow.container );
       } );
     }
 
@@ -83,5 +91,12 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      * After display fields, clean the setting
      */
     EpsilonFramework.repeater.helpers.setValue( this, settingValue, true, true );
+
+    this.repeaterContainer.sortable( {
+      handle: '.repeater-row-header',
+      update: function() {
+        EpsilonFramework.repeater.helpers.sort( control );
+      }
+    } );
   },
 } );

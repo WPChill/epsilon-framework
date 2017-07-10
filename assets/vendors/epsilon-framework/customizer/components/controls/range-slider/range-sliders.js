@@ -12,23 +12,20 @@ EpsilonFramework.rangeSliders = {
   init: function( selector ) {
     var context = jQuery( selector ),
         sliders = context.find( '.slider-container' ),
-        slider, input, inputId, id, min, max, step;
+        slider, input, inputId, id;
 
     jQuery.each( sliders, function() {
       var slider = jQuery( this ).find( '.ss-slider' ),
           input = jQuery( this ).find( '.rl-slider' ),
           inputId = input.attr( 'id' ),
-          id = slider.attr( 'id' ),
-          min = jQuery( '#' + id ).attr( 'data-attr-min' ),
-          max = jQuery( '#' + id ).attr( 'data-attr-max' ),
-          step = jQuery( '#' + id ).attr( 'data-attr-step' );
+          id = slider.attr( 'id' );
 
       jQuery( '#' + id ).slider( {
-        value: jQuery( '#' + inputId ).attr( 'value' ),
+        value: parseFloat( jQuery( '#' + inputId ).attr( 'value' ) ),
         range: 'min',
-        min: parseFloat( min ),
-        max: parseFloat( max ),
-        step: parseFloat( step ),
+        min: parseFloat( jQuery( '#' + id ).attr( 'data-attr-min' ) ),
+        max: parseFloat( jQuery( '#' + id ).attr( 'data-attr-max' ) ),
+        step: parseFloat( jQuery( '#' + id ).attr( 'data-attr-step' ) ),
         /**
          * Removed Change event because server was flooded with requests from
          * javascript, sending changesets on each increment.

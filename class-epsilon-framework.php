@@ -78,6 +78,9 @@ class Epsilon_Framework {
 	public function init_controls( $wp_customize ) {
 		$path = get_template_directory() . $this->path . '/epsilon-framework';
 
+		$this->controls[] = 'repeater';
+		$this->controls[] = 'layouts';
+
 		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
 				require_once $path . '/customizer/controls/class-epsilon-control-' . $control . '.php';
@@ -99,6 +102,56 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
 			}
 		}
+
+		$wp_customize->add_setting(
+			new Epsilon_Setting_Repeater(
+				$wp_customize,
+				'_slider_bg_1',
+				array(
+					'default' => '',
+				)
+			)
+		);
+
+		$wp_customize->add_control(
+			new Epsilon_Control_Repeater(
+				$wp_customize,
+				'_slider_bg_1',
+				array(
+					'type'         => 'epsilon-repeater',
+					'label'        => esc_attr__( 'Slider Backgrounds', 'epsilon-framework' ),
+					'section'      => 'newsmag_blog_section',
+					'priority'     => 10,
+					'button_label' => 'Add more background images',
+					'row_label'    => array(
+						'type'  => 'text',
+						'value' => esc_attr__( 'Background Image', 'epsilon-framework' ),
+					),
+					'fields'       => array(
+						'cta_text'   => array(
+							'type'    => 'epsilon-toggle',
+							'label'   => esc_html__( 'CTA Text', 'epsilon-framework' ),
+							'default' => true,
+						),
+						'button_one' => array(
+							'type'    => 'epsilon-slider',
+							'label'   => esc_html__( 'Range', 'epsilon-framework' ),
+							'default' => 25,
+							'choices' => array(
+								'min'  => 10,
+								'max'  => 50,
+								'step' => 5,
+							),
+						),
+						'button_two' => array(
+							'type'    => 'text',
+							'label'   => esc_html__( 'Button #2 URL', 'epsilon-framework' ),
+							'default' => 'https://colorlib.com',
+						),
+					),
+				)
+			)
+		);
 	}
 
 	/**

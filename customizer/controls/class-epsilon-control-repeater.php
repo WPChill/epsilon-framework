@@ -61,6 +61,15 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	}
 
 	/**
+	 * Load the necessary styles and scripts
+	 *
+	 * @since 1.2.0
+	 */
+	public function enqueue() {
+		wp_enqueue_script( 'jquery-ui-sortable' );
+	}
+
+	/**
 	 * Add custom parameters to pass to the JS via JSON.
 	 *
 	 * @since  1.2.0

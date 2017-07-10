@@ -2,40 +2,22 @@
   position: relative;
 
   .repeater-fields {
-    width: 105%;
-    position: relative;
-    left: -10px;
     .repeater-row {
-      border: none;
-      margin-top: 0;
-      margin-bottom: 0;
+      border: 1px solid #e5e5e5;
+      margin-top: 0.5rem;
       background: #eee;
       position: relative;
-      border-bottom: 1px solid #e1e1e1;
+
       &.minimized {
+        border: 1px solid #dfdfdf;
         padding: 0;
-        border-bottom: none;
-        &:before {
-          width: 5px;
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: -2px;
-          background: #fff;
-          content: '';
-          z-index: 10;
-          -webkit-transition: all .2s;
-          transition: all .2s;
+
+        &:hover {
+          border: 1px solid #e5e5e5;
         }
+
         .repeater-row-content {
           display: none;
-        }
-        &:hover {
-          &:before {
-            -webkit-transition: all .2s;
-            transition: all .2s;
-            background: #006ea3;
-          }
         }
       }
 
@@ -139,13 +121,9 @@
     line-height: 30px;
     overflow: hidden;
     word-wrap: break-word;
-    -webkit-transition: all .2s;
-    transition: all .2s;
+
     &:hover {
-      -webkit-transition: all .2s;
-      transition: all .2s;
       cursor: move;
-      background: #f3f3f5;
     }
 
     .dashicons {
@@ -165,6 +143,12 @@
     width: 90%;
     overflow: hidden;
     height: 18px;
+    &:before {
+      font-family: 'Dashicons';
+      content: "\f545";
+      vertical-align: middle;
+      margin-right: 15px;
+    }
   }
 
   .repeater-row-remove {
@@ -183,88 +167,6 @@
   .upload-button {
     width: 48%;
   }
-
-  .kirki-controls-loading-spinner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    text-align: center;
-    background-color: #eee;
-
-    > div {
-      margin-top: 20px;
-      width: 18px;
-      height: 18px;
-      background-color: #333;
-      border-radius: 100%;
-      display: inline-block;
-      -webkit-animation: kirkibouncedelay 1.4s infinite ease-in-out both;
-      animation: kirkibouncedelay 1.4s infinite ease-in-out both;
-    }
-
-    .bounce1 {
-      -webkit-animation-delay: -0.32s;
-      animation-delay: -0.32s;
-    }
-
-    .bounce2 {
-      -webkit-animation-delay: -0.16s;
-      animation-delay: -0.16s;
-    }
-  }
-}
-
-@-webkit-keyframes kirkibouncedelay {
-  0%,
-  100%,
-  80% {
-    -webkit-transform: scale(0);
-  }
-
-  40% {
-    -webkit-transform: scale(1.0);
-  }
-}
-
-@keyframes kirkibouncedelay {
-  0%,
-  100%,
-  80% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-
-  40% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-  }
-}
-
-.kirki-image-attachment {
-  margin: 0;
-  text-align: center;
-  margin-bottom: 10px;
-
-  img {
-    display: inline-block;
-  }
-}
-
-.kirki-file-attachment {
-  margin: 0;
-  text-align: center;
-  margin-bottom: 10px;
-
-  .file {
-    display: block;
-    padding: 10px 5px;
-    border: 1px dotted #c3c3c3;
-    background: #f9f9f9;
-  }
 }
 
 .limit {
@@ -278,6 +180,5 @@
 }
 
 .button-holder {
-  margin-top:10px;
   text-align: center;
 }

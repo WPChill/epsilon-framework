@@ -77,14 +77,43 @@ EpsilonFramework.repeater.helpers = {
       return;
     }
 
-    if ( 'checkbox' === control.params.fields[ fieldId ].type ) {
-      currentSettings[ row.rowIndex ][ fieldId ] = element.is( ':checked' );
-    } else {
-
-      // Update the settings
-      currentSettings[ row.rowIndex ][ fieldId ] = element.val();
+    switch ( control.params.fields[ fieldId ].type ) {
+      case 'checkbox':
+      case 'epsilon-toggle':
+        currentSettings[ row.rowIndex ][ fieldId ] = element.prop( 'checked' );
+        break;
+      default:
+        currentSettings[ row.rowIndex ][ fieldId ] = element.val();
+        break;
     }
+
     EpsilonFramework.repeater.helpers.setValue( control, currentSettings, true );
+  },
+
+  /**
+   * Drag and drop functionality
+   * @param control
+   */
+  sort: function( control ) {
+    var rows = control.repeaterContainer.find( '.repeater-row' ),
+        settings = EpsilonFramework.repeater.helpers.getValue( control ),
+        newOrder = [],
+        newRows = [],
+        newSettings = [];
+
+    rows.each( function( i, element ) {
+      newOrder.push( jQuery( element ).data( 'row' ) );
+    } );
+
+    jQuery.each( newOrder, function( newPosition, oldPosition ) {
+      newRows[ newPosition ] = control.rows[ oldPosition ];
+
+      EpsilonFramework.repeater.row.setRowIndex( newRows[ newPosition ], newPosition, control );
+      newSettings[ newPosition ] = settings[ oldPosition ];
+    } );
+
+    control.rows = newRows;
+    EpsilonFramework.repeater.helpers.setValue( control, newSettings );
   },
   /**
    * Load Underscores template
@@ -101,7 +130,6 @@ EpsilonFramework.repeater.helpers = {
           escape: /\{\{([^\}]+?)\}\}(?!\})/g,
           variable: 'data'
         };
-
 
     return function( data ) {
       compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
