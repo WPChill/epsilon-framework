@@ -105,9 +105,34 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 			if ( ! isset( $value['default'] ) ) {
 				$this->fields[ $key ]['default'] = '';
 			}
+
 			if ( ! isset( $value['label'] ) ) {
 				$this->fields[ $key ]['label'] = '';
 			}
+
+			/**
+			 * Range Slider defaults
+			 */
+			if ( 'epsilon-slider' === $value['type'] ) {
+				if ( ! isset( $this->fields[ $key ]['choices'] ) ) {
+					$this->fields[ $key ]['choices'] = array();
+				}
+
+				$default = array(
+					'min'  => 0,
+					'max'  => 10,
+					'step' => 1,
+				);
+
+				$this->fields[ $key ]['choices'] = wp_parse_args( $this->fields[ $key ]['choices'], $default );
+			}
+			/**
+			 * Color picker defaults
+			 */
+			if ( 'epsilon-color-picker' === $value['type'] ) {
+				$this->fields[ $key ]['mode'] = ! empty( $this->fields[ $key ]['mode'] ) ? $this->fields[ $key ]['mode'] : 'hex';
+			}
+
 			$this->fields[ $key ]['id'] = $key;
 		} // End foreach().
 

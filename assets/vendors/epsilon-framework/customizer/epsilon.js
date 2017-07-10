@@ -17,9 +17,9 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
   EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
+  EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
-  EpsilonFramework.colorPickers.init();
   EpsilonFramework.recommendedActions.init();
 } );

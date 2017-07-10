@@ -77,7 +77,6 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 				<# } #>
 			</span>
 		</label>
-
 	<?php //@formatter:on
 	}
 

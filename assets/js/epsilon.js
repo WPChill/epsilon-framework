@@ -15,9 +15,10 @@ EpsilonFramework.repeater = 'undefined' === typeof( EpsilonFramework.repeater ) 
  * @type {{init: EpsilonFramework.colorPickers.init}}
  */
 EpsilonFramework.colorPickers = {
-  init: function() {
-    var selectors = jQuery( '.epsilon-color-picker' ),
+  init: function( selectors ) {
+    var selectors = jQuery( selectors ),
         settings;
+
     jQuery.each( selectors, function() {
       settings = {
         changeDelay: 1000,
@@ -1411,9 +1412,10 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       if ( ! limit || control.currentIndex < limit ) {
         newRow = EpsilonFramework.repeater.row.add( control );
         /**
-         * init the range sliders
+         * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
+        EpsilonFramework.colorPickers.init( newRow.container.find('.epsilon-color-picker') );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -1436,9 +1438,10 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       _.each( settingValue, function( subValue ) {
         newRow = EpsilonFramework.repeater.row.add( control, subValue );
         /**
-         * init the range sliders
+         * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
+        EpsilonFramework.colorPickers.init( newRow.container.find('.epsilon-color-picker') );
       } );
     }
 
@@ -1523,9 +1526,9 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
   EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
+  EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
-  EpsilonFramework.colorPickers.init();
   EpsilonFramework.recommendedActions.init();
 } );

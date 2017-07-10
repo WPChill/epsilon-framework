@@ -73,6 +73,16 @@ class Epsilon_Repeater_Templates {
 									<div id="slider_{{ field.id }}-{{ index }}" class="ss-slider" {{{ fieldExtras }}}></div>
 								</div>
 							</div>
+						<# } else if ( 'epsilon-color-picker' === field.type ) { #>
+							<label>
+								<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.value }}" />
+								<span class="customize-control-title epsilon-color-picker-title">
+									{{{ field.label }}}
+									<# if( field.description ){ #>
+										<span class="epsilon-color-picker-description">{{{ field.description }}}</span>
+									<# } #>
+								</span>
+							</label>
 						<# } #>
 					<# } ); #>
 					<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>

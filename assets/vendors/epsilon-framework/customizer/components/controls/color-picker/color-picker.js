@@ -4,9 +4,10 @@
  * @type {{init: EpsilonFramework.colorPickers.init}}
  */
 EpsilonFramework.colorPickers = {
-  init: function() {
-    var selectors = jQuery( '.epsilon-color-picker' ),
+  init: function( selectors ) {
+    var selectors = jQuery( selectors ),
         settings;
+
     jQuery.each( selectors, function() {
       settings = {
         changeDelay: 1000,
