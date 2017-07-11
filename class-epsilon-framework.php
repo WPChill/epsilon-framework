@@ -82,9 +82,6 @@ class Epsilon_Framework {
 	public function init_controls( $wp_customize ) {
 		$path = get_template_directory() . $this->path . '/epsilon-framework';
 
-		$this->controls[] = 'repeater';
-		$this->controls[] = 'section-repeater';
-
 		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
 				require_once $path . '/customizer/controls/class-epsilon-control-' . $control . '.php';
@@ -97,13 +94,6 @@ class Epsilon_Framework {
 				add_action( 'customize_controls_print_footer_scripts', array(
 					'Epsilon_Repeater_Templates',
 					'field_repeater_js_template',
-				) );
-			}
-
-			if ( in_array( 'section-repeater', $this->controls ) ) {
-				add_action( 'customize_controls_print_footer_scripts', array(
-					'Epsilon_Repeater_Templates',
-					'section_repeater_js_template',
 				) );
 			}
 		}
@@ -119,32 +109,6 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php';
 			}
 		}
-		
-		$wp_customize->add_section(
-			'panel_section_repeater',
-			array(
-				'title' => 'Sections',
-			)
-		);
-		$wp_customize->add_setting(
-			new Epsilon_Setting_Repeater(
-				$wp_customize,
-				'_Sections'
-			)
-		);
-
-		$wp_customize->add_control(
-			new Epsilon_Control_Section_Repeater(
-				$wp_customize,
-				'_Sections',
-				array(
-					'type'     => 'epsilon-section-repeater',
-					'label'    => esc_attr__( 'Sections', 'epsilon-framework' ),
-					'section'  => 'panel_section_repeater',
-					'priority' => 10,
-				)
-			)
-		);
 	}
 
 	/**
