@@ -1083,3 +1083,137 @@ ul.epsilon-upsell-requirements li {
   line-height: 20px;
   padding-top: 4px;
 }
+
+/* Start Panels */
+.epsilon-add-section-buttons {
+  padding: 10px;
+}
+.epsilon-add-section-buttons .epsilon-add-new-section:before {
+  content: "\f132";
+  display: inline-block;
+  position: relative;
+  left: -2px;
+  top: -1px;
+  font: 400 20px/1 dashicons;
+  vertical-align: middle;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.adding-section #available-sections {
+  left: 0;
+  visibility: visible;
+}
+body.adding-section .wp-full-overlay-main {
+  left: 300px;
+}
+body.adding-section #customize-preview {
+  opacity: 0.4;
+}
+body.adding-section .epsilon-add-new-section:before {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+#available-sections {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -301px;
+  visibility: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 300px;
+  margin: 0;
+  z-index: 4;
+  background: #eee;
+  -webkit-transition: left .18s;
+  transition: left .18s;
+  border-right: 1px solid #ddd;
+  padding-top: 60px;
+}
+#available-sections .customize-section-title {
+  display: none;
+}
+
+#available-sections-filter h2 {
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+#available-sections-filter input {
+  width: 100%;
+  height: 32px;
+  margin: 1px 0;
+  padding: 6px 30px;
+}
+#available-sections-filter .search-icon {
+  display: block;
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  text-align: center;
+  color: #72777c;
+}
+#available-sections-filter .search-icon:after {
+  content: "\f179";
+  font: 400 20px/1 dashicons;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#available-sections-filter .clear-results {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: 0 0;
+  color: #a00;
+  text-decoration: none;
+  outline: 0;
+}
+
+#available-sections-list .epsilon-section {
+  padding: 20px 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  border-left: 4px solid #fff;
+  -webkit-transition: .15s color ease-in-out, .15s background-color ease-in-out, .15s border-color ease-in-out;
+  transition: .15s color ease-in-out, .15s background-color ease-in-out, .15s border-color ease-in-out;
+}
+#available-sections-list .epsilon-section:hover {
+  background: #f3f3f5;
+  border-bottom-color: #ccc;
+  color: #0073aa;
+  border-left-color: #0073aa;
+}
+#available-sections-list .epsilon-section .epsilon-section-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #23282d;
+  padding-bottom: 5px;
+}
+#available-sections-list .epsilon-section .epsilon-section-description {
+  display: block;
+}
+
+.epsilon-add-section-buttons {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 0 10px;
+}
+
+.customize-control.customize-control-hidden {
+  display: none !important;
+}

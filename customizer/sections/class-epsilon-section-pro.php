@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
  * Pro customizer section.

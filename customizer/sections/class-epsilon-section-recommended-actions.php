@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 /**
  * Class Epsilon_Section_Recommended_Actions

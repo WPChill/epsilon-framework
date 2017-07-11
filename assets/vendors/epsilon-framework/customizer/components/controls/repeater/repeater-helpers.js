@@ -215,6 +215,5 @@ EpsilonFramework.repeater.helpers = {
       compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).html(), null, options );
       return compiled( data );
     };
-
   }
 };

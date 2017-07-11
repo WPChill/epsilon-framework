@@ -799,7 +799,6 @@ EpsilonFramework.repeater.helpers = {
       compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).html(), null, options );
       return compiled( data );
     };
-
   }
 };
 
@@ -1075,6 +1074,81 @@ EpsilonFramework.repeater.row = {
   },
 };
 
+/**
+ * Section Repeater object
+ *
+ * @type {{}}
+ */
+EpsilonFramework.sectionRepeater = {
+  /**
+   * Wp API
+   */
+  api: wp.customize || null,
+  /**
+   * Context
+   */
+  context: null,
+  /**
+   * Control that saves option in the database
+   */
+  control: null,
+  /**
+   * Initiator
+   */
+  init: function( instance ) {
+    /**
+     * Save Context
+     */
+    this.context = instance;
+    /**
+     * Handle adding of new sections
+     */
+    this.addNewSection();
+    /**
+     * Handle the click event
+     */
+    this.handleAddButton();
+  },
+
+  /**
+   * Add a new section handler
+   */
+  add: function( control ) {
+    var self = this,
+        template = _.memoize( EpsilonFramework.repeater.helpers.repeaterTemplate( control ) );
+  },
+  /**
+   * Handle the adding section button
+   *
+   * @private
+   */
+  handleAddButton: function() {
+    var panel = this.context,
+        isAddBtn,
+        body = jQuery( 'body' );
+
+    panel.container.find( '.epsilon-add-new-section' ).on( 'click keydown', function( e ) {
+      isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
+
+      body.toggleClass( 'adding-section' );
+      if ( body.hasClass( 'adding-section' ) && ! isAddBtn ) {
+        panel.close();
+      }
+    } );
+  },
+
+  /**
+   * Set the value of the customizer option
+   *
+   * @param instance
+   * @param newValue
+   * @param refresh
+   */
+  setValue: function( instance, newValue, refresh ) {
+    console.log( newValue );
+    instance.setting.set( encodeURI( JSON.stringify( newValue ) ) );
+  }
+};
 /**
  * Typography functions
  *
@@ -1701,6 +1775,25 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
         EpsilonFramework.repeater.helpers.sort( control );
       }
     } );
+  },
+} );
+/**
+ * Epsilon Section Repeater Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var newSection, limit;
+    this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
+    this.currentIndex = 0;
+    /**
+     * Set an initial value to the repeater field
+     */
+    EpsilonFramework.repeater.helpers.setValue( this, [], false );
+
+    /**
+     * Add new repeater section handler
+     */
+    EpsilonFramework.repeater.handleAddButton();
   },
 } );
 /**

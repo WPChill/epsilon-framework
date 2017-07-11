@@ -18,6 +18,7 @@ module.exports = function( grunt ) {
           'assets/vendors/epsilon-framework/customizer/components/controls/repeater/repeater-object.js',
           'assets/vendors/epsilon-framework/customizer/components/controls/**/*.js',
           'assets/vendors/epsilon-framework/customizer/components/sections/**/*.js',
+          'assets/vendors/epsilon-framework/customizer/components/panels/**/*.js',
           'assets/vendors/epsilon-framework/customizer/components/wp-customize-extenders/**/*.js',
           'assets/vendors/epsilon-framework/customizer/epsilon.js',
           '!assets/vendors/epsilon-framework/customizer/epsilon.min.js',
