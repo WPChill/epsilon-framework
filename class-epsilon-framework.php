@@ -78,6 +78,7 @@ class Epsilon_Framework {
 	public function init_controls( $wp_customize ) {
 		$path = get_template_directory() . $this->path . '/epsilon-framework';
 
+
 		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
 				require_once $path . '/customizer/controls/class-epsilon-control-' . $control . '.php';
@@ -99,6 +100,7 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
 			}
 		}
+
 	}
 
 	/**
@@ -140,6 +142,13 @@ class Epsilon_Framework {
 			'theme'   => get_template_directory_uri(),
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
+
+		wp_localize_script( 'epsilon-object', 'EpsilonTranslations', array(
+			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
+			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
+			'selectFile' => esc_html__( 'Select a file', 'epsilon-framework' ),
+		) );
+
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
 
 	}
@@ -187,6 +196,10 @@ class Epsilon_Framework {
 
 		$response = $class::$method( $args );
 
+		if ( is_array( $response ) ) {
+			wp_die( json_encode( $response ) );
+		}
+
 		if ( 'ok' == $response ) {
 			wp_die(
 				json_encode(
@@ -206,26 +219,5 @@ class Epsilon_Framework {
 				)
 			)
 		);
-	}
-
-	/**
-	 * @param $args
-	 *
-	 * @return string
-	 */
-	public static function dismiss_required_action( $args ) {
-		$option = get_option( $args['option'] );
-
-		if ( $option ) :
-			$option[ $args['id'] ] = false;
-			update_option( $args['option'], $option );
-		else :
-			$option = array(
-				$args['id'] => false,
-			);
-			update_option( $args['option'], $option );
-		endif;
-
-		return 'ok';
 	}
 }
