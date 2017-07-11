@@ -19,7 +19,7 @@
 }
 
 body.adding-section {
-  #available-sections {
+  .available-sections {
     left: 0;
     visibility: visible;
   }
@@ -36,7 +36,7 @@ body.adding-section {
   }
 }
 
-#available-sections {
+.available-sections {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -57,7 +57,7 @@ body.adding-section {
   }
 }
 
-#available-sections-filter {
+.available-sections-filter {
   h2 {
     margin-bottom: 0;
     margin-top: 5px;
@@ -102,7 +102,7 @@ body.adding-section {
   }
 }
 
-#available-sections-list {
+.available-sections-list {
   .epsilon-section {
     padding: 20px 15px;
     background-color: #fff;

@@ -199,10 +199,9 @@ EpsilonFramework.repeater.helpers = {
    * Load Underscores template
    *
    * @since 1.2.0
-   * @param instance
    * @returns {Function}
    */
-  repeaterTemplate: function( instance ) {
+  repeaterTemplate: function() {
     var compiled,
         options = {
           evaluate: /<#([\s\S]+?)#>/g,

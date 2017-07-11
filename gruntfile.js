@@ -16,6 +16,7 @@ module.exports = function( grunt ) {
         src: [
           'assets/vendors/epsilon-framework/customizer/components/epsilon-object.js',
           'assets/vendors/epsilon-framework/customizer/components/controls/repeater/repeater-object.js',
+          'assets/vendors/epsilon-framework/customizer/components/controls/section-repeater/section-repeater-object.js',
           'assets/vendors/epsilon-framework/customizer/components/controls/**/*.js',
           'assets/vendors/epsilon-framework/customizer/components/sections/**/*.js',
           'assets/vendors/epsilon-framework/customizer/components/panels/**/*.js',

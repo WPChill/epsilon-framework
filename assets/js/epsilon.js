@@ -9,6 +9,11 @@ var EpsilonFramework = 'undefined' === typeof( EpsilonFramework ) ? {} : Epsilon
  */
 EpsilonFramework.repeater = 'undefined' === typeof( EpsilonFramework.repeater ) ? {} : EpsilonFramework.repeater;
 
+/*
+ EpsilonFramework.sectionRepeater Object
+ */
+EpsilonFramework.sectionRepeater = 'undefined' === typeof( EpsilonFramework.sectionRepeater ) ? {} : EpsilonFramework.sectionRepeater;
+
 /**
  * Improved Color Picker
  *
@@ -783,10 +788,9 @@ EpsilonFramework.repeater.helpers = {
    * Load Underscores template
    *
    * @since 1.2.0
-   * @param instance
    * @returns {Function}
    */
-  repeaterTemplate: function( instance ) {
+  repeaterTemplate: function() {
     var compiled,
         options = {
           evaluate: /<#([\s\S]+?)#>/g,
@@ -1074,65 +1078,208 @@ EpsilonFramework.repeater.row = {
   },
 };
 
+EpsilonFramework.sectionRepeater.section = {
+  /**
+   * Basic section constructor
+   *
+   * @param sectionIndex
+   * @param container
+   * @param label
+   * @param control
+   */
+  constructor: function( sectionIndex, container, type, label, control ) {
+    var self = this;
+    this.sectionIndex = sectionIndex;
+    this.container = container;
+    this.label = label;
+    this.type = type;
+    this.header = this.container.find( '.repeater-row-header' );
+
+    /**
+     * Events
+     */
+    this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
+      self.container.trigger( 'section:update', [ self.sectionIndex, self.type, jQuery( e.target ).data( 'field' ), e.target, control ] );
+    } );
+
+    /**
+     * Remove event
+     */
+    this.container.on( 'click', '.repeater-row-remove', function() {
+      EpsilonFramework.sectionRepeater.base.removeSection( self );
+    } );
+
+    EpsilonFramework.sectionRepeater.base.updateLabel( self, control );
+  },
+};
 /**
  * Section Repeater object
  *
  * @type {{}}
  */
-EpsilonFramework.sectionRepeater = {
+EpsilonFramework.sectionRepeater.base = {
   /**
-   * Wp API
+   * Deletes a section from the control
+   *
+   * @param index
    */
-  api: wp.customize || null,
-  /**
-   * Context
-   */
-  context: null,
-  /**
-   * Control that saves option in the database
-   */
-  control: null,
-  /**
-   * Initiator
-   */
-  init: function( instance ) {
-    /**
-     * Save Context
-     */
-    this.context = instance;
-    /**
-     * Handle adding of new sections
-     */
-    this.addNewSection();
-    /**
-     * Handle the click event
-     */
-    this.handleAddButton();
-  },
+  delete: function( sectionInstance, index, control ) {
+    var self = this,
+        currentSettings = self.getValue( control ),
+        section,
+        i,
+        prop;
 
+    if ( currentSettings[ index ] ) {
+      // Find the row
+      section = control.sections[ index ];
+      if ( section ) {
+
+        // Remove the sections settings
+        delete currentSettings[ index ];
+
+        // Remove the sections from the rows collection
+        delete control.sections[ index ];
+
+        // Update the new setting values
+        self.setValue( control, currentSettings, true );
+      }
+    }
+
+    // Remap the row numbers
+    i = 1;
+    for ( prop in control.sections ) {
+      if ( control.sections.hasOwnProperty( prop ) && control.sections[ prop ] ) {
+        self.updateLabel( control.sections[ prop ], control );
+        i ++;
+      }
+    }
+  },
   /**
    * Add a new section handler
    */
-  add: function( control ) {
+  add: function( control, type, data ) {
     var self = this,
-        template = _.memoize( EpsilonFramework.repeater.helpers.repeaterTemplate( control ) );
+        template = _.memoize( EpsilonFramework.repeater.helpers.repeaterTemplate() ),
+        settingValue = self.getValue( control ),
+        newSectionSetting = {},
+        templateData,
+        newSection,
+        i;
+
+    /**
+     * In case we don`t have a template, we terminate here
+     */
+    if ( ! template ) {
+      return;
+    }
+
+    /**
+     * Extend template data with what we passed in PHP
+     */
+    templateData = jQuery.extend( true, {}, control.params.sections[ type ].fields );
+
+    /**
+     * In case we added the row with "known" data, we need to overwrite the array
+     */
+    if ( data ) {
+      for ( i in data ) {
+        if ( data.hasOwnProperty( i ) && templateData.hasOwnProperty( i ) ) {
+          templateData[ i ][ 'default' ] = data[ i ];
+        }
+      }
+    }
+    /**
+     * Add an index
+     *
+     * @type {number}
+     */
+    templateData.index = control.currentIndex;
+    /**
+     * Render the HTML template with underscores
+     */
+    template = template( templateData );
+
+    /**
+     * Initiate a new ROW
+     *
+     * @type {*}
+     */
+    newSection = new EpsilonFramework.sectionRepeater.section.constructor(
+        control.currentIndex,
+        jQuery( template ).appendTo( control.repeaterContainer ),
+        control.params.sections[ type ].id,
+        control.params.sections[ type ].title,
+        control
+    );
+
+    /**
+     * 1. Remove row event
+     */
+    newSection.container.on( 'section:remove', function( e, sectionIndex ) {
+      self.delete( this, sectionIndex, control );
+    } );
+    /**
+     * 2. Update row event
+     */
+    newSection.container.on( 'section:update', function( e, sectionIndex, type, fieldName, element, control ) {
+      self.updateField.call( e, sectionIndex, type, fieldName, element, control );
+      self.updateLabel( newSection );
+    } );
+
+    /**
+     * Register the new row in the control
+     *
+     * @type {*}
+     */
+    control.sections[ control.currentIndex ] = newSection;
+
+    /**
+     * Add a new "index" to the setting ( easier to render in the frontend )
+     */
+    for ( i in templateData ) {
+      if ( templateData.hasOwnProperty( i ) ) {
+        newSectionSetting[ i ] = templateData[ i ][ 'default' ];
+      }
+    }
+
+    newSectionSetting.type = type;
+
+    /**
+     * Add a value to the setting
+     * @type {{}}
+     */
+    settingValue[ control.currentIndex ] = newSectionSetting;
+    /**
+     * Set it
+     */
+    self.setValue( control, settingValue, true, false );
+
+    /**
+     * Update index
+     */
+    control.currentIndex ++;
+
+    /**
+     * Return constructor
+     */
+    return newSection;
   },
   /**
    * Handle the adding section button
    *
    * @private
    */
-  handleAddButton: function() {
-    var panel = this.context,
-        isAddBtn,
+  handleAddButton: function( context ) {
+    var isAddBtn,
         body = jQuery( 'body' );
 
-    panel.container.find( '.epsilon-add-new-section' ).on( 'click keydown', function( e ) {
+    context.container.find( '.epsilon-add-new-section' ).on( 'click keydown', function( e ) {
       isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
 
       body.toggleClass( 'adding-section' );
       if ( body.hasClass( 'adding-section' ) && ! isAddBtn ) {
-        panel.close();
+        context.close();
       }
     } );
   },
@@ -1143,10 +1290,106 @@ EpsilonFramework.sectionRepeater = {
    * @param instance
    * @param newValue
    * @param refresh
+   * @param filtering
    */
-  setValue: function( instance, newValue, refresh ) {
-    console.log( newValue );
-    instance.setting.set( encodeURI( JSON.stringify( newValue ) ) );
+  setValue: function( instance, newValue, refresh, filtering ) {
+    // We need to filter the values after the first load to remove data requrired for diplay but that we don't want to save in DB
+    var filteredValue = newValue,
+        filter = [];
+
+    /**
+     * Filtering
+     */
+    if ( filtering ) {
+      jQuery.each( newValue, function( index, value ) {
+        jQuery.each( filter, function( ind, field ) {
+          if ( ! _.isUndefined( value[ field ] ) && ! _.isUndefined( value[ field ].id ) ) {
+            filteredValue[ index ][ field ] = value[ field ].id;
+          }
+        } );
+      } );
+    }
+
+    instance.setting.set( encodeURI( JSON.stringify( filteredValue ) ) );
+
+    if ( refresh ) {
+      instance.settingField.trigger( 'change' );
+    }
+  },
+
+  /**
+   * Get the value of the customizer option
+   *
+   * @param instance
+   */
+  getValue: function( instance ) {
+    // The setting is saved in JSON
+    return JSON.parse( decodeURI( instance.setting.get() ) );
+  },
+
+  /**
+   * Update the label of the section
+   *
+   * @param section
+   * @param control
+   */
+  updateLabel: function( section, control ) {
+    var sectionLabelField,
+        sectionLabel,
+        sectionLabelSelector;
+
+    section.header.find( '.repeater-row-label' ).text( section.label + ' ' + ( section.sectionIndex + 1 ) );
+  },
+  /**
+   * Update a single field inside a row.
+   * Triggered when a field has changed
+   *
+   * @param e Event Object
+   */
+  updateField: function( sectionIndex, sectionType, fieldId, element, control ) {
+    var section,
+        currentSettings;
+
+    console.log( self );
+    if ( ! control.sections[ sectionIndex ] ) {
+      return;
+    }
+
+    if ( ! control.params.sections[ sectionType ].fields[ fieldId ] ) {
+      return;
+    }
+
+    section = control.sections[ sectionIndex ];
+    currentSettings = EpsilonFramework.sectionRepeater.base.getValue( control );
+
+    element = jQuery( element );
+
+    if ( _.isUndefined( currentSettings[ section.sectionIndex ][ fieldId ] ) ) {
+      return;
+    }
+
+    switch ( control.params.sections[ sectionType ].fields[ fieldId ].type ) {
+      case 'checkbox':
+      case 'epsilon-toggle':
+        currentSettings[ section.sectionIndex ][ fieldId ] = element.prop( 'checked' );
+        break;
+      default:
+        currentSettings[ section.sectionIndex ][ fieldId ] = element.val();
+        break;
+    }
+
+    EpsilonFramework.sectionRepeater.base.setValue( control, currentSettings, true );
+  },
+  /**
+   * Remove a row from the instance
+   *
+   * @param instance
+   */
+  removeSection: function( instance ) {
+    instance.container.slideUp( 300, function() {
+      jQuery( this ).detach();
+    } );
+    instance.container.trigger( 'section:remove', [ instance.sectionIndex ] );
   }
 };
 /**
@@ -1782,18 +2025,54 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
  */
 wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Control.extend( {
   ready: function() {
-    var newSection, limit;
+    var control = this,
+        settingValue = this.params.value,
+        newSection, limit;
+
+    /**
+     * We need to move this element to the bottom of the page so it renders properly
+     */
+    jQuery( '#sections-left-' + this.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
+
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
+    this.repeaterContainer = this.container.find( '.repeater-sections' ).first();
     this.currentIndex = 0;
+    /**
+     * Start saving rows
+     * @type {Array}
+     */
+    this.sections = [];
     /**
      * Set an initial value to the repeater field
      */
-    EpsilonFramework.repeater.helpers.setValue( this, [], false );
+    EpsilonFramework.sectionRepeater.base.setValue( this, [], false );
 
     /**
      * Add new repeater section handler
      */
-    EpsilonFramework.repeater.handleAddButton();
+    EpsilonFramework.sectionRepeater.base.handleAddButton( this );
+
+    /**
+     * Addition of sections
+     */
+    jQuery( '#sections-left-' + this.params.id ).on( 'click', '.epsilon-section', function( e ) {
+      EpsilonFramework.sectionRepeater.base.add( control, jQuery( this ).attr( 'data-id' ) );
+    } );
+
+    console.log( settingValue.length );
+    /**
+     * If we have saved rows, we need to display them
+     */
+    if ( settingValue.length ) {
+      _.each( settingValue, function( subValue ) {
+        newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
+      } );
+    }
+
+    /**
+     * After display fields, clean the setting
+     */
+    EpsilonFramework.sectionRepeater.base.setValue( this, settingValue, true, true );
   },
 } );
 /**

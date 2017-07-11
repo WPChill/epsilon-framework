@@ -19,6 +19,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $type = 'epsilon-section-repeater';
 
 	/**
+	 * @since 1.2.0
+	 * @var array
+	 */
+	public $repeatable_sections = array();
+
+	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
 	 * @since 1.2.0
@@ -40,12 +46,73 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']      = $this->id;
-		$json['link']    = $this->get_link();
-		$json['value']   = $this->value();
-		$json['default'] = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']       = $this->id;
+		$json['link']     = $this->get_link();
+		$json['value']    = $this->value();
+		$json['sections'] = $this->set_repeatable_sections();
+		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
+	}
+
+	/**
+	 * @since 1.2.0
+	 */
+	public function set_repeatable_sections() {
+		if ( empty( $this->repeatable_sections ) || ! is_array( $this->repeatable_sections ) ) {
+			$this->repeatable_sections = array();
+		}
+
+		foreach ( $this->repeatable_sections as $key => $value ) {
+			foreach ( $value['fields'] as $k => $v ) {
+				if ( ! isset( $v['default'] ) ) {
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = '';
+				}
+
+				if ( ! isset( $v['label'] ) ) {
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['label'] = '';
+				}
+
+				/**
+				 * Range Slider defaults
+				 */
+				if ( 'epsilon-slider' === $v['type'] ) {
+					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] ) ) {
+						$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = array();
+					}
+
+					$default = array(
+						'min'  => 0,
+						'max'  => 10,
+						'step' => 1,
+					);
+
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = wp_parse_args( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'], $default );
+				}
+
+				/**
+				 * Epsilon Image
+				 */
+				if ( 'epsilon-image' === $v['type'] ) {
+					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['default'] ) ) {
+						$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = array();
+					}
+
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections->fields[ $key ]['fields'][ $k ]['mode'] : 'url';
+				}
+
+				/**
+				 * Color picker defaults
+				 */
+				if ( 'epsilon-color-picker' === $v['type'] ) {
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'hex';
+				}
+
+				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;
+			}
+		} // End foreach().
+
+		return $this->repeatable_sections;
 	}
 
 	/**
@@ -72,8 +139,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						</span>
 					</i>
 				<# } #>
-			</span>
-		</label>
+			</span> </label>
 		<ul class="repeater-sections">
 
 		</ul>
@@ -82,6 +148,30 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				<?php _e( 'Add a Section' ); ?>
 			</button>
 		</div>
+		<div id="sections-left-{{ data.id }}">
+			<div class="available-sections">
+				<div class="customize-section-title">
+					<h3>
+					<span class="customize-action"><?php
+						?></span>
+						<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
+					</h3>
+				</div>
+				<div class="available-sections-filter">
+					<h2><?php esc_html_e( 'Epsilon Sections', 'epsilon-framework' ); ?></h2>
+				</div>
+				<div class="available-sections-list">
+					<# for (section in data.sections) { #>
+						<# var temp = JSON.stringify(data.sections[section].fields); #>
+							<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
+								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+								<input type="hidden" value="{{ temp }}"/>
+							</div>
+							<# } #>
+				</div><!-- #available-sections-list -->
+			</div><!-- #available-sections -->
+		</div><!-- #sections-left -->
 		<?php
 	}
 }

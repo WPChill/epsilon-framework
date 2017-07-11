@@ -5,54 +5,6 @@ if ( ! defined( 'WPINC' ) ) {
 
 class Epsilon_Repeater_Templates {
 	/**
-	 * Section Repeater JS Template
-	 */
-	public static function section_repeater_js_template() {
-		$sections = array(
-			'hero' => array(
-				'title'       => 'Hero Section',
-				'description' => 'This is mostly used for first section',
-				'fields'      => array(
-					'hero-title'       => array(
-						'title' => 'Hero Title',
-						'type'  => 'text',
-						'value' => '',
-					),
-					'hero-description' => array(
-						'title' => 'Hero Description',
-						'type'  => 'text',
-						'value' => '',
-					)
-				),
-			),
-		);
-		?>
-		<div id="sections-left">
-			<div id="available-sections">
-				<div class="customize-section-title">
-					<h3>
-					<span class="customize-action"><?php
-						?></span>
-						<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
-					</h3>
-				</div>
-				<div id="available-sections-filter">
-					<h2><?php esc_html_e( 'Epsilon Sections', 'epsilon-framework' ); ?></h2>
-				</div>
-				<div id="available-sections-list">
-					<?php foreach ( $sections as $section_id => $section ): ?>
-						<div class="epsilon-section" data-id="<?php echo $section_id ?>">
-							<span class="epsilon-section-title"><?php echo $section['title'] ?></span>
-							<span class="epsilon-section-description"><?php echo $section['description'] ?></span>
-						</div>
-					<?php endforeach; ?>
-				</div><!-- #available-sections-list -->
-			</div><!-- #available-sections -->
-		</div><!-- #sections-left -->
-		<?php
-	}
-
-	/**
 	 * Render JS Template
 	 */
 	public static function field_repeater_js_template() {
