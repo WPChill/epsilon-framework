@@ -129,6 +129,130 @@ EpsilonFramework.colorSchemes = {
 };
 
 /**
+ * Initiate the Image Control
+ */
+
+EpsilonFramework.image = {
+  /**
+   * Initiator
+   */
+  init: function( control ) {
+    var self = this,
+        image,
+        temp,
+        setting = {},
+        thumb;
+
+    /**
+     * Image selection
+     */
+    control.container.on( 'click', '.image-upload-button', function( e ) {
+      /**
+       * Open the wp.media frame
+       */
+      image = wp.media( {
+        multiple: false,
+      } ).open();
+
+      /**
+       * On selection, save the data in a JSON
+       */
+      image.on( 'select', function() {
+        temp = image.state().get( 'selection' ).first();
+        setting.id = temp.id;
+        setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+        self.saveValue( control, setting );
+        self.setImage( control, setting.url );
+
+        /**
+         * Show buttons
+         */
+        control.container.find( '.actions .image-upload-remove-button' ).show();
+        if ( ! _.isEmpty( control.params.default ) ) {
+          control.container.find( '.actions .image-default-button' ).show();
+        }
+      } );
+    } );
+
+    /**
+     * Image deletion
+     */
+    control.container.on( 'click', '.image-upload-remove-button', function( e ) {
+      e.preventDefault();
+      thumb = control.container.find( '.epsilon-image' );
+      self.saveValue( control, '' );
+
+      if ( thumb.length ) {
+        thumb.find( 'img' ).fadeOut( 200, function() {
+          thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( EpsilonTranslations.selectFile );
+        } );
+      }
+
+      /**
+       * If we don`t have an image, we can hide these buttons
+       */
+      jQuery( this ).hide();
+      if ( ! _.isEmpty( control.params.default ) ) {
+        control.container.find( '.actions .image-default-button' ).show();
+      }
+    } );
+
+    control.container.on( 'click', '.image-default-button', function( e ) {
+      e.preventDefault();
+      thumb = control.container.find( '.epsilon-image' );
+
+      self.saveValue( control, control.params.default );
+      self.setImage( control, control.params.default.url );
+
+      control.container.find( '.actions .image-upload-remove-button' ).show();
+    } );
+  },
+
+  /**
+   * Set image in the customizer option control
+   *
+   * @param control
+   * @param image
+   */
+  setImage: function( control, image ) {
+    /**
+     * If we already have an image, we need to return that div, else we grab the placeholder
+     *
+     * @type {*}
+     */
+    var thumb = control.container.find( '.epsilon-image' ).length ? control.container.find( '.epsilon-image' ) : control.container.find( '.placeholder' );
+
+    /**
+     * We "reload" the image container
+     */
+    if ( thumb.length ) {
+      thumb.removeClass( 'epsilon-image placeholder' ).addClass( 'epsilon-image' );
+      thumb.html( '' );
+      thumb.append( '<img style="display:none" src="' + image + '" />' );
+      thumb.find( 'img' ).fadeIn( 200 );
+    }
+  },
+
+  /**
+   * Save value in database
+   *
+   * @param control
+   * @param val
+   */
+  saveValue: function( control, val ) {
+    var input = control.container.find( '.epsilon-controller-image-container > input' );
+
+    if ( 'object' === typeof(val) ) {
+      control.setting.set( JSON.stringify( val ) );
+      jQuery( input ).attr( 'value', JSON.stringify( val ) ).trigger( 'change' );
+    } else {
+      control.setting.set( '' );
+      jQuery( input ).attr( 'value', '' ).trigger( 'change' );
+    }
+
+  },
+};
+/**
  * Initiate the Layouts Control
  *
  * jQuery Events {
@@ -575,6 +699,86 @@ EpsilonFramework.repeater.helpers = {
     control.rows = newRows;
     EpsilonFramework.repeater.helpers.setValue( control, newSettings );
   },
+
+  /**
+   * Handle image uploading in a repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  handleImageUpload: function( instance, container ) {
+    var self = this,
+        setting = {},
+        temp,
+        input,
+        image = wp.media( {
+          multiple: false,
+        } ).open();
+
+    /**
+     * On selection, save the data in a JSON
+     */
+    image.on( 'select', function() {
+      input = container.find( 'input' );
+      temp = image.state().get( 'selection' ).first();
+      setting.id = temp.id;
+      setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+
+      self._setImage( container, setting.url );
+      input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );
+
+      container.find( '.actions .image-upload-remove-button' ).show();
+    } );
+  },
+
+  /**
+   * Handle Image Removal in a repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  handleImageRemoval: function( instance, container ) {
+    var self = this,
+        setting = {},
+        thumb = container.find( '.epsilon-image' );
+
+    if ( thumb.length ) {
+      thumb.find( 'img' ).fadeOut( 200, function() {
+        thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( EpsilonTranslations.selectFile );
+      } );
+    }
+
+    container.find( '.actions .image-upload-remove-button' ).hide();
+    container.find( 'input' ).attr( 'value', '' ).trigger( 'change' );
+  },
+
+  /**
+   * Set image in the customizer option control
+   *
+   * @param control
+   * @param image
+   *
+   * @access private
+   */
+  _setImage: function( container, image ) {
+    /**
+     * If we already have an image, we need to return that div, else we grab the placeholder
+     *
+     * @type {*}
+     */
+    var thumb = container.find( '.epsilon-image' ).length ? container.find( '.epsilon-image' ) : container.find( '.placeholder' );
+
+    /**
+     * We "reload" the image container
+     */
+    if ( thumb.length ) {
+      thumb.removeClass( 'epsilon-image placeholder' ).addClass( 'epsilon-image' );
+      thumb.html( '' );
+      thumb.append( '<img style="display:none" src="' + image + '" />' );
+      thumb.find( 'img' ).fadeIn( 200 );
+    }
+  },
+
   /**
    * Load Underscores template
    *
@@ -592,7 +796,7 @@ EpsilonFramework.repeater.helpers = {
         };
 
     return function( data ) {
-      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
+      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).html(), null, options );
       return compiled( data );
     };
 
@@ -1144,7 +1348,7 @@ EpsilonFramework.recommendedActions = {
            * @type {{action: [*], args: {id: *, option: *}}}
            */
           args = {
-            'action': [ 'Epsilon_Framework', 'dismiss_required_action' ],
+            'action': [ 'Epsilon_Notify_System', 'dismiss_required_action' ],
             'args': {
               'id': jQuery( this ).attr( 'id' ),
               'option': jQuery( this ).attr( 'data-option' )
@@ -1324,6 +1528,16 @@ wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control
   }
 } );
 /**
+ * Image Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-image' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+    EpsilonFramework.image.init( this );
+  }
+} );
+
+/**
  * WP Customizer Layouts Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
@@ -1367,7 +1581,8 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     var control = this,
         settingValue = this.params.value,
         limit = false,
-        newRow;
+        newRow,
+        temp;
 
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
 
@@ -1415,7 +1630,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find('.epsilon-color-picker') );
+        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -1432,6 +1647,33 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     } );
 
     /**
+     * 3. Image controls - Upload
+     */
+    this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-button', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+      temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
+
+      EpsilonFramework.repeater.helpers.handleImageUpload( control, temp );
+    } );
+
+    /**
+     * 4 Image Controls - Removal
+     */
+    this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-remove-button', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+
+      temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
+      EpsilonFramework.repeater.helpers.handleImageRemoval( control, temp );
+    } );
+    /**
      * If we have saved rows, we need to display them
      */
     if ( settingValue.length ) {
@@ -1441,7 +1683,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find('.epsilon-color-picker') );
+        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
       } );
     }
 
@@ -1450,6 +1692,9 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      */
     EpsilonFramework.repeater.helpers.setValue( this, settingValue, true, true );
 
+    /**
+     * Add sortable functionality
+     */
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       update: function() {

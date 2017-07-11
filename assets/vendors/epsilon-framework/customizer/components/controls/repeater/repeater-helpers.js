@@ -115,6 +115,86 @@ EpsilonFramework.repeater.helpers = {
     control.rows = newRows;
     EpsilonFramework.repeater.helpers.setValue( control, newSettings );
   },
+
+  /**
+   * Handle image uploading in a repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  handleImageUpload: function( instance, container ) {
+    var self = this,
+        setting = {},
+        temp,
+        input,
+        image = wp.media( {
+          multiple: false,
+        } ).open();
+
+    /**
+     * On selection, save the data in a JSON
+     */
+    image.on( 'select', function() {
+      input = container.find( 'input' );
+      temp = image.state().get( 'selection' ).first();
+      setting.id = temp.id;
+      setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+
+      self._setImage( container, setting.url );
+      input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );
+
+      container.find( '.actions .image-upload-remove-button' ).show();
+    } );
+  },
+
+  /**
+   * Handle Image Removal in a repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  handleImageRemoval: function( instance, container ) {
+    var self = this,
+        setting = {},
+        thumb = container.find( '.epsilon-image' );
+
+    if ( thumb.length ) {
+      thumb.find( 'img' ).fadeOut( 200, function() {
+        thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( EpsilonTranslations.selectFile );
+      } );
+    }
+
+    container.find( '.actions .image-upload-remove-button' ).hide();
+    container.find( 'input' ).attr( 'value', '' ).trigger( 'change' );
+  },
+
+  /**
+   * Set image in the customizer option control
+   *
+   * @param control
+   * @param image
+   *
+   * @access private
+   */
+  _setImage: function( container, image ) {
+    /**
+     * If we already have an image, we need to return that div, else we grab the placeholder
+     *
+     * @type {*}
+     */
+    var thumb = container.find( '.epsilon-image' ).length ? container.find( '.epsilon-image' ) : container.find( '.placeholder' );
+
+    /**
+     * We "reload" the image container
+     */
+    if ( thumb.length ) {
+      thumb.removeClass( 'epsilon-image placeholder' ).addClass( 'epsilon-image' );
+      thumb.html( '' );
+      thumb.append( '<img style="display:none" src="' + image + '" />' );
+      thumb.find( 'img' ).fadeIn( 200 );
+    }
+  },
+
   /**
    * Load Underscores template
    *
@@ -132,7 +212,7 @@ EpsilonFramework.repeater.helpers = {
         };
 
     return function( data ) {
-      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).first().html(), null, options );
+      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).html(), null, options );
       return compiled( data );
     };
 

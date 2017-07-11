@@ -135,6 +135,13 @@
     }
   }
 
+  .repeater-row-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #efefef;
+    margin-top: 15px;
+  }
+
   .repeater-row-label {
     font-size: 13px;
     font-weight: 600;
@@ -147,6 +154,7 @@
       font-family: 'Dashicons';
       content: "\f545";
       vertical-align: middle;
+      font-size: 15px;
       margin-right: 15px;
     }
   }

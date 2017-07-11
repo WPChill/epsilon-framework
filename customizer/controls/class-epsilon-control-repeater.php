@@ -126,6 +126,18 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 
 				$this->fields[ $key ]['choices'] = wp_parse_args( $this->fields[ $key ]['choices'], $default );
 			}
+
+			/**
+			 * Epsilon Image
+			 */
+			if ( 'epsilon-image' === $value['type'] ) {
+				if ( ! isset( $this->fields[ $key ]['default'] ) ) {
+					$this->fields[ $key ]['default'] = array();
+				}
+
+				$this->fields[ $key ]['mode'] = ! empty( $this->fields[ $key ]['mode'] ) ? $this->fields[ $key ]['mode'] : 'url';
+			}
+
 			/**
 			 * Color picker defaults
 			 */
@@ -186,7 +198,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 
 		<ul class="repeater-fields"></ul>
 		<div class="button-holder">
-			<button class="button-secondary epsilon-repeater-add">{{ data.buttonLabel }}</button>
+			<button class="button-primary epsilon-repeater-add">{{ data.buttonLabel }}</button>
 		</div>
 		<?php //@formatter:on
 	}

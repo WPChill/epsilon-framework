@@ -1,0 +1,26 @@
+.epsilon-controller-image-container {
+  .placeholder {
+    padding: 15px;
+    border: 2px dashed #f9f9f9;
+    display: block;
+    text-align: center;
+    height: 70px;
+    line-height: 70px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .epsilon-image {
+    img {
+      width: 100%;
+    }
+  }
+  .actions {
+    display: block;
+    text-align: center;
+    .image-upload-button,
+    .image-default-button {
+      margin-top: 12px;
+    }
+
+  }
+}

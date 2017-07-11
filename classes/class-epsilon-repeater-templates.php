@@ -18,7 +18,7 @@ class Epsilon_Repeater_Templates {
 				</div>
 				<div class="repeater-row-content">
 					<# _.each( data, function( field, i ) { #>
-						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type ) { #>
+						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'hidden' === field.type ) { #>
 							<# var fieldExtras = ''; #>
 							<# if ( 'link' === field.type ) { #>
 								<# field.type = 'url' #>
@@ -83,9 +83,74 @@ class Epsilon_Repeater_Templates {
 									<# } #>
 								</span>
 							</label>
+						<# } else if ( 'select' === field.type ) { #>
+							<label>
+								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+								<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+									<# _.each( field.choices, function( choice, i ) { #>
+										<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+									<# }); #>
+								</select>
+							</label>
+						<# } else if ( 'checkbox' === field.type ) { #>
+							<label>
+								<input type="checkbox" value="true" data-field="{{{ field.id }}}" <# if ( field.default ) { #> checked="checked" <# } #> /> {{ field.label }}
+								<# if ( field.description ) { #>{{ field.description }}<# } #>
+							</label>
+						<# } else if ( 'radio' === field.type ) { #>
+							<label>
+								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+
+								<# _.each( field.choices, function( choice, i ) { #>
+									<label><input type="radio" name="{{{ field.id }}}{{ index }}" data-field="{{{ field.id }}}" value="{{{ i }}}" <# if ( field.default == i ) { #> checked="checked" <# } #>> {{ choice }} <br/></label>
+								<# }); #>
+							</label>
+						<# } else if ( 'textarea' === field.type ) { #>
+								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+								<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
+						<# } else if ( 'epsilon-image' === field.type ) { #>
+							<label>
+								<span class="customize-control-title">
+									{{{ field.label }}}
+									<# if( field.description ){ #>
+										<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+											<span class="mte-tooltip">
+												{{{ field.description }}}
+											</span>
+										</i>
+									<# } #>
+								</span>
+							</label>
+
+							<div class="epsilon-controller-image-container image-upload">
+								<input type="hidden" data-field="{{ field.id }}" data-save-mode="{{ field.mode }}"/>
+								<# if ( field.default ) { #>
+								<div class="epsilon-image">
+									<img src="{{{ field.default }}}" />
+								</div>
+								<# } else { #>
+								<div class="placeholder">
+									<?php echo esc_html__( 'Select a file', 'epsilon-framework' ); ?>
+								</div>
+								<# } #>
+								<div class="actions">
+									<button class="button image-upload-remove-button" <# if( '' === field.default ) { #> style="display:none;" <# } #>>
+										<?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?>
+									</button>
+
+									<button type="button" class="button-primary image-upload-button">
+										<?php echo esc_html__( 'Select File', 'epsilon-framework' ); ?>
+									</button>
+								</div>
+							</div>
 						<# } #>
 					<# } ); #>
-					<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>
+					<div class="repeater-row-footer">
+						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>
+					</div>
 				</div>
 			</li>
 		</script>

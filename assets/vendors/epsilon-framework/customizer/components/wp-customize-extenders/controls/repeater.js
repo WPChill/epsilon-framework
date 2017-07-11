@@ -11,7 +11,8 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     var control = this,
         settingValue = this.params.value,
         limit = false,
-        newRow;
+        newRow,
+        temp;
 
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
 
@@ -59,7 +60,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find('.epsilon-color-picker') );
+        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -76,6 +77,33 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     } );
 
     /**
+     * 3. Image controls - Upload
+     */
+    this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-button', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+      temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
+
+      EpsilonFramework.repeater.helpers.handleImageUpload( control, temp );
+    } );
+
+    /**
+     * 4 Image Controls - Removal
+     */
+    this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-remove-button', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+
+      temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
+      EpsilonFramework.repeater.helpers.handleImageRemoval( control, temp );
+    } );
+    /**
      * If we have saved rows, we need to display them
      */
     if ( settingValue.length ) {
@@ -85,7 +113,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find('.epsilon-color-picker') );
+        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
       } );
     }
 
@@ -94,6 +122,9 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      */
     EpsilonFramework.repeater.helpers.setValue( this, settingValue, true, true );
 
+    /**
+     * Add sortable functionality
+     */
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       update: function() {

@@ -862,6 +862,12 @@ ul.epsilon-upsell-requirements li {
   top: 2px;
   color: #a0a5aa;
 }
+.customize-control-epsilon-repeater .repeater-row-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #efefef;
+  margin-top: 15px;
+}
 .customize-control-epsilon-repeater .repeater-row-label {
   font-size: 13px;
   font-weight: 600;
@@ -875,6 +881,7 @@ ul.epsilon-upsell-requirements li {
   font-family: 'Dashicons';
   content: "\f545";
   vertical-align: middle;
+  font-size: 15px;
   margin-right: 15px;
 }
 .customize-control-epsilon-repeater .repeater-row-remove {
@@ -902,6 +909,28 @@ ul.epsilon-upsell-requirements li {
 
 .button-holder {
   text-align: center;
+}
+
+.epsilon-controller-image-container .placeholder {
+  padding: 15px;
+  border: 2px dashed #f9f9f9;
+  display: block;
+  text-align: center;
+  height: 70px;
+  line-height: 70px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.epsilon-controller-image-container .epsilon-image img {
+  width: 100%;
+}
+.epsilon-controller-image-container .actions {
+  display: block;
+  text-align: center;
+}
+.epsilon-controller-image-container .actions .image-upload-button,
+.epsilon-controller-image-container .actions .image-default-button {
+  margin-top: 12px;
 }
 
 /* Start Sections */

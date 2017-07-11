@@ -91,4 +91,25 @@ class Epsilon_Notify_System {
 		}
 	}
 
+	/**
+	 * @param $args
+	 *
+	 * @return string
+	 */
+	public static function dismiss_required_action( $args ) {
+		$option = get_option( $args['option'] );
+
+		if ( $option ) :
+			$option[ $args['id'] ] = false;
+			update_option( $args['option'], $option );
+		else :
+			$option = array(
+				$args['id'] => false,
+			);
+			update_option( $args['option'], $option );
+		endif;
+
+		return 'ok';
+	}
+
 }

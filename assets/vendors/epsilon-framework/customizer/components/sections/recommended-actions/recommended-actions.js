@@ -80,7 +80,7 @@ EpsilonFramework.recommendedActions = {
            * @type {{action: [*], args: {id: *, option: *}}}
            */
           args = {
-            'action': [ 'Epsilon_Framework', 'dismiss_required_action' ],
+            'action': [ 'Epsilon_Notify_System', 'dismiss_required_action' ],
             'args': {
               'id': jQuery( this ).attr( 'id' ),
               'option': jQuery( this ).attr( 'data-option' )
