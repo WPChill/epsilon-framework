@@ -46,7 +46,7 @@ EpsilonFramework.sectionRepeater.base = {
    */
   add: function( control, type, data ) {
     var self = this,
-        template = _.memoize( EpsilonFramework.repeater.helpers.repeaterTemplate() ),
+        template = _.memoize( EpsilonFramework.repeater.base.repeaterTemplate() ),
         settingValue = self.getValue( control ),
         newSectionSetting = {},
         templateData,
@@ -169,8 +169,9 @@ EpsilonFramework.sectionRepeater.base = {
           return;
         }
 
+        instance.container.find( '.repeater-row' ).addClass( 'minimized' );
         body.removeClass( 'adding-section' );
-      });
+      } );
     } );
 
     context.container.find( '.epsilon-add-new-section' ).on( 'click keydown', function( e ) {

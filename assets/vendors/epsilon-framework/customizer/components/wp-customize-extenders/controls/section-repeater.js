@@ -108,6 +108,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
      */
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
+      axis: 'y',
       update: function() {
         EpsilonFramework.sectionRepeater.base.sort( control );
       }

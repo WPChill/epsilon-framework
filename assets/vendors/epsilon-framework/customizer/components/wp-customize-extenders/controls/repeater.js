@@ -19,7 +19,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     /**
      * Set an initial value to the repeater field
      */
-    EpsilonFramework.repeater.helpers.setValue( this, [], false );
+    EpsilonFramework.repeater.base.setValue( this, [], false );
 
     /**
      * Create a reference of the container
@@ -55,7 +55,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     this.container.on( 'click', 'button.epsilon-repeater-add', function( e ) {
       e.preventDefault();
       if ( ! limit || control.currentIndex < limit ) {
-        newRow = EpsilonFramework.repeater.row.add( control );
+        newRow = EpsilonFramework.repeater.base.add( control );
         /**
          * init range sliders, color pickers
          */
@@ -87,7 +87,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       }
       temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
 
-      EpsilonFramework.repeater.helpers.handleImageUpload( control, temp );
+      EpsilonFramework.repeater.base.handleImageUpload( control, temp );
     } );
 
     /**
@@ -101,14 +101,14 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       }
 
       temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
-      EpsilonFramework.repeater.helpers.handleImageRemoval( control, temp );
+      EpsilonFramework.repeater.base.handleImageRemoval( control, temp );
     } );
     /**
      * If we have saved rows, we need to display them
      */
     if ( settingValue.length ) {
       _.each( settingValue, function( subValue ) {
-        newRow = EpsilonFramework.repeater.row.add( control, subValue );
+        newRow = EpsilonFramework.repeater.base.add( control, subValue );
         /**
          * init range sliders, color pickers
          */
@@ -120,15 +120,16 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     /**
      * After display fields, clean the setting
      */
-    EpsilonFramework.repeater.helpers.setValue( this, settingValue, true, true );
+    EpsilonFramework.repeater.base.setValue( this, settingValue, true, true );
 
     /**
      * Add sortable functionality
      */
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
+      axis: 'y',
       update: function() {
-        EpsilonFramework.repeater.helpers.sort( control );
+        EpsilonFramework.repeater.base.sort( control );
       }
     } );
   },
