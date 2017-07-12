@@ -134,6 +134,67 @@ EpsilonFramework.colorSchemes = {
 };
 
 /**
+ * Icon Picker Initiator
+ *
+ * @type {{init: EpsilonFramework.iconPickers.init}}
+ */
+EpsilonFramework.iconPickers = {
+
+	init: function( selector ) {
+		var context = jQuery( selector );
+
+		context.find( '.epsilon-open-iconpicker' ).click( function(){
+	    	context.toggleClass( 'epsilon-iconpicker-opened' );
+	    });
+
+	    context.find( '.epsilon-icons-container .epsilon-icons' ).on( 'click', 'i', function( e ){
+	    	var selectedIcon = jQuery(this).attr( 'data-icon' );
+	    	context.removeClass( 'epsilon-iconpicker-opened' );
+	    	context.find( '.epsilon-icon-contianer > i' ).removeClass();
+	    	context.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
+	    	jQuery(this).addClass( 'selected' );
+	    	context.find( '.epsilon-icon-contianer > i' ).addClass( selectedIcon );
+	    	context.find( '.epsilon-icon-contianer > i' );
+	    	context.find( 'input.epsilon-icon-picker' ).val( selectedIcon );
+	    	context.find( 'input.epsilon-icon-picker' ).trigger( 'change' );
+	    	control.setting.set( selectedIcon );
+	    });
+
+	    context.find( '.search-container input' ).keyup(function(){
+	    	var filter = jQuery(this).val();
+	    	context.find( '.epsilon-icons > i' ).each(function(){
+	    		var text = jQuery(this).attr( 'data-search' );
+	    		if ( text.search(new RegExp(filter, 'i')) < 0 ) {
+	    			jQuery(this).fadeOut();
+	    		}else{
+	    			jQuery(this).fadeIn();
+	    		}
+	    	});
+	    });
+
+	    EpsilonFramework.iconPickers.builHTML( context );
+
+	},
+
+	builHTML: function( context ) {
+		var iconsString, icons, currentIcon, iconContainer;
+		iconsString = context.find( '.epsilon-icon-pack' ).val();
+		icons = JSON.parse(iconsString);
+		currentIcon = context.find( '.epsilon-icon-picker' ).val();
+		
+		iconContainer = context.find( '.epsilon-icons-container .epsilon-icons' );
+		jQuery.each( icons, function( key, name ){
+			var classes = key;
+			if ( key === currentIcon ) {
+				classes = classes + ' selected';
+			}
+			var iconHTML = '<i class="' + classes + '" data-icon="' + key + '" data-search="' + name + '"></i>';
+			iconContainer.append( iconHTML );
+		});
+	}
+
+}
+/**
  * Initiate the Image Control
  */
 
@@ -1584,6 +1645,41 @@ EpsilonFramework.typography = {
 };
 
 /**
+ * Icon Picker Initiator
+ *
+ * @type {{init: EpsilonFramework.iconPickers.init}}
+ */
+EpsilonFramework.wysiwyg = {
+	init: function( selector ) {
+		var context = jQuery( selector ),
+			textarea, editor_id;
+		textarea = context.find( 'textarea' );
+		editor_id = textarea.attr( 'id' );
+
+		// The user has disabled TinyMCE.
+		if ( typeof window.tinymce === 'undefined' ) {
+			wp.editor.initialize( editor_id, {
+				quicktags: true
+			});
+			return;
+		}
+
+		wp.editor.initialize( editor_id, {
+			tinymce: {
+				wpautop: true,
+				setup: function( editor ) {
+				    editor.on('change', function(e) {
+				    	editor.save();
+				    	jQuery( editor.getElement() ).trigger( 'change' );
+				    });
+				}
+			},
+			quicktags: true
+		});
+
+	}
+}
+/**
  * Recommended action section scripting
  *
  * @type {{_init: _init, dismissActions: dismissActions, dismissPlugins:
@@ -1843,6 +1939,20 @@ wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control
         }
     );
   }
+} );
+/**
+ * Icon Picker Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-iconpicker' ] = wp.customize.Control.extend( {
+	ready: function() {
+		var control = this;
+
+		control.container.on( 'change', 'input.epsilon-icon-picker',
+	        function() {
+	          control.setting.set( jQuery( this ).val() );
+	        }
+	    );
+	}
 } );
 /**
  * Image Control Constructor
@@ -2105,6 +2215,23 @@ wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.e
   }
 } );
 
+/**
+ * WYSIWYG Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-wysiwyg' ] = wp.customize.Control.extend( {
+	ready: function() {
+		var control = this;
+
+		control.container.on( 'change', 'textarea',
+	        function() {
+	          control.setting.set( jQuery( this ).val() );
+	        }
+	    );
+	    control.container.find( 'textarea' ).keyup(function(){
+	    	control.setting.set( jQuery( this ).val() );
+	    });
+	}
+} );
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
   attachEvents: function() {
   },
@@ -2144,6 +2271,8 @@ wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
   EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
   EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
+  EpsilonFramework.iconPickers.init( '.customize-control-epsilon-iconpicker' );
+  EpsilonFramework.wysiwyg.init( '.customize-control-epsilon-wysiwyg' );
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
