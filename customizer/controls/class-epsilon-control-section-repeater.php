@@ -31,6 +31,14 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $choices = array();
 
 	/**
+	 * Icons array
+	 *
+	 * @since 1.2.0
+	 * @var array
+	 */
+	protected $icons = array();
+	
+	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
 	 * @since 1.2.0
@@ -65,6 +73,29 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	/**
 	 * @since 1.2.0
 	 */
+	public function get_icons() {
+		global $wp_filesystem;
+		if ( empty( $wp_filesystem ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/file.php' );
+			WP_Filesystem();
+		}
+
+		$path = $this->icons;
+		/**
+		 * In case we don`t have path to icons, we load our own library
+		 */
+		if ( empty( $this->icons ) || ! file_exists( $path ) ) {
+			$path = EPSILON_PATH . '/assets/data/icons.json';
+		}
+
+		$icons = $wp_filesystem->get_contents( $path );
+
+		return json_decode( $icons );
+	}
+
+	/**
+	 * @since 1.2.0
+	 */
 	public function set_repeatable_sections() {
 		if ( empty( $this->repeatable_sections ) || ! is_array( $this->repeatable_sections ) ) {
 			$this->repeatable_sections = array();
@@ -78,6 +109,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 				if ( ! isset( $v['label'] ) ) {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['label'] = '';
+				}
+
+				if ( 'epsilon-icon-picker' === $v['type'] ) {
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['icons'] = $this->get_icons();
 				}
 
 				/**
@@ -167,13 +202,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				</div>
 				<div class="available-sections-list">
 					<# for (section in data.sections) { #>
-					<# var temp = JSON.stringify(data.sections[section].fields); #>
-						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-							<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-							<input type="hidden" value="{{ temp }}"/>
-						</div>
-					<# } #>
+						<# var temp = JSON.stringify(data.sections[section].fields); #>
+							<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
+								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+								<input type="hidden" value="{{ temp }}"/>
+							</div>
+							<# } #>
 				</div>
 			</div>
 		</div>

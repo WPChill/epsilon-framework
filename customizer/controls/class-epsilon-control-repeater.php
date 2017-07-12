@@ -47,6 +47,14 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	protected $filtered_value = array();
 
 	/**
+	 * Icons array
+	 *
+	 * @since 1.2.0
+	 * @var array
+	 */
+	protected $icons = array();
+
+	/**
 	 * Epsilon_Control_Repeater constructor.
 	 *
 	 * @since 1.2.0
@@ -91,6 +99,29 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	}
 
 	/**
+	 * Get custom repeater icons
+	 */
+	public function get_icons() {
+		global $wp_filesystem;
+		if ( empty( $wp_filesystem ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/file.php' );
+			WP_Filesystem();
+		}
+
+		$path = $this->icons;
+		/**
+		 * In case we don`t have path to icons, we load our own library
+		 */
+		if ( empty( $this->icons ) || ! file_exists( $path ) ) {
+			$path = EPSILON_PATH . '/assets/data/icons.json';
+		}
+
+		$icons = $wp_filesystem->get_contents( $path );
+
+		return json_decode( $icons );
+	}
+
+	/**
 	 * Set defaults, label and add an ID for the fields
 	 *
 	 * @since 1.2.0
@@ -108,6 +139,10 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 
 			if ( ! isset( $value['label'] ) ) {
 				$this->fields[ $key ]['label'] = '';
+			}
+
+			if ( 'epsilon-icon-picker' === $value['type'] ) {
+				$this->fields[ $key ]['icons'] = $this->get_icons();
 			}
 
 			/**

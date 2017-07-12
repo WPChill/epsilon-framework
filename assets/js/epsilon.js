@@ -139,8 +139,17 @@ EpsilonFramework.colorSchemes = {
  * @type {{init: EpsilonFramework.iconPickers.init}}
  */
 EpsilonFramework.iconPickers = {
+  /**
+   * Context
+   */
   control: null,
-  init: function( control ) {
+  /**
+   * Init the icon picker
+   *
+   * @param control
+   * @param inRepeater
+   */
+  init: function( control, inRepeater ) {
     this.control = control;
     var icon, filter, temp,
         collection = control.container.find( '.epsilon-icons > i' ),
@@ -158,14 +167,18 @@ EpsilonFramework.iconPickers = {
      * Icon selection
      */
     control.container.on( 'click', '.epsilon-icons-container .epsilon-icons > i', function( e ) {
-      icon = jQuery( this ).attr( 'data-icon' );
       control.container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
+      icon = jQuery( this ).addClass( 'selected' ).attr( 'data-icon' );
       control.container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
 
       /**
        * Set value
        */
-      control.setting.set( icon );
+      if ( ! inRepeater ) {
+        control.setting.set( icon );
+      } else {
+        control.container.find( '.epsilon-icon-picker' ).attr( 'value', icon ).trigger( 'change' );
+      }
     } );
 
     /**
@@ -2078,7 +2091,7 @@ wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.
   ready: function() {
     var control = this;
 
-    EpsilonFramework.iconPickers.init( control );
+    EpsilonFramework.iconPickers.init( control, false );
 
     control.container.on( 'change', 'input.epsilon-icon-picker',
         function() {
@@ -2191,6 +2204,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
         EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.iconPickers.init( newRow, true );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2244,6 +2258,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
         EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.iconPickers.init( newRow, true );
       } );
     }
 
@@ -2320,6 +2335,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
          */
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.iconPickers.init( newSection, true );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2361,6 +2377,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.iconPickers.init( newSection, true );
       } );
     }
 

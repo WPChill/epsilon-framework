@@ -4,8 +4,17 @@
  * @type {{init: EpsilonFramework.iconPickers.init}}
  */
 EpsilonFramework.iconPickers = {
+  /**
+   * Context
+   */
   control: null,
-  init: function( control ) {
+  /**
+   * Init the icon picker
+   *
+   * @param control
+   * @param inRepeater
+   */
+  init: function( control, inRepeater ) {
     this.control = control;
     var icon, filter, temp,
         collection = control.container.find( '.epsilon-icons > i' ),
@@ -23,14 +32,18 @@ EpsilonFramework.iconPickers = {
      * Icon selection
      */
     control.container.on( 'click', '.epsilon-icons-container .epsilon-icons > i', function( e ) {
-      icon = jQuery( this ).attr( 'data-icon' );
       control.container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
+      icon = jQuery( this ).addClass( 'selected' ).attr( 'data-icon' );
       control.container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
 
       /**
        * Set value
        */
-      control.setting.set( icon );
+      if ( ! inRepeater ) {
+        control.setting.set( icon );
+      } else {
+        control.container.find( '.epsilon-icon-picker' ).attr( 'value', icon ).trigger( 'change' );
+      }
     } );
 
     /**

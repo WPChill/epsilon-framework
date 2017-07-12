@@ -5,7 +5,7 @@ wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.
   ready: function() {
     var control = this;
 
-    EpsilonFramework.iconPickers.init( control );
+    EpsilonFramework.iconPickers.init( control, false );
 
     control.container.on( 'change', 'input.epsilon-icon-picker',
         function() {

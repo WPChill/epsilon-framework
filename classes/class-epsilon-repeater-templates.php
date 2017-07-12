@@ -111,6 +111,35 @@ class Epsilon_Repeater_Templates {
 								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
 								<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
+						<# } else if ( 'epsilon-icon-picker' === field.type ) { #>
+							<label class="epsilon-icon-picker-label">
+								<span class="customize-control-title">
+									<# if( field.label ){ #>
+										<span class="customize-control-title">{{{ field.label }}}</span>
+									<# } #>
+
+									<# if( field.description ){ #>
+										<span class="description customize-control-description">{{{ field.description }}}</span>
+									<# } #>
+								</span>
+								<span class="epsilon-icon-container">
+									<i class="{{{ field.default }}}"></i>
+									<span class="dashicons dashicons-arrow-down epsilon-open-icon-picker"></span>
+								</span>
+							</label>
+							<input type="hidden" class="epsilon-icon-picker" data-field={{{ field.id }}} value="{{{ field.default }}}">
+							<div class="epsilon-icon-picker-container">
+								<div class="search-container">
+									<input type="text" class="widefat text" />
+								</div>
+								<div class="epsilon-icons-container">
+									<div class="epsilon-icons">
+										<# _.each(field.icons, function(k, v){ #>
+											<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k }}}"></i>
+										<# }) #>
+									</div>
+								</div>
+							</div>
 						<# } else if ( 'epsilon-image' === field.type ) { #>
 							<label>
 								<span class="customize-control-title">

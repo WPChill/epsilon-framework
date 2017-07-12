@@ -52,7 +52,6 @@ label.epsilon-icon-picker-label {
   }
 }
 
-
 .epsilon-icon-picker-opened .epsilon-icon-container {
   -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
@@ -68,13 +67,16 @@ label.epsilon-icon-picker-label {
   border: 1px solid #dddddd;
   padding: 6px 0 6px 6px;
   max-height: 164px;
+  min-height: 79px;
   overflow-y: scroll;
 }
 
 .epsilon-icons > i {
   display: inline-block;
-  width: calc(20% - 7px);
-  padding: 6px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 18px;
   box-sizing: border-box;
   border: 1px solid #eaeaea;
   text-align: center;
