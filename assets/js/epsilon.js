@@ -1098,6 +1098,10 @@ EpsilonFramework.sectionRepeater.section = {
     /**
      * Events
      */
+    this.header.on( 'click', function() {
+      EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
+    } );
+
     this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
       self.container.trigger( 'section:update', [ self.sectionIndex, self.type, jQuery( e.target ).data( 'field' ), e.target, control ] );
     } );
@@ -1274,6 +1278,19 @@ EpsilonFramework.sectionRepeater.base = {
     var isAddBtn,
         body = jQuery( 'body' );
 
+    /**
+     * Get a reference for the parent section, if we close it. we must close the Section sidebar as well
+     */
+    wp.customize[ 'section' ]( context.params.section, function( instance ) {
+      instance.container.find( '.accordion-section-title, .customize-section-back' ).on( 'click keydown', function( event ) {
+        if ( wp.customize.utils.isKeydownButNotEnterEvent( event ) ) {
+          return;
+        }
+
+        body.removeClass( 'adding-section' );
+      });
+    } );
+
     context.container.find( '.epsilon-add-new-section' ).on( 'click keydown', function( e ) {
       isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
 
@@ -1350,7 +1367,6 @@ EpsilonFramework.sectionRepeater.base = {
     var section,
         currentSettings;
 
-    console.log( self );
     if ( ! control.sections[ sectionIndex ] ) {
       return;
     }
@@ -1390,7 +1406,134 @@ EpsilonFramework.sectionRepeater.base = {
       jQuery( this ).detach();
     } );
     instance.container.trigger( 'section:remove', [ instance.sectionIndex ] );
-  }
+  },
+  /**
+   * Set section's index
+   *
+   * @param rowIndex
+   */
+  setSectionIndex: function( sectionInstance, sectionIndex, control ) {
+    sectionInstance.sectionIndex = sectionIndex;
+    sectionInstance.container.attr( 'data-row', sectionIndex );
+    sectionInstance.container.data( 'row', sectionIndex );
+    EpsilonFramework.sectionRepeater.base.updateLabel( sectionInstance, control );
+  },
+
+  /**
+   * Drag and drop functionality
+   * @param control
+   */
+  sort: function( control ) {
+    var sections = control.repeaterContainer.find( '.repeater-row' ),
+        settings = EpsilonFramework.sectionRepeater.base.getValue( control ),
+        newOrder = [],
+        newSections = [],
+        newSettings = [];
+
+    sections.each( function( i, element ) {
+      newOrder.push( jQuery( element ).data( 'row' ) );
+    } );
+
+    jQuery.each( newOrder, function( newPosition, oldPosition ) {
+      newSections[ newPosition ] = control.sections[ oldPosition ];
+
+      EpsilonFramework.sectionRepeater.base.setSectionIndex( newSections[ newPosition ], newPosition, control );
+      newSettings[ newPosition ] = settings[ oldPosition ];
+    } );
+
+    control.sections = newSections;
+    EpsilonFramework.sectionRepeater.base.setValue( control, newSettings );
+  },
+
+  /**
+   * Handle image uploading in a repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  handleImageUpload: function( instance, container ) {
+    var self = this,
+        setting = {},
+        temp,
+        input,
+        image = wp.media( {
+          multiple: false,
+        } ).open();
+
+    /**
+     * On selection, save the data in a JSON
+     */
+    image.on( 'select', function() {
+      input = container.find( 'input' );
+      temp = image.state().get( 'selection' ).first();
+      setting.id = temp.id;
+      setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+
+      self._setImage( container, setting.url );
+      input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );
+
+      container.find( '.actions .image-upload-remove-button' ).show();
+    } );
+  },
+
+  /**
+   * Handle Image Removal in a repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  handleImageRemoval: function( instance, container ) {
+    var self = this,
+        setting = {},
+        thumb = container.find( '.epsilon-image' );
+
+    if ( thumb.length ) {
+      thumb.find( 'img' ).fadeOut( 200, function() {
+        thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( EpsilonTranslations.selectFile );
+      } );
+    }
+
+    container.find( '.actions .image-upload-remove-button' ).hide();
+    container.find( 'input' ).attr( 'value', '' ).trigger( 'change' );
+  },
+
+  /**
+   * Set image in the customizer option control
+   *
+   * @param control
+   * @param image
+   *
+   * @access private
+   */
+  _setImage: function( container, image ) {
+    /**
+     * If we already have an image, we need to return that div, else we grab the placeholder
+     *
+     * @type {*}
+     */
+    var thumb = container.find( '.epsilon-image' ).length ? container.find( '.epsilon-image' ) : container.find( '.placeholder' );
+
+    /**
+     * We "reload" the image container
+     */
+    if ( thumb.length ) {
+      thumb.removeClass( 'epsilon-image placeholder' ).addClass( 'epsilon-image' );
+      thumb.html( '' );
+      thumb.append( '<img style="display:none" src="' + image + '" />' );
+      thumb.find( 'img' ).fadeIn( 200 );
+    }
+  },
+
+  /**
+   * Toggle vizibility
+   *
+   * @param instance
+   */
+  toggleMinimize: function( instance ) {
+    instance.container.toggleClass( 'minimized' );
+    instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+  },
+
 };
 /**
  * Typography functions
@@ -2027,13 +2170,17 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
   ready: function() {
     var control = this,
         settingValue = this.params.value,
-        newSection, limit;
+        newSection, limit, temp;
 
     /**
      * We need to move this element to the bottom of the page so it renders properly
      */
     jQuery( '#sections-left-' + this.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
 
+    /**
+     * Initiate search functionality
+     */
+    this.initSearch( control, jQuery( '#sections-left-' + this.params.id ) );
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
     this.repeaterContainer = this.container.find( '.repeater-sections' ).first();
     this.currentIndex = 0;
@@ -2042,6 +2189,14 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
      * @type {Array}
      */
     this.sections = [];
+    /**
+     * Setup Limit
+     *
+     * @type {boolean}
+     */
+    if ( ! _.isUndefined( this.params.choices.limit ) ) {
+      limit = ( 0 >= this.params.choices.limit ) ? false : parseInt( this.params.choices.limit );
+    }
     /**
      * Set an initial value to the repeater field
      */
@@ -2056,16 +2211,55 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
      * Addition of sections
      */
     jQuery( '#sections-left-' + this.params.id ).on( 'click', '.epsilon-section', function( e ) {
-      EpsilonFramework.sectionRepeater.base.add( control, jQuery( this ).attr( 'data-id' ) );
+      e.preventDefault();
+      if ( ! limit || control.currentIndex < limit ) {
+        newSection = EpsilonFramework.sectionRepeater.base.add( control, jQuery( this ).attr( 'data-id' ) );
+        /**
+         * init range sliders, color pickers
+         */
+        EpsilonFramework.rangeSliders.init( newSection.container );
+        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+      } else {
+        jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
+      }
     } );
 
-    console.log( settingValue.length );
+    /**
+     * 3. Image controls - Upload
+     */
+    this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-button', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+      temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
+
+      EpsilonFramework.sectionRepeater.base.handleImageUpload( control, temp );
+    } );
+
+    /**
+     * 4 Image Controls - Removal
+     */
+    this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-remove-button', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+
+      temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
+      EpsilonFramework.sectionRepeater.base.handleImageRemoval( control, temp );
+    } );
+
     /**
      * If we have saved rows, we need to display them
      */
     if ( settingValue.length ) {
       _.each( settingValue, function( subValue ) {
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
+        EpsilonFramework.rangeSliders.init( newSection.container );
+        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
       } );
     }
 
@@ -2073,7 +2267,40 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
      * After display fields, clean the setting
      */
     EpsilonFramework.sectionRepeater.base.setValue( this, settingValue, true, true );
+
+    /**
+     * Add sortable functionality
+     */
+    this.repeaterContainer.sortable( {
+      handle: '.repeater-row-header',
+      update: function() {
+        EpsilonFramework.sectionRepeater.base.sort( control );
+      }
+    } );
   },
+  /**
+   * Search functionality in the sections library
+   *
+   * @param instance
+   * @param selector
+   */
+  initSearch: function( instance, selector ) {
+    var input = selector.find( '.sections-search-input' ),
+        val, collection, id,
+        self = this;
+
+    input.on( 'keyup change', _.debounce( function( e ) {
+      val = input.val().toLowerCase();
+      collection = selector.find( '.epsilon-section' );
+
+      jQuery.each( collection, function() {
+        id = jQuery( this ).attr( 'data-id' ).toLowerCase();
+        jQuery( this )[ id.indexOf( val ) !== - 1 ? 'show' : 'hide' ]();
+      } );
+
+    }, 1000 ) );
+  },
+
 } );
 /**
  * WP Customizer Control Constructor

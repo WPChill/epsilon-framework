@@ -118,6 +118,10 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 					$this->fields[ $key ]['choices'] = array();
 				}
 
+				if ( '' == $this->fields[ $key ]['default'] ) {
+					$this->fields[ $key ]['default'] = 0;
+				}
+
 				$default = array(
 					'min'  => 0,
 					'max'  => 10,
@@ -198,6 +202,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 
 		<ul class="repeater-fields"></ul>
 		<div class="button-holder">
+			<input type="hidden" value="" {{{ data.link }}} />
 			<button class="button-primary epsilon-repeater-add">{{ data.buttonLabel }}</button>
 		</div>
 		<?php //@formatter:on

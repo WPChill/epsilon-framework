@@ -25,6 +25,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $repeatable_sections = array();
 
 	/**
+	 * @since 1.2.0
+	 * @var array
+	 */
+	public $choices = array();
+
+	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
 	 * @since 1.2.0
@@ -48,6 +54,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 		$json['id']       = $this->id;
 		$json['link']     = $this->get_link();
+		$json['choices']  = $this->choices;
 		$json['value']    = $this->value();
 		$json['sections'] = $this->set_repeatable_sections();
 		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
@@ -109,7 +116,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				}
 
 				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;
-			}
+			} // End foreach().
 		} // End foreach().
 
 		return $this->repeatable_sections;
@@ -140,38 +147,36 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					</i>
 				<# } #>
 			</span> </label>
-		<ul class="repeater-sections">
-
-		</ul>
+		<ul class="repeater-sections"></ul>
 		<div class="epsilon-add-section-buttons">
+			<input type="hidden" value="" {{{ data.link }}}/>
 			<button type="button" class="button epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
-				<?php _e( 'Add a Section' ); ?>
+				<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
 			</button>
 		</div>
 		<div id="sections-left-{{ data.id }}">
 			<div class="available-sections">
-				<div class="customize-section-title">
-					<h3>
-					<span class="customize-action"><?php
-						?></span>
-						<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
-					</h3>
-				</div>
 				<div class="available-sections-filter">
-					<h2><?php esc_html_e( 'Epsilon Sections', 'epsilon-framework' ); ?></h2>
+					<label class="screen-reader-text" for="sections-search-{{ data.id }}"><?php esc_html_e( 'Search sections', 'epsilon-framework' ); ?></label>
+					<input type="text" class="sections-search-input" id="sections-search-{{ data.id }}" placeholder="<?php esc_attr_e( 'Search sections &hellip;', 'epsilon-framework' ) ?>" aria-describedby="sections-search-desc"/>
+					<div class="search-icon" aria-hidden="true"></div>
+					<button type="button" class="clear-results">
+						<span class="screen-reader-text"><?php esc_html_e( 'Clear Results', 'epsilon-framework' ); ?></span>
+					</button>
+					<p class="screen-reader-text" id="sections-search-desc-{{ data.id }}"><?php esc_html_e( 'The search results will be updated as you type.', 'epsilon-framework' ); ?></p>
 				</div>
 				<div class="available-sections-list">
 					<# for (section in data.sections) { #>
-						<# var temp = JSON.stringify(data.sections[section].fields); #>
-							<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-								<input type="hidden" value="{{ temp }}"/>
-							</div>
-							<# } #>
-				</div><!-- #available-sections-list -->
-			</div><!-- #available-sections -->
-		</div><!-- #sections-left -->
+					<# var temp = JSON.stringify(data.sections[section].fields); #>
+						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
+							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+							<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+							<input type="hidden" value="{{ temp }}"/>
+						</div>
+					<# } #>
+				</div>
+			</div>
+		</div>
 		<?php
 	}
 }

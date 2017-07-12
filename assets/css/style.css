@@ -759,89 +759,89 @@ ul.epsilon-upsell-requirements li {
   transition: opacity .2s;
 }
 
-.customize-control-epsilon-repeater, .customize-control-epsilon-section-repeater {
+.customize-control-epsilon-repeater {
   position: relative;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row {
   border: 1px solid #e5e5e5;
   margin-top: 0.5rem;
   background: #eee;
   position: relative;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row.minimized {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized {
   border: 1px solid #dfdfdf;
   padding: 0;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized:hover, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row.minimized:hover {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized:hover {
   border: 1px solid #e5e5e5;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized .repeater-row-content, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row.minimized .repeater-row-content {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row.minimized .repeater-row-content {
   display: none;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row label, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row label {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row label {
   margin-bottom: 12px;
   clear: both;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row .repeater-field.repeater-field- {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field- {
   display: none;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input {
   display: none;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input img, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input img {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input img {
   border: 1px solid transparent;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input:checked + label img, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input:checked + label img {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field.repeater-field-radio-image input:checked + label img {
   -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
   border: 1px solid #3498DB;
 }
-.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field:last-child, .customize-control-epsilon-section-repeater .repeater-fields .repeater-row .repeater-field:last-child {
+.customize-control-epsilon-repeater .repeater-fields .repeater-row .repeater-field:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
-.customize-control-epsilon-repeater button.repeater-add, .customize-control-epsilon-section-repeater button.repeater-add {
+.customize-control-epsilon-repeater button.repeater-add {
   margin-top: 1rem;
 }
-.customize-control-epsilon-repeater .repeater-row-content, .customize-control-epsilon-section-repeater .repeater-row-content {
+.customize-control-epsilon-repeater .repeater-row-content {
   padding: 10px 15px;
   background: #fff;
 }
-.customize-control-epsilon-repeater .repeater-field, .customize-control-epsilon-section-repeater .repeater-field {
+.customize-control-epsilon-repeater .repeater-field {
   margin-bottom: 12px;
   width: 100%;
   clear: both;
   padding-bottom: 12px;
   border-bottom: 1px dotted #CCC;
 }
-.customize-control-epsilon-repeater .repeater-field .customize-control-title, .customize-control-epsilon-section-repeater .repeater-field .customize-control-title {
+.customize-control-epsilon-repeater .repeater-field .customize-control-title {
   font-size: 13px;
   line-height: initial;
 }
-.customize-control-epsilon-repeater .repeater-field .customize-control-description, .customize-control-epsilon-section-repeater .repeater-field .customize-control-description {
+.customize-control-epsilon-repeater .repeater-field .customize-control-description {
   font-size: 13px;
   line-height: initial;
 }
-.customize-control-epsilon-repeater .repeater-field.repeater-field-hidden, .customize-control-epsilon-section-repeater .repeater-field.repeater-field-hidden {
+.customize-control-epsilon-repeater .repeater-field.repeater-field-hidden {
   margin: 0;
   padding: 0;
   border: 0;
 }
-.customize-control-epsilon-repeater .repeater-field-select select, .customize-control-epsilon-section-repeater .repeater-field-select select {
+.customize-control-epsilon-repeater .repeater-field-select select {
   margin-left: 0;
 }
-.customize-control-epsilon-repeater .repeater-field-checkbox label, .customize-control-epsilon-section-repeater .repeater-field-checkbox label {
+.customize-control-epsilon-repeater .repeater-field-checkbox label {
   line-height: 28px;
 }
-.customize-control-epsilon-repeater .repeater-field-checkbox input, .customize-control-epsilon-section-repeater .repeater-field-checkbox input {
+.customize-control-epsilon-repeater .repeater-field-checkbox input {
   line-height: 28px;
   margin-right: 5px;
 }
-.customize-control-epsilon-repeater .repeater-field-textarea textarea, .customize-control-epsilon-section-repeater .repeater-field-textarea textarea {
+.customize-control-epsilon-repeater .repeater-field-textarea textarea {
   width: 100%;
   resize: vertical;
 }
-.customize-control-epsilon-repeater .repeater-row-header, .customize-control-epsilon-section-repeater .repeater-row-header {
+.customize-control-epsilon-repeater .repeater-row-header {
   background: white;
   border-bottom: 1px solid #dfdfdf;
   position: relative;
@@ -852,23 +852,23 @@ ul.epsilon-upsell-requirements li {
   overflow: hidden;
   word-wrap: break-word;
 }
-.customize-control-epsilon-repeater .repeater-row-header:hover, .customize-control-epsilon-section-repeater .repeater-row-header:hover {
+.customize-control-epsilon-repeater .repeater-row-header:hover {
   cursor: move;
 }
-.customize-control-epsilon-repeater .repeater-row-header .dashicons, .customize-control-epsilon-section-repeater .repeater-row-header .dashicons {
+.customize-control-epsilon-repeater .repeater-row-header .dashicons {
   font-size: 18px;
   position: absolute;
   right: 12px;
   top: 2px;
   color: #a0a5aa;
 }
-.customize-control-epsilon-repeater .repeater-row-footer, .customize-control-epsilon-section-repeater .repeater-row-footer {
+.customize-control-epsilon-repeater .repeater-row-footer {
   padding-top: 10px;
   padding-bottom: 10px;
   border-top: 1px solid #efefef;
   margin-top: 15px;
 }
-.customize-control-epsilon-repeater .repeater-row-label, .customize-control-epsilon-section-repeater .repeater-row-label {
+.customize-control-epsilon-repeater .repeater-row-label {
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
@@ -877,25 +877,24 @@ ul.epsilon-upsell-requirements li {
   overflow: hidden;
   height: 18px;
 }
-.customize-control-epsilon-repeater .repeater-row-label:before, .customize-control-epsilon-section-repeater .repeater-row-label:before {
+.customize-control-epsilon-repeater .repeater-row-label:before {
   font-family: 'Dashicons';
   content: "\f545";
   vertical-align: middle;
   font-size: 15px;
   margin-right: 15px;
 }
-.customize-control-epsilon-repeater .repeater-row-remove, .customize-control-epsilon-section-repeater .repeater-row-remove {
+.customize-control-epsilon-repeater .repeater-row-remove {
   color: #a00;
 }
-.customize-control-epsilon-repeater .repeater-row-remove:hover, .customize-control-epsilon-section-repeater .repeater-row-remove:hover {
+.customize-control-epsilon-repeater .repeater-row-remove:hover {
   color: #f00;
 }
-.customize-control-epsilon-repeater .repeater-minimize, .customize-control-epsilon-section-repeater .repeater-minimize {
+.customize-control-epsilon-repeater .repeater-minimize {
   line-height: 36px;
 }
 .customize-control-epsilon-repeater .remove-button,
-.customize-control-epsilon-repeater .upload-button, .customize-control-epsilon-section-repeater .remove-button,
-.customize-control-epsilon-section-repeater .upload-button {
+.customize-control-epsilon-repeater .upload-button {
   width: 48%;
 }
 
@@ -910,6 +909,78 @@ ul.epsilon-upsell-requirements li {
 
 .button-holder {
   text-align: center;
+}
+
+.customize-control-epsilon-section-repeater {
+  margin: -12px;
+  width: 105%;
+}
+.customize-control-epsilon-section-repeater .customize-control-title {
+  padding: 12px;
+}
+.customize-control-epsilon-section-repeater .repeater-sections {
+  width: 100%;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header {
+  color: #555d66;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  border-left: 4px solid #fff;
+  -webkit-transition: .15s color ease-in-out, .15s background-color ease-in-out, .15s border-color ease-in-out;
+  transition: .15s color ease-in-out, .15s background-color ease-in-out, .15s border-color ease-in-out;
+  font-size: 14px;
+  padding: 10px 10px 11px 14px;
+  line-height: 21px;
+  background: #fff;
+  font-weight: 600;
+  color: #0073aa;
+  background: #f3f3f5;
+  cursor: pointer;
+  border-left-color: #0073aa;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header:before {
+  font-family: 'Dashicons';
+  content: "\f545";
+  vertical-align: middle;
+  font-size: 15px;
+  margin-right: 15px;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header i {
+  float: right;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header {
+  color: #555d66;
+  background: #fff;
+  cursor: pointer;
+  border-left-color: #fff;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header:hover {
+  color: #0073aa;
+  background: #f3f3f5;
+  cursor: pointer;
+  border-left-color: #0073aa;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-content {
+  display: none;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content {
+  padding: 15px;
+  background: #fff;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content .customize-control-title {
+  padding: initial;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #efefef;
+  margin-top: 15px;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row-remove {
+  color: #a00;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row-remove:hover {
+  color: #f00;
 }
 
 .epsilon-add-section-buttons {
@@ -971,10 +1042,13 @@ body.adding-section .epsilon-add-new-section:before {
   margin-top: 5px;
 }
 .available-sections-filter input {
-  width: 100%;
+  width: 89%;
   height: 32px;
   margin: 1px 0;
   padding: 6px 30px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
 }
 .available-sections-filter .search-icon {
   display: block;
@@ -1039,10 +1113,6 @@ body.adding-section .epsilon-add-new-section:before {
   margin-top: 15px;
   margin-bottom: 15px;
   padding: 0 10px;
-}
-
-.customize-control.customize-control-hidden {
-  display: none !important;
 }
 
 .epsilon-controller-image-container .placeholder {
