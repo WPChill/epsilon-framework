@@ -1,10 +1,10 @@
 label.epsilon-icon-picker-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.epsilon-icon-contianer {
+.epsilon-icon-container {
   -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, .08);
   -moz-box-shadow: 0 0px 10px rgba(0, 0, 0, .08);
   box-shadow: 0 0px 10px rgba(0, 0, 0, .08);
@@ -26,10 +26,9 @@ label.epsilon-icon-picker-label {
     background-color: #f4f4f4;
     border-left: 1px solid #dddddd;
   }
-
 }
 
-.epsilon-icon-picker-contianer {
+.epsilon-icon-picker-container {
   display: none;
   background-color: #f4f4f4;
   border-radius: 5px;
@@ -48,19 +47,22 @@ label.epsilon-icon-picker-label {
     box-sizing: border-box;
     border-top: 1px solid #fafafa;
   }
+  &.opened {
+    display: block;
+  }
 }
 
-.epsilon-iconpicker-opened .epsilon-icon-picker-contianer {
-  display: block;
-}
-.epsilon-iconpicker-opened .epsilon-icon-contianer {
+
+.epsilon-icon-picker-opened .epsilon-icon-container {
   -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
 }
-.epsilon-iconpicker-opened .epsilon-icon-contianer > span {
+
+.epsilon-icon-picker-opened .epsilon-icon-container > span {
   border-bottom-right-radius: 0px;
 }
+
 .epsilon-icons-container .epsilon-icons {
   background-color: #fefefe;
   border: 1px solid #dddddd;
@@ -68,17 +70,19 @@ label.epsilon-icon-picker-label {
   max-height: 164px;
   overflow-y: scroll;
 }
+
 .epsilon-icons > i {
-    display: inline-block;
-    width: calc(20% - 7px );
-    padding: 6px;
-    box-sizing: border-box;
-    border: 1px solid #eaeaea;
-    text-align: center;
-    margin-bottom: 7px;
-    margin-right: 7px;
-    cursor: pointer;
+  display: inline-block;
+  width: calc(20% - 7px);
+  padding: 6px;
+  box-sizing: border-box;
+  border: 1px solid #eaeaea;
+  text-align: center;
+  margin-bottom: 7px;
+  margin-right: 7px;
+  cursor: pointer;
 }
+
 .epsilon-icons > i:hover,
 .epsilon-icons > i.selected {
   border-color: #57a7c9;

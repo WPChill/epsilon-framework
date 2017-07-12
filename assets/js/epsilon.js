@@ -139,61 +139,49 @@ EpsilonFramework.colorSchemes = {
  * @type {{init: EpsilonFramework.iconPickers.init}}
  */
 EpsilonFramework.iconPickers = {
+  control: null,
+  init: function( control ) {
+    this.control = control;
+    var icon, filter, temp,
+        collection = control.container.find( '.epsilon-icons > i' ),
+        input = control.container.find( '.search-container input' );
 
-	init: function( selector ) {
-		var context = jQuery( selector );
+    /**
+     * Icon container toggler
+     */
+    control.container.on( 'click', '.epsilon-open-icon-picker', function( e ) {
+      e.preventDefault();
+      control.container.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
+    } );
 
-		context.find( '.epsilon-open-iconpicker' ).click( function(){
-	    	context.toggleClass( 'epsilon-iconpicker-opened' );
-	    });
+    /**
+     * Icon selection
+     */
+    control.container.on( 'click', '.epsilon-icons-container .epsilon-icons > i', function( e ) {
+      icon = jQuery( this ).attr( 'data-icon' );
+      control.container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
+      control.container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
 
-	    context.find( '.epsilon-icons-container .epsilon-icons' ).on( 'click', 'i', function( e ){
-	    	var selectedIcon = jQuery(this).attr( 'data-icon' );
-	    	context.removeClass( 'epsilon-iconpicker-opened' );
-	    	context.find( '.epsilon-icon-contianer > i' ).removeClass();
-	    	context.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
-	    	jQuery(this).addClass( 'selected' );
-	    	context.find( '.epsilon-icon-contianer > i' ).addClass( selectedIcon );
-	    	context.find( '.epsilon-icon-contianer > i' );
-	    	context.find( 'input.epsilon-icon-picker' ).val( selectedIcon );
-	    	context.find( 'input.epsilon-icon-picker' ).trigger( 'change' );
-	    	control.setting.set( selectedIcon );
-	    });
+      /**
+       * Set value
+       */
+      control.setting.set( icon );
+    } );
 
-	    context.find( '.search-container input' ).keyup(function(){
-	    	var filter = jQuery(this).val();
-	    	context.find( '.epsilon-icons > i' ).each(function(){
-	    		var text = jQuery(this).attr( 'data-search' );
-	    		if ( text.search(new RegExp(filter, 'i')) < 0 ) {
-	    			jQuery(this).fadeOut();
-	    		}else{
-	    			jQuery(this).fadeIn();
-	    		}
-	    	});
-	    });
+    /**
+     * Search functionality
+     */
+    control.container.on( 'keyup change', '.search-container input', _.debounce( function( e ) {
+      filter = input.val().toLowerCase();
 
-	    EpsilonFramework.iconPickers.builHTML( context );
+      jQuery.each( collection, function() {
+        temp = jQuery( this ).attr( 'data-search' ).toLowerCase();
+        jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
+      } );
 
-	},
-
-	builHTML: function( context ) {
-		var iconsString, icons, currentIcon, iconContainer;
-		iconsString = context.find( '.epsilon-icon-pack' ).val();
-		icons = JSON.parse(iconsString);
-		currentIcon = context.find( '.epsilon-icon-picker' ).val();
-		
-		iconContainer = context.find( '.epsilon-icons-container .epsilon-icons' );
-		jQuery.each( icons, function( key, name ){
-			var classes = key;
-			if ( key === currentIcon ) {
-				classes = classes + ' selected';
-			}
-			var iconHTML = '<i class="' + classes + '" data-icon="' + key + '" data-search="' + name + '"></i>';
-			iconContainer.append( iconHTML );
-		});
-	}
-
-}
+    }, 1000 ) );
+  },
+};
 /**
  * Initiate the Image Control
  */
@@ -2086,16 +2074,18 @@ wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control
 /**
  * Icon Picker Control Constructor
  */
-wp.customize.controlConstructor[ 'epsilon-iconpicker' ] = wp.customize.Control.extend( {
-	ready: function() {
-		var control = this;
+wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
 
-		control.container.on( 'change', 'input.epsilon-icon-picker',
-	        function() {
-	          control.setting.set( jQuery( this ).val() );
-	        }
-	    );
-	}
+    EpsilonFramework.iconPickers.init( control );
+
+    control.container.on( 'change', 'input.epsilon-icon-picker',
+        function() {
+          control.setting.set( jQuery( this ).val() );
+        }
+    );
+  }
 } );
 /**
  * Image Control Constructor
@@ -2500,8 +2490,7 @@ wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
   EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
   EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
-  EpsilonFramework.iconPickers.init( '.customize-control-epsilon-iconpicker' );
-  EpsilonFramework.wysiwyg.init( '.customize-control-epsilon-wysiwyg' );
+  //EpsilonFramework.wysiwyg.init( '.customize-control-epsilon-wysiwyg' );
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();

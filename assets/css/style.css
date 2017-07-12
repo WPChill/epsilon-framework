@@ -1143,12 +1143,12 @@ label.epsilon-icon-picker-label {
   align-items: center;
 }
 
-.epsilon-icon-contianer {
+.epsilon-icon-container {
   -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
   -moz-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
 }
-.epsilon-icon-contianer i {
+.epsilon-icon-container i {
   padding: 10px;
   float: left;
   border-top-left-radius: 5px;
@@ -1158,7 +1158,7 @@ label.epsilon-icon-picker-label {
   text-align: center;
   background: #fefefe;
 }
-.epsilon-icon-contianer span {
+.epsilon-icon-container span {
   padding: 10px;
   float: left;
   border-top-right-radius: 5px;
@@ -1167,7 +1167,7 @@ label.epsilon-icon-picker-label {
   border-left: 1px solid #dddddd;
 }
 
-.epsilon-icon-picker-contianer {
+.epsilon-icon-picker-container {
   display: none;
   background-color: #f4f4f4;
   border-radius: 5px;
@@ -1177,28 +1177,27 @@ label.epsilon-icon-picker-label {
   -moz-box-shadow: 0 0px 9px rgba(0, 0, 0, 0.08);
   box-shadow: 0 0px 9px rgba(0, 0, 0, 0.08);
 }
-.epsilon-icon-picker-contianer .search-container {
+.epsilon-icon-picker-container .search-container {
   padding: 15px 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #eaeaea;
 }
-.epsilon-icon-picker-contianer .epsilon-icons-container {
+.epsilon-icon-picker-container .epsilon-icons-container {
   padding: 15px 20px;
   box-sizing: border-box;
   border-top: 1px solid #fafafa;
 }
-
-.epsilon-iconpicker-opened .epsilon-icon-picker-contianer {
+.epsilon-icon-picker-container.opened {
   display: block;
 }
 
-.epsilon-iconpicker-opened .epsilon-icon-contianer {
+.epsilon-icon-picker-opened .epsilon-icon-container {
   -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.epsilon-iconpicker-opened .epsilon-icon-contianer > span {
+.epsilon-icon-picker-opened .epsilon-icon-container > span {
   border-bottom-right-radius: 0px;
 }
 
@@ -1212,7 +1211,7 @@ label.epsilon-icon-picker-label {
 
 .epsilon-icons > i {
   display: inline-block;
-  width: calc(20% - 7px );
+  width: calc(20% - 7px);
   padding: 6px;
   box-sizing: border-box;
   border: 1px solid #eaeaea;

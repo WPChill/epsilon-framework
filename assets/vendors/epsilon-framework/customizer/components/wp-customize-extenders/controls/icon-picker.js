@@ -1,14 +1,16 @@
 /**
  * Icon Picker Control Constructor
  */
-wp.customize.controlConstructor[ 'epsilon-iconpicker' ] = wp.customize.Control.extend( {
-	ready: function() {
-		var control = this;
+wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
 
-		control.container.on( 'change', 'input.epsilon-icon-picker',
-	        function() {
-	          control.setting.set( jQuery( this ).val() );
-	        }
-	    );
-	}
+    EpsilonFramework.iconPickers.init( control );
+
+    control.container.on( 'change', 'input.epsilon-icon-picker',
+        function() {
+          control.setting.set( jQuery( this ).val() );
+        }
+    );
+  }
 } );
