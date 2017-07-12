@@ -157,9 +157,8 @@ class Epsilon_Framework {
 			'selectFile' => esc_html__( 'Select a file', 'epsilon-framework' ),
 		) );
 
-		wp_enqueue_style( 'epsilon-fontawesome', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/font-awesome.css' );
+		wp_enqueue_style( 'font-awesome', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/font-awesome.css' );
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
-
 	}
 
 	/**
