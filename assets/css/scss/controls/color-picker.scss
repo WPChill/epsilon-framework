@@ -8,6 +8,17 @@
     color: #959696;
     display: block;
   }
+
+  .epsilon-color-picker-default {
+    font-style: italic;
+    font-weight: 300;
+    color: #959696;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+      color: #55AAD3;
+    }
+  }
 }
 
 .minicolors-theme-default {

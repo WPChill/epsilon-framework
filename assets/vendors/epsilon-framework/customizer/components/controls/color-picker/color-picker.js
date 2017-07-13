@@ -6,7 +6,7 @@
 EpsilonFramework.colorPickers = {
   init: function( selectors ) {
     var selectors = jQuery( selectors ),
-        settings;
+        settings, clear, instance;
 
     jQuery.each( selectors, function() {
       settings = {
@@ -24,6 +24,14 @@ EpsilonFramework.colorPickers = {
       }
 
       jQuery( this ).minicolors( settings );
+
+      clear = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'a' );
+      clear.on( 'click', function( e ) {
+        e.preventDefault();
+        instance = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
+        instance.minicolors( 'value', jQuery( this ).attr( 'data-default' ) );
+        instance.trigger( 'change' );
+      } );
     } );
   }
 };
