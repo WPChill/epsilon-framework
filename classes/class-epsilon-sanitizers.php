@@ -33,4 +33,46 @@ class Epsilon_Sanitizers {
 
 		return 'rgba(' . $red . ',' . $green . ',' . $blue . ',' . $alpha . ')';
 	}
+
+	/**
+	 * @since 1.2.0
+	 *
+	 * @param $value
+	 *
+	 * @return int
+	 */
+	public static function checkbox( $value ) {
+		return (bool) $value;
+	}
+
+	/**
+	 * @since 1.2.0
+	 *
+	 * Simple function to validate choices from radio buttons
+	 *
+	 * @param $input
+	 *
+	 * @return string
+	 */
+	public static function radio_buttons( $input, $setting ) {
+		global $wp_customize;
+
+		$control = $wp_customize->get_control( $setting->id );
+		if ( array_key_exists( $input, $control->choices ) ) {
+			return $input;
+		}
+
+		return $setting->default;
+	}
+
+	/**
+	 * @since 1.2.0
+	 *
+	 * @param $input
+	 *
+	 * @return string
+	 */
+	public static function textarea_nl2br( $input ) {
+		return nl2br( $input );
+	}
 }
