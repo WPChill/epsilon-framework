@@ -18,7 +18,7 @@ wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
   EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
   EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
-  //EpsilonFramework.wysiwyg.init( '.customize-control-epsilon-wysiwyg' );
+  EpsilonFramework.textEditor.init( '.customize-control-epsilon-text-editor' );
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();

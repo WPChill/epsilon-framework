@@ -1598,6 +1598,42 @@ EpsilonFramework.sectionRepeater.section = {
   },
 };
 /**
+ * Icon Picker Initiator
+ *
+ * @type {{init: EpsilonFramework.iconPickers.init}}
+ */
+EpsilonFramework.textEditor = {
+  init: function( selector ) {
+    var context = jQuery( selector ), textarea, editorId;
+
+    jQuery.each( context, function() {
+      textarea = jQuery( this ).find( 'textarea' );
+      editorId = jQuery( textarea ).attr( 'id' );
+
+      // The user has disabled TinyMCE.
+      if ( typeof window.tinymce === 'undefined' ) {
+        wp.editor.initialize( editorId, {
+          quicktags: true
+        } );
+        return;
+      }
+
+      wp.editor.initialize( editorId, {
+        tinymce: {
+          wpautop: true,
+          setup: function( editor ) {
+            editor.on( 'change', function( e ) {
+              editor.save();
+              jQuery( editor.getElement() ).trigger( 'change' );
+            } );
+          }
+        },
+        quicktags: true
+      } );
+    } );
+  }
+};
+/**
  * Typography functions
  *
  * @type {{_selectize: null, _linkedFonts: {}, init: EpsilonFramework.typography.init, _resetDefault: EpsilonFramework.typography._resetDefault, _parseJson:
@@ -1788,41 +1824,6 @@ EpsilonFramework.typography = {
   }
 };
 
-/**
- * Icon Picker Initiator
- *
- * @type {{init: EpsilonFramework.iconPickers.init}}
- */
-EpsilonFramework.wysiwyg = {
-	init: function( selector ) {
-		var context = jQuery( selector ),
-			textarea, editor_id;
-		textarea = context.find( 'textarea' );
-		editor_id = textarea.attr( 'id' );
-
-		// The user has disabled TinyMCE.
-		if ( typeof window.tinymce === 'undefined' ) {
-			wp.editor.initialize( editor_id, {
-				quicktags: true
-			});
-			return;
-		}
-
-		wp.editor.initialize( editor_id, {
-			tinymce: {
-				wpautop: true,
-				setup: function( editor ) {
-				    editor.on('change', function(e) {
-				    	editor.save();
-				    	jQuery( editor.getElement() ).trigger( 'change' );
-				    });
-				}
-			},
-			quicktags: true
-		});
-
-	}
-}
 /**
  * Recommended action section scripting
  *
@@ -2205,6 +2206,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
         EpsilonFramework.rangeSliders.init( newRow.container );
         EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.iconPickers.init( newRow, true );
+        EpsilonFramework.textEditor.init( newRow.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2259,6 +2261,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
         EpsilonFramework.rangeSliders.init( newRow.container );
         EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.iconPickers.init( newRow, true );
+        EpsilonFramework.textEditor.init( newRow.container );
       } );
     }
 
@@ -2336,6 +2339,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.iconPickers.init( newSection, true );
+        EpsilonFramework.textEditor.init( newSection.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2378,6 +2382,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.iconPickers.init( newSection, true );
+        EpsilonFramework.textEditor.init( newSection.container );
       } );
     }
 
@@ -2422,6 +2427,18 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
 
 } );
 /**
+ * Epsilon Text Editor Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-text-editor' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+
+    control.container.on( 'change keyup', 'textarea', function() {
+      control.setting.set( jQuery( this ).val() );
+    } );
+  }
+} );
+/**
  * WP Customizer Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.extend( {
@@ -2451,23 +2468,6 @@ wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.e
   }
 } );
 
-/**
- * WYSIWYG Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-wysiwyg' ] = wp.customize.Control.extend( {
-	ready: function() {
-		var control = this;
-
-		control.container.on( 'change', 'textarea',
-	        function() {
-	          control.setting.set( jQuery( this ).val() );
-	        }
-	    );
-	    control.container.find( 'textarea' ).keyup(function(){
-	    	control.setting.set( jQuery( this ).val() );
-	    });
-	}
-} );
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
   attachEvents: function() {
   },
@@ -2507,7 +2507,7 @@ wp.customize.bind( 'ready', function() {
   EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
   EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
   EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
-  //EpsilonFramework.wysiwyg.init( '.customize-control-epsilon-wysiwyg' );
+  EpsilonFramework.textEditor.init( '.customize-control-epsilon-text-editor' );
 
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();

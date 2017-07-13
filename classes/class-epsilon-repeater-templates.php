@@ -111,6 +111,19 @@ class Epsilon_Repeater_Templates {
 								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
 								<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
+						<# } else if ( 'epsilon-text-editor' === field.type ) { #>
+							<label>
+								<span class="customize-control-title">
+									<# if( field.label ){ #>
+										<span class="customize-control-title">{{ field.label }}</span>
+									<# } #>
+
+									<# if( field.description ){ #>
+										<span class="description customize-control-description">{{ field.description }}</span>
+									<# } #>
+								</span>
+								<textarea id="{{{ field.id }}}-{{ index }}" data-field="{{{ field.id }}}" class="widefat text wp-editor-area" >{{{ field.default }}}</textarea>
+							</label>
 						<# } else if ( 'epsilon-icon-picker' === field.type ) { #>
 							<label class="epsilon-icon-picker-label">
 								<span class="customize-control-title">
