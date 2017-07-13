@@ -18,10 +18,6 @@ class Epsilon_Framework {
 	 */
 	private $sections = array();
 	/**
-	 * @var array|mixed
-	 */
-	private $panels = array();
-	/**
 	 * @var mixed|string
 	 */
 	private $path = '/inc/libraries';
@@ -34,7 +30,7 @@ class Epsilon_Framework {
 	public function __construct( $args ) {
 		foreach ( $args as $k => $v ) {
 
-			if ( ! in_array( $k, array( 'controls', 'sections', 'panels', 'path' ) ) ) {
+			if ( ! in_array( $k, array( 'controls', 'sections', 'path' ) ) ) {
 				continue;
 			}
 
@@ -90,7 +86,7 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php';
 			}
 
-			if ( in_array( 'repeater', $this->controls ) ) {
+			if ( in_array( 'repeater', $this->controls ) || in_array( 'section-repeater', $this->controls ) ) {
 				add_action( 'customize_controls_print_footer_scripts', array(
 					'Epsilon_Repeater_Templates',
 					'field_repeater_js_template',
@@ -101,12 +97,6 @@ class Epsilon_Framework {
 		foreach ( $this->sections as $section ) {
 			if ( file_exists( $path . '/customizer/sections/class-epsilon-section-' . $section . '.php' ) ) {
 				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
-			}
-		}
-
-		foreach ( $this->panels as $panel ) {
-			if ( file_exists( $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php' ) ) {
-				require_once $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php';
 			}
 		}
 	}

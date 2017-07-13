@@ -20,14 +20,34 @@ class Epsilon_Customizer {
 	 */
 	private static function add_setting( $id, array $args = array() ) {
 		global $wp_customize;
+
+		/**
+		 * We need to use setting_type to determine the sanitizer
+		 */
+		if ( empty( $args['setting_type'] ) ) {
+			$args['setting_type'] = $args['type'];
+		}
+
+		/**
+		 * Setting types can be theme_mod or options, control's type is not needed here
+		 */
 		unset( $args['type'] );
 
+		/**
+		 * Determine sanitizer
+		 */
 		if ( empty( $args['sanitize_callback'] ) ) {
 			$args['sanitize_callback'] = self::_get_sanitizer( $args['setting_type'] );
 		}
 
+		/**
+		 * Create the class name for the setting, repeater field has a different setting class
+		 */
 		$class = self::_get_type( $args['setting_type'], 'setting' );
 
+		/**
+		 * Register it
+		 */
 		$wp_customize->add_setting(
 			new $class['class'](
 				$wp_customize,
@@ -47,10 +67,20 @@ class Epsilon_Customizer {
 	 */
 	public static function add_field( $id, array $args = array() ) {
 		global $wp_customize;
+
+		/**
+		 * Add setting
+		 */
 		self::add_setting( $id, $args );
 
+		/**
+		 * Get class name, if it's an epsilon control, we need to build the class name accordingly
+		 */
 		$field_type = self::_get_type( $args['type'], 'control' );
 
+		/**
+		 * Register the control
+		 */
 		$wp_customize->add_control(
 			new $field_type['class'](
 				$wp_customize,
@@ -109,12 +139,18 @@ class Epsilon_Customizer {
 	 * @param $type
 	 */
 	public static function _get_type( $type = '', $prefix = '' ) {
-		$type  = explode( '-', $type );
-		$class = 'WP_Customize_Control';
+		$type = explode( '-', $type );
 
 		if ( 1 < count( $type ) && 'epsilon' === $type[0] ) {
 			$class = implode( '_', $type );
 			$class = str_replace( 'epsilon_', 'epsilon_' . $prefix . '_', $class );
+		}
+
+		/**
+		 * Provide a default
+		 */
+		if ( ! class_exists( $class ) ) {
+			$class = 'WP_Customize_' . $prefix;
 		}
 
 		return array(
@@ -124,6 +160,8 @@ class Epsilon_Customizer {
 
 	/**
 	 * Dynamic sanitization
+	 *
+	 * @todo check sanitizers
 	 *
 	 * @param $type
 	 *
@@ -147,10 +185,10 @@ class Epsilon_Customizer {
 				break;
 			case 'epsilon-toggle':
 			case 'checkbox':
-				$sanitizer = array( 'Epsilon_Sanitizer', 'checkbox' );
+				$sanitizer = array( 'Epsilon_Sanitizers', 'checkbox' );
 				break;
 			case 'radio':
-				$sanitizer = array( 'Epsilon_Sanitizer', 'radio_buttons' );
+				$sanitizer = array( 'Epsilon_Sanitizers', 'radio_buttons' );
 				break;
 			case 'epsilon-repeater':
 			case 'epsilon-section-repeater':
@@ -171,7 +209,7 @@ class Epsilon_Customizer {
 			case 'epsilon-color-picker':
 				$sanitizer = 'sanitize_hex_color';
 				if ( 'rgba' === $args['mode'] ) {
-					$sanitizer = array( 'Epsilon_Sanitizer', 'rgba' );
+					$sanitizer = array( 'Epsilon_Sanitizers', 'rgba' );
 				}
 				break;
 			default:
