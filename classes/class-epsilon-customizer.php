@@ -78,6 +78,22 @@ class Epsilon_Customizer {
 		 */
 		$field_type = self::_get_type( $args['type'], 'control' );
 
+		if ( EPSILON_BACKUP ) {
+			/**
+			 * This array SHOULD always be backed up
+			 */
+			$must_backup = array(
+				'epsilon-section-repeater',
+				'epsilon-repeater',
+				'epsilon-text-editor',
+			);
+
+			if ( in_array( $args['type'], $must_backup ) || true === $args['backup'] ) {
+				$instance = Epsilon_Content_Backup::get_instance();
+				$instance->add_field( $id, $args );
+			}
+		}
+
 		/**
 		 * Register the control
 		 */

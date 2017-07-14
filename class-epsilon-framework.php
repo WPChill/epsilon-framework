@@ -21,6 +21,10 @@ class Epsilon_Framework {
 	 * @var mixed|string
 	 */
 	private $path = '/inc/libraries';
+	/**
+	 * @var bool
+	 */
+	private $backup = true;
 
 	/**
 	 * Epsilon_Framework constructor.
@@ -30,7 +34,7 @@ class Epsilon_Framework {
 	public function __construct( $args ) {
 		foreach ( $args as $k => $v ) {
 
-			if ( ! in_array( $k, array( 'controls', 'sections', 'path' ) ) ) {
+			if ( ! in_array( $k, array( 'controls', 'sections', 'path', 'backup' ) ) ) {
 				continue;
 			}
 
@@ -38,11 +42,17 @@ class Epsilon_Framework {
 		}
 
 		/**
+		 * Let's initiate a backup instance
+		 */
+		if ( $this->backup ) {
+			$backup = Epsilon_Content_Backup::get_instance();
+		}
+		/**
 		 * Define URI and PATH for the framework
 		 */
 		define( 'EPSILON_URI', get_template_directory_uri() . $this->path . '/epsilon-framework' );
 		define( 'EPSILON_PATH', get_template_directory() . $this->path . '/epsilon-framework' );
-
+		define( 'EPSILON_BACKUP', $this->backup );
 		/**
 		 * Admin enqueues
 		 */
@@ -51,7 +61,7 @@ class Epsilon_Framework {
 		/**
 		 * Customizer enqueues & controls
 		 */
-		add_action( 'customize_register', array( $this, 'init_controls' ), 0 );
+		add_action( 'customize_register', array( $this, 'init_controls' ) );
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customizer_enqueue_scripts' ), 25 );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_styles' ), 25 );
@@ -67,7 +77,6 @@ class Epsilon_Framework {
 			$this,
 			'epsilon_framework_ajax_action',
 		) );
-
 	}
 
 	/**
@@ -76,7 +85,7 @@ class Epsilon_Framework {
 	 * @param object $wp_customize
 	 */
 	public function init_controls( $wp_customize ) {
-		$path = get_template_directory() . $this->path . '/epsilon-framework';
+		$path             = get_template_directory() . $this->path . '/epsilon-framework';
 
 		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {

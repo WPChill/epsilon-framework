@@ -123,7 +123,7 @@ class Epsilon_Predefined_Controls {
 	 */
 	private function set_collection() {
 		$theme  = wp_get_theme();
-		$prefix = 'epsilon_framework';
+		$prefix = str_replace( '-', '_', $theme->get( 'TextDomain' ) );
 
 		/**
 		 * Each "set" has it's own panels,
