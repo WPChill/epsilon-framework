@@ -41,27 +41,30 @@
       display: inline-block;
       width: 20px;
       height: 20px;
-      line-height: 20px;
+      line-height: 19px;
       position: absolute;
       border-radius: 50px;
       color: #fff;
       background: #333333;
       left: 50%;
       top: 50%;
+      font-size: 12px;
       -webkit-transform: translate(-50%, -50%);
       -ms-transform: translate(-50%, -50%);
       -o-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
     }
   }
-
 }
 
 .epsilon-upsell-options {
   li {
-    margin-bottom: 10px;
+    margin-bottom: 0;
     display: inline-block;
     width: 100%;
+    font-size: 12px;
+    font-family: 'Open Sans';
+    color: #8b9096;
     i {
       vertical-align: middle;
       position: relative;
@@ -72,28 +75,20 @@
   }
 }
 
-ul.epsilon-upsell-requirements {
-  font-size: 12px;
-  li {
-    line-height: 1.75;
-    margin-bottom: 10px;
-    font-style: italic;
-  }
-}
-
 .customize-control-epsilon-upsell {
-  margin: -12px;
+  margin: 0 -12px;
   width: 105.5%;
   margin-bottom: 40px;
 
   .epsilon-upsell-label {
     background: #d54e21;
     color: #fff;
-    padding: 20px;
+    padding: 14px 20px;
     cursor: pointer;
     -webkit-transition: all .2s;
     transition: all .2s;
-    &:hover {
+    &:hover,
+    &.opened {
       -webkit-transition: all .2s;
       transition: all .2s;
       background: #008ec2;
