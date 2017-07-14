@@ -41,14 +41,6 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 	 */
 	public $requirements = array();
 	/**
-	 * @var string|void
-	 */
-	public $pro_label = '';
-	/**
-	 * @var array
-	 */
-	public $json = array();
-	/**
 	 * @var bool|mixed|void
 	 */
 	public $allowed = true;
@@ -61,24 +53,34 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 	 * @param array                $args
 	 */
 	public function __construct( WP_Customize_Manager $manager, $id, array $args ) {
-		$this->pro_label = __( 'Pro', 'epsilon-framework' );
-		$this->allowed   = apply_filters( 'epsilon_upsell_control_display', true );
-
-		$manager->register_control_type( 'Epsilon_Control_Upsell' );
+		//$this->allowed = apply_filters( 'epsilon_upsell_control_display', true );
 		parent::__construct( $manager, $id, $args );
+		$manager->register_control_type( 'Epsilon_Control_Upsell' );
+
 	}
 
 	/**
 	 *
 	 */
-	public function to_json() {
-		parent::to_json();
-		$this->json['button_text']        = $this->button_text;
-		$this->json['button_url']         = $this->button_url;
-		$this->json['second_button_text'] = $this->second_button_text;
-		$this->json['second_button_url']  = $this->second_button_url;
-		$this->json['separator']          = $this->separator;
-		$this->json['allowed']            = $this->allowed;
+	public function json() {
+		$json = parent::json();
+		/**
+		 * Provide a fallback for the label
+		 */
+		$json['label'] = ! empty( $this->label ) ? $this->label : __( 'See what\'s in the PRO version', 'epsilon-framework' );
+		/**
+		 * Buttons
+		 */
+		$json['button_text']        = $this->button_text;
+		$json['button_url']         = $this->button_url;
+		$json['second_button_text'] = $this->second_button_text;
+		$json['second_button_url']  = $this->second_button_url;
+
+		/**
+		 * Misc
+		 */
+		$json['separator'] = $this->separator;
+		$json['allowed']   = $this->allowed;
 
 		$arr = array();
 		$i   = 0;
@@ -93,8 +95,13 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 			$i ++;
 		}
 
-		$this->json['options']   = $arr;
-		$this->json['pro_label'] = $this->pro_label;
+		$json['options'] = $arr;
+
+		$json['id']    = $this->id;
+		$json['link']  = $this->get_link();
+		$json['value'] = $this->value();
+
+		return $json;
 	}
 
 	/**
@@ -102,17 +109,18 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 	 */
 	public function content_template() {
 		//@formatter:off ?>
-
 		<# if ( data.allowed ) { #>
-		<div class="epsilon-upsell">
+		<div class="epsilon-upsell-label">
+			{{{ data.label }}} <i class="dashicons dashicons-arrow-down-alt2"></i>
+		</div>
+		<div class="epsilon-upsell-container">
 			<# if ( data.options ) { #>
 				<ul class="epsilon-upsell-options">
 					<# _.each(data.options, function( option, index) { #>
-						<li><span class="wp-ui-notification">{{ data.pro_label }}</span>{{ option.option }}
-							<i class="dashicons dashicons-editor-help"
-							   style="vertical-align: text-bottom; position: relative;">
+						<li><i class="dashicons dashicons-editor-help">
 								<span class="mte-tooltip">{{ option.help }}</span>
 							</i>
+							{{ option.option }}
 						</li>
 						<# }) #>
 				</ul>
@@ -134,6 +142,15 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 			</div>
 		</div>
 		<# } #>
-<?php //@formatter:on
+	<?php //@formatter:on
+	}
+
+	/**
+	 * Empty
+	 *
+	 * @since 1.2.0
+	 */
+	public function render_content() {
+
 	}
 }

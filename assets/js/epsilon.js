@@ -2476,6 +2476,18 @@ wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.e
   }
 } );
 
+/**
+ * WP Customizer Upsell Control Constructor
+ */
+wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.extend( {
+  ready: function() {
+    var control = this;
+    control.container.on( 'click', '.epsilon-upsell-label', function( e ) {
+      e.preventDefault();
+      control.container.find( '.epsilon-upsell-container' ).slideToggle( 200 );
+    } );
+  }
+} );
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
   attachEvents: function() {
   },

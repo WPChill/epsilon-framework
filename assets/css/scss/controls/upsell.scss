@@ -1,7 +1,8 @@
-.epsilon-upsell {
+.epsilon-upsell-container {
   background: #fff;
-  border-radius: 10px;
   padding: 20px;
+  display: none;
+
   span.wp-ui-notification {
     padding: 2px 8px;
     text-transform: uppercase;
@@ -12,26 +13,62 @@
     display: inline-block;
   }
 
-  .button {
-    display: block;
-    text-align: center;
-    vertical-align: middle;
+  .epsilon-button-group {
+    position: relative;
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    .button {
+      display: inline-block;
+      text-align: center;
+      vertical-align: middle;
+      width: 50%;
+      float: left;
+      padding: 3px 0;
+      height: initial;
+      &:first-of-type {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      &:last-of-type {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    .button-separator {
+      text-align: center;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      position: absolute;
+      border-radius: 50px;
+      color: #fff;
+      background: #333333;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
   }
 
-  .button-separator {
-    font-style: italic;
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
 }
 
 .epsilon-upsell-options {
   li {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: inline-block;
+    width: 100%;
+    i {
+      vertical-align: middle;
+      position: relative;
+    }
+    &:last-of-type {
+      margin-bottom: 20px;
+    }
   }
 }
 
@@ -41,5 +78,32 @@ ul.epsilon-upsell-requirements {
     line-height: 1.75;
     margin-bottom: 10px;
     font-style: italic;
+  }
+}
+
+.customize-control-epsilon-upsell {
+  margin: -12px;
+  width: 105.5%;
+  margin-bottom: 40px;
+
+  .epsilon-upsell-label {
+    background: #d54e21;
+    color: #fff;
+    padding: 20px;
+    cursor: pointer;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    &:hover {
+      -webkit-transition: all .2s;
+      transition: all .2s;
+      background: #008ec2;
+    }
+    i {
+      float: right;
+    }
+  }
+
+  .mte-tooltip {
+    left: 0;
   }
 }
