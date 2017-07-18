@@ -209,6 +209,7 @@ EpsilonFramework.repeater.base = {
     // The setting is saved in JSON
     return JSON.parse( decodeURI( instance.setting.get() ) );
   },
+
   /**
    * Update a single field inside a row.
    * Triggered when a field has changed
@@ -297,7 +298,7 @@ EpsilonFramework.repeater.base = {
       input = container.find( 'input' );
       temp = image.state().get( 'selection' ).first();
       setting.id = temp.id;
-      setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+      setting.url = temp.toJSON().sizes.full.url;
 
       self._setImage( container, setting.url );
       input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );
@@ -447,5 +448,52 @@ EpsilonFramework.repeater.base = {
     }
 
     instance.header.find( '.repeater-row-label' ).text( instance.label.value + ' ' + ( instance.rowIndex + 1 ) );
+  },
+  /**
+   * Handle the icon picker field
+   *
+   * @param instance
+   * @param container
+   */
+  handleIconPickerToggle: function( instance, container ) {
+    container.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
+  },
+
+  /**
+   * Handle the selection of the icon picker
+   *
+   * @param instance
+   * @param container
+   */
+  handleIconPickerSelection: function( instance, clicked, container ) {
+    var icon;
+
+    container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
+    icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
+    container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+
+    /**
+     * Set value
+     */
+    container.find( '.epsilon-icon-picker' ).attr( 'value', icon ).trigger( 'change' );
+  },
+
+  /**
+   * Handle the Filtering of the icons
+   *
+   * @param instance
+   * @param input
+   * @param container
+   */
+  handleIconPickerFiltering: function( instance, input, container ) {
+    var filter, temp,
+        collection = jQuery( container ).find( '.epsilon-icons > i' );
+
+    filter = jQuery( input ).val().toLowerCase();
+
+    jQuery.each( collection, function() {
+      temp = jQuery( this ).attr( 'data-search' ).toLowerCase();
+      jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
+    } );
   },
 };

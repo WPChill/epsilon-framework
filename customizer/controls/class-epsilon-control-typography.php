@@ -35,11 +35,12 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	public $default;
 
 	/**
-	 * @since 1.2.0
+	 * @since  1.2.0
 	 * @access public
 	 * @var array
 	 */
 	public $choices = array();
+
 	/**
 	 * Epsilon_Control_Typography constructor.
 	 *
@@ -50,7 +51,6 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	public function __construct( WP_Customize_Manager $manager, $id, array $args = array() ) {
 		parent::__construct( $manager, $id, $args );
 		$manager->register_control_type( 'Epsilon_Control_Typography' );
-		$this->set_font_defaults( $args, $id );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$json['value']        = $this->value();
 		$json['choices']      = $this->choices;
 		$json['default']      = $this->default;
-		$json['fontDefaults'] = $this->font_defaults;
+		$json['fontDefaults'] = $this->set_font_defaults();
 		$json['inputs']       = $this->get_values( $this->id );
 		$json['fonts']        = $this->google_fonts();
 		$json['selectors']    = $this->set_selectors();
@@ -77,13 +77,17 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	/**
 	 * Sets the typography defaults
 	 */
-	public function set_font_defaults( $args, $id ) {
+	public function set_font_defaults() {
 		$arr = array();
-		if ( ! empty( $args['font_defaults'] ) ) {
-			$arr[ $id ] = $args['font_defaults'];
+		if ( empty( $this->font_defaults ) ) {
+			$arr[ $this->id ] = array();
 		}
 
-		$this->font_defaults = $arr;
+		if ( ! empty( $this->font_defaults ) ) {
+			$arr[ $this->id ] = $this->font_defaults;
+		}
+
+		return $arr;
 	}
 
 	/**
@@ -173,7 +177,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 			WP_Filesystem();
 		}
 
-		$path   = dirname( dirname( __FILE__ ) ) . '/assets/data/gfonts.json';
+		$path   = EPSILON_PATH . '/assets/data/gfonts.json';
 		$gfonts = $wp_filesystem->get_contents( $path );
 
 		return json_decode( $gfonts );

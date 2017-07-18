@@ -16,9 +16,7 @@ EpsilonFramework.iconPickers = {
    */
   init: function( control, inRepeater ) {
     this.control = control;
-    var icon, filter, temp,
-        collection = control.container.find( '.epsilon-icons > i' ),
-        input = control.container.find( '.search-container input' );
+    var icon, filter, temp, collection = control.container.find( '.epsilon-icons > i' ), input = control.container.find( '.search-container input' );
 
     /**
      * Icon container toggler
@@ -58,5 +56,5 @@ EpsilonFramework.iconPickers = {
       } );
 
     }, 1000 ) );
-  },
+  }
 };

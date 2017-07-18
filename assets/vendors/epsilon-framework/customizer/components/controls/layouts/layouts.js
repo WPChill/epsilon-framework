@@ -73,6 +73,10 @@ EpsilonFramework.layouts = {
       };
     } );
 
+    if ( null === json.columnsCount ) {
+      json.columnsCount = e.instance.context.find( '.epsilon-column' ).length;
+    }
+
     e.instance.context.find( 'input' ).val( JSON.stringify( json ) ).trigger( 'change' );
   },
 
@@ -230,9 +234,9 @@ EpsilonFramework.layouts = {
     /**
      * Trigger event to change
      */
-    jQuery( this.context ).trigger( {
+    jQuery( instance.context ).trigger( {
       'type': 'epsilon_column_size_changed',
-      'instance': this
+      'instance': instance
     } );
   },
 

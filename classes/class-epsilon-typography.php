@@ -59,6 +59,7 @@ class Epsilon_Typography {
 	public function __construct( $args = array(), $handler = null ) {
 		$this->handler = $handler;
 		$this->options = $this->get_option( $args );
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
 		/**
@@ -144,7 +145,7 @@ class Epsilon_Typography {
 			WP_Filesystem();
 		}
 
-		$path   = dirname( dirname( __FILE__ ) ) . '/assets/data/gfonts.json';
+		$path   = EPSILON_PATH . '/assets/data/gfonts.json';
 		$gfonts = $wp_filesystem->get_contents( $path );
 		$gfonts = json_decode( $gfonts );
 

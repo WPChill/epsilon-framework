@@ -38,6 +38,9 @@ class Epsilon_Customizer {
 		 */
 		if ( empty( $args['sanitize_callback'] ) ) {
 			$args['sanitize_callback'] = self::_get_sanitizer( $args['setting_type'] );
+			if ( 'epsilon-section-repeater' === $args['setting_type'] ) {
+				unset( $args['sanitize_callback'] );
+			}
 		}
 
 		/**
@@ -155,6 +158,10 @@ class Epsilon_Customizer {
 	 * @param $type
 	 */
 	public static function _get_type( $type = '', $prefix = '' ) {
+		if ( 'setting' === $prefix && ( 'epsilon-section-repeater' === $type || 'epsilon-repeater' === $type ) ) {
+			$type = 'epsilon-repeater';
+		}
+
 		$type = explode( '-', $type );
 
 		if ( 1 < count( $type ) && 'epsilon' === $type[0] ) {
@@ -205,6 +212,9 @@ class Epsilon_Customizer {
 				break;
 			case 'radio':
 				$sanitizer = array( 'Epsilon_Sanitizers', 'radio_buttons' );
+				break;
+			case 'epsilon-text-editor':
+				$sanitizer = array( 'Epsilon_Sanitizers', 'textarea_nl2br' );
 				break;
 			case 'epsilon-repeater':
 			case 'epsilon-section-repeater':

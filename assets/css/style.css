@@ -341,7 +341,7 @@
   left: -75px;
   /* half of its width */
   bottom: 25px;
-  z-index: 10;
+  z-index: 9999;
   display: none;
   padding: 12px;
   line-height: 1.5;
@@ -622,7 +622,7 @@
   -moz-border-radius: 3px;
   border-radius: 3px;
   background: #fefefe;
-  padding: 6px;
+  padding: 9px;
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
@@ -658,7 +658,7 @@
 }
 .epsilon-layouts-container .epsilon-layouts-container-buttons .epsilon-button-group a {
   background: #fefefe;
-  padding: 6px 4px;
+  padding: 9px 5px;
   display: inline-block;
   position: relative;
 }

@@ -37,7 +37,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @var array
 	 */
 	protected $icons = array();
-	
+
 	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
@@ -60,12 +60,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']       = $this->id;
-		$json['link']     = $this->get_link();
-		$json['choices']  = $this->choices;
-		$json['value']    = $this->value();
-		$json['sections'] = $this->set_repeatable_sections();
-		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']             = $this->id;
+		$json['link']           = $this->get_link();
+		$json['choices']        = $this->choices;
+		$json['value']          = $this->value();
+		$json['sections']       = $this->set_repeatable_sections();
+		$json['default']        = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
 	}

@@ -61,7 +61,7 @@ class Epsilon_Framework {
 		/**
 		 * Customizer enqueues & controls
 		 */
-		add_action( 'customize_register', array( $this, 'init_controls' ) );
+		add_action( 'customize_register', array( $this, 'init_controls' ), 10 );
 
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customizer_enqueue_scripts' ), 25 );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_styles' ), 25 );
@@ -77,6 +77,14 @@ class Epsilon_Framework {
 			$this,
 			'epsilon_framework_ajax_action',
 		) );
+
+		/**
+		 * Repeater fields templates
+		 */
+		add_action( 'customize_controls_print_footer_scripts', array(
+			'Epsilon_Repeater_Templates',
+			'field_repeater_js_template',
+		), 0 );
 	}
 
 	/**
@@ -85,7 +93,7 @@ class Epsilon_Framework {
 	 * @param object $wp_customize
 	 */
 	public function init_controls( $wp_customize ) {
-		$path             = get_template_directory() . $this->path . '/epsilon-framework';
+		$path = get_template_directory() . $this->path . '/epsilon-framework';
 
 		foreach ( $this->controls as $control ) {
 			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
@@ -93,13 +101,6 @@ class Epsilon_Framework {
 			}
 			if ( file_exists( $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php' ) ) {
 				require_once $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php';
-			}
-
-			if ( in_array( 'repeater', $this->controls ) || in_array( 'section-repeater', $this->controls ) ) {
-				add_action( 'customize_controls_print_footer_scripts', array(
-					'Epsilon_Repeater_Templates',
-					'field_repeater_js_template',
-				) );
 			}
 		}
 
@@ -154,6 +155,7 @@ class Epsilon_Framework {
 			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
 			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
 			'selectFile' => esc_html__( 'Select a file', 'epsilon-framework' ),
+			'row'        => esc_html__( 'Row', 'epsilon-framework' ),
 		) );
 
 		wp_enqueue_style( 'font-awesome', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/vendors/fontawesome/font-awesome.css' );

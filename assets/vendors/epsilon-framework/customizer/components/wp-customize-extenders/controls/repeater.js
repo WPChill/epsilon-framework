@@ -105,6 +105,12 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
       EpsilonFramework.repeater.base.handleImageRemoval( control, temp );
     } );
+
+    /**
+     * Icon Picker Events
+     */
+    control.initIconPicker();
+
     /**
      * If we have saved rows, we need to display them
      */

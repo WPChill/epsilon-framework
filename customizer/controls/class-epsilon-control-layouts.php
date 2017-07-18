@@ -94,7 +94,11 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 			return $this->default;
 		}
 
-		return json_decode( $val );
+		if ( is_string( $val ) ) {
+			$val = json_decode( $val );
+		}
+
+		return $val;
 	}
 
 	/**
@@ -130,25 +134,23 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	 */
 	public function content_template() {
 		//@formatter:off ?>
-		<label>
-			<span class="customize-control-title">
-				{{{ data.label }}}
-				<# if( data.description ){ #>
-					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-						<span class="mte-tooltip">
-							{{{ data.description }}}
-						</span>
-					</i>
-				<# } #>
-			</span>
-		</label>
-
 		<div class="epsilon-layouts-container" data-min-span="{{ data.minSpan }}">
 			<div class="customize-control-content">
 				<input {{{ data.link }}} {{{ data.inputAttrs }}} type="hidden" <# if( data.value ) { #> value='{{{ data.value }}}' <# } #> />
 			</div>
 			<div class="epsilon-layouts-container-buttons">
-				<span class="epsilon-button-label"><?php echo esc_html__( 'Columns', 'epsilon-framework' ); ?></span>
+				<label>
+					<span class="customize-control-title epsilon-button-label">
+						{{{ data.label }}}
+						<# if( data.description ){ #>
+							<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+								<span class="mte-tooltip">
+									{{{ data.description }}}
+								</span>
+							</i>
+						<# } #>
+					</span>
+				</label>
 				<div class="epsilon-button-group">
 					<# if( data.layouts.length > 0 ){ #>
 						<# for (layout in data.layouts) { #>
