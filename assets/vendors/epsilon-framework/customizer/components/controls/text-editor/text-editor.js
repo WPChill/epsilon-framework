@@ -6,7 +6,6 @@
 EpsilonFramework.textEditor = {
   init: function( selector ) {
     var context = jQuery( selector ), textarea, editorId;
-
     jQuery.each( context, function() {
       textarea = jQuery( this ).find( 'textarea' );
       editorId = jQuery( textarea ).attr( 'id' );

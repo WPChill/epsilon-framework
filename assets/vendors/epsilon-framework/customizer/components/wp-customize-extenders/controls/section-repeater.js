@@ -54,8 +54,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
          */
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        //EpsilonFramework.iconPickers.initRepeaterField( newSection.container );
-        EpsilonFramework.textEditor.init( newSection.container );
+        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -102,7 +101,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.textEditor.init( newSection.container );
+        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
       } );
     }
 

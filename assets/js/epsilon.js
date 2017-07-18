@@ -1655,6 +1655,42 @@ EpsilonFramework.sectionRepeater.base = {
   },
 
   /**
+   * Initiate the text editor in the repeater field
+   *
+   * @param instance
+   * @param container
+   */
+  initTexteditor: function( instance, container ) {
+    var textarea = container.find( 'textarea' ),
+        editorId;
+
+    jQuery.each( textarea, function() {
+      editorId = jQuery( this ).attr( 'id' );
+      // The user has disabled TinyMCE.
+      if ( typeof window.tinymce === 'undefined' ) {
+        wp.editor.initialize( editorId, {
+          quicktags: true
+        } );
+        return;
+      }
+
+      wp.editor.initialize( editorId, {
+        tinymce: {
+          wpautop: true,
+          setup: function( editor ) {
+            editor.on( 'change', function( e ) {
+              editor.save();
+              jQuery( editor.getElement() ).trigger( 'change' );
+            } );
+          }
+        },
+        quicktags: true
+      } );
+    } );
+
+  },
+
+  /**
    * Toggle vizibility
    *
    * @param instance
@@ -1711,7 +1747,6 @@ EpsilonFramework.sectionRepeater.section = {
 EpsilonFramework.textEditor = {
   init: function( selector ) {
     var context = jQuery( selector ), textarea, editorId;
-
     jQuery.each( context, function() {
       textarea = jQuery( this ).find( 'textarea' );
       editorId = jQuery( textarea ).attr( 'id' );
@@ -2450,8 +2485,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
          */
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        //EpsilonFramework.iconPickers.initRepeaterField( newSection.container );
-        EpsilonFramework.textEditor.init( newSection.container );
+        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2498,7 +2532,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.textEditor.init( newSection.container );
+        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
       } );
     }
 
