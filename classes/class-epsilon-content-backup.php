@@ -240,16 +240,16 @@ class Epsilon_Content_Backup {
 				$content .= "\n";
 				break;
 			case 'epsilon-section-repeater':
-				$i = 1;
 				foreach ( $field['content'] as $single_section ) {
 					$content .= "\n";
-					$content .= $control->repeatable_sections[ $single_section['type'] ]['title'] . $i . "\n";
+					$content .= $control->repeatable_sections[ $single_section['type'] ]['title'] . "\n";
 					foreach ( $single_section as $id => $val ) {
 						if ( empty( $val ) || 'type' === $id ) {
 							continue;
 						}
 						$content .= $id . ' : ' . $val . "\n";
 					}
+					$content .= '------------------------------------------------------------';
 				}
 				$content .= "\n";
 				break;

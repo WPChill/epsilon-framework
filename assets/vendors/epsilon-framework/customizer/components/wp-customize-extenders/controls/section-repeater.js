@@ -49,6 +49,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
       e.preventDefault();
       if ( ! limit || control.currentIndex < limit ) {
         newSection = EpsilonFramework.sectionRepeater.base.add( control, jQuery( this ).attr( 'data-id' ) );
+        jQuery( 'body' ).removeClass( 'adding-section' );
         /**
          * init range sliders, color pickers
          */
