@@ -337,6 +337,7 @@ EpsilonFramework.sectionRepeater.base = {
   handleImageUpload: function( instance, container ) {
     var self = this,
         setting = {},
+        size,
         temp,
         input,
         image = wp.media( {
@@ -349,8 +350,14 @@ EpsilonFramework.sectionRepeater.base = {
     image.on( 'select', function() {
       input = container.find( 'input' );
       temp = image.state().get( 'selection' ).first();
+      size = input.attr( 'data-size' );
+
+      if ( 'undefined' === typeof (temp.toJSON().sizes[ size ]) ) {
+        size = 'full';
+      }
+
       setting.id = temp.id;
-      setting.url = temp.toJSON().sizes.full.url;
+      setting.url = temp.toJSON().sizes[ size ].url;
 
       self._setImage( container, setting.url );
       input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );

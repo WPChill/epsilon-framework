@@ -10,6 +10,7 @@ EpsilonFramework.image = {
     var self = this,
         image,
         temp,
+        size,
         setting = {},
         thumb;
 
@@ -29,8 +30,14 @@ EpsilonFramework.image = {
        */
       image.on( 'select', function() {
         temp = image.state().get( 'selection' ).first();
+        size = input.attr( 'data-size' );
+
+        if ( 'undefined' === typeof (temp.toJSON().sizes[ size ]) ) {
+          size = 'full';
+        }
+
         setting.id = temp.id;
-        setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+        setting.url = temp.toJSON().sizes[ size ].url;
         self.saveValue( control, setting );
         self.setImage( control, setting.url );
 

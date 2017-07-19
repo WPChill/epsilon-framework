@@ -20,6 +20,12 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 	public $default;
 
 	/**
+	 * @since 1.2.0
+	 * @var string
+	 */
+	public $size = 'full';
+
+	/**
 	 * Epsilon_Control_Image constructor.
 	 *
 	 * @since 1.2.0
@@ -47,6 +53,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 		$json['stringifiedVal'] = $this->value();
 		$json['value']          = $this->sanitize_value();
 		$json['default']        = $this->default;
+		$json['size']           = $this->size;
 
 		return $json;
 	}

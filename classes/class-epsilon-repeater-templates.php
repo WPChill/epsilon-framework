@@ -171,7 +171,7 @@ class Epsilon_Repeater_Templates {
 							</label>
 
 							<div class="epsilon-controller-image-container image-upload">
-								<input type="hidden" data-field="{{ field.id }}" data-save-mode="{{ field.mode }}"/>
+								<input type="hidden" data-field="{{ field.id }}" data-size="{{ field.size }}" data-save-mode="{{ field.mode }}"/>
 								<# if ( field.default ) { #>
 								<div class="epsilon-image">
 									<img src="{{{ field.default }}}" />
@@ -191,6 +191,8 @@ class Epsilon_Repeater_Templates {
 									</button>
 								</div>
 							</div>
+						<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
+							{{{ field.label }}} <a href="#" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
 						<# } #>
 					<# } ); #>
 					<div class="repeater-row-footer">

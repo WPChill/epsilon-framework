@@ -23,4 +23,12 @@ wp.customize.bind( 'ready', function() {
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
   EpsilonFramework.recommendedActions.init();
+
+  /**
+   * @todo add it somewhere in JS
+   */
+  jQuery( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
+    e.preventDefault();
+    wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+  } );
 } );

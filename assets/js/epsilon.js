@@ -213,6 +213,7 @@ EpsilonFramework.image = {
     var self = this,
         image,
         temp,
+        size,
         setting = {},
         thumb;
 
@@ -232,8 +233,14 @@ EpsilonFramework.image = {
        */
       image.on( 'select', function() {
         temp = image.state().get( 'selection' ).first();
+        size = input.attr( 'data-size' );
+
+        if ( 'undefined' === typeof (temp.toJSON().sizes[ size ]) ) {
+          size = 'full';
+        }
+
         setting.id = temp.id;
-        setting.url = _.isUndefined( temp.toJSON().sizes.medium.url ) ? temp.toJSON().sizes.full.url : temp.toJSON().sizes.medium.url;
+        setting.url = temp.toJSON().sizes[ size ].url;
         self.saveValue( control, setting );
         self.setImage( control, setting.url );
 
@@ -947,6 +954,7 @@ EpsilonFramework.repeater.base = {
     var self = this,
         setting = {},
         temp,
+        size,
         input,
         image = wp.media( {
           multiple: false,
@@ -958,8 +966,14 @@ EpsilonFramework.repeater.base = {
     image.on( 'select', function() {
       input = container.find( 'input' );
       temp = image.state().get( 'selection' ).first();
+      size = input.attr( 'data-size' );
+
+      if ( 'undefined' === typeof (temp.toJSON().sizes[ size ]) ) {
+        size = 'full';
+      }
+
       setting.id = temp.id;
-      setting.url = temp.toJSON().sizes.full.url;
+      setting.url = temp.toJSON().sizes[ size ].url;
 
       self._setImage( container, setting.url );
       input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );
@@ -1536,6 +1550,7 @@ EpsilonFramework.sectionRepeater.base = {
   handleImageUpload: function( instance, container ) {
     var self = this,
         setting = {},
+        size,
         temp,
         input,
         image = wp.media( {
@@ -1548,8 +1563,14 @@ EpsilonFramework.sectionRepeater.base = {
     image.on( 'select', function() {
       input = container.find( 'input' );
       temp = image.state().get( 'selection' ).first();
+      size = input.attr( 'data-size' );
+
+      if ( 'undefined' === typeof (temp.toJSON().sizes[ size ]) ) {
+        size = 'full';
+      }
+
       setting.id = temp.id;
-      setting.url = temp.toJSON().sizes.full.url;
+      setting.url = temp.toJSON().sizes[ size ].url;
 
       self._setImage( container, setting.url );
       input.attr( 'value', ( 'url' === input.attr( 'data-save-mode' ) ? setting.url : setting.id ) ).trigger( 'change' );
@@ -2227,6 +2248,13 @@ wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control
   }
 } );
 /**
+ * Customizer Navigation
+ */
+wp.customize.controlConstructor[ 'epsilon-customizer-navigation' ] = wp.customize.Control.extend( {
+  ready: function() {
+  }
+} );
+/**
  * Icon Picker Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
@@ -2393,8 +2421,9 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
 
     /**
      * Icon Picker Events
+     * @TODO VERIFY THIS URGENT
      */
-    control.initIconPicker();
+    //control.initIconPicker();
 
     /**
      * If we have saved rows, we need to display them
@@ -2717,4 +2746,12 @@ wp.customize.bind( 'ready', function() {
   EpsilonFramework.typography.init();
   EpsilonFramework.colorSchemes.init();
   EpsilonFramework.recommendedActions.init();
+
+  /**
+   * @todo add it somewhere in JS
+   */
+  jQuery( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
+    e.preventDefault();
+    wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+  } );
 } );

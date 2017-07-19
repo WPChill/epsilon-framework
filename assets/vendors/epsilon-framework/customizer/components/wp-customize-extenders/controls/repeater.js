@@ -108,8 +108,9 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
 
     /**
      * Icon Picker Events
+     * @TODO VERIFY THIS URGENT
      */
-    control.initIconPicker();
+    //control.initIconPicker();
 
     /**
      * If we have saved rows, we need to display them

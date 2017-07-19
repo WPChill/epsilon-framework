@@ -140,7 +140,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = array();
 					}
 
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections->fields[ $key ]['fields'][ $k ]['mode'] : 'url';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['size'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] : 'full';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'url';
 				}
 
 				/**
