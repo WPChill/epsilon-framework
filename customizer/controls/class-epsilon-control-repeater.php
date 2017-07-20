@@ -203,7 +203,16 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 			'field' => false,
 		);
 
-		return wp_parse_args( $this->row_label, $default );
+		$label = wp_parse_args( $this->row_label, $default );
+
+		/**
+		 * Default to text
+		 */
+		if ( 'field' === $label['type'] && ( ! $label['field'] || empty( $this->fields[ $label['field'] ] ) ) ) {
+			$label['type'] = 'text';
+		}
+
+		return $label;
 	}
 
 	/**

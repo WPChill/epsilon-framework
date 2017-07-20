@@ -1294,6 +1294,12 @@ label.epsilon-icon-picker-label {
   background-color: #eff6f9;
 }
 
+.epsilon-customizer-navigation {
+  margin-top: 10px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
 /* Start Sections */
 #customize-controls .control-section-epsilon-section-pro .accordion-section-title:hover,
 #customize-controls .control-section-epsilon-section-pro .accordion-section-title:focus {

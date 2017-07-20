@@ -234,10 +234,6 @@ EpsilonFramework.sectionRepeater.base = {
    * @param control
    */
   updateLabel: function( section, control ) {
-    var sectionLabelField,
-        sectionLabel,
-        sectionLabelSelector;
-
     section.header.find( '.repeater-row-label' ).text( section.label + ' ' + ( section.sectionIndex + 1 ) );
   },
   /**

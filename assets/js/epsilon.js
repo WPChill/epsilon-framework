@@ -783,7 +783,7 @@ EpsilonFramework.repeater.base = {
      */
     newRow.container.on( 'row:update', function( e, rowIndex, fieldName, element, control ) {
       EpsilonFramework.repeater.base.updateField.call( e, rowIndex, fieldName, element, control );
-      EpsilonFramework.repeater.base.updateLabel( newRow );
+      EpsilonFramework.repeater.base.updateLabel( newRow, control );
     } );
 
     /**
@@ -1447,10 +1447,6 @@ EpsilonFramework.sectionRepeater.base = {
    * @param control
    */
   updateLabel: function( section, control ) {
-    var sectionLabelField,
-        sectionLabel,
-        sectionLabelSelector;
-
     section.header.find( '.repeater-row-label' ).text( section.label + ' ' + ( section.sectionIndex + 1 ) );
   },
   /**
@@ -2752,6 +2748,8 @@ wp.customize.bind( 'ready', function() {
    */
   jQuery( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
     e.preventDefault();
-    wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+    if ( 'undefined' !== typeof(wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) )) ) {
+      wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+    }
   } );
 } );

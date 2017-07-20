@@ -115,7 +115,7 @@ EpsilonFramework.repeater.base = {
      */
     newRow.container.on( 'row:update', function( e, rowIndex, fieldName, element, control ) {
       EpsilonFramework.repeater.base.updateField.call( e, rowIndex, fieldName, element, control );
-      EpsilonFramework.repeater.base.updateLabel( newRow );
+      EpsilonFramework.repeater.base.updateLabel( newRow, control );
     } );
 
     /**

@@ -18,6 +18,7 @@ class Epsilon_Repeater_Templates {
 				</div>
 				<div class="repeater-row-content">
 					<# _.each( data, function( field, i ) { #>
+						<div class="repeater-field repeater-field-{{{ field.type }}}">
 						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'hidden' === field.type ) { #>
 							<# var fieldExtras = ''; #>
 							<# if ( 'link' === field.type ) { #>
@@ -192,8 +193,11 @@ class Epsilon_Repeater_Templates {
 								</div>
 							</div>
 						<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
-							{{{ field.label }}} <a href="#" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
+							<div class="epsilon-customizer-navigation">
+								{{{ field.label }}} <a href="#" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
+							</div>
 						<# } #>
+						</div>
 					<# } ); #>
 					<div class="repeater-row-footer">
 						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>

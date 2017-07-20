@@ -8,20 +8,31 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	/**
+	 * Control type
+	 *
+	 * @since 1.2.0
 	 * @var string
 	 */
 	public $type = 'epsilon-customizer-navigation';
 	/**
-	 * @var
+	 * Id of the section we`re navigating to
+	 *
+	 * @since 1.2.0
+	 * @var string
 	 */
 	public $navigate_to_id;
 	/**
-	 * @var
+	 * Anchor label
+	 *
+	 * @since 1.2.0
+	 * @var string
 	 */
 	public $navigate_to_label;
 
 	/**
 	 * Epsilon_Control_Customizer_Navigation constructor.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
