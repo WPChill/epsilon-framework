@@ -1515,7 +1515,7 @@ EpsilonFramework.sectionRepeater.base = {
    * Drag and drop functionality
    * @param control
    */
-  sort: function( control ) {
+  sort: function( control, data ) {
     var sections = control.repeaterContainer.find( '.repeater-row' ),
         settings = EpsilonFramework.sectionRepeater.base.getValue( control ),
         newOrder = [],
@@ -1531,9 +1531,13 @@ EpsilonFramework.sectionRepeater.base = {
 
       EpsilonFramework.sectionRepeater.base.setSectionIndex( newSections[ newPosition ], newPosition, control );
       newSettings[ newPosition ] = settings[ oldPosition ];
+
     } );
 
+    EpsilonFramework.sectionRepeater.base.reinitTexteditor( control, data.item );
+
     control.sections = newSections;
+
     EpsilonFramework.sectionRepeater.base.setValue( control, newSettings );
   },
 
@@ -1672,6 +1676,33 @@ EpsilonFramework.sectionRepeater.base = {
   },
 
   /**
+   * Remove the editor so we can add it again
+   *
+   * @param instance
+   * @param container
+   */
+  reinitTexteditor: function( instance, container ) {
+    var self = this,
+        textarea = container.find( 'textarea' ),
+        editorId;
+
+    jQuery.each( textarea, function() {
+      wp.editor.remove( jQuery( this ).attr( 'id' ) );
+      wp.editor.initialize( jQuery( this ).attr( 'id' ), {
+        tinymce: {
+          wpautop: true,
+          setup: function( editor ) {
+            editor.on( 'change', function( e ) {
+              editor.save();
+              jQuery( editor.getElement() ).trigger( 'change' );
+            } );
+          }
+        },
+        quicktags: true
+      } );
+    } );
+  },
+  /**
    * Initiate the text editor in the repeater field
    *
    * @param instance
@@ -1683,14 +1714,6 @@ EpsilonFramework.sectionRepeater.base = {
 
     jQuery.each( textarea, function() {
       editorId = jQuery( this ).attr( 'id' );
-      // The user has disabled TinyMCE.
-      if ( typeof window.tinymce === 'undefined' ) {
-        wp.editor.initialize( editorId, {
-          quicktags: true
-        } );
-        return;
-      }
-
       wp.editor.initialize( editorId, {
         tinymce: {
           wpautop: true,
@@ -1763,18 +1786,9 @@ EpsilonFramework.sectionRepeater.section = {
  */
 EpsilonFramework.textEditor = {
   init: function( selector ) {
-    var context = jQuery( selector ), textarea, editorId;
+    var context = jQuery( selector ), editorId;
     jQuery.each( context, function() {
-      textarea = jQuery( this ).find( 'textarea' );
-      editorId = jQuery( textarea ).attr( 'id' );
-
-      // The user has disabled TinyMCE.
-      if ( typeof window.tinymce === 'undefined' ) {
-        wp.editor.initialize( editorId, {
-          quicktags: true
-        } );
-        return;
-      }
+      editorId = jQuery( jQuery( this ).find( 'textarea' ) ).attr( 'id' );
 
       wp.editor.initialize( editorId, {
         tinymce: {
@@ -2573,8 +2587,8 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       axis: 'y',
-      update: function() {
-        EpsilonFramework.sectionRepeater.base.sort( control );
+      update: function( e, data ) {
+        EpsilonFramework.sectionRepeater.base.sort( control, data );
       }
     } );
   },
