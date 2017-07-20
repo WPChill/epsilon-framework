@@ -17,7 +17,7 @@ EpsilonFramework.colorSchemes = {
     }
 
     options = context.find( '.epsilon-color-scheme-option' );
-    input = context.parent().find( '.epsilon-color-scheme-input' );
+    input = context.parent().find( '[data-customize-setting-link]' ).first();
     json = jQuery.parseJSON( options.first().find( 'input' ).val() );
     api = wp.customize;
     colorSettings = [];
@@ -40,6 +40,13 @@ EpsilonFramework.colorSchemes = {
     }
 
     _.each( colorSettings, function( setting ) {
+      api.control( setting ).container.on( 'change', 'input.epsilon-color-picker', function() {
+        context.siblings( '.epsilon-color-scheme-selected' ).
+            find( '.epsilon-color-scheme-palette' ).
+            find( '*[data-field-id="' + setting + '"]' ).
+            css( 'background', jQuery( this ).attr( 'value' ) );
+      } );
+
       api( setting, function( setting ) {
         setting.bind( updateCSS );
       } );
@@ -62,6 +69,8 @@ EpsilonFramework.colorSchemes = {
          */
         jQuery( '#customize-control-' + index + ' .epsilon-color-picker' ).minicolors( 'value', value );
         wp.customize( index ).set( value );
+
+        context.siblings( '.epsilon-color-scheme-selected' ).find( '.epsilon-color-scheme-palette' ).find( '*[data-field-id="' + index + '"]' ).css( 'background', value );
       } );
 
       /**
@@ -74,16 +83,26 @@ EpsilonFramework.colorSchemes = {
        * Make active the current selection
        */
       jQuery( this ).addClass( 'selected' );
-      /**
-       * Trigger change
-       */
-      input.val( val ).change();
 
       _.each( colorSettings, function( setting ) {
         api( setting, function( setting ) {
           setting.bind( updateCSS() );
         } );
       } );
+
+      /**
+       * Trigger change
+       */
+      input.val( val ).trigger( 'change' );
+    } );
+
+    /**
+     * Advanced toggler
+     */
+    jQuery( '.epsilon-color-schemes-advanced' ).on( 'click', function() {
+      jQuery( this ).toggleClass( 'active' );
+      jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down dashicons-arrow-up' );
+      context.slideToggle();
     } );
   }
 };

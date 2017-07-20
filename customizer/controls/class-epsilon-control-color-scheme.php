@@ -52,7 +52,33 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 		$json['value']   = $this->value();
 		$json['choices'] = $this->get_choices();
 
+		if ( 'default' === $json['value'] ) {
+			$temp          = reset( $json['choices'] );
+			$json['value'] = $temp['id'];
+		}
+
+		$json['selectedColors'] = $this->get_selected_colors( $json );
+
 		return $json;
+	}
+
+	/**
+	 * Arrange a new array of options using the values from database
+	 *
+	 * @since 1.2.0
+	 */
+	public function get_selected_colors( $json ) {
+		$arr = $json['choices'][ $json['value'] ];
+
+		foreach ( $arr['colors'] as $input => $value ) {
+			if ( ! get_theme_mod( $input, false ) ) {
+				continue;
+			}
+
+			$arr['colors'][ $input ] = get_theme_mod( $input );
+		}
+
+		return $arr;
 	}
 
 	/**
@@ -61,11 +87,13 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 	 * @since 1.2.0
 	 */
 	public function get_choices() {
+		$arr = array();
 		foreach ( $this->choices as $index => $choice ) {
-			$this->choices[ $index ]['encodedColors'] = json_encode( $choice['colors'] );
+			$arr[ $choice['id'] ]                  = $choice;
+			$arr[ $choice['id'] ]['encodedColors'] = json_encode( $choice['colors'] );
 		}
 
-		return $this->choices;
+		return $arr;
 	}
 
 	/**
@@ -89,20 +117,26 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 			<div class="customize-control-content">
 				<input {{{ data.link }}} class="epsilon-color-scheme-input" id="input_{{ data.id }}" type="hidden" <# if( data.value ) { #> value='{{{ data.value }}}' <# } #> />
 			</div>
+			<div class="epsilon-color-scheme-selected">
+				<div class="epsilon-color-scheme-palette">
+					<# _.each(data.selectedColors.colors, function(v, k) { #>
+						<span data-field-id="{{ k }}" style="background-color: {{ v }}"></span>
+					<# }); #>
+				</div>
+				<a class="epsilon-color-schemes-advanced" href="#"><span class="dashicons dashicons-arrow-down"></span></a>
+			</div>
 			<div id="color_scheme_{{ data.id }}" class="epsilon-color-scheme">
-				<# if( data.choices.length > 0 ){ #>
-					<# for (choice in data.choices) { #>
-					<div class="epsilon-color-scheme-option <# if ( data.value === data.choices[choice].id ) { #> selected <# } #>" data-color-id="{{{ data.choices[choice].id }}}">
-						<input type="hidden" value='{{{ data.choices[choice].encodedColors }}}'/>
-						<span class="epsilon-color-scheme-name"> {{{ data.choices[choice].name }}} </span>
-						<div class="epsilon-color-scheme-palette">
-							<# for (current in data.choices[choice].colors ) { #>
-								<span style="background-color: {{ data.choices[choice].colors[current] }}"></span>
-							<# } #>
-						</div>
+				<# _.each(data.choices, function(el) { #>
+				<div class="epsilon-color-scheme-option <# if ( data.value === el.id ) { #> selected <# } #>" data-color-id="{{{ el.id }}}">
+					<input type="hidden" value='{{{ el.encodedColors }}}'/>
+					<span class="epsilon-color-scheme-name"> {{{ el.name }}} </span>
+					<div class="epsilon-color-scheme-palette">
+						<# _.each(el.colors, function(v, k) { #>
+							<span data-field-id="{{ k }}" style="background-color: {{ v }}"></span>
+						<# }); #>
 					</div>
-					<# } #>
-				<# } #>
+				</div>
+				<# }); #>
 			</div>
 		</label>
 		<?php //@formatter:on
