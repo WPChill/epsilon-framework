@@ -254,7 +254,7 @@ EpsilonFramework.repeater.base = {
    * Drag and drop functionality
    * @param control
    */
-  sort: function( control ) {
+  sort: function( control, data ) {
     var rows = control.repeaterContainer.find( '.repeater-row' ),
         settings = EpsilonFramework.repeater.base.getValue( control ),
         newOrder = [],
@@ -271,6 +271,8 @@ EpsilonFramework.repeater.base = {
       EpsilonFramework.repeater.base.setRowIndex( newRows[ newPosition ], newPosition, control );
       newSettings[ newPosition ] = settings[ oldPosition ];
     } );
+
+    EpsilonFramework.repeater.base.reinitTexteditor( control, data.item );
 
     control.rows = newRows;
     EpsilonFramework.repeater.base.setValue( control, newSettings );
@@ -501,6 +503,33 @@ EpsilonFramework.repeater.base = {
     jQuery.each( collection, function() {
       temp = jQuery( this ).attr( 'data-search' ).toLowerCase();
       jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
+    } );
+  },
+  /**
+   * Remove the editor so we can add it again
+   *
+   * @param instance
+   * @param container
+   */
+  reinitTexteditor: function( instance, container ) {
+    var self = this,
+        textarea = container.find( 'textarea' ),
+        editorId;
+
+    jQuery.each( textarea, function() {
+      wp.editor.remove( jQuery( this ).attr( 'id' ) );
+      wp.editor.initialize( jQuery( this ).attr( 'id' ), {
+        tinymce: {
+          wpautop: true,
+          setup: function( editor ) {
+            editor.on( 'change', function( e ) {
+              editor.save();
+              jQuery( editor.getElement() ).trigger( 'change' );
+            } );
+          }
+        },
+        quicktags: true
+      } );
     } );
   },
 };

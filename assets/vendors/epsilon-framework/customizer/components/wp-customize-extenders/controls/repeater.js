@@ -139,8 +139,8 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       axis: 'y',
-      update: function() {
-        EpsilonFramework.repeater.base.sort( control );
+      update: function( e, data ) {
+        EpsilonFramework.repeater.base.sort( control, data );
       }
     } );
   },
