@@ -40,12 +40,14 @@ EpsilonFramework.colorSchemes = {
     }
 
     _.each( colorSettings, function( setting ) {
-      api.control( setting ).container.on( 'change', 'input.epsilon-color-picker', function() {
-        context.siblings( '.epsilon-color-scheme-selected' ).
-            find( '.epsilon-color-scheme-palette' ).
-            find( '*[data-field-id="' + setting + '"]' ).
-            css( 'background', jQuery( this ).attr( 'value' ) );
-      } );
+      if ( 'undefined' !== typeof(api.control( setting )) ) {
+        api.control( setting ).container.on( 'change', 'input.epsilon-color-picker', function() {
+          context.siblings( '.epsilon-color-scheme-selected' ).
+              find( '.epsilon-color-scheme-palette' ).
+              find( '*[data-field-id="' + setting + '"]' ).
+              css( 'background', jQuery( this ).attr( 'value' ) );
+        } );
+      }
 
       api( setting, function( setting ) {
         setting.bind( updateCSS );

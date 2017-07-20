@@ -24,7 +24,7 @@ class Epsilon_Framework {
 	/**
 	 * @var bool
 	 */
-	private $backup = true;
+	private $backup = false;
 
 	/**
 	 * Epsilon_Framework constructor.

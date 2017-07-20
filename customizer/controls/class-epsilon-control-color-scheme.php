@@ -52,7 +52,7 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 		$json['value']   = $this->value();
 		$json['choices'] = $this->get_choices();
 
-		if ( 'default' === $json['value'] ) {
+		if ( 'default' === $json['value'] || null === $json['value'] ) {
 			$temp          = reset( $json['choices'] );
 			$json['value'] = $temp['id'];
 		}

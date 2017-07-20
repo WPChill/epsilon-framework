@@ -125,7 +125,6 @@ class Epsilon_Color_Scheme {
 	/**
 	 * Add the controls to the customizer
 	 *
-	 * @todo - nu cred ca merge translation stuff
 	 */
 	public function add_controls_settings() {
 		global $wp_customize;
