@@ -116,6 +116,7 @@ class Epsilon_Framework {
 	 */
 	public function enqueue() {
 		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
+		wp_enqueue_style( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style-admin.css' );
 	}
 
 	/**
