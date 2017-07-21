@@ -6,10 +6,11 @@ EpsilonAdmin.notices = {
       jQuery( this ).on( 'click', '.notice-dismiss', function() {
         id = jQuery( this ).parent().attr( 'data-unique-id' );
         args = {
-          'action': [ 'Epsilon_Notifications', 'dismiss_notice' ],
-          'args': {
-            'notice_id': jQuery( this ).parent().attr( 'data-unique-id' ),
-            'user_id': userSettings.uid,
+          action: [ 'Epsilon_Notifications', 'dismiss_notice' ],
+          nonce: WPUrls.ajax_nonce,
+          args: {
+            notice_id: jQuery( this ).parent().attr( 'data-unique-id' ),
+            user_id: userSettings.uid,
           }
         },
             EpsilonAdmin.notices.request( args );
