@@ -29,3 +29,7 @@ wp.customize.bind( 'preview-ready', function() {
   } );
 } );
 
+jQuery( '.about-section' ).on( 'click', '.pencil', function( e ) {
+  e.preventDefault();
+  wp.customize.preview.send( 'epsilon-section-edit', jQuery( this ).parents( '.about-section' ).attr( 'data-section' ) );
+} );

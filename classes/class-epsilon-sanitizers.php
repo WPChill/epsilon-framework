@@ -75,4 +75,17 @@ class Epsilon_Sanitizers {
 	public static function textarea_nl2br( $input ) {
 		return nl2br( $input );
 	}
+
+	/**
+	 * @since 1.2.0
+	 *
+	 * @param $input
+	 *
+	 * @return array
+	 */
+	public static function selectize( $input ) {
+		$input = array_map( 'sanitize_text_field', $input );
+
+		return $input;
+	}
 }

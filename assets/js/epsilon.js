@@ -1194,13 +1194,40 @@ EpsilonFramework.repeater.base = {
       jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
     } );
   },
+
+  /**
+   * Initiate the text editor in the repeater field
+   *
+   * @param container
+   */
+  initTexteditor: function( container ) {
+    var textarea = container.find( 'textarea' ),
+        editorId;
+
+    jQuery.each( textarea, function() {
+      editorId = jQuery( this ).attr( 'id' );
+
+      wp.editor.initialize( editorId, {
+        tinymce: {
+          wpautop: true,
+          setup: function( editor ) {
+            editor.on( 'change', function( e ) {
+              editor.save();
+              jQuery( editor.getElement() ).trigger( 'change' );
+            } );
+          }
+        },
+        quicktags: true
+      } );
+    } );
+  },
+
   /**
    * Remove the editor so we can add it again
    *
-   * @param instance
    * @param container
    */
-  reinitTexteditor: function( instance, container ) {
+  reinitTexteditor: function( container ) {
     var self = this,
         textarea = container.find( 'textarea' ),
         editorId;
@@ -2446,8 +2473,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
         EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.iconPickers.init( newRow, true );
-        EpsilonFramework.textEditor.init( newRow.container );
+        EpsilonFramework.repeater.base.initTexteditor( newRow.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2492,10 +2518,9 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     } );
 
     /**
-     * Icon Picker Events
-     * @TODO VERIFY THIS URGENT
+     * Initiate Icon Picker
      */
-    //control.initIconPicker();
+    control.initIconPicker();
 
     /**
      * If we have saved rows, we need to display them
@@ -2508,8 +2533,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
         EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.iconPickers.init( newRow, true );
-        EpsilonFramework.textEditor.init( newRow.container );
+        EpsilonFramework.repeater.base.initTexteditor( newRow.container );
       } );
     }
 
@@ -2524,11 +2548,53 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       axis: 'y',
+      distance: 15,
       update: function( e, data ) {
         EpsilonFramework.repeater.base.sort( control, data );
       }
     } );
   },
+
+  /**
+   * Init icon pickers
+   */
+  initIconPicker: function() {
+    var control = this, temp, filter, input;
+
+    this.container.on( 'click keypress', '.epsilon-icon-picker-repeater-container .epsilon-open-icon-picker', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+
+      temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
+      EpsilonFramework.repeater.base.handleIconPickerToggle( control, temp );
+    } );
+
+    this.container.on( 'click keypress', '.epsilon-icon-picker-repeater-container .epsilon-icons-container .epsilon-icons > i', function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+
+      temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
+      EpsilonFramework.repeater.base.handleIconPickerSelection( control, this, temp );
+    } );
+
+    this.container.on( 'keyup change', '.epsilon-icon-picker-repeater-container .search-container input', _.debounce( function( e ) {
+      e.preventDefault();
+
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
+        return;
+      }
+
+      temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
+      EpsilonFramework.repeater.base.handleIconPickerFiltering( control, this, temp );
+
+    }, 1000 ) );
+  }
 } );
 /**
  * Epsilon Section Repeater Constructor
@@ -2649,9 +2715,14 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       axis: 'y',
+      distance: 15,
       update: function( e, data ) {
         EpsilonFramework.sectionRepeater.base.sort( control, data );
       }
+    } );
+
+    wp.customize.previewer.bind( 'epsilon-section-edit', function( data ) {
+      console.log( JSON.parse( data ) );
     } );
   },
   /**
@@ -2719,6 +2790,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
   }
 
 } );
+
 /**
  * Epsilon Text Editor Control Constructor
  */

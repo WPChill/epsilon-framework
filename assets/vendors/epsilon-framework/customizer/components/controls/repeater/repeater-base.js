@@ -505,13 +505,40 @@ EpsilonFramework.repeater.base = {
       jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
     } );
   },
+
+  /**
+   * Initiate the text editor in the repeater field
+   *
+   * @param container
+   */
+  initTexteditor: function( container ) {
+    var textarea = container.find( 'textarea' ),
+        editorId;
+
+    jQuery.each( textarea, function() {
+      editorId = jQuery( this ).attr( 'id' );
+
+      wp.editor.initialize( editorId, {
+        tinymce: {
+          wpautop: true,
+          setup: function( editor ) {
+            editor.on( 'change', function( e ) {
+              editor.save();
+              jQuery( editor.getElement() ).trigger( 'change' );
+            } );
+          }
+        },
+        quicktags: true
+      } );
+    } );
+  },
+
   /**
    * Remove the editor so we can add it again
    *
-   * @param instance
    * @param container
    */
-  reinitTexteditor: function( instance, container ) {
+  reinitTexteditor: function( container ) {
     var self = this,
         textarea = container.find( 'textarea' ),
         editorId;

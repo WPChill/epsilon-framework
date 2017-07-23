@@ -117,9 +117,14 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       axis: 'y',
+      distance: 15,
       update: function( e, data ) {
         EpsilonFramework.sectionRepeater.base.sort( control, data );
       }
+    } );
+
+    wp.customize.previewer.bind( 'epsilon-section-edit', function( data ) {
+      console.log( JSON.parse( data ) );
     } );
   },
   /**
