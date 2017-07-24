@@ -1,4 +1,4 @@
-# Epsilon Framework
+# Epsilon Framework v1.2.0 (documentation to be updated)
 
 ## 1. Getting started
 ### Available controls

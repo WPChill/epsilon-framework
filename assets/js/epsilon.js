@@ -2790,7 +2790,6 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
   }
 
 } );
-
 /**
  * Epsilon Text Editor Control Constructor
  */
