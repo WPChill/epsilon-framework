@@ -12,10 +12,18 @@
 
 > [Upsell](https://github.com/MachoThemes/epsilon-framework#upsell)
 
+> [Layouts](https://github.com/MachoThemes/epsilon-framework#layouts)
+
+> [Color Picker](https://github.com/MachoThemes/epsilon-framework#color-picker)
+
 ### Available sections
 > [Upsell pro section](https://github.com/MachoThemes/epsilon-framework#upsell-pro-section)
 
 > [Recommended action section](https://github.com/MachoThemes/epsilon-framework#recommended-action-section)
+
+### Helpers
+
+> [Demo generator](https://github)
 
 ## 2. Installation
 > In the root of the theme, run:
@@ -140,7 +148,8 @@
                                       'font-weight',
                                       'font-style',
                                       'font-size',
-                                      'line-height'
+                                      'line-height',
+                                      'letter-spacing',
                                     ),
                                     'selectors'   => array(
                                       '.entry-content h1',
@@ -149,7 +158,12 @@
                                       '.entry-content h4',
                                       '.entry-content h5',
                                       '.entry-content h6'
-                                    )
+                                    ),
+                                    'font_defaults'   => array(
+                                      'font-size' 		=> '18',
+                                      'line-height' 	=> '22',
+                                      'letter-spacing' 	=> '0',
+                                    ),
                                   )
                                 )
                               );
@@ -308,3 +322,61 @@ Collect all the options ID and get an instance of the Typography class (this is 
                               );
                               
 > Themes can disable the Upsell Pro Control by adding `add_filter ('epsilon_upsell_control_display', '__return_false');` in functions.php
+
+#### Layouts
+
+    $wp_customize->add_control( new Epsilon_Control_Layouts(
+                                  $wp_customize,
+                                  'epsilon_control_layouts',
+                                  array(
+                                    'section'      => 'section_id',
+                                    'priority'     => 0,
+                                    'layouts'      => array(
+                                      1 => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/one-column.png',
+                                      2 => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/one-column.png',
+                                    ),
+                                    'default' => array(
+                                      'columnsCount' => 2,
+                                      'columns' => array(
+                                      	array(
+                                      		'index' => 1,
+                                      		'span' => 8,
+                                      	),
+                                      	array(
+                                      		'index' => 1,
+                                      		'span' => 4,
+                                      	),
+                                      ),
+                                    ),
+                                    'min_span' => 2,
+                                    'label'       => esc_html__( 'Label', 'text-domain' ),
+                                    'description' => esc_html__( 'Description.', 'text-domain' ),
+                                  )
+                                )
+                              );
+                              
+#### Color Picker               
+    $wp_customize->add_control( new Epsilon_Control_Color_Picker(
+                                  $wp_customize,
+                                  'epsilon_control_color_picker',
+                                  array(
+                                    'section'      => 'section_id',
+                                    'priority'     => 0,
+																		'mode' => 'hex' // can be 'hex' or 'rgba'
+                                  )
+                                )
+                              );
+
+
+### Epsilon Notifications
+
+Basically a "helper" function to add persistant dismissable notices, you need to get an instance of the Epsilon_Notification object and add your notice
+
+	$notifications = Epsilon_Notifications::get_instance();
+	$notifications->add_notice(
+		array(
+			'id'      => 'newsmag_dismissable_notice', // This id needs to be unique, so we know which notice we can hide
+			'type'    => 'updated notice', // This is the class applied to the notice
+			'message' => '<p>you are awesome</p>' // The text written in the notice, accepts basic HTML tags ( escaped with wp_kses_post)
+		)
+	);

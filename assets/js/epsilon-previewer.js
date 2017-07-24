@@ -19,8 +19,7 @@ wp.customize.bind( 'preview-ready', function() {
 
         if ( ! style.length ) {
           style = jQuery( 'body' ).
-              append( '<style type="text/css" id="epsilon-stylesheet-' + sufix +
-                  '" />' ).
+              append( '<style type="text/css" id="epsilon-stylesheet-' + sufix + '" />' ).
               find( '#epsilon-stylesheet-' + sufix );
         }
 
@@ -30,3 +29,7 @@ wp.customize.bind( 'preview-ready', function() {
   } );
 } );
 
+jQuery( '.about-section' ).on( 'click', '.pencil', function( e ) {
+  e.preventDefault();
+  wp.customize.preview.send( 'epsilon-section-edit', jQuery( this ).parents( '.about-section' ).attr( 'data-section' ) );
+} );

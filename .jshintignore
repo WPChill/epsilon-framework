@@ -2,4 +2,4 @@ assets/vendors/selectize/
 /Gruntfile.js
 !/assets/js/epsilon.min.js
 /assets/js/epsilon.js
-!/assets/vendors/epsilon-framework/components/epsilon-object.js
+!/assets/vendors/epsilon-framework/customizer/components/epsilon-object.js
