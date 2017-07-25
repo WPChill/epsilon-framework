@@ -1,3 +1,6 @@
+v1.2.1
+	- Radio fields fix
+
 v1.2.0
 	- Added section repeater
 	- Added field repeater
