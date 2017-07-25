@@ -184,6 +184,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				<# } #>
 			</span> </label>
 		<ul class="repeater-sections"></ul>
+		<# if(!_.isUndefined(data.choices.limit)){ #>
+		<?php /* Translators: Section limit */ ?>
+		<p class="limit"><?php echo esc_html__( 'Limit: ' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
+		<# } #>
 		<div class="epsilon-add-section-buttons">
 			<input type="hidden" value="" {{{ data.link }}}/>
 			<button type="button" class="button epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
@@ -203,13 +207,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				</div>
 				<div class="available-sections-list">
 					<# for (section in data.sections) { #>
-						<# var temp = JSON.stringify(data.sections[section].fields); #>
-							<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-								<input type="hidden" value="{{ temp }}"/>
-							</div>
-							<# } #>
+					<# var temp = JSON.stringify(data.sections[section].fields); #>
+						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
+							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+							<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+							<input type="hidden" value="{{ temp }}"/>
+						</div>
+					<# } #>
 				</div>
 			</div>
 		</div>

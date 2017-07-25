@@ -1,3 +1,9 @@
+v1.2.3
+	- Added support for section-repeater/repeater limit
+
+v1.2.2
+	-Sanitizers were missing
+
 v1.2.1
 	- Radio fields fix
 
