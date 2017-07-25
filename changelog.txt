@@ -1,3 +1,6 @@
+v1.2.4
+	- Recommended actions fixes ( JS was not pointing "where it should" )
+
 v1.2.3
 	- Added support for section-repeater/repeater limit
 

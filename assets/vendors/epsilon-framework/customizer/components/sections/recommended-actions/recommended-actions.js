@@ -81,6 +81,7 @@ EpsilonFramework.recommendedActions = {
            */
           args = {
             'action': [ 'Epsilon_Notify_System', 'dismiss_required_action' ],
+            'nonce': WPUrls.ajax_nonce,
             'args': {
               'id': jQuery( this ).attr( 'id' ),
               'option': jQuery( this ).attr( 'data-option' )
@@ -104,7 +105,7 @@ EpsilonFramework.recommendedActions = {
         type: 'POST',
         data: { action: 'epsilon_framework_ajax_action', args: args },
         dataType: 'json',
-        url: WPUrls.ajaxurl,
+        url: ajaxurl,
         success: function( data ) {
           /**
            * In case everything is ok, we start changing things
@@ -196,7 +197,8 @@ EpsilonFramework.recommendedActions = {
            * @type {{action: [*], args: {id: *, option: *}}}
            */
           args = {
-            'action': [ 'Epsilon_Framework', 'dismiss_required_action' ],
+            'action': [ 'Epsilon_Notify_System', 'dismiss_required_action' ],
+            'nonce': WPUrls.ajax_nonce,
             'args': {
               'id': jQuery( this ).attr( 'id' ),
               'option': jQuery( this ).attr( 'data-option' )
@@ -208,7 +210,7 @@ EpsilonFramework.recommendedActions = {
         type: 'POST',
         data: { action: 'epsilon_framework_ajax_action', args: args },
         dataType: 'json',
-        url: WPUrls.ajaxurl,
+        url: ajaxurl,
         success: function( data ) {
           /**
            * In case everything is ok, we start changing things
