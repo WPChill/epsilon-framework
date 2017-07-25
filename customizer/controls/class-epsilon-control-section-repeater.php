@@ -186,7 +186,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		<ul class="repeater-sections"></ul>
 		<# if(!_.isUndefined(data.choices.limit)){ #>
 		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
+		<p class="limit"><?php echo esc_html__( 'Limit: ', 'epsilon-framework' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
 		<# } #>
 		<div class="epsilon-add-section-buttons">
 			<input type="hidden" value="" {{{ data.link }}}/>

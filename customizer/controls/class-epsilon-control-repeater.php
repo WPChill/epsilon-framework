@@ -247,7 +247,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		<ul class="repeater-fields"></ul>
 		<# if(!_.isUndefined(data.choices.limit)){ #>
 		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
+		<p class="limit"><?php echo esc_html__( 'Limit: ','epsilon-framework' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
 		<# } #>
 		<div class="button-holder">
 			<input type="hidden" value="" {{{ data.link }}} />
