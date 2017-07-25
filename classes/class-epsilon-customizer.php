@@ -184,8 +184,6 @@ class Epsilon_Customizer {
 	/**
 	 * Dynamic sanitization
 	 *
-	 * @todo check sanitizers
-	 *
 	 * @param $type
 	 *
 	 * @return array|string
@@ -227,10 +225,13 @@ class Epsilon_Customizer {
 				$sanitizer = 'absint';
 				break;
 			case 'epsilon-typography':
+				$sanitizer = 'sanitize_text_field';
 				break;
 			case 'epsilon-layouts':
+				$sanitizer = 'sanitize_text_field';
 				break;
 			case 'epsilon-color-scheme':
+				$sanitizer = 'sanitize_text_field';
 				break;
 			case 'epsilon-color-picker':
 				$sanitizer = 'sanitize_hex_color';
