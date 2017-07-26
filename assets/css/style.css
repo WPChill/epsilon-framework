@@ -1256,15 +1256,16 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 .epsilon-controller-image-container .placeholder {
-  padding: 15px;
-  border: 2px dashed #f9f9f9;
-  display: block;
+  width: 100%;
+  position: relative;
   text-align: center;
-  height: 70px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-top: 15px;
-  line-height: 33px;
+  cursor: default;
+  border: 1px dashed #b4b9be;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 9px 0;
+  line-height: 20px;
 }
 .epsilon-controller-image-container .placeholder .recommended-size {
   display: block;

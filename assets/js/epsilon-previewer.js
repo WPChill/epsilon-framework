@@ -29,7 +29,13 @@ wp.customize.bind( 'preview-ready', function() {
   } );
 } );
 
-jQuery( '.about-section' ).on( 'click', '.pencil', function( e ) {
+jQuery( document ).on( 'click', '.epsilon-section-editor', function( e ) {
   e.preventDefault();
-  wp.customize.preview.send( 'epsilon-section-edit', jQuery( this ).parents( '.about-section' ).attr( 'data-section' ) );
+
+  var object = {
+    section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),
+    customizerSection: jQuery( this ).parents( '[data-section]' ).attr( 'data-customizer-section-id' )
+  };
+
+  wp.customize.preview.send( 'epsilon-section-edit', object );
 } );

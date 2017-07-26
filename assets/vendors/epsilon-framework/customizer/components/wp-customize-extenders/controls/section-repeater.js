@@ -123,8 +123,29 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
       }
     } );
 
+    /**
+     * Event that fires from the main page
+     * so we can focus our panel and repeatable section
+     */
     wp.customize.previewer.bind( 'epsilon-section-edit', function( data ) {
-      console.log( JSON.parse( data ) );
+      /**
+       * Iterate over the controls, minimize everything
+       */
+      _.each( control.sections, function( sect, index ) {
+        if ( ! sect.container.hasClass( 'minimized' ) && index !== parseFloat( data.section ) ) {
+          EpsilonFramework.sectionRepeater.base.toggleMinimize( sect );
+        }
+      } );
+      /**
+       * Focus section
+       */
+      wp.customize.section( data.customizerSection ).focus();
+      /**
+       * Focus repeatable section
+       */
+      if ( control.sections[ data.section ].container.hasClass( 'minimized' ) ) {
+        EpsilonFramework.sectionRepeater.base.toggleMinimize( control.sections[ data.section ] );
+      }
     } );
   },
   /**

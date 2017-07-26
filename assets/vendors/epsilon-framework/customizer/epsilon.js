@@ -33,5 +33,4 @@ wp.customize.bind( 'ready', function() {
       wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
     }
   } );
-
 } );
