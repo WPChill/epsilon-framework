@@ -1,3 +1,6 @@
+v1.2.5
+	- Epsilon Admin didn't had the wpurls object available
+
 v1.2.4
 	- Recommended actions fixes ( JS was not pointing "where it should" )
 	- Fixed textdomains
