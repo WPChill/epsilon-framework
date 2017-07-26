@@ -22,6 +22,10 @@ EpsilonFramework.sectionRepeater.section = {
       EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
     } );
 
+    this.container.on( 'click', '.repeater-row-minimize', function() {
+      EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
+    } );
+
     this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
       self.container.trigger( 'section:update', [ self.sectionIndex, self.type, jQuery( e.target ).data( 'field' ), e.target, control ] );
     } );

@@ -401,17 +401,22 @@
 .epsilon-color-scheme-palette {
   cursor: pointer;
   padding: 2px;
-  display: inline-block;
   border: 1px solid transparent;
   margin-bottom: 10px;
+  width: 81%;
+  display: table;
+  table-layout: fixed;
 }
 .epsilon-color-scheme-palette span {
-  width: 31px;
+  display: table-cell;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  width: 100%;
   height: 21px;
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-  float: left;
 }
 
 .epsilon-color-scheme-option {
@@ -706,8 +711,8 @@
   border-bottom-left-radius: 0;
   color: #79b5d1;
 }
-.epsilon-layouts-container .epsilon-layouts-container-buttons {
-  text-align: right;
+.epsilon-layouts-container .epsilon-layouts-container-buttons label {
+  display: block;
 }
 .epsilon-layouts-container .epsilon-layouts-container-buttons .epsilon-button-group {
   -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
@@ -717,14 +722,20 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  display: inline-block;
+  display: table;
+  table-layout: fixed;
   vertical-align: middle;
+  width: 81%;
+  float: left;
+  margin-right: 3px;
 }
 .epsilon-layouts-container .epsilon-layouts-container-buttons .epsilon-button-group a {
   background: #fefefe;
   padding: 9px 5px;
-  display: inline-block;
+  display: table-cell;
   position: relative;
+  width: 100%;
+  text-align: center;
 }
 .epsilon-layouts-container .epsilon-layouts-container-buttons .epsilon-button-group a.active {
   -webkit-box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
@@ -1113,6 +1124,7 @@
 
 .epsilon-add-section-buttons {
   padding: 10px;
+  text-align: right;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section:before {
   content: "\f132";
@@ -1249,9 +1261,14 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
   text-align: center;
   height: 70px;
-  line-height: 70px;
   font-size: 14px;
   font-weight: 600;
+  margin-top: 15px;
+  line-height: 33px;
+}
+.epsilon-controller-image-container .placeholder .recommended-size {
+  display: block;
+  font-style: italic;
 }
 .epsilon-controller-image-container .epsilon-image img {
   width: 100%;

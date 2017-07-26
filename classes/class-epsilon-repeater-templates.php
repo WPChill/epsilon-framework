@@ -179,7 +179,10 @@ class Epsilon_Repeater_Templates {
 								</div>
 								<# } else { #>
 								<div class="placeholder">
-									<?php echo esc_html__( 'Select a file', 'epsilon-framework' ); ?>
+									<?php echo esc_html__( 'Upload image', 'epsilon-framework' ); ?>
+									<# if ( ! _.isUndefined( field.sizeArray[field.size] ) ) { #>
+										<span class="recommended-size"><?php echo esc_html__('Recommended resolution:', 'epsilon-framework'); ?> {{{ field.sizeArray[field.size].width }}} x {{{ field.sizeArray[field.size].height }}}</span>
+									<# } #>
 								</div>
 								<# } #>
 								<div class="actions">
@@ -200,7 +203,8 @@ class Epsilon_Repeater_Templates {
 						</div>
 					<# } ); #>
 					<div class="repeater-row-footer">
-						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>
+						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button> |
+						<button type="button" class="button-link repeater-row-minimize"><?php esc_attr_e( 'Close', 'epsilon-framework' ); ?></button>
 					</div>
 				</div>
 			</li>

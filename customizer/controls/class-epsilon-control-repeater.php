@@ -131,7 +131,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		if ( empty( $this->fields ) || ! is_array( $this->fields ) ) {
 			$this->fields = array();
 		}
-
+		$sizes = Epsilon_Framework::get_image_sizes();
 		foreach ( $this->fields as $key => $value ) {
 			if ( ! isset( $value['default'] ) ) {
 				$this->fields[ $key ]['default'] = '';
@@ -173,8 +173,9 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 				if ( ! isset( $this->fields[ $key ]['default'] ) ) {
 					$this->fields[ $key ]['default'] = array();
 				}
-				$this->fields[ $key ]['size'] = ! empty( $this->fields[ $key ]['size'] ) ? $this->fields[ $key ]['size'] : 'full';
-				$this->fields[ $key ]['mode'] = ! empty( $this->fields[ $key ]['mode'] ) ? $this->fields[ $key ]['mode'] : 'url';
+				$this->fields[ $key ]['sizeArray'] = $sizes;
+				$this->fields[ $key ]['size']      = ! empty( $this->fields[ $key ]['size'] ) ? $this->fields[ $key ]['size'] : 'full';
+				$this->fields[ $key ]['mode']      = ! empty( $this->fields[ $key ]['mode'] ) ? $this->fields[ $key ]['mode'] : 'url';
 			}
 
 			/**

@@ -60,12 +60,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']             = $this->id;
-		$json['link']           = $this->get_link();
-		$json['choices']        = $this->choices;
-		$json['value']          = $this->value();
-		$json['sections']       = $this->set_repeatable_sections();
-		$json['default']        = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']       = $this->id;
+		$json['link']     = $this->get_link();
+		$json['choices']  = $this->choices;
+		$json['value']    = $this->value();
+		$json['sections'] = $this->set_repeatable_sections();
+		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
 	}
@@ -100,6 +100,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		if ( empty( $this->repeatable_sections ) || ! is_array( $this->repeatable_sections ) ) {
 			$this->repeatable_sections = array();
 		}
+		$sizes = Epsilon_Framework::get_image_sizes();
 
 		foreach ( $this->repeatable_sections as $key => $value ) {
 			foreach ( $value['fields'] as $k => $v ) {
@@ -140,7 +141,9 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = array();
 					}
 
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['size'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] : 'full';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['size']      = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] : 'full';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['sizeArray'] = $sizes;
+
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'url';
 				}
 
@@ -186,7 +189,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		<ul class="repeater-sections"></ul>
 		<# if(!_.isUndefined(data.choices.limit)){ #>
 		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ', 'epsilon-framework' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
+		<p class="limit"><?php echo esc_html__( 'Limit: ', 'epsilon-framework' ); ?> {{{ data.choices.limit
+			}}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
 		<# } #>
 		<div class="epsilon-add-section-buttons">
 			<input type="hidden" value="" {{{ data.link }}}/>
@@ -207,13 +211,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				</div>
 				<div class="available-sections-list">
 					<# for (section in data.sections) { #>
-					<# var temp = JSON.stringify(data.sections[section].fields); #>
-						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-							<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-							<input type="hidden" value="{{ temp }}"/>
-						</div>
-					<# } #>
+						<# var temp = JSON.stringify(data.sections[section].fields); #>
+							<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
+								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+								<input type="hidden" value="{{ temp }}"/>
+							</div>
+							<# } #>
 				</div>
 			</div>
 		</div>

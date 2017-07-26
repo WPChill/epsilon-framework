@@ -24,6 +24,10 @@ EpsilonFramework.repeater.row = {
       EpsilonFramework.repeater.base.toggleMinimize( self );
     } );
 
+    this.container.on( 'click', '.repeater-row-minimize', function() {
+      EpsilonFramework.repeater.base.toggleMinimize( self );
+    } );
+
     this.container.on( 'click', '.repeater-row-remove', function() {
       EpsilonFramework.repeater.base.removeRow( self );
     } );

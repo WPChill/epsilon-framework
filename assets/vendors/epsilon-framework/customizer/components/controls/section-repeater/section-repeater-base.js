@@ -234,7 +234,7 @@ EpsilonFramework.sectionRepeater.base = {
    * @param control
    */
   updateLabel: function( section, control ) {
-    section.header.find( '.repeater-row-label' ).text( section.label + ' ' + ( section.sectionIndex + 1 ) );
+    section.header.find( '.repeater-row-label' ).text( '#' + ( section.sectionIndex + 1 ) + ' - ' + section.label );
   },
   /**
    * Update a single field inside a row.
@@ -523,8 +523,10 @@ EpsilonFramework.sectionRepeater.base = {
    * @param instance
    */
   toggleMinimize: function( instance ) {
-    instance.container.toggleClass( 'minimized' );
-    instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    instance.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
+      instance.container.toggleClass( 'minimized' );
+      instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    } );
   },
 
 };

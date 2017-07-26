@@ -5,9 +5,14 @@
     display: block;
     text-align: center;
     height: 70px;
-    line-height: 70px;
     font-size: 14px;
     font-weight: 600;
+    margin-top: 15px;
+    line-height: 33px;
+    .recommended-size {
+      display: block;
+      font-style: italic;
+    }
   }
   .epsilon-image {
     img {

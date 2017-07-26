@@ -163,12 +163,34 @@ class Epsilon_Framework {
 		wp_localize_script( 'epsilon-object', 'EpsilonTranslations', array(
 			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
 			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
-			'selectFile' => esc_html__( 'Select a file', 'epsilon-framework' ),
+			'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
 			'row'        => esc_html__( 'Row', 'epsilon-framework' ),
 		) );
 
 		wp_enqueue_style( 'font-awesome', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/vendors/fontawesome/font-awesome.css' );
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
+	}
+
+	public static function get_image_sizes() {
+		global $_wp_additional_image_sizes;
+
+		$sizes = array();
+
+		foreach ( get_intermediate_image_sizes() as $_size ) {
+			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
+				$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
+				$sizes[ $_size ]['height'] = get_option( "{$_size}_size_h" );
+				$sizes[ $_size ]['crop']   = (bool) get_option( "{$_size}_crop" );
+			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
+				$sizes[ $_size ] = array(
+					'width'  => $_wp_additional_image_sizes[ $_size ]['width'],
+					'height' => $_wp_additional_image_sizes[ $_size ]['height'],
+					'crop'   => $_wp_additional_image_sizes[ $_size ]['crop'],
+				);
+			}
+		}
+
+		return $sizes;
 	}
 
 	/**

@@ -1092,8 +1092,11 @@ EpsilonFramework.repeater.base = {
    */
   toggleMinimize: function( instance ) {
     // Store the previous state.
-    instance.container.toggleClass( 'minimized' );
-    instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    instance.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
+      instance.container.toggleClass( 'minimized' );
+      instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    } );
+
   },
 
   /**
@@ -1271,6 +1274,10 @@ EpsilonFramework.repeater.row = {
      * Events
      */
     this.header.on( 'click', function() {
+      EpsilonFramework.repeater.base.toggleMinimize( self );
+    } );
+
+    this.container.on( 'click', '.repeater-row-minimize', function() {
       EpsilonFramework.repeater.base.toggleMinimize( self );
     } );
 
@@ -1522,7 +1529,7 @@ EpsilonFramework.sectionRepeater.base = {
    * @param control
    */
   updateLabel: function( section, control ) {
-    section.header.find( '.repeater-row-label' ).text( section.label + ' ' + ( section.sectionIndex + 1 ) );
+    section.header.find( '.repeater-row-label' ).text( '#' + ( section.sectionIndex + 1 ) + ' - ' + section.label );
   },
   /**
    * Update a single field inside a row.
@@ -1811,8 +1818,10 @@ EpsilonFramework.sectionRepeater.base = {
    * @param instance
    */
   toggleMinimize: function( instance ) {
-    instance.container.toggleClass( 'minimized' );
-    instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    instance.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
+      instance.container.toggleClass( 'minimized' );
+      instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    } );
   },
 
 };
@@ -1837,6 +1846,10 @@ EpsilonFramework.sectionRepeater.section = {
      * Events
      */
     this.header.on( 'click', function() {
+      EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
+    } );
+
+    this.container.on( 'click', '.repeater-row-minimize', function() {
       EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
     } );
 
@@ -2893,10 +2906,11 @@ wp.customize.bind( 'ready', function() {
   /**
    * @todo add it somewhere in JS
    */
-  jQuery( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
+  jQuery( '#customize-theme-controls' ).on( 'click', '.epsilon-customizer-navigation', function( e ) {
     e.preventDefault();
     if ( 'undefined' !== typeof(wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) )) ) {
       wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
     }
   } );
+
 } );

@@ -404,8 +404,11 @@ EpsilonFramework.repeater.base = {
    */
   toggleMinimize: function( instance ) {
     // Store the previous state.
-    instance.container.toggleClass( 'minimized' );
-    instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    instance.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
+      instance.container.toggleClass( 'minimized' );
+      instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+    } );
+
   },
 
   /**

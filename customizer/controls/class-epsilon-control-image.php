@@ -54,6 +54,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 		$json['value']          = $this->sanitize_value();
 		$json['default']        = $this->default;
 		$json['size']           = $this->size;
+		$json['sizeArray']      = Epsilon_Framework::get_image_sizes();
 
 		return $json;
 	}
@@ -106,7 +107,10 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 			</div>
 			<# } else { #>
 			<div class="placeholder">
-				<?php echo esc_html__( 'Select a file', 'epsilon-framework' ); ?>
+				<?php echo esc_html__( 'Upload image', 'epsilon-framework' ); ?>
+				<# if ( ! _.isUndefined( data.sizeArray[data.size] ) ) { #>
+					<span class="recommended-size"><?php echo esc_html__('Recommended resolution:', 'epsilon-framework'); ?> {{{ data.sizeArray[data.size].width }}} x {{{ data.sizeArray[data.size].height }}}</span>
+				<# } #>
 			</div>
 			<# } #>
 			<div class="actions">
