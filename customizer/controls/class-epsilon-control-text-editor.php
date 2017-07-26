@@ -45,7 +45,16 @@ class Epsilon_Control_Text_Editor extends WP_Customize_Control {
 	 * @since 1.2.0
 	 */
 	public function enqueue() {
-		wp_enqueue_editor();
+		if ( function_exists( 'wp_enqueue_editor' ) ) {
+			wp_enqueue_editor();
+		} else {
+			if ( ! class_exists( '_WP_Editors', false ) ) {
+				require( ABSPATH . WPINC . '/class-wp-editor.php' );
+			}
+
+			_WP_Editors::enqueue_scripts();
+		}
+
 	}
 
 	/**

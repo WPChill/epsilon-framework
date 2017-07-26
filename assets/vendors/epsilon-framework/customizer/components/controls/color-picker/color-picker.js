@@ -5,14 +5,14 @@
  */
 EpsilonFramework.colorPickers = {
   init: function( selectors ) {
-    var selectors = jQuery( selectors ),
-        settings, clear, instance;
+    var selectors = jQuery( selectors );
 
     jQuery.each( selectors, function() {
-      settings = {
-        changeDelay: 1000,
-        theme: 'default',
-      };
+      var settings = {
+            changeDelay: 1000,
+            theme: 'default',
+          },
+          clear, instance;
 
       if ( '' !== jQuery( this ).attr( 'placeholder' ) ) {
         settings.defaultValue = jQuery( this ).attr( 'placeholder' );

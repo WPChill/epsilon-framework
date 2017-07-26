@@ -5,9 +5,9 @@
  */
 EpsilonFramework.textEditor = {
   init: function( selector ) {
-    var context = jQuery( selector ), editorId;
+    var context = jQuery( selector );
     jQuery.each( context, function() {
-      editorId = jQuery( jQuery( this ).find( 'textarea' ) ).attr( 'id' );
+      var editorId = jQuery( jQuery( this ).find( 'textarea' ) ).attr( 'id' );
 
       wp.editor.initialize( editorId, {
         tinymce: {

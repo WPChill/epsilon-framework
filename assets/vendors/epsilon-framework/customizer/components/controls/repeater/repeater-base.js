@@ -538,10 +538,9 @@ EpsilonFramework.repeater.base = {
    *
    * @param container
    */
-  reinitTexteditor: function( container ) {
+  reinitTexteditor: function( instance, container ) {
     var self = this,
-        textarea = container.find( 'textarea' ),
-        editorId;
+        textarea = container.find( 'textarea' );
 
     jQuery.each( textarea, function() {
       wp.editor.remove( jQuery( this ).attr( 'id' ) );

@@ -76,6 +76,7 @@ class Epsilon_Customizer {
 		 */
 		self::add_setting( $id, $args );
 
+		$args['backup'] = isset( $args['backup'] ) ? $args['backup'] : false;
 		/**
 		 * Get class name, if it's an epsilon control, we need to build the class name accordingly
 		 */

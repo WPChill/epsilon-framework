@@ -1,6 +1,7 @@
 v1.2.4
 	- Recommended actions fixes ( JS was not pointing "where it should" )
 	- Fixed textdomains
+	- Fixed text-editor initiation
 
 v1.2.3
 	- Added support for section-repeater/repeater limit

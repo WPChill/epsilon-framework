@@ -21,14 +21,14 @@ EpsilonFramework.sectionRepeater = 'undefined' === typeof( EpsilonFramework.sect
  */
 EpsilonFramework.colorPickers = {
   init: function( selectors ) {
-    var selectors = jQuery( selectors ),
-        settings, clear, instance;
+    var selectors = jQuery( selectors );
 
     jQuery.each( selectors, function() {
-      settings = {
-        changeDelay: 1000,
-        theme: 'default',
-      };
+      var settings = {
+            changeDelay: 1000,
+            theme: 'default',
+          },
+          clear, instance;
 
       if ( '' !== jQuery( this ).attr( 'placeholder' ) ) {
         settings.defaultValue = jQuery( this ).attr( 'placeholder' );
@@ -639,8 +639,7 @@ EpsilonFramework.rangeSliders = {
    */
   init: function( selector ) {
     var context = jQuery( selector ),
-        sliders = context.find( '.slider-container' ),
-        slider, input, inputId, id;
+        sliders = context.find( '.slider-container' );
 
     jQuery.each( sliders, function() {
       var slider = jQuery( this ).find( '.ss-slider' ),
@@ -1227,10 +1226,9 @@ EpsilonFramework.repeater.base = {
    *
    * @param container
    */
-  reinitTexteditor: function( container ) {
+  reinitTexteditor: function( instance, container ) {
     var self = this,
-        textarea = container.find( 'textarea' ),
-        editorId;
+        textarea = container.find( 'textarea' );
 
     jQuery.each( textarea, function() {
       wp.editor.remove( jQuery( this ).attr( 'id' ) );
@@ -1863,9 +1861,9 @@ EpsilonFramework.sectionRepeater.section = {
  */
 EpsilonFramework.textEditor = {
   init: function( selector ) {
-    var context = jQuery( selector ), editorId;
+    var context = jQuery( selector );
     jQuery.each( context, function() {
-      editorId = jQuery( jQuery( this ).find( 'textarea' ) ).attr( 'id' );
+      var editorId = jQuery( jQuery( this ).find( 'textarea' ) ).attr( 'id' );
 
       wp.editor.initialize( editorId, {
         tinymce: {

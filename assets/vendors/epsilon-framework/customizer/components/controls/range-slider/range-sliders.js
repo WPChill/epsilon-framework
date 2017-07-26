@@ -11,8 +11,7 @@ EpsilonFramework.rangeSliders = {
    */
   init: function( selector ) {
     var context = jQuery( selector ),
-        sliders = context.find( '.slider-container' ),
-        slider, input, inputId, id;
+        sliders = context.find( '.slider-container' );
 
     jQuery.each( sliders, function() {
       var slider = jQuery( this ).find( '.ss-slider' ),
