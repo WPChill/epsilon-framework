@@ -680,7 +680,7 @@
 .epsilon-layouts-container a {
   outline: none;
   text-decoration: none;
-  color: #555555;
+  color: #000;
 }
 .epsilon-layouts-container a:hover, .epsilon-layouts-container a:focus {
   text-decoration: none;
