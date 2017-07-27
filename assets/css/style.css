@@ -680,7 +680,7 @@
 .epsilon-layouts-container a {
   outline: none;
   text-decoration: none;
-  color: #555555;
+  color: #000;
 }
 .epsilon-layouts-container a:hover, .epsilon-layouts-container a:focus {
   text-decoration: none;
@@ -1316,34 +1316,40 @@ body.adding-section .epsilon-add-new-section:before {
   margin-top: 12px;
 }
 
-label.epsilon-icon-picker-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.epsilon-icon-container {
+.repeater-field .epsilon-icon-container {
   -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
   -moz-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
 }
-.epsilon-icon-container i {
-  padding: 10px;
-  float: left;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  line-height: 20px;
-  width: 20px;
-  text-align: center;
-  background: #fefefe;
+
+.epsilon-icon-container {
+  display: inline-block;
+  background: #fff;
+  width: 100%;
+  border-radius: 5px;
 }
-.epsilon-icon-container span {
-  padding: 10px;
+.epsilon-icon-container .epsilon-icon-name {
+  display: inline-block;
   float: left;
+  padding: 10px;
+}
+.epsilon-icon-container i {
+  margin-left: 5px;
+  margin-right: 15px;
+}
+.epsilon-icon-container .icon-label {
+  display: inline-block;
+}
+.epsilon-icon-container .epsilon-open-icon-picker {
+  padding: 10px;
+  float: right;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background-color: #f4f4f4;
+  background-color: #fff;
   border-left: 1px solid #dddddd;
+}
+.epsilon-icon-container .epsilon-open-icon-picker.opened-icon-picker {
+  background-color: #f4f4f4;
 }
 
 .epsilon-icon-picker-container {

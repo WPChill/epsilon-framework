@@ -190,6 +190,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         return;
       }
 
+      jQuery( this ).toggleClass( 'opened-icon-picker' );
       temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
       EpsilonFramework.sectionRepeater.base.handleIconPickerToggle( control, temp );
     } );

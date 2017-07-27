@@ -478,11 +478,14 @@ EpsilonFramework.repeater.base = {
    * @param container
    */
   handleIconPickerSelection: function( instance, clicked, container ) {
-    var icon;
+    var icon, label;
 
     container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
     icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
-    container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+    icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
+
+    container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
+    container.find( '.epsilon-icon-name > .icon-label' ).html( label );
 
     /**
      * Set value

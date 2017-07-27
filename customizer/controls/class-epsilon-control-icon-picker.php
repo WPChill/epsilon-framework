@@ -76,19 +76,21 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 	public function content_template() {
 		//@formatter:off ?>
 		<label class="epsilon-icon-picker-label">
-			<span class="customize-control-title">
-				<# if( data.label ){ #>
-					<span class="customize-control-title">{{{ data.label }}}</span>
-				<# } #>
-
+			<span class="customize-control-title epsilon-button-label">
+				{{{ data.label }}}
 				<# if( data.description ){ #>
-					<span class="description customize-control-description">{{{ data.description }}}</span>
+					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ data.description }}}
+						</span>
+					</i>
 				<# } #>
 			</span>
-			<span class="epsilon-icon-container">
-				<i class="{{{ data.value }}}"></i>
+
+			<div class="epsilon-icon-container">
+				<div class="epsilon-icon-name"><i class="{{{ data.value }}}"></i> <div class="icon-label">{{{ data.icons[data.value] }}}</div></div>
 				<span class="dashicons dashicons-arrow-down epsilon-open-icon-picker"></span>
-			</span>
+			</div>
 		</label>
 		<input type="hidden" class="epsilon-icon-picker" {{{ data.link }}} value="{{{ data.value }}}">
 		<div class="epsilon-icon-picker-container">

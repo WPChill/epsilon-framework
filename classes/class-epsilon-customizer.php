@@ -120,7 +120,16 @@ class Epsilon_Customizer {
 	 */
 	public static function add_section( $id, array $args = array() ) {
 		global $wp_customize;
-		$wp_customize->add_section( $id, $args );
+		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'section';
+
+		$class = self::_get_section_type( $args['type'] );
+		$wp_customize->add_section(
+			new $class['class'](
+				$wp_customize,
+				$id,
+				$args
+			)
+		);
 	}
 
 	/**
@@ -149,6 +158,35 @@ class Epsilon_Customizer {
 				call_user_func( $func, $item['id'], $item['args'] );
 			}
 		}
+	}
+
+	/**
+	 * Get the class name of the section type
+	 *
+	 * @since 1.2.6
+	 *
+	 * @param string $type
+	 */
+	public static function _get_section_type( $type = '' ) {
+		$class = '';
+		$type  = explode( '-', $type );
+		/**
+		 * Let's make sure it's an Epsilon Class
+		 */
+		if ( 1 < count( $type ) && 'epsilon' === $type[0] ) {
+			$class = implode( '_', $type );
+		}
+
+		/**
+		 * Provide a default
+		 */
+		if ( ! class_exists( $class ) ) {
+			$class = 'WP_Customize_Section';
+		}
+
+		return array(
+			'class' => $class,
+		);
 	}
 
 	/**

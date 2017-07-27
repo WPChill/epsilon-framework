@@ -158,6 +158,7 @@ EpsilonFramework.sectionRepeater.base = {
    */
   handleAddButton: function( context ) {
     var isAddBtn,
+        self = this,
         body = jQuery( 'body' );
 
     /**
@@ -169,7 +170,15 @@ EpsilonFramework.sectionRepeater.base = {
           return;
         }
 
-        instance.container.find( '.repeater-row' ).addClass( 'minimized' );
+        /**
+         * In case we left the "sections" screen, let's close all the repeatable sections
+         */
+        _.each( context.sections, function( sect ) {
+          if ( ! sect.container.hasClass( 'minimized' ) ) {
+            self.toggleMinimize( sect );
+          }
+        } );
+
         body.removeClass( 'adding-section' );
       } );
     } );
@@ -431,11 +440,14 @@ EpsilonFramework.sectionRepeater.base = {
    * @param container
    */
   handleIconPickerSelection: function( instance, clicked, container ) {
-    var icon;
+    var icon, label;
 
     container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
     icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
-    container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+    label = jQuery( clicked ).addClass( 'selected' ).attr( 'data-search' );
+
+    container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
+    container.find( '.epsilon-icon-name > .icon-label' ).html( label );
 
     /**
      * Set value
