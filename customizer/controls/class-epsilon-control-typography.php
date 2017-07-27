@@ -122,14 +122,8 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	 * @return array
 	 */
 	public function get_values( $values ) {
-		$defaults = array(
-			'font-family'    => 'Select font',
-			'font-weight'    => '',
-			'font-style'     => '',
-			'letter-spacing' => '0',
-			'font-size'      => '16',
-			'line-height'    => '18',
-		);
+		$defaults = $this->set_font_defaults();
+		$defaults = $defaults[ $this->id ];
 
 		$arr = array();
 		foreach ( $this->choices as $choice ) {
@@ -219,7 +213,6 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 			</span>
 		</label>
 		<div class="customize-control-content">
-			<input disabled type="hidden" id="selectors_{{{data.id}}}" value="{{{ data.selectors }}}"/>
 			<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_{{{ data.id }}}" <# if ( data.value ) { value="{{{ data.value }}}"  } #> {{{ data.link }}}/>
 		</div>
 
