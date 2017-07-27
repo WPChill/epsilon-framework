@@ -158,6 +158,7 @@ EpsilonFramework.sectionRepeater.base = {
    */
   handleAddButton: function( context ) {
     var isAddBtn,
+        self = this,
         body = jQuery( 'body' );
 
     /**
@@ -169,7 +170,15 @@ EpsilonFramework.sectionRepeater.base = {
           return;
         }
 
-        instance.container.find( '.repeater-row' ).addClass( 'minimized' );
+        /**
+         * In case we left the "sections" screen, let's close all the repeatable sections
+         */
+        _.each( context.sections, function( sect ) {
+          if ( ! sect.container.hasClass( 'minimized' ) ) {
+            self.toggleMinimize( sect );
+          }
+        } );
+
         body.removeClass( 'adding-section' );
       } );
     } );
