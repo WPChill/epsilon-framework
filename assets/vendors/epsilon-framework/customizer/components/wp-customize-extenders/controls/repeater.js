@@ -155,7 +155,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
         return;
       }
-
+      jQuery( this ).toggleClass( 'opened-icon-picker' );
       temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
       EpsilonFramework.repeater.base.handleIconPickerToggle( control, temp );
     } );

@@ -16,13 +16,14 @@ EpsilonFramework.iconPickers = {
    */
   init: function( control, inRepeater ) {
     this.control = control;
-    var icon, filter, temp, collection = control.container.find( '.epsilon-icons > i' ), input = control.container.find( '.search-container input' );
+    var icon, label, filter, temp, collection = control.container.find( '.epsilon-icons > i' ), input = control.container.find( '.search-container input' );
 
     /**
      * Icon container toggler
      */
     control.container.on( 'click', '.epsilon-open-icon-picker', function( e ) {
       e.preventDefault();
+      jQuery( this ).toggleClass( 'opened-icon-picker' );
       control.container.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
     } );
 
@@ -32,7 +33,9 @@ EpsilonFramework.iconPickers = {
     control.container.on( 'click', '.epsilon-icons-container .epsilon-icons > i', function( e ) {
       control.container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
       icon = jQuery( this ).addClass( 'selected' ).attr( 'data-icon' );
-      control.container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+      label = jQuery( this ).addClass( 'selected' ).attr( 'data-search' );
+      control.container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
+      control.container.find( '.epsilon-icon-name > .icon-label' ).html( label );
 
       /**
        * Set value

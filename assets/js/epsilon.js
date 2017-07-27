@@ -175,13 +175,14 @@ EpsilonFramework.iconPickers = {
    */
   init: function( control, inRepeater ) {
     this.control = control;
-    var icon, filter, temp, collection = control.container.find( '.epsilon-icons > i' ), input = control.container.find( '.search-container input' );
+    var icon, label, filter, temp, collection = control.container.find( '.epsilon-icons > i' ), input = control.container.find( '.search-container input' );
 
     /**
      * Icon container toggler
      */
     control.container.on( 'click', '.epsilon-open-icon-picker', function( e ) {
       e.preventDefault();
+      jQuery( this ).toggleClass( 'opened-icon-picker' );
       control.container.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
     } );
 
@@ -191,7 +192,9 @@ EpsilonFramework.iconPickers = {
     control.container.on( 'click', '.epsilon-icons-container .epsilon-icons > i', function( e ) {
       control.container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
       icon = jQuery( this ).addClass( 'selected' ).attr( 'data-icon' );
-      control.container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+      label = jQuery( this ).addClass( 'selected' ).attr( 'data-search' );
+      control.container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
+      control.container.find( '.epsilon-icon-name > .icon-label' ).html( label );
 
       /**
        * Set value
@@ -1161,11 +1164,14 @@ EpsilonFramework.repeater.base = {
    * @param container
    */
   handleIconPickerSelection: function( instance, clicked, container ) {
-    var icon;
+    var icon, label;
 
     container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
     icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
-    container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+    icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
+
+    container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
+    container.find( '.epsilon-icon-name > .icon-label' ).html( label );
 
     /**
      * Set value
@@ -1730,11 +1736,14 @@ EpsilonFramework.sectionRepeater.base = {
    * @param container
    */
   handleIconPickerSelection: function( instance, clicked, container ) {
-    var icon;
+    var icon, label;
 
     container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
     icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
-    container.find( '.epsilon-icon-container > i' ).removeClass().addClass( icon );
+    label = jQuery( clicked ).addClass( 'selected' ).attr( 'data-search' );
+
+    container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
+    container.find( '.epsilon-icon-name > .icon-label' ).html( label );
 
     /**
      * Set value
@@ -2583,7 +2592,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
         return;
       }
-
+      jQuery( this ).toggleClass( 'opened-icon-picker' );
       temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
       EpsilonFramework.repeater.base.handleIconPickerToggle( control, temp );
     } );
@@ -2804,6 +2813,7 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         return;
       }
 
+      jQuery( this ).toggleClass( 'opened-icon-picker' );
       temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
       EpsilonFramework.sectionRepeater.base.handleIconPickerToggle( control, temp );
     } );
