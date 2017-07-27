@@ -2,6 +2,7 @@ v1.2.7
 	- Bug fixing in typography controls
 	- Icon picker has been redesigned
 	- Possibility to add different types of sections through our wrapper
+	
 
 v1.2.6
 	- Performance improvements for color scheme control
