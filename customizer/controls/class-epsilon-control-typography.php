@@ -125,6 +125,17 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$defaults = $this->set_font_defaults();
 		$defaults = $defaults[ $this->id ];
 
+		if ( empty( $defaults ) ) {
+			$defaults = array(
+				'font-family'    => 'Select font',
+				'font-weight'    => '',
+				'font-style'     => '',
+				'letter-spacing' => '0',
+				'font-size'      => '16',
+				'line-height'    => '18',
+			);
+		}
+
 		$arr = array();
 		foreach ( $this->choices as $choice ) {
 			if ( array_key_exists( $choice, $defaults ) ) {
