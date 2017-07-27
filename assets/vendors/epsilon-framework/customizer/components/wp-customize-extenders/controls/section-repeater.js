@@ -129,21 +129,27 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
      */
     wp.customize.previewer.bind( 'epsilon-section-edit', function( data ) {
       /**
+       * In case the section does not exist, we can terminate
+       */
+      if ( 'undefined' === typeof( wp.customize.section( data.customizerSection ) ) ) {
+        return false;
+      }
+
+      /**
        * Iterate over the controls, minimize everything
        */
       _.each( control.sections, function( sect, index ) {
-        if ( ! sect.container.hasClass( 'minimized' ) && index !== parseFloat( data.section ) ) {
+        if ( ! sect.container.hasClass( 'minimized' ) && index !== data.section ) {
           EpsilonFramework.sectionRepeater.base.toggleMinimize( sect );
         }
       } );
-      /**
-       * Focus section
-       */
+
       wp.customize.section( data.customizerSection ).focus();
+
       /**
        * Focus repeatable section
        */
-      if ( control.sections[ data.section ].container.hasClass( 'minimized' ) ) {
+      if ( ! _.isUndefined( control.sections[ data.section ] ) && control.sections[ data.section ].container.hasClass( 'minimized' ) ) {
         EpsilonFramework.sectionRepeater.base.toggleMinimize( control.sections[ data.section ] );
       }
     } );

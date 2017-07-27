@@ -190,10 +190,9 @@ class Epsilon_Typography {
 	 * @return string
 	 */
 	public function generate_css( $options ) {
-		$css      = '';
-		$defaults = array( 'Select font', 'Theme default', 'initial', 'default_font' );
-		$css      .= $options['selectors'] . '{' . "\n";
-
+		$css        = '';
+		$properties = '';
+		$defaults   = array( 'Select font', 'Theme default', 'initial', 'default_font' );
 		foreach ( $options['json'] as $property => $value ) {
 			$extra = '';
 
@@ -209,24 +208,29 @@ class Epsilon_Typography {
 				case 'font-size':
 				case 'line-height':
 				case 'letter-spacing':
-					$css .= $property . ':' . $value . $extra . ';' . "\n";
+					$properties .= $property . ':' . $value . $extra . ';' . "\n";
 					break;
 				case 'font-weight':
 					if ( 'on' === $value ) {
-						$css .= $property . ': bold;' . "\n";
+						$properties .= $property . ': bold;' . "\n";
 					}
 					break;
 				case 'font-style':
 					if ( 'on' === $value ) {
-						$css .= $property . ': italic;' . "\n";
+						$properties .= $property . ': italic;' . "\n";
 					}
 					break;
 				default :
-					$css .= $property . ':' . $value . ';' . "\n";
+					$properties .= $property . ':' . $value . ';' . "\n";
 					break;
 			}
 		}
-		$css .= '}' . "\n";
+
+		if ( ! empty( $properties ) ) {
+			$css .= $options['selectors'] . '{' . "\n";
+			$css .= $properties;
+			$css .= '}' . "\n";
+		}
 
 		return $css;
 	}
@@ -246,7 +250,7 @@ class Epsilon_Typography {
 			$this->font_imports = array_unique( $this->font_imports );
 			foreach ( $this->font_imports as $font ) {
 				if ( null !== $font ) {
-					$fonts .= '@import url("https://fonts.googleapis.com/css?family=' . $font . '");' . "\n";
+					wp_enqueue_style( 'epsilon-google-fonts', '//fonts.googleapis.com/css?family=' . $font, array(), false, 'all' );
 				}
 			}
 		}

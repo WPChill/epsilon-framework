@@ -26,9 +26,17 @@ EpsilonFramework.colorPickers = {
       jQuery( this ).minicolors( settings );
 
       clear = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'a' );
+      if ( ! clear.length ) {
+        clear = jQuery( this ).parents( '.repeater-field-epsilon-color-picker' ).find( 'a' );
+      }
+
       clear.on( 'click', function( e ) {
         e.preventDefault();
         instance = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
+        if ( ! instance.length ) {
+          instance = jQuery( this ).parents( '.repeater-field-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
+        }
+
         instance.minicolors( 'value', jQuery( this ).attr( 'data-default' ) );
         instance.trigger( 'change' );
       } );

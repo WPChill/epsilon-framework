@@ -32,26 +32,22 @@ EpsilonFramework.colorSchemes = {
       colorSettings.push( index );
     } );
 
-    function updateCSS() {
-      _.each( colorSettings, function( setting ) {
-        css.data[ setting ] = api( setting )();
-      } );
-      api.previewer.send( 'update-inline-css', css );
-    }
-
     _.each( colorSettings, function( setting ) {
+      css.data[ setting ] = api( setting )();
+
       if ( 'undefined' !== typeof(api.control( setting )) ) {
-        api.control( setting ).container.on( 'change', 'input.epsilon-color-picker', function() {
+        api.control( setting ).container.on( 'change', 'input.epsilon-color-picker', _.debounce( function() {
           context.siblings( '.epsilon-color-scheme-selected' ).
               find( '.epsilon-color-scheme-palette' ).
               find( '*[data-field-id="' + setting + '"]' ).
               css( 'background', jQuery( this ).attr( 'value' ) );
-        } );
+
+          css.data[ setting ] = api( setting )();
+
+          api.previewer.send( 'update-inline-color-schemes-css', css );
+        }, 800 ) );
       }
 
-      api( setting, function( setting ) {
-        setting.bind( updateCSS );
-      } );
     } );
 
     /**
@@ -65,12 +61,11 @@ EpsilonFramework.colorSchemes = {
        * Find the customizer options
        */
       jQuery.each( json, function( index, value ) {
-        colorSettings.push( index );
         /**
          * Set values
          */
         jQuery( '#customize-control-' + index + ' .epsilon-color-picker' ).minicolors( 'value', value );
-        wp.customize( index ).set( value );
+        api( index ).set( value );
 
         context.siblings( '.epsilon-color-scheme-selected' ).find( '.epsilon-color-scheme-palette' ).find( '*[data-field-id="' + index + '"]' ).css( 'background', value );
       } );
@@ -78,19 +73,11 @@ EpsilonFramework.colorSchemes = {
       /**
        * Remove the selected class from siblings
        */
-      jQuery( this ).
-          siblings( '.epsilon-color-scheme-option' ).
-          removeClass( 'selected' );
+      jQuery( this ).siblings( '.epsilon-color-scheme-option' ).removeClass( 'selected' );
       /**
        * Make active the current selection
        */
       jQuery( this ).addClass( 'selected' );
-
-      _.each( colorSettings, function( setting ) {
-        api( setting, function( setting ) {
-          setting.bind( updateCSS() );
-        } );
-      } );
 
       /**
        * Trigger change

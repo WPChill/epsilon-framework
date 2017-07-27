@@ -130,7 +130,7 @@ class Epsilon_Framework {
 	 */
 	public function customize_preview_styles() {
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
-		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.js', array(
+		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.min.js', array(
 			'jquery',
 			'customize-preview',
 		), 2, true );
@@ -149,7 +149,7 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
+		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.min.js', array(
 			'jquery',
 			'customize-controls',
 		) );
@@ -171,6 +171,11 @@ class Epsilon_Framework {
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
 	}
 
+	/**
+	 * Function that retrieves image sizes defined in theme
+	 *
+	 * @return array
+	 */
 	public static function get_image_sizes() {
 		global $_wp_additional_image_sizes;
 

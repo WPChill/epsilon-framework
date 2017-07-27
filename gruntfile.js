@@ -36,7 +36,17 @@ module.exports = function( grunt ) {
           '!assets/vendors/epsilon-framework/admin/epsilon-admin-concat.js'
         ],
         dest: 'assets/js/epsilon-admin.js'
-      }
+      },
+      epsilonPreviewer: {
+        src: [
+          'assets/vendors/epsilon-framework/previewer/components/epsilon-previewer-object.js',
+          'assets/vendors/epsilon-framework/previewer/**/*.js',
+          'assets/vendors/epsilon-framework/previewer/epsilon-previewer.js',
+          '!assets/vendors/epsilon-framework/previewer/epsilon-previewer.min.js',
+          '!assets/vendors/epsilon-framework/previewer/epsilon-previewer-concat.js'
+        ],
+        dest: 'assets/js/epsilon-previewer.js'
+      },
     },
     uglify: {
       epsilon: {
@@ -54,6 +64,14 @@ module.exports = function( grunt ) {
         },
         src: [ 'assets/js/epsilon-admin.js', '!assets/js/epsilon-admin.min.js' ],
         dest: 'assets/js/epsilon-admin.min.js'
+      },
+      epsilonPreviewer: {
+        options: {
+          sourceMap: false,
+          sourceMapName: 'sourceMap.map'
+        },
+        src: [ 'assets/js/epsilon-previewer.js', '!assets/js/epsilon-previewer.min.js' ],
+        dest: 'assets/js/epsilon-previewer.min.js'
       }
     },
 
@@ -127,7 +145,9 @@ module.exports = function( grunt ) {
   grunt.registerTask( 'concat-epsilon', [
     'concat:epsilonFramework',
     'concat:epsilonAdmin',
+    'concat:epsilonPreviewer',
     'uglify:epsilon',
-    'uglify:epsilonAdmin'
+    'uglify:epsilonAdmin',
+    'uglify:epsilonPreviewer'
   ] );
 };

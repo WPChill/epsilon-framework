@@ -1255,6 +1255,39 @@ body.adding-section .epsilon-add-new-section:before {
   padding: 0 10px;
 }
 
+.epsilon-section-editor {
+  background: #0085ba !important;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  display: inline-block;
+  border: 1px solid #fff;
+  -webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
+  box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
+  line-height: 30px;
+  text-align: center;
+  position: absolute;
+  z-index: 100;
+  left: -35px;
+}
+.epsilon-section-editor .dashicons {
+  line-height: 30px;
+}
+.epsilon-section-editor:hover, .epsilon-section-editor:focus {
+  color: #fff;
+}
+
+[data-section] .container,
+[data-section] .container-fluid {
+  position: relative;
+}
+
+[data-section] .container-fluid .epsilon-section-editor {
+  left: initial;
+  right: 35px;
+}
+
 .epsilon-controller-image-container .placeholder {
   width: 100%;
   position: relative;

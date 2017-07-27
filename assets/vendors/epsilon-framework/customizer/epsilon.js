@@ -1,7 +1,4 @@
 /**
- *
- * File epsilon.js.
- *
  * Epsilon Framework Initiator
  */
 

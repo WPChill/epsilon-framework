@@ -1,3 +1,8 @@
+v1.2.6
+	- Performance improvements for color scheme control
+	- Performance improvements for typography controls
+	- Added support for section repeater inline shortcuts
+
 v1.2.5
 	- Epsilon Admin didn't had the wpurls object available
 

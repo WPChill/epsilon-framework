@@ -42,6 +42,13 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	public $choices = array();
 
 	/**
+	 * @since  1.2.0
+	 * @access public
+	 * @var string
+	 */
+	public $stylesheet = 'epsilon-typography-css';
+
+	/**
 	 * Epsilon_Control_Typography constructor.
 	 *
 	 * @param WP_Customize_Manager $manager
@@ -70,6 +77,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$json['inputs']       = $this->get_values( $this->id );
 		$json['fonts']        = $this->google_fonts();
 		$json['selectors']    = $this->set_selectors();
+		$json['stylesheet']   = $this->stylesheet;
 
 		return $json;
 	}

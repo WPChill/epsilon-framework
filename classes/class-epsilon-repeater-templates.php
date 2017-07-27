@@ -79,7 +79,7 @@ class Epsilon_Repeater_Templates {
 								<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.value }}" />
 								<span class="customize-control-title epsilon-color-picker-title">
 									{{{ field.label }}}
-									<a href="#" data-default="{{ field.default }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
+									<a href="#" data-default="{{ field.defaultVal }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
 									<# if( field.description ){ #>
 										<span class="epsilon-color-picker-description">{{{ field.description }}}</span>
 									<# } #>

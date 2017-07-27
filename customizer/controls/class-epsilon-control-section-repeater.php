@@ -152,6 +152,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				 */
 				if ( 'epsilon-color-picker' === $v['type'] ) {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'hex';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] : '';
 				}
 
 				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;

@@ -143,6 +143,7 @@
                                     'section'     => 'section_id',
                                     'label'       => esc_html__( 'Epsilon Typography Label', 'text-domain' ),
                                     'description' => esc_html__( 'Epsilon Typography Description', 'text-domain' ),
+                                    'stylesheet'  => 'theme-style',
                                     'choices'     => array(
                                       'font-family',
                                       'font-weight',
