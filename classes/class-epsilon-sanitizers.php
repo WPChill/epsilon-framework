@@ -89,4 +89,20 @@ class Epsilon_Sanitizers {
 
 		return $input;
 	}
+
+	/**
+	 * Recursive array map functionality ( for field sanitize)
+	 *
+	 * @param $callback
+	 * @param $array
+	 *
+	 * @return array
+	 */
+	public static function array_map_recursive( $callback, $array ) {
+		$func = function ( $item ) use ( &$func, &$callback ) {
+			return is_array( $item ) ? array_map( $func, $item ) : call_user_func( $callback, $item );
+		};
+
+		return array_map( $func, $array );
+	}
 }
