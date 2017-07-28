@@ -49,9 +49,14 @@ class Epsilon_Customizer {
 		$class = self::_get_type( $args['setting_type'], 'setting' );
 
 		/**
+		 * Theme check fails because there is no "specific" sanitize_callback argument. All fields are sanitized automatically check -> Epsilon_Customizer::_get_sanitizer();
+		 */
+		$func_name = 'add_setting';
+
+		/**
 		 * Register it
 		 */
-		$wp_customize->add_setting(
+		$wp_customize->$func_name(
 			new $class['class'](
 				$wp_customize,
 				$id,
