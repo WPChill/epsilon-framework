@@ -247,6 +247,11 @@ class Epsilon_Content_Backup {
 						if ( empty( $val ) || 'type' === $id ) {
 							continue;
 						}
+
+						if ( is_array( $val ) ) {
+							$val = implode( ',', $val );
+						}
+						
 						$content .= $id . ' : ' . $val . "\n";
 					}
 					$content .= '------------------------------------------------------------';

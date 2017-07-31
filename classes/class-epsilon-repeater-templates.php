@@ -86,12 +86,17 @@ class Epsilon_Repeater_Templates {
 								</span>
 							</label>
 						<# } else if ( 'select' === field.type ) { #>
+							<# console.log(field.default) #>
 							<label>
 								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
 								<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
 									<# _.each( field.choices, function( choice, i ) { #>
-										<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  if( field.multiple ) { #>
+											<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  } else { #>
+											<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  }  #>
 									<# }); #>
 								</select>
 							</label>
