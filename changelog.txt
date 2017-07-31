@@ -1,6 +1,6 @@
 v1.2.8
 	- Select multiple now shows selected items
-	
+
 v1.2.7
 	- Bug fixing in typography controls
 	- Icon picker has been redesigned

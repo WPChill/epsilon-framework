@@ -86,7 +86,6 @@ class Epsilon_Repeater_Templates {
 								</span>
 							</label>
 						<# } else if ( 'select' === field.type ) { #>
-							<# console.log(field.default) #>
 							<label>
 								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
 								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
