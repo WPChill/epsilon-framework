@@ -18,12 +18,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      * Setting field reference
      */
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
-
-    /**
-     * Set an initial value to the repeater field
-     */
-    EpsilonFramework.repeater.base.setValue( this, [], false );
-
+    
     /**
      * Create a reference of the container
      */
@@ -57,11 +52,6 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      * Create the existing rows
      */
     this.createExistingRows();
-
-    /**
-     * After display fields, clean the setting
-     */
-    EpsilonFramework.repeater.base.setValue( this, control.params.value, true, true );
 
     /**
      * Start sorting

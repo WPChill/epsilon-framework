@@ -832,10 +832,13 @@ EpsilonFramework.repeater.base = {
      * @type {{}}
      */
     settingValue[ control.currentIndex ] = newRowSetting;
+
     /**
      * Set it
      */
-    EpsilonFramework.repeater.base.setValue( control, settingValue, true );
+    if ( ! data ) {
+      EpsilonFramework.repeater.base.setValue( control, settingValue, true );
+    }
 
     /**
      * Update index
@@ -852,38 +855,10 @@ EpsilonFramework.repeater.base = {
    *
    * @param instance
    * @param newValue
-   * @param refresh
-   * @param filtering
    */
-  setValue: function( instance, newValue, refresh, filtering ) {
-    // We need to filter the values after the first load to remove data requrired for diplay but that we don't want to save in DB
-    var filteredValue = newValue,
-        filter = [];
-
-    /**
-     * Filtering
-     */
-    if ( filtering ) {
-      jQuery.each( instance.params.fields, function( index, value ) {
-        if ( 'image' === value.type || 'cropped_image' === value.type || 'upload' === value.type ) {
-          filter.push( index );
-        }
-      } );
-
-      jQuery.each( newValue, function( index, value ) {
-        jQuery.each( filter, function( ind, field ) {
-          if ( ! _.isUndefined( value[ field ] ) && ! _.isUndefined( value[ field ].id ) ) {
-            filteredValue[ index ][ field ] = value[ field ].id;
-          }
-        } );
-      } );
-    }
-
-    instance.setting.set( encodeURI( JSON.stringify( filteredValue ) ) );
-
-    if ( refresh ) {
-      instance.settingField.trigger( 'change' );
-    }
+  setValue: function( instance, newValue ) {
+    instance.setting.set( [] );
+    instance.setting.set( newValue );
   },
 
   /**
@@ -892,19 +867,20 @@ EpsilonFramework.repeater.base = {
    * @param instance
    */
   getValue: function( instance ) {
-    // The setting is saved in JSON
-    return JSON.parse( decodeURI( instance.setting.get() ) );
+    return instance.setting.get();
   },
 
   /**
    * Update a single field inside a row.
    * Triggered when a field has changed
    *
-   * @param e Event Object
+   * @param rowIndex
+   * @param fieldId
+   * @param element
+   * @param control
    */
   updateField: function( rowIndex, fieldId, element, control ) {
-    var row,
-        currentSettings;
+    var row, currentSettings;
 
     if ( ! control.rows[ rowIndex ] ) {
       return;
@@ -917,8 +893,6 @@ EpsilonFramework.repeater.base = {
     row = control.rows[ rowIndex ];
     currentSettings = EpsilonFramework.repeater.base.getValue( control );
 
-    element = jQuery( element );
-
     if ( _.isUndefined( currentSettings[ row.rowIndex ][ fieldId ] ) ) {
       return;
     }
@@ -926,14 +900,14 @@ EpsilonFramework.repeater.base = {
     switch ( control.params.fields[ fieldId ].type ) {
       case 'checkbox':
       case 'epsilon-toggle':
-        currentSettings[ row.rowIndex ][ fieldId ] = element.prop( 'checked' );
+        currentSettings[ row.rowIndex ][ fieldId ] = jQuery( element ).prop( 'checked' );
         break;
       default:
-        currentSettings[ row.rowIndex ][ fieldId ] = element.val();
+        currentSettings[ row.rowIndex ][ fieldId ] = jQuery( element ).val();
         break;
     }
 
-    EpsilonFramework.repeater.base.setValue( control, currentSettings, true );
+    EpsilonFramework.repeater.base.setValue( control, currentSettings );
   },
 
   /**
@@ -958,6 +932,9 @@ EpsilonFramework.repeater.base = {
       newSettings[ newPosition ] = settings[ oldPosition ];
     } );
 
+    /**
+     * Text editor needs to be reinitiated after sorting (else it loses the "visual" part)
+     */
     EpsilonFramework.repeater.base.reinitTexteditor( control, data.item );
 
     control.rows = newRows;
@@ -2455,12 +2432,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      * Setting field reference
      */
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
-
-    /**
-     * Set an initial value to the repeater field
-     */
-    EpsilonFramework.repeater.base.setValue( this, [], false );
-
+    
     /**
      * Create a reference of the container
      */
@@ -2494,11 +2466,6 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
      * Create the existing rows
      */
     this.createExistingRows();
-
-    /**
-     * After display fields, clean the setting
-     */
-    EpsilonFramework.repeater.base.setValue( this, control.params.value, true, true );
 
     /**
      * Start sorting
