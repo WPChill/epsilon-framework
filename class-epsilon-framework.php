@@ -115,7 +115,7 @@ class Epsilon_Framework {
 	 * @since 1.2.0
 	 */
 	public function enqueue() {
-		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.js', array( 'jquery' ) );
+		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
 		wp_localize_script( 'epsilon-admin', 'WPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
