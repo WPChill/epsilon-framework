@@ -2444,13 +2444,16 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     this.initRepeater();
   },
 
+  /**
+   * Initiator
+   */
   initRepeater: function() {
     var control = this,
-        settingValue = this.params.value,
-        limit = false,
-        newRow,
-        temp;
+        newRow;
 
+    /**
+     * Setting field reference
+     */
     this.settingField = this.container.find( '[data-customize-setting-link]' ).first();
 
     /**
@@ -2477,6 +2480,61 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     this.rows = [];
 
     /**
+     * Initiate the adding/removing events
+     */
+    this.handleEvents();
+
+    /**
+     * Initiate Custom Controls
+     */
+    this.initIconPicker();
+    this.initImageControls();
+
+    /**
+     * Create the existing rows
+     */
+    this.createExistingRows();
+
+    /**
+     * After display fields, clean the setting
+     */
+    EpsilonFramework.repeater.base.setValue( this, control.params.value, true, true );
+
+    /**
+     * Start sorting
+     */
+    this.initSortable();
+  },
+
+  /**
+   * Create existing rows
+   */
+  createExistingRows: function() {
+    var control = this,
+        newRow;
+
+    if ( this.params.value.length ) {
+      _.each( this.params.value, function( subValue ) {
+        newRow = EpsilonFramework.repeater.base.add( control, subValue );
+        /**
+         * init range sliders, color pickers
+         */
+        EpsilonFramework.rangeSliders.init( newRow.container );
+        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.repeater.base.initTexteditor( newRow.container );
+      } );
+    }
+  },
+
+  /**
+   * Init events
+   */
+  handleEvents: function() {
+    var control = this,
+        limit = false,
+        newRow;
+
+    /**
      * Setup Limit
      *
      * @type {boolean}
@@ -2484,8 +2542,9 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     if ( ! _.isUndefined( this.params.choices.limit ) ) {
       limit = ( 0 >= this.params.choices.limit ) ? false : parseInt( this.params.choices.limit );
     }
+
     /**
-     * Bind events for this control
+     * Bind events for adding and removing
      *
      * 1. Click event on the ADD Row button
      */
@@ -2513,9 +2572,16 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
         jQuery( control.selector + ' .limit' ).removeClass( 'highlight' );
       }
     } );
+  },
 
+  /**
+   * Init the image controls (adding removing)
+   */
+  initImageControls: function() {
+    var control = this,
+        temp;
     /**
-     * 3. Image controls - Upload
+     * Image controls - Upload
      */
     this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-button', function( e ) {
       e.preventDefault();
@@ -2529,7 +2595,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
     } );
 
     /**
-     * 4 Image Controls - Removal
+     * Image Controls - Removal
      */
     this.container.on( 'click keypress', '.epsilon-controller-image-container .image-upload-remove-button', function( e ) {
       e.preventDefault();
@@ -2541,35 +2607,14 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       temp = jQuery( this ).parents( '.epsilon-controller-image-container' );
       EpsilonFramework.repeater.base.handleImageRemoval( control, temp );
     } );
+  },
 
-    /**
-     * Initiate Icon Picker
-     */
-    control.initIconPicker();
+  /**
+   * Initiate sortable functionality
+   */
+  initSortable: function() {
+    var control = this;
 
-    /**
-     * If we have saved rows, we need to display them
-     */
-    if ( settingValue.length ) {
-      _.each( settingValue, function( subValue ) {
-        newRow = EpsilonFramework.repeater.base.add( control, subValue );
-        /**
-         * init range sliders, color pickers
-         */
-        EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.repeater.base.initTexteditor( newRow.container );
-      } );
-    }
-
-    /**
-     * After display fields, clean the setting
-     */
-    EpsilonFramework.repeater.base.setValue( this, settingValue, true, true );
-
-    /**
-     * Add sortable functionality
-     */
     this.repeaterContainer.sortable( {
       handle: '.repeater-row-header',
       axis: 'y',
@@ -2579,7 +2624,6 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
       }
     } );
   },
-
   /**
    * Init icon pickers
    */
