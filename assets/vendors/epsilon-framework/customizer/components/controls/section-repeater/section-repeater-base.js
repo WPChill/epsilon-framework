@@ -136,10 +136,13 @@ EpsilonFramework.sectionRepeater.base = {
      * @type {{}}
      */
     settingValue[ control.currentIndex ] = newSectionSetting;
-    /**
-     * Set it
-     */
-    self.setValue( control, settingValue, true, false );
+
+    if ( ! data ) {
+      /**
+       * Set it
+       */
+      self.setValue( control, settingValue );
+    }
 
     /**
      * Update index
@@ -198,32 +201,10 @@ EpsilonFramework.sectionRepeater.base = {
    *
    * @param instance
    * @param newValue
-   * @param refresh
-   * @param filtering
    */
-  setValue: function( instance, newValue, refresh, filtering ) {
-    // We need to filter the values after the first load to remove data requrired for diplay but that we don't want to save in DB
-    var filteredValue = newValue,
-        filter = [];
-
-    /**
-     * Filtering
-     */
-    if ( filtering ) {
-      jQuery.each( newValue, function( index, value ) {
-        jQuery.each( filter, function( ind, field ) {
-          if ( ! _.isUndefined( value[ field ] ) && ! _.isUndefined( value[ field ].id ) ) {
-            filteredValue[ index ][ field ] = value[ field ].id;
-          }
-        } );
-      } );
-    }
-
-    instance.setting.set( encodeURI( JSON.stringify( filteredValue ) ) );
-
-    if ( refresh ) {
-      instance.settingField.trigger( 'change' );
-    }
+  setValue: function( instance, newValue ) {
+    instance.setting.set( [] );
+    instance.setting.set( newValue );
   },
 
   /**
@@ -232,8 +213,7 @@ EpsilonFramework.sectionRepeater.base = {
    * @param instance
    */
   getValue: function( instance ) {
-    // The setting is saved in JSON
-    return JSON.parse( decodeURI( instance.setting.get() ) );
+    return instance.setting.get();
   },
 
   /**
