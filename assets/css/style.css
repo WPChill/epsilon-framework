@@ -154,6 +154,11 @@
   bottom: 0;
 }
 
+.slider-container .ui-slider:hover,
+.widget-content .ui-slider:hover {
+  cursor: pointer; 
+}
+
 .widget-content label.block {
   display: block;
   margin-bottom: 10px;
