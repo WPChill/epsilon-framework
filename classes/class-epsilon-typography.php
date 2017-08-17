@@ -269,12 +269,27 @@ class Epsilon_Typography {
 			'json',
 		);
 
+		if ( ! isset( $_POST['args'] ) ) {
+			wp_die();
+		}
+
+		if ( ! is_array( $_POST['args'] ) ) {
+			wp_die();
+		}
+
+		if ( ! isset( $_POST['args']['json'] ) ) {
+			wp_die();
+		}
+
 		/**
 		 * Sanitize the $_POST['args']
 		 */
-		foreach ( $_POST['args']['json'] as $k => $v ) {
-			$args['json'][ $k ] = esc_attr( $v );
+		if ( ! empty( $_POST['args']['json'] ) ) {
+			foreach ( $_POST['args']['json'] as $k => $v ) {
+				$args['json'][ $k ] = sanitize_text_field( wp_unslash( $v ) );
+			}
 		}
+
 		$args['selectors'] = esc_attr( $_POST['args']['selectors'] );
 
 		$typography = Epsilon_Typography::get_instance();

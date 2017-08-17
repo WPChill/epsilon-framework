@@ -273,11 +273,21 @@ class Epsilon_Color_Scheme {
 	public function epsilon_generate_color_scheme_css() {
 		$args = array();
 
-		/**
-		 * Sanitize the $_POST['args']
-		 */
-		foreach ( $_POST['args'] as $k => $v ) {
-			$args[ $k ] = sanitize_hex_color( $v );
+		if ( ! isset( $_POST['args'] ) ) {
+			wp_die();
+		}
+
+		if ( ! is_array( $_POST['args'] ) ) {
+			wp_die();
+		}
+
+		if ( ! empty( $_POST['args'] ) ) {
+			/**
+			 * Sanitize the $_POST['args']
+			 */
+			foreach ( $_POST['args'] as $k => $v ) {
+				$args[ $k ] = sanitize_hex_color( $v );
+			}
 		}
 
 		/**
