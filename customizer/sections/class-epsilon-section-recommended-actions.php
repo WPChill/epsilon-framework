@@ -155,6 +155,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 						<span class="current-index" data-total="{{{ data.total_actions }}}">1</span> / {{{ data.total_actions }}}
 					</span>
 				<# } #>
+				<a href="#" class="epsilon-close-recommended-section"><span class="dashicons dashicons-arrow-up-alt2"></span></a>
 			</h3>
 			<div class="recommended-actions_container" id="plugin-filter">
 				<# if( data.actions.length > 0 ){ #>

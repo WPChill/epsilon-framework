@@ -2077,6 +2077,12 @@ EpsilonFramework.recommendedActions = {
      * Dismiss plugins
      */
     this.dismissPlugins( dismissPlugin );
+
+    jQuery( '.epsilon-close-recommended-section' ).on( 'click', function( e ) {
+      e.preventDefault();
+      jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down-alt2' );
+      jQuery( '.recommended-actions_container' ).slideToggle( 200 );
+    } );
   },
 
   /**

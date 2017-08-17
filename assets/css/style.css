@@ -1461,6 +1461,19 @@ body.adding-section .epsilon-add-new-section:before {
 /**
 * Recommended section
  */
+.epsilon-close-recommended-section {
+  text-decoration: none;
+  float: right;
+  color: #a0a5aa;
+}
+.epsilon-close-recommended-section:hover, .epsilon-close-recommended-section:focus {
+  outline: none;
+  text-decoration: none;
+  color: #0073aa;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
 .recommended-actions_container {
   padding: 0 10px;
   margin-bottom: 2em;
