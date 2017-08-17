@@ -116,7 +116,7 @@ class Epsilon_Framework {
 	 */
 	public function enqueue() {
 		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
-		wp_localize_script( 'epsilon-admin', 'WPUrls', array(
+		wp_localize_script( 'epsilon-admin', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -135,7 +135,7 @@ class Epsilon_Framework {
 			'customize-preview',
 		), 2, true );
 
-		wp_localize_script( 'epsilon-previewer', 'WPUrls', array(
+		wp_localize_script( 'epsilon-previewer', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -153,7 +153,7 @@ class Epsilon_Framework {
 			'jquery',
 			'customize-controls',
 		) );
-		wp_localize_script( 'epsilon-object', 'WPUrls', array(
+		wp_localize_script( 'epsilon-object', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),

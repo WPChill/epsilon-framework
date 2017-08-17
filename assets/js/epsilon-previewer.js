@@ -36,7 +36,7 @@ EpsilonPreviewer.colorSchemes = {
     jQuery.ajax( {
       dataType: 'json',
       type: 'POST',
-      url: WPUrls.ajaxurl,
+      url: EpsilonWPUrls.ajaxurl,
       data: data,
       complete: function( json ) {
         var sufix = data.action + data.id,
@@ -106,7 +106,7 @@ EpsilonPreviewer.typography = {
     jQuery.ajax( {
       dataType: 'json',
       type: 'POST',
-      url: WPUrls.ajaxurl,
+      url: EpsilonWPUrls.ajaxurl,
       data: object,
       complete: function( json ) {
         var style = jQuery( '#' + object.args.stylesheet + '-inline-css' ),

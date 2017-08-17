@@ -16,7 +16,7 @@ v1.2.6
 	- Added support for section repeater inline shortcuts
 
 v1.2.5
-	- Epsilon Admin didn't had the wpurls object available
+	- Epsilon Admin didn't had the EpsilonWPUrls object available
 
 v1.2.4
 	- Recommended actions fixes ( JS was not pointing "where it should" )
