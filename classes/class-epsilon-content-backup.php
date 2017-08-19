@@ -221,40 +221,28 @@ class Epsilon_Content_Backup {
 		}
 
 		$control = $wp_customize->get_control( $field['id'] );
-		$content = $control->label . "\n";
+		$content = '';
 
 		switch ( $field['type'] ) {
-			case 'epsilon-repeater':
-				$i = 1;
-				foreach ( $field['content'] as $single_row ) {
-					$content .= "\n";
-					$content .= ( ! empty( $control->row_label ) && ! empty( $control->row_label['value'] ) ) ? $control->row_label['value'] . ' ' . $i . "\n" : 'Row - ' . $i . "\n";
-					foreach ( $single_row as $id => $val ) {
-						if ( empty( $val ) ) {
-							continue;
-						}
-						$content .= $id . ' : ' . $val . "\n";
-					}
-					$i ++;
-				}
-				$content .= "\n";
-				break;
 			case 'epsilon-section-repeater':
 				foreach ( $field['content'] as $single_section ) {
-					$content .= "\n";
-					$content .= $control->repeatable_sections[ $single_section['type'] ]['title'] . "\n";
+					$content .= '<!-- ' . $control->repeatable_sections[ $single_section['type'] ]['title'] . ' -->' . "\n";
 					foreach ( $single_section as $id => $val ) {
-						if ( empty( $val ) || 'type' === $id ) {
+						$args = array(
+							'val'    => $val,
+							'id'     => $id,
+							'fields' => $control->repeatable_sections[ $single_section['type'] ]['fields'],
+						);
+
+						$condition = $this->check_backup_condition( $args );
+
+						if ( ! $condition ) {
 							continue;
 						}
 
-						if ( is_array( $val ) ) {
-							$val = implode( ',', $val );
-						}
-						
-						$content .= $id . ' : ' . $val . "\n";
+						$content .= $this->create_content_value( $args['val'], $args['fields'][ $id ]['type'] );
 					}
-					$content .= '------------------------------------------------------------';
+					$content .= '<!-- /' . $control->repeatable_sections[ $single_section['type'] ]['title'] . ' -->' . "\n";
 				}
 				$content .= "\n";
 				break;
@@ -266,5 +254,90 @@ class Epsilon_Content_Backup {
 		}// End switch().
 
 		return $content;
+	}
+
+	/**
+	 * Checks if we need to generate backup for this item
+	 *
+	 * @param $args Array Array of arguments.
+	 *
+	 * @return bool
+	 */
+	private function check_backup_condition( $args ) {
+		/**
+		 * Empty values don't need to be saved
+		 */
+		if ( empty( $args['val'] ) ) {
+			return false;
+		}
+
+		/**
+		 * Id of the field doesn't need saving
+		 */
+		if ( 'type' === $args['id'] ) {
+			return false;
+		}
+
+		/**
+		 * Design related items should not be saved
+		 */
+		$skip = array(
+			'epsilon-customizer-navigation',
+			'epsilon-icon-picker',
+			'epsilon-color-picker',
+			'select',
+		);
+		if ( in_array( $args['fields'][ $args['id'] ]['type'], $skip ) ) {
+			return false;
+		}
+
+		/**
+		 * If conditions are false, we return true
+		 */
+		return true;
+	}
+
+	/**
+	 * Parse the value and create "readable" content.
+	 *
+	 *
+	 * @param $value array|string Can be both.
+	 * @param $type  string Type of field we are saving content.
+	 *
+	 * @return string
+	 */
+	private function create_content_value( $value, $type ) {
+		global $wp_customize;
+		switch ( $type ) {
+			case 'hidden':
+				$control = $wp_customize->get_control( $value );
+				if ( is_a( $control, 'Epsilon_Control_Repeater' ) ) {
+					$val     = get_theme_mod( $value, array() );
+					$content = '';
+					foreach ( $val as $fields ) {
+						$content .= '<!-- ' . $control->label . ' -->' . "\n";
+						foreach ( $fields as $id => $f_val ) {
+							if ( empty( $f_val ) ) {
+								continue;
+							}
+
+							if ( 'epsilon-color-picker' === $control->fields[ $id ] || 'epsilon-icon-picker' === $control->fields[ $id ]['type'] ) {
+								continue;
+							};
+
+							$content .= $f_val . "\n";
+						}
+						$content .= '<!-- /' . $control->label . '-->' . "\n";
+					}
+
+					return $content;
+				};
+
+				return '';
+				break;
+			default:
+				return $value . "\n";
+				break;
+		}
 	}
 }

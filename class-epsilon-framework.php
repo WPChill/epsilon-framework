@@ -24,7 +24,7 @@ class Epsilon_Framework {
 	/**
 	 * @var bool
 	 */
-	private $backup = false;
+	private $backup = true;
 
 	/**
 	 * Epsilon_Framework constructor.
@@ -44,9 +44,8 @@ class Epsilon_Framework {
 		/**
 		 * Let's initiate a backup instance
 		 */
-		if ( $this->backup ) {
-			$backup = Epsilon_Content_Backup::get_instance();
-		}
+		$backup = Epsilon_Content_Backup::get_instance();
+
 		/**
 		 * Define URI and PATH for the framework
 		 */
