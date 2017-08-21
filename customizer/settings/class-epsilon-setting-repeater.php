@@ -91,7 +91,6 @@ class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 	 */
 	protected function set_root_value( $value ) {
 		if ( ! empty( $this->save_as_meta ) ) {
-			parent::set_root_value( $value );
 			update_post_meta(
 				$this->save_as_meta,
 				$this->id, array(
@@ -114,8 +113,6 @@ class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 	 */
 	protected function get_root_value( $default = null ) {
 		if ( ! empty( $this->save_as_meta ) ) {
-			return parent::get_root_value( $default );
-
 			$arr = get_post_meta( $this->save_as_meta, $this->id, true );
 
 			if ( empty( $arr ) ) {
