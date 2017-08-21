@@ -5,6 +5,13 @@
  */
 class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 	/**
+	 * ID of the post where we`ll save the meta
+	 *
+	 * @var
+	 */
+	public $save_as_meta;
+
+	/**
 	 * Constructor.
 	 *
 	 * Any supplied $args override class property defaults.
@@ -18,6 +25,10 @@ class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
 		parent::__construct( $manager, $id, $args );
+		if ( isset( $args['save_as_meta'] ) ) {
+			$this->save_as_meta = $args['save_as_meta'];
+		}
+
 		// Will onvert the setting from JSON to array. Must be triggered very soon.
 		add_filter( "customize_sanitize_{$this->id}", array( $this, 'sanitize_repeater_setting' ), 10, 1 );
 	}
@@ -68,5 +79,51 @@ class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 		}
 
 		return $sanitized;
+	}
+
+
+	/**
+	 * Overwrite saving
+	 *
+	 * @param mixed $value
+	 *
+	 * @return bool
+	 */
+	protected function set_root_value( $value ) {
+		if ( ! empty( $this->save_as_meta ) ) {
+			update_post_meta(
+				$this->save_as_meta,
+				$this->id, array(
+					$this->id => $value,
+				)
+			);
+
+			return true;
+		} else {
+			return parent::set_root_value( $value );
+		}
+	}
+
+	/**
+	 * Get the root value for a setting, especially for multidimensional ones.
+	 *
+	 * @param mixed $default Value to return if root does not exist.
+	 *
+	 * @return mixed
+	 */
+	protected function get_root_value( $default = null ) {
+		if ( ! empty( $this->save_as_meta ) ) {
+			$arr = get_post_meta( $this->save_as_meta, $this->id, true );
+
+			if ( empty( $arr ) ) {
+				$arr = array(
+					$this->id => array(),
+				);
+			}
+
+			return $arr[ $this->id ];
+		} else {
+			return parent::get_root_value( $default );
+		}
 	}
 }
