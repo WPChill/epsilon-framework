@@ -1,3 +1,6 @@
+v1.3.1
+	- Content backup will create the content based on theme_mods and post_meta
+
 v1.3.0
 	- Rework how repeater fields save options ( they can even go in post_meta )
 
