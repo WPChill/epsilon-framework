@@ -30,6 +30,11 @@ class Epsilon_Content_Backup {
 	 */
 	public $hash;
 	/**
+	 * @since 1.2.0
+	 * @var string
+	 */
+	public $mode = 'theme_mods';
+	/**
 	 * The single instance of the backup class
 	 *
 	 * @var     object
@@ -46,7 +51,7 @@ class Epsilon_Content_Backup {
 		$theme                = wp_get_theme();
 		$this->slug           = $theme->get( 'TextDomain' );
 		$this->slug_sanitized = str_replace( '-', '_', $theme->get( 'TextDomain' ) );
-		$this->hash           = md5( json_encode( get_option( 'theme_mods_' . $this->slug ) ) );
+		$this->hash           = $this->calculate_hash();
 		$this->setting_page   = get_option( $this->slug_sanitized . '_backup_settings', false );
 
 		if ( ! $this->setting_page || null === get_post( $this->setting_page ) ) {
@@ -96,6 +101,16 @@ class Epsilon_Content_Backup {
 	 */
 	public function add_field( $id, $args ) {
 		$this->fields[ $id ] = $args;
+	}
+
+	/**
+	 * Calculates the hash of the settings
+	 */
+	private function calculate_hash() {
+		$hash = array(
+			'theme_mods' => md5( json_encode( get_option( 'theme_mods_' . $this->slug ) ) ),
+			'post_meta'  => md5( json_encode( get_post_meta( $this->setting_page ) ) ),
+		);
 	}
 
 	/**
@@ -172,12 +187,21 @@ class Epsilon_Content_Backup {
 			'status' => true,
 		);
 
-		$last_known_hash = get_transient( $this->slug . '_hash_update' );
-		if ( false === $last_known_hash ) {
-			set_transient( $this->slug . '_hash_update', $this->hash, 5 * MINUTE_IN_SECONDS );
+		$temp = reset( $this->fields );
+
+		/**
+		 * In case we save options as post_meta, we need to use that particular hash
+		 */
+		if ( is_array( $temp ) && isset( $temp['save_as_meta'] ) && $this->setting_page === $temp['save_as_meta'] ) {
+			$this->mode = 'post_meta';
 		}
 
-		if ( $last_known_hash !== $this->hash ) {
+		$last_known_hash = get_transient( $this->slug . '_hash_update' );
+		if ( false === $last_known_hash ) {
+			set_transient( $this->slug . '_hash_update', $this->hash[ $this->mode ], 5 * MINUTE_IN_SECONDS );
+		}
+
+		if ( $last_known_hash !== $this->hash[ $this->mode ] ) {
 			$arr['status'] = false;
 		}
 
@@ -190,17 +214,33 @@ class Epsilon_Content_Backup {
 	 */
 	private function parse_content() {
 		$content    = '';
-		$options    = get_option( 'theme_mods_' . $this->slug );
 		$collection = array();
 
-		foreach ( $this->fields as $id => $field ) {
-			if ( array_key_exists( $id, $options ) ) {
-				$collection[ $id ] = array(
-					'id'      => $id,
-					'content' => get_theme_mod( $id ),
-					'type'    => $field['type'],
-				);
-			}
+		switch ( $this->mode ) {
+			case 'post_meta':
+				$options = get_post_meta( $this->setting_page );
+				foreach ( $this->fields as $id => $field ) {
+					if ( array_key_exists( $id, $options ) ) {
+						$collection[ $id ] = array(
+							'id'      => $id,
+							'content' => get_post_meta( $this->setting_page, $id, true ),
+							'type'    => $field['type'],
+						);
+					}
+				}
+				break;
+			default:
+				$options = get_option( 'theme_mods_' . $this->slug );
+				foreach ( $this->fields as $id => $field ) {
+					if ( array_key_exists( $id, $options ) ) {
+						$collection[ $id ] = array(
+							'id'      => $id,
+							'content' => get_theme_mod( $id ),
+							'type'    => $field['type'],
+						);
+					}
+				}
+				break;
 		}
 
 		foreach ( $collection as $field => $props ) {
@@ -221,40 +261,31 @@ class Epsilon_Content_Backup {
 		}
 
 		$control = $wp_customize->get_control( $field['id'] );
-		$content = $control->label . "\n";
+		$content = '';
+		if ( 'post_meta' === $this->mode ) {
+			$field['content'] = $field['content'][ $field['id'] ];
+		}
 
 		switch ( $field['type'] ) {
-			case 'epsilon-repeater':
-				$i = 1;
-				foreach ( $field['content'] as $single_row ) {
-					$content .= "\n";
-					$content .= ( ! empty( $control->row_label ) && ! empty( $control->row_label['value'] ) ) ? $control->row_label['value'] . ' ' . $i . "\n" : 'Row - ' . $i . "\n";
-					foreach ( $single_row as $id => $val ) {
-						if ( empty( $val ) ) {
-							continue;
-						}
-						$content .= $id . ' : ' . $val . "\n";
-					}
-					$i ++;
-				}
-				$content .= "\n";
-				break;
 			case 'epsilon-section-repeater':
 				foreach ( $field['content'] as $single_section ) {
-					$content .= "\n";
-					$content .= $control->repeatable_sections[ $single_section['type'] ]['title'] . "\n";
+					$content .= '<!-- ' . $control->repeatable_sections[ $single_section['type'] ]['title'] . ' -->' . "\n";
 					foreach ( $single_section as $id => $val ) {
-						if ( empty( $val ) || 'type' === $id ) {
+						$args = array(
+							'val'    => $val,
+							'id'     => $id,
+							'fields' => $control->repeatable_sections[ $single_section['type'] ]['fields'],
+						);
+
+						$condition = $this->check_backup_condition( $args );
+
+						if ( ! $condition ) {
 							continue;
 						}
 
-						if ( is_array( $val ) ) {
-							$val = implode( ',', $val );
-						}
-						
-						$content .= $id . ' : ' . $val . "\n";
+						$content .= $this->create_content_value( $args['val'], $args['fields'][ $id ]['type'] );
 					}
-					$content .= '------------------------------------------------------------';
+					$content .= '<!-- /' . $control->repeatable_sections[ $single_section['type'] ]['title'] . ' -->' . "\n";
 				}
 				$content .= "\n";
 				break;
@@ -266,5 +297,111 @@ class Epsilon_Content_Backup {
 		}// End switch().
 
 		return $content;
+	}
+
+	/**
+	 * Checks if we need to generate backup for this item
+	 *
+	 * @param $args Array Array of arguments.
+	 *
+	 * @return bool
+	 */
+	private function check_backup_condition( $args ) {
+		/**
+		 * Empty values don't need to be saved
+		 */
+		if ( empty( $args['val'] ) ) {
+			return false;
+		}
+
+		/**
+		 * Id of the field doesn't need saving
+		 */
+		if ( 'type' === $args['id'] ) {
+			return false;
+		}
+
+		/**
+		 * Design related items should not be saved
+		 */
+		$skip = array(
+			'epsilon-customizer-navigation',
+			'epsilon-icon-picker',
+			'epsilon-color-picker',
+			'select',
+		);
+		if ( in_array( $args['fields'][ $args['id'] ]['type'], $skip ) ) {
+			return false;
+		}
+
+		/**
+		 * If conditions are false, we return true
+		 */
+		return true;
+	}
+
+	/**
+	 * Parse the value and create "readable" content.
+	 *
+	 *
+	 * @param $value array|string Can be both.
+	 * @param $type  string Type of field we are saving content.
+	 *
+	 * @return string
+	 */
+	private function create_content_value( $value, $type ) {
+		global $wp_customize;
+		switch ( $type ) {
+			case 'epsilon-image':
+				return '<img src="' . $value . '" />' . "\n";
+				break;
+			case 'hidden':
+				$control = $wp_customize->get_control( $value );
+				if ( is_a( $control, 'Epsilon_Control_Repeater' ) ) {
+					switch ( $this->mode ) {
+						case 'post_meta':
+							$val = get_post_meta( $this->setting_page, $value, true );
+							if ( empty( $val ) ) {
+								return $val;
+							}
+							if ( ! isset( $val[ $value ] ) ) {
+								return $val;
+							}
+							$val = $val[ $value ];
+							break;
+						default:
+							$val = get_theme_mod( $value, array() );
+							break;
+					}
+					$content = '';
+					foreach ( $val as $fields ) {
+						$content .= '<!-- ' . $control->label . ' -->' . "\n";
+						foreach ( $fields as $id => $f_val ) {
+							if ( empty( $f_val ) ) {
+								continue;
+							}
+
+							if ( 'epsilon-color-picker' === $control->fields[ $id ]['type'] || 'epsilon-icon-picker' === $control->fields[ $id ]['type'] ) {
+								continue;
+							};
+
+							if ( 'epsilon-image' === $control->fields[ $id ]['type'] ) {
+								$content .= '<img src="' . $f_val . '" />' . "\n";
+							} else {
+								$content .= $f_val . "\n";
+							}
+						}
+						$content .= '<!-- /' . $control->label . '-->' . "\n";
+					}
+
+					return $content;
+				};// End if().
+
+				return '';
+				break;
+			default:
+				return $value . "\n";
+				break;
+		}// End switch().
 	}
 }
