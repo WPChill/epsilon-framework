@@ -10,18 +10,40 @@ require_once dirname( __FILE__ ) . '/class-epsilon-autoloader.php';
  */
 class Epsilon_Framework {
 	/**
+	 * By default, it loads all controls
+	 *
 	 * @var array|mixed
 	 */
-	private $controls = array();
+	private $controls = array(
+		'toggle',
+		'typography',
+		'slider',
+		'repeater',
+		'section-repeater',
+		'image',
+		'text-editor',
+		'icon-picker',
+		'customizer-navigation',
+		'color-scheme',
+	);
 	/**
+	 * By default, it loads all sections
+	 *
 	 * @var array|mixed
 	 */
-	private $sections = array();
+	private $sections = array(
+		'recommended-actions',
+		'pro',
+	);
 	/**
+	 * Default path is in /inc/libraries
+	 *
 	 * @var mixed|string
 	 */
 	private $path = '/inc/libraries';
 	/**
+	 * At the current moment, backup is a must
+	 *
 	 * @var bool
 	 */
 	private $backup = true;
@@ -31,7 +53,7 @@ class Epsilon_Framework {
 	 *
 	 * @param $args array
 	 */
-	public function __construct( $args ) {
+	public function __construct( $args = array() ) {
 		foreach ( $args as $k => $v ) {
 
 			if ( ! in_array( $k, array( 'controls', 'sections', 'path', 'backup' ) ) ) {
