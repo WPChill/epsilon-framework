@@ -108,6 +108,11 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
 			}
 		}
+
+		/**
+		 * Expose Manager to the Epsilon Customizer class.
+		 */
+		Epsilon_Customizer::get_instance( $wp_customize );
 	}
 
 	/**
