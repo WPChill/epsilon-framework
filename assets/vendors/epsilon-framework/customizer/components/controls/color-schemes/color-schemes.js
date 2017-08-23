@@ -88,7 +88,7 @@ EpsilonFramework.colorSchemes = {
     /**
      * Advanced toggler
      */
-    jQuery( '.epsilon-color-schemes-advanced' ).on( 'click', function() {
+    jQuery( '.epsilon-control-dropdown' ).on( 'click', function() {
       jQuery( this ).toggleClass( 'active' );
       jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down dashicons-arrow-up' );
       context.slideToggle();
