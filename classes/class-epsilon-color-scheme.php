@@ -261,29 +261,7 @@ class Epsilon_Color_Scheme {
 				WP_Filesystem();
 			}
 
-			/**
-			 * https://github.com/MachoThemes/epsilon-framework/issues/12
-			 */
-			$contents = $wp_filesystem->get_contents( $path );
-			if ( empty( $contents ) ) {
-				$contents_check = file_get_contents( $path );
-
-				/**
-				 * Verify the contents of the contents, this should always be a string ( it's CSS file )
-				 */
-				if ( is_string( $contents_check ) ) {
-					return $contents_check;
-				}
-
-				return false;
-			}
-
-			/**
-			 * Verify the contents of the contents, this should always be a string ( it's CSS file )
-			 */
-			if ( is_string( $contents ) ) {
-				return $contents;
-			}
+			return $wp_filesystem->get_contents( $path );
 		}
 
 		return false;
@@ -295,21 +273,11 @@ class Epsilon_Color_Scheme {
 	public function epsilon_generate_color_scheme_css() {
 		$args = array();
 
-		if ( ! isset( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! is_array( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! empty( $_POST['args'] ) ) {
-			/**
-			 * Sanitize the $_POST['args']
-			 */
-			foreach ( $_POST['args'] as $k => $v ) {
-				$args[ $k ] = sanitize_hex_color( $v );
-			}
+		/**
+		 * Sanitize the $_POST['args']
+		 */
+		foreach ( $_POST['args'] as $k => $v ) {
+			$args[ $k ] = sanitize_hex_color( $v );
 		}
 
 		/**

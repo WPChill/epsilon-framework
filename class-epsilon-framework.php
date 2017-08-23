@@ -10,50 +10,28 @@ require_once dirname( __FILE__ ) . '/class-epsilon-autoloader.php';
  */
 class Epsilon_Framework {
 	/**
-	 * By default, it loads all controls
-	 *
 	 * @var array|mixed
 	 */
-	private $controls = array(
-		'toggle',
-		'typography',
-		'slider',
-		'repeater',
-		'section-repeater',
-		'image',
-		'text-editor',
-		'icon-picker',
-		'customizer-navigation',
-		'color-scheme',
-	);
+	private $controls = array();
 	/**
-	 * By default, it loads all sections
-	 *
 	 * @var array|mixed
 	 */
-	private $sections = array(
-		'recommended-actions',
-		'pro',
-	);
+	private $sections = array();
 	/**
-	 * Default path is in /inc/libraries
-	 *
 	 * @var mixed|string
 	 */
 	private $path = '/inc/libraries';
 	/**
-	 * At the current moment, backup is a must
-	 *
 	 * @var bool
 	 */
-	private $backup = true;
+	private $backup = false;
 
 	/**
 	 * Epsilon_Framework constructor.
 	 *
 	 * @param $args array
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args ) {
 		foreach ( $args as $k => $v ) {
 
 			if ( ! in_array( $k, array( 'controls', 'sections', 'path', 'backup' ) ) ) {
@@ -66,8 +44,9 @@ class Epsilon_Framework {
 		/**
 		 * Let's initiate a backup instance
 		 */
-		$backup = Epsilon_Content_Backup::get_instance();
-
+		if ( $this->backup ) {
+			$backup = Epsilon_Content_Backup::get_instance();
+		}
 		/**
 		 * Define URI and PATH for the framework
 		 */
@@ -130,11 +109,6 @@ class Epsilon_Framework {
 				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
 			}
 		}
-
-		/**
-		 * Expose Manager to the Epsilon Customizer class.
-		 */
-		Epsilon_Customizer::get_instance( $wp_customize );
 	}
 
 	/**
@@ -142,7 +116,7 @@ class Epsilon_Framework {
 	 */
 	public function enqueue() {
 		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
-		wp_localize_script( 'epsilon-admin', 'EpsilonWPUrls', array(
+		wp_localize_script( 'epsilon-admin', 'WPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -161,7 +135,7 @@ class Epsilon_Framework {
 			'customize-preview',
 		), 2, true );
 
-		wp_localize_script( 'epsilon-previewer', 'EpsilonWPUrls', array(
+		wp_localize_script( 'epsilon-previewer', 'WPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
@@ -179,7 +153,7 @@ class Epsilon_Framework {
 			'jquery',
 			'customize-controls',
 		) );
-		wp_localize_script( 'epsilon-object', 'EpsilonWPUrls', array(
+		wp_localize_script( 'epsilon-object', 'WPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),

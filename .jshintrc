@@ -18,7 +18,7 @@
     "jQuery": false,
     "wp": false,
     "tycheVariables": false,
-    "EpsilonWPUrls": false,
+    "WPUrls": false,
     "console": false,
     "JSON": false,
     "_": false,

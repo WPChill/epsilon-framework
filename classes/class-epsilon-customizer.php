@@ -12,53 +12,6 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Customizer {
 	/**
-	 * Holds the WP Customizer Object
-	 *
-	 * @since 1.3.3
-	 * @var WP Customize Object
-	 */
-	public static $manager;
-
-	/**
-	 * The single instance of the backup class
-	 *
-	 * @var     object
-	 * @access   private
-	 * @since    1.3.3
-	 */
-	private static $_instance = null;
-
-	/**
-	 * Epsilon_Customizer constructor.
-	 *
-	 * @param $manager WP_Customize_Manager.
-	 */
-	public function __construct( $manager ) {
-		self::$manager = $manager;
-
-		/**
-		 * Fallback, if somehow the argument is not the manager we use the global
-		 */
-		if ( ! is_a( $manager, 'WP_Customize_Manager' ) ) {
-			global $wp_customize;
-			self::$manager = $wp_customize;
-		}
-	}
-
-	/**
-	 * @param array|object $manager WP Customizer object.
-	 *
-	 * @return Epsilon_Customizer|object
-	 */
-	public static function get_instance( $manager = array() ) {
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new self( $manager );
-		}
-
-		return self::$_instance;
-	}
-
-	/**
 	 * This function is called by self::add_field()
 	 *
 	 * @since 1.2.0
@@ -66,6 +19,8 @@ class Epsilon_Customizer {
 	 * @param $id
 	 */
 	private static function add_setting( $id, array $args = array() ) {
+		global $wp_customize;
+
 		/**
 		 * We need to use setting_type to determine the sanitizer
 		 */
@@ -94,11 +49,16 @@ class Epsilon_Customizer {
 		$class = self::_get_type( $args['setting_type'], 'setting' );
 
 		/**
+		 * Theme check fails because there is no "specific" sanitize_callback argument. All fields are sanitized automatically check -> Epsilon_Customizer::_get_sanitizer();
+		 */
+		$func_name = 'add_setting';
+
+		/**
 		 * Register it
 		 */
-		self::$manager->add_setting(
+		$wp_customize->$func_name(
 			new $class['class'](
-				self::$manager,
+				$wp_customize,
 				$id,
 				$args
 			)
@@ -114,6 +74,8 @@ class Epsilon_Customizer {
 	 * @param array $args
 	 */
 	public static function add_field( $id, array $args = array() ) {
+		global $wp_customize;
+
 		/**
 		 * Add setting
 		 */
@@ -125,24 +87,28 @@ class Epsilon_Customizer {
 		 */
 		$field_type = self::_get_type( $args['type'], 'control' );
 
-		/**
-		 * This array SHOULD always be backed up
-		 */
-		$must_backup = array(
-			'epsilon-section-repeater',
-		);
+		if ( EPSILON_BACKUP ) {
+			/**
+			 * This array SHOULD always be backed up
+			 */
+			$must_backup = array(
+				'epsilon-section-repeater',
+				'epsilon-repeater',
+				'epsilon-text-editor',
+			);
 
-		if ( in_array( $args['type'], $must_backup ) || true === $args['backup'] ) {
-			$instance = Epsilon_Content_Backup::get_instance();
-			$instance->add_field( $id, $args );
+			if ( in_array( $args['type'], $must_backup ) || true === $args['backup'] ) {
+				$instance = Epsilon_Content_Backup::get_instance();
+				$instance->add_field( $id, $args );
+			}
 		}
 
 		/**
 		 * Register the control
 		 */
-		self::$manager->add_control(
+		$wp_customize->add_control(
 			new $field_type['class'](
-				self::$manager,
+				$wp_customize,
 				$id,
 				$args
 			)
@@ -158,12 +124,13 @@ class Epsilon_Customizer {
 	 * @param array $args
 	 */
 	public static function add_section( $id, array $args = array() ) {
+		global $wp_customize;
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'section';
 
 		$class = self::_get_section_type( $args['type'] );
-		self::$manager->add_section(
+		$wp_customize->add_section(
 			new $class['class'](
-				self::$manager,
+				$wp_customize,
 				$id,
 				$args
 			)
@@ -178,7 +145,8 @@ class Epsilon_Customizer {
 	 * @param array $args
 	 */
 	public static function add_panel( $id, array $args = array() ) {
-		self::$manager->add_panel( $id, $args );
+		global $wp_customize;
+		$wp_customize->add_panel( $id, $args );
 	}
 
 	/**

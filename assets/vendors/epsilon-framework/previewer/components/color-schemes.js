@@ -30,7 +30,7 @@ EpsilonPreviewer.colorSchemes = {
     jQuery.ajax( {
       dataType: 'json',
       type: 'POST',
-      url: EpsilonWPUrls.ajaxurl,
+      url: WPUrls.ajaxurl,
       data: data,
       complete: function( json ) {
         var sufix = data.action + data.id,

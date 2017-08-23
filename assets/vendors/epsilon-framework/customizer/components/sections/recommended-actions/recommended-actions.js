@@ -22,12 +22,6 @@ EpsilonFramework.recommendedActions = {
      * Dismiss plugins
      */
     this.dismissPlugins( dismissPlugin );
-
-    jQuery( '.epsilon-close-recommended-section' ).on( 'click', function( e ) {
-      e.preventDefault();
-      jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down-alt2' );
-      jQuery( '.recommended-actions_container' ).slideToggle( 200 );
-    } );
   },
 
   /**
@@ -87,7 +81,7 @@ EpsilonFramework.recommendedActions = {
            */
           args = {
             'action': [ 'Epsilon_Notify_System', 'dismiss_required_action' ],
-            'nonce': EpsilonWPUrls.ajax_nonce,
+            'nonce': WPUrls.ajax_nonce,
             'args': {
               'id': jQuery( this ).attr( 'id' ),
               'option': jQuery( this ).attr( 'data-option' )
@@ -204,7 +198,7 @@ EpsilonFramework.recommendedActions = {
            */
           args = {
             'action': [ 'Epsilon_Notify_System', 'dismiss_required_action' ],
-            'nonce': EpsilonWPUrls.ajax_nonce,
+            'nonce': WPUrls.ajax_nonce,
             'args': {
               'id': jQuery( this ).attr( 'id' ),
               'option': jQuery( this ).attr( 'data-option' )

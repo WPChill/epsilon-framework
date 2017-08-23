@@ -29,7 +29,7 @@ EpsilonPreviewer.typography = {
     jQuery.ajax( {
       dataType: 'json',
       type: 'POST',
-      url: EpsilonWPUrls.ajaxurl,
+      url: WPUrls.ajaxurl,
       data: object,
       complete: function( json ) {
         var style = jQuery( '#' + object.args.stylesheet + '-inline-css' ),

@@ -147,28 +147,10 @@ class Epsilon_Typography {
 
 		$path   = EPSILON_PATH . '/assets/data/gfonts.json';
 		$gfonts = $wp_filesystem->get_contents( $path );
-
-		/**
-		 * https://github.com/MachoThemes/epsilon-framework/issues/12
-		 */
-		if ( empty( $gfonts ) ) {
-			$gfonts_bkup = file_get_contents( $path );
-			if ( ! empty( $gfonts_bkup ) ) {
-				$gfonts = json_decode( $gfonts_bkup );
-			}
-		} else {
-			$gfonts = json_decode( $gfonts );
-		}
-
-		/**
-		 * If it's not a valid json ( json_decode returns null if invalid ), we terminate here.
-		 */
-		if ( null === $gfonts ) {
-			return false;
-		}
+		$gfonts = json_decode( $gfonts );
 
 		if ( empty( $font ) ) {
-			return $gfonts;
+			return json_decode( $gfonts );
 		}
 
 		return $gfonts->$font;
@@ -287,27 +269,12 @@ class Epsilon_Typography {
 			'json',
 		);
 
-		if ( ! isset( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! is_array( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! isset( $_POST['args']['json'] ) ) {
-			wp_die();
-		}
-
 		/**
 		 * Sanitize the $_POST['args']
 		 */
-		if ( ! empty( $_POST['args']['json'] ) ) {
-			foreach ( $_POST['args']['json'] as $k => $v ) {
-				$args['json'][ $k ] = sanitize_text_field( wp_unslash( $v ) );
-			}
+		foreach ( $_POST['args']['json'] as $k => $v ) {
+			$args['json'][ $k ] = esc_attr( $v );
 		}
-
 		$args['selectors'] = esc_attr( $_POST['args']['selectors'] );
 
 		$typography = Epsilon_Typography::get_instance();
