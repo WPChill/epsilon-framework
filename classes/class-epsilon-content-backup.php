@@ -166,9 +166,9 @@ class Epsilon_Content_Backup {
 
 		$check = $this->check_hash();
 
-//		if ( $check['status'] ) {
-//			return;
-//		};
+		if ( $check['status'] ) {
+			return;
+		};
 
 		$settings = array(
 			'ID'           => $this->setting_page,
@@ -361,6 +361,12 @@ class Epsilon_Content_Backup {
 					switch ( $this->mode ) {
 						case 'post_meta':
 							$val = get_post_meta( $this->setting_page, $value, true );
+							if ( empty( $val ) ) {
+								return $val;
+							}
+							if ( ! isset( $val[ $value ] ) ) {
+								return $val;
+							}
 							$val = $val[ $value ];
 							break;
 						default:

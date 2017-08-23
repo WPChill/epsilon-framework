@@ -1,3 +1,6 @@
+v1.3.2
+	- Fixed PHP Warnings in epsilon content backup
+
 v1.3.1
 	- Content backup will create the content based on theme_mods and post_meta
 
