@@ -1,3 +1,8 @@
+v1.3.3
+	- Epsilon_Customizer will try to add objects through the manager passed by customize_register hook
+	- WP Filesystem calls sometime failed, we try to get contents with file_get_contents as well
+	- Provide defaults for controls/sections
+
 v1.3.2
 	- Fixed PHP Warnings in epsilon content backup
 
