@@ -39,10 +39,12 @@
     width: 160px;
     height: 40px;
     line-height: 23px;
-    border: none;
+    border: 1px solid #DADCDF;
+	/*
     -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
     -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
     box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
+	*/
   }
 
   .selectize-dropdown {

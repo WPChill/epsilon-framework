@@ -14,7 +14,7 @@ v1.3.0
 
 v1.2.9
 	- Reworked parts of repeater fields
-	
+
 v1.2.8
 	- Select multiple now shows selected items
 
