@@ -48,65 +48,6 @@
     label {
       display: block;
     }
-    .epsilon-button-group {
-      -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .1);
-      -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .1);
-      box-shadow: 0 0 4px rgba(0, 0, 0, .1);
-      background: #fefefe;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      border-radius: 3px;
-      display: table;
-      table-layout: fixed;
-      vertical-align: middle;
-      width: 81%;
-      float: left;
-      margin-right: 3px;
-      a {
-        &.active {
-          -webkit-box-shadow: inset 0 2px 5px rgba(0, 0, 0, .08);
-          -moz-box-shadow: inset 0 2px 5px rgba(0, 0, 0, .08);
-          box-shadow: inset 0 2px 5px rgba(0, 0, 0, .08);
-          &:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background-color: #57a7c9;
-          }
-        }
-
-        &:first-of-type {
-          -webkit-border-top-left-radius: 3px;
-          -moz-border-top-left-radius: 3px;
-          border-top-left-radius: 3px;
-          -webkit-border-bottom-left-radius: 3px;
-          -moz-border-bottom-left-radius: 3px;
-          border-bottom-left-radius: 3px;
-        }
-        &:last-of-type {
-          -webkit-border-top-right-radius: 3px;
-          -moz-border-top-right-radius: 3px;
-          border-top-right-radius: 3px;
-          -webkit-border-bottom-right-radius: 3px;
-          -moz-border-bottom-right-radius: 3px;
-          border-bottom-right-radius: 3px;
-        }
-
-        background: #fefefe;
-        padding: 9px 5px;
-        display: table-cell;
-        position: relative;
-        width: 100%;
-        text-align: center;
-        img {
-          vertical-align: middle;
-        }
-
-      }
-    }
   }
 
   .epsilon-layouts-container-advanced {

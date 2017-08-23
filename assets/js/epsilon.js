@@ -380,7 +380,7 @@ EpsilonFramework.layouts = {
      * Variables
      */
     this.context = context;
-    this.layoutButtons = this.context.find( '.epsilon-button-group > a' );
+    this.layoutButtons = this.context.find( '.epsilon-control-group > a' );
     this.resizeButtons = this.context.find( '.epsilon-layouts-setup > .epsilon-column > a' );
     this.maxColumns = this.layoutButtons.length;
     this.minSpan = parseFloat( this.context.attr( 'data-min-span' ) );
@@ -617,7 +617,7 @@ EpsilonFramework.layouts = {
     /**
      * On clicking the advanced options toggler,
      */
-    instance.context.on( 'click', '.epsilon-layouts-advanced-toggler', function( e ) {
+    instance.context.on( 'click', '.epsilon-control-advanced', function( e ) {
       e.preventDefault();
       jQuery( this ).toggleClass( 'active' );
       jQuery( '#' + jQuery( this ).attr( 'data-unique-id' ) ).slideToggle().addClass( 'active' );

@@ -63,14 +63,15 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	 * @access public
 	 */
 	public function json() {
-		$json            = parent::json();
-		$json['layouts'] = $this->get_layouts();
-		$json['id']      = $this->id;
-		$json['link']    = $this->get_link();
-		$json['value']   = $this->value();
-		$json['default'] = $this->default;
-		$json['columns'] = $this->get_columns();
-		$json['minSpan'] = null === $this->min_span ? 2 : (int) $this->min_span;
+		$json              = parent::json();
+		$json['layouts']   = $this->get_layouts();
+		$json['id']        = $this->id;
+		$json['link']      = $this->get_link();
+		$json['value']     = $this->value();
+		$json['default']   = $this->default;
+		$json['columns']   = $this->get_columns();
+		$json['minSpan']   = null === $this->min_span ? 2 : (int) $this->min_span;
+		$json['intString'] = $this->match_int_to_string( count( $json['layouts'] ) );
 
 		$this->json['inputAttrs'] = '';
 		foreach ( $this->input_attrs as $attr => $value ) {
@@ -120,6 +121,24 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	}
 
 	/**
+	 * Matches an int to a string
+	 *
+	 * @since 1.3.4
+	 */
+	public function match_int_to_string( $int = 1 ) {
+		$arr = array(
+			1 => 'one',
+			2 => 'two',
+			3 => 'three',
+			4 => 'four',
+			5 => 'five',
+			6 => 'six',
+		);
+
+		return $arr[ $int ];
+	}
+
+	/**
 	 * As it should be
 	 *
 	 * @since 1.2.0
@@ -151,19 +170,22 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 						<# } #>
 					</span>
 				</label>
-				<div class="epsilon-button-group">
-					<# if( data.layouts.length > 0 ){ #>
-						<# for (layout in data.layouts) { #>
-							<a href="#" data-button-value="{{ data.layouts[layout].value }}" <# if( data.columns.columnsCount === data.layouts[layout].value) { #> class="active" <# } #>>
-								<img src="{{ data.layouts[layout].label }}" />
-							</a>
-						<# } #>
-					<# } #>
-				</div>
 
-				<a href="#" class="epsilon-layouts-advanced-toggler" data-unique-id="{{{ data.id }}}">
-					<span class="dashicons dashicons-admin-generic"></span>
-				</a>
+				<div class="epsilon-control-set-advanced">
+					<div class="epsilon-control-group epsilon-group-{{ data.intString }}">
+						<# if( data.layouts.length > 0 ){ #>
+							<# for (layout in data.layouts) { #>
+								<a href="#" data-button-value="{{ data.layouts[layout].value }}" <# if( data.columns.columnsCount === data.layouts[layout].value) { #> class="active" <# } #>>
+									<img src="{{ data.layouts[layout].label }}" />
+								</a>
+							<# } #>
+						<# } #>
+					</div>
+
+					<div class="epsilon-control-advanced" data-unique-id="{{{ data.id }}}">
+						<i class="dashicons dashicons-admin-generic"/>
+					</div>
+				</div>
 			</div>
 
 			<div class="epsilon-layouts-container-advanced" id="{{{ data.id }}}">
