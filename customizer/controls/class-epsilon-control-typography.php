@@ -193,7 +193,19 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$path   = EPSILON_PATH . '/assets/data/gfonts.json';
 		$gfonts = $wp_filesystem->get_contents( $path );
 
-		return json_decode( $gfonts );
+		/**
+		 * https://github.com/MachoThemes/epsilon-framework/issues/12
+		 */
+		if ( empty( $gfonts ) ) {
+			$gfonts_bkup = file_get_contents( $path );
+			if ( ! empty( $gfonts_bkup ) ) {
+				$gfonts = json_decode( $gfonts_bkup );
+			}
+		} else {
+			$gfonts = json_decode( $gfonts );
+		}
+
+		return $gfonts;
 	}
 
 	/**
