@@ -121,7 +121,7 @@ class Epsilon_Repeater_Templates {
 							<label>
 								<span class="customize-control-title">
 									<# if( field.label ){ #>
-										<span class="customize-control-title">{{ field.label }}</span>
+										{{ field.label }}
 									<# } #>
 
 									<# if( field.description ){ #>
