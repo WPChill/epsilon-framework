@@ -178,7 +178,16 @@ class Epsilon_Customizer {
 	 * @param array $args
 	 */
 	public static function add_panel( $id, array $args = array() ) {
-		self::$manager->add_panel( $id, $args );
+		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'section';
+
+		$class = self::_get_panel_type( $args['type'] );
+		self::$manager->add_panel(
+			new $class['class'](
+				self::$manager,
+				$id,
+				$args
+			)
+		);
 	}
 
 	/**
@@ -219,6 +228,35 @@ class Epsilon_Customizer {
 		 */
 		if ( ! class_exists( $class ) ) {
 			$class = 'WP_Customize_Section';
+		}
+
+		return array(
+			'class' => $class,
+		);
+	}
+
+	/**
+	 * Get the class name of the panel type
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param string $type
+	 */
+	public static function _get_panel_type( $type = '' ) {
+		$class = '';
+		$type  = explode( '-', $type );
+		/**
+		 * Let's make sure it's an Epsilon Class
+		 */
+		if ( 1 < count( $type ) && 'epsilon' === $type[0] ) {
+			$class = implode( '_', $type );
+		}
+
+		/**
+		 * Provide a default
+		 */
+		if ( ! class_exists( $class ) ) {
+			$class = 'WP_Customize_Panel';
 		}
 
 		return array(

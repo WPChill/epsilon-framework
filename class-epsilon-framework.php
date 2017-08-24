@@ -131,6 +131,8 @@ class Epsilon_Framework {
 			}
 		}
 
+		require_once $path . '/customizer/panels/class-epsilon-panel-regular.php';
+
 		/**
 		 * Expose Manager to the Epsilon Customizer class.
 		 */
