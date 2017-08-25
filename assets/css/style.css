@@ -1746,3 +1746,18 @@ body.adding-section .epsilon-add-new-section:before {
 .epsilon-control-group.epsilon-group-two a {
   width: 50%;
 }
+
+.hidden-section-panel {
+  opacity: .5;
+  position: relative;
+}
+.hidden-section-panel:before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1231;
+  display: block;
+  content: '';
+}
