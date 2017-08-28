@@ -204,6 +204,38 @@ class Epsilon_Repeater_Templates {
 							<div class="epsilon-customizer-navigation">
 								{{{ field.label }}} <a href="#" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
 							</div>
+						<# } else if ( 'epsilon-upsell' === field.type ) { #>
+							<div class="epsilon-upsell-label">
+								{{{ field.label }}}
+							</div>
+							<div class="epsilon-upsell-container">
+								<# if ( field.options ) { #>
+									<ul class="epsilon-upsell-options">
+										<# _.each(field.options, function( option, index) { #>
+											<li><i class="dashicons dashicons-editor-help">
+													<span class="mte-tooltip">{{ option.help }}</span>
+												</i>
+												{{ option.option }}
+											</li>
+											<# }) #>
+									</ul>
+								<# } #>
+
+								<div class="epsilon-button-group">
+									<# if ( field.button_text && field.button_url ) { #>
+										<a href="{{ field.button_url }}" class="button" target="_blank">{{
+											field.button_text }}</a>
+									<# } #>
+
+									<# if ( field.separator ) { #>
+										<span class="button-separator">{{ field.separator }}</span>
+									<# } #>
+
+									<# if ( field.second_button_text && field.second_button_url ) { #>
+										<a href="{{ field.second_button_url }}" class="button button-primary" target="_blank"> {{field.second_button_text }}</a>
+									<# } #>
+								</div>
+							</div>
 						<# } #>
 						</div>
 					<# } ); #>

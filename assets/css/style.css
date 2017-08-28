@@ -1041,6 +1041,10 @@
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-remove:hover {
   color: #f00;
 }
+.customize-control-epsilon-section-repeater .repeater-sections .epsilon-upsell-container {
+  display: block;
+  padding: 15px;
+}
 
 .epsilon-add-section-buttons {
   padding: 10px;
