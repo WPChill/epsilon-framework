@@ -74,7 +74,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	 */
 	public function content_template() {
 		//@formatter:off ?>
-		<label <# if( ! data.lite ) { #>class="lite"<# } #>>
+		<label <# if( data.lite ) { #>class="lite"<# } #>>
 			<input class="epsilon-color-picker" data-attr-mode={{ data.mode }} type="text" maxlength="7" <# if( data.default ){ #>placeholder="{{ data.default }}"<# } #> <# if(data.value){ #> value="{{ data.value }}" <# } #> {{{ data.link }}} />
 			<span class="customize-control-title epsilon-color-picker-title">
 				{{{ data.label }}}
