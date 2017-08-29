@@ -53,7 +53,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     /**
      * Start sorting
      */
-    this.initSortable();
+    if ( this.params.sortable ) {
+      this.initSortable();
+    }
 
     /**
      * Event that fires from the main page

@@ -35,6 +35,13 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	public $default = array();
 
 	/**
+	 * Fixed layout
+	 *
+	 * @since 1.3.4
+	 * @var bool
+	 */
+	public $fixed = false;
+	/**
 	 * Minimum span ( no column will go lower than this )
 	 *
 	 * @since 1.2.0
@@ -72,6 +79,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 		$json['columns']   = $this->get_columns();
 		$json['minSpan']   = null === $this->min_span ? 2 : (int) $this->min_span;
 		$json['intString'] = $this->match_int_to_string( count( $json['layouts'] ) );
+		$json['fixed']     = $this->fixed;
 
 		$this->json['inputAttrs'] = '';
 		foreach ( $this->input_attrs as $attr => $value ) {
@@ -171,7 +179,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 					</span>
 				</label>
 
-				<div class="epsilon-control-set-advanced">
+				<div class="epsilon-control-set-<# if( ! data.fixed ) { #>advanced<# } #>">
 					<div class="epsilon-control-group epsilon-group-{{ data.intString }}">
 						<# if( data.layouts.length > 0 ){ #>
 							<# for (layout in data.layouts) { #>
@@ -181,10 +189,11 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 							<# } #>
 						<# } #>
 					</div>
-
+				<# if ( ! data.fixed ) { #>
 					<div class="epsilon-control-advanced" data-unique-id="{{{ data.id }}}">
 						<i class="dashicons dashicons-admin-generic"/>
 					</div>
+				<# } #>
 				</div>
 			</div>
 

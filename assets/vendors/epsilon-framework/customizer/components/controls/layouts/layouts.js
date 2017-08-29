@@ -249,10 +249,19 @@ EpsilonFramework.layouts = {
         self = this;
 
     jQuery( instance.context ).on( 'epsilon_column_count_changed', function( e ) {
-      instance.context.find( '.epsilon-column' ).
-          removeClass( self.colClasses ).
-          addClass( 'col' + ( 12 / instance.activeColumns ) ).
-          attr( 'data-columns', ( 12 / instance.activeColumns ) );
+      switch ( instance.activeColumns ) {
+        case 2:
+          instance.context.find( '.epsilon-column' ).removeClass( self.colClasses );
+          instance.context.find( '.epsilon-column' ).first().addClass( 'col8' ).attr( 'data-columns', ( 8 ) );
+          instance.context.find( '.epsilon-column' ).last().addClass( 'col4' ).attr( 'data-columns', ( 4 ) );
+          break;
+        default:
+          instance.context.find( '.epsilon-column' ).
+              removeClass( self.colClasses ).
+              addClass( 'col' + ( 12 / instance.activeColumns ) ).
+              attr( 'data-columns', ( 12 / instance.activeColumns ) );
+          break;
+      }
     } );
   },
   /**

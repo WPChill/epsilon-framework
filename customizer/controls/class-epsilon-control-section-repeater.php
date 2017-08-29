@@ -31,6 +31,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $choices = array();
 
 	/**
+	 * @since 1.3.4
+	 * @var bool
+	 */
+	public $sortable = true;
+
+	/**
 	 * Icons array
 	 *
 	 * @since 1.2.0
@@ -66,6 +72,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		$json['value']    = $this->value();
 		$json['sections'] = $this->set_repeatable_sections();
 		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['sortable'] = $this->sortable;
 
 		return $json;
 	}

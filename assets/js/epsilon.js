@@ -21,12 +21,14 @@ EpsilonFramework.sectionRepeater = 'undefined' === typeof( EpsilonFramework.sect
  */
 EpsilonFramework.colorPickers = {
   init: function( selectors ) {
-    var selectors = jQuery( selectors );
+    var selectors = jQuery( selectors ),
+        self = this;
 
     jQuery.each( selectors, function() {
       var settings = {
-            changeDelay: 1000,
+            changeDelay: 500,
             theme: 'default',
+            change: self.changePallete
           },
           clear, instance;
 
@@ -57,6 +59,15 @@ EpsilonFramework.colorPickers = {
         instance.trigger( 'change' );
       } );
     } );
+  },
+  /**
+   * Real time changes to the "pallete"
+   *
+   * @param value
+   * @param opacity
+   */
+  changePallete: function( value, opacity ) {
+    jQuery( '.epsilon-color-scheme-selected' ).find( '*[data-field-id="' + jQuery( this ).attr( 'data-customize-setting-link' ) + '"]' ).css( 'background-color', value );
   }
 };
 /**
@@ -602,10 +613,19 @@ EpsilonFramework.layouts = {
         self = this;
 
     jQuery( instance.context ).on( 'epsilon_column_count_changed', function( e ) {
-      instance.context.find( '.epsilon-column' ).
-          removeClass( self.colClasses ).
-          addClass( 'col' + ( 12 / instance.activeColumns ) ).
-          attr( 'data-columns', ( 12 / instance.activeColumns ) );
+      switch ( instance.activeColumns ) {
+        case 2:
+          instance.context.find( '.epsilon-column' ).removeClass( self.colClasses );
+          instance.context.find( '.epsilon-column' ).first().addClass( 'col8' ).attr( 'data-columns', ( 8 ) );
+          instance.context.find( '.epsilon-column' ).last().addClass( 'col4' ).attr( 'data-columns', ( 4 ) );
+          break;
+        default:
+          instance.context.find( '.epsilon-column' ).
+              removeClass( self.colClasses ).
+              addClass( 'col' + ( 12 / instance.activeColumns ) ).
+              attr( 'data-columns', ( 12 / instance.activeColumns ) );
+          break;
+      }
     } );
   },
   /**
@@ -2674,7 +2694,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     /**
      * Start sorting
      */
-    this.initSortable();
+    if ( this.params.sortable ) {
+      this.initSortable();
+    }
 
     /**
      * Event that fires from the main page

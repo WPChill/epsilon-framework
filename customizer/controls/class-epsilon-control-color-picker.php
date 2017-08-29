@@ -22,6 +22,11 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	 * @var string
 	 */
 	public $mode = '';
+	/**
+	 * @since 1.3.4
+	 * @var bool
+	 */
+	public $lite = false;
 
 	/**
 	 * Epsilon_Control_Color_Picker constructor.
@@ -51,6 +56,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 		$json['value']   = $this->value();
 		$json['default'] = $this->setting->default;
 		$json['mode']    = '' !== $this->mode ? $this->mode : 'hex';
+		$json['lite']    = $this->lite;
 
 		return $json;
 	}
@@ -68,7 +74,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	 */
 	public function content_template() {
 		//@formatter:off ?>
-		<label>
+		<label <# if( ! data.lite ) { #>class="lite"<# } #>>
 			<input class="epsilon-color-picker" data-attr-mode={{ data.mode }} type="text" maxlength="7" <# if( data.default ){ #>placeholder="{{ data.default }}"<# } #> <# if(data.value){ #> value="{{ data.value }}" <# } #> {{{ data.link }}} />
 			<span class="customize-control-title epsilon-color-picker-title">
 				{{{ data.label }}}
