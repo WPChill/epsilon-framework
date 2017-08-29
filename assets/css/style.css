@@ -218,6 +218,11 @@
   transform: translateX(-50%);
 }
 
+.slider-container .ui-slider:hover,
+.widget-content, ui-slider:hover {
+  cursor: pointer;
+}
+
 .wp-admin .checkbox_switch {
   display: inline-block;
   width: 100%;
