@@ -28,6 +28,14 @@ EpsilonFramework.recommendedActions = {
       jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down-alt2' );
       jQuery( '.recommended-actions_container' ).slideToggle( 200 );
     } );
+
+    jQuery( document ).on( 'epsilon-plugin-activated', function( event, data ) {
+      var container = jQuery( 'span#' + data.plugin ).parents( '.epsilon-recommended-plugins' ),
+          next = container.next();
+      container.fadeOut( '200', function() {
+        next.css( { opacity: 1, height: 'initial' } ).fadeIn( '200' );
+      } );
+    } );
   },
 
   /**
