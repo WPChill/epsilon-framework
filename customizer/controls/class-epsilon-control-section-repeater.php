@@ -78,6 +78,18 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	}
 
 	/**
+	 * Enqueues selectize js
+	 *
+	 * @since  1.3.4
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue() {
+		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
+		wp_enqueue_script( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
+	}
+
+	/**
 	 * @since 1.2.0
 	 */
 	public function get_icons() {

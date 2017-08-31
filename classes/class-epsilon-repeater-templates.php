@@ -99,6 +99,20 @@ class Epsilon_Repeater_Templates {
 									<# }); #>
 								</select>
 							</label>
+						<# } else if ( 'selectize' === field.type ) { #>
+							<label>
+								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+								<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+									<# _.each( field.choices, function( choice, i ) { #>
+										<#  if( field.multiple ) { #>
+											<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  } else { #>
+											<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  }  #>
+									<# }); #>
+								</select>
+							</label>
 						<# } else if ( 'checkbox' === field.type ) { #>
 							<label>
 								<input type="checkbox" value="true" data-field="{{{ field.id }}}" <# if ( field.default ) { #> checked="checked" <# } #> /> {{ field.label }}
