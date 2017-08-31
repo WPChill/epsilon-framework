@@ -2,7 +2,75 @@
 * Typography controls
 */
 .epsilon-typography-container {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+
+  &.group-of-full {
+    > div {
+      &:nth-child(1) {
+        width: 100%;
+        padding-right: 105px;
+      }
+      &:nth-child(2) {
+        position: absolute;
+        right: 70px;
+        top: 1px;
+      }
+
+      &:nth-child(3) {
+        position: absolute;
+        right: 35px;
+        top: 1px;
+      }
+
+      &:nth-child(4) {
+        position: absolute;
+        right: 0;
+        top: 1px;
+      }
+    }
+  }
+  &.group-of-three {
+    > div {
+      &:nth-child(1) {
+        width: 100%;
+        padding-right: 72px;
+      }
+
+      &:nth-child(2) {
+        position: absolute;
+        right: 35px;
+        top: 1px;
+      }
+
+      &:nth-child(3) {
+        position: absolute;
+        right: 0;
+        top: 1px;
+      }
+    }
+  }
+  &.group-of-two {
+    > div {
+      &:nth-child(1) {
+        width: 100%;
+        padding-right: 37px;
+      }
+
+      &:nth-child(2) {
+        position: absolute;
+        right: 0;
+        top: 1px;
+      }
+    }
+  }
+  &.group-of-one {
+    width: 100%;
+  }
+
   > div {
+    box-sizing: border-box;
     > label {
       margin-bottom: 5px;
       display: inline-block;
@@ -36,9 +104,8 @@
   }
 
   .selectize-input {
-    width: 160px;
-    height: 40px;
-    line-height: 23px;
+    height: 34px;
+    line-height: 21px;
     border: none;
     //-webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
     //-moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
@@ -69,8 +136,8 @@
 
 .epsilon-font-weight-switch,
 .epsilon-font-style-switch {
-  width: 38px;
-  height: 38px;
+  width: 33px;
+  height: 33px;
   border-radius: 4px;
   background: #fff;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
@@ -78,7 +145,6 @@
   box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
   cursor: pointer;
   position: relative;
-  top: -1px;
 }
 
 .epsilon-font-style-switch-label,
@@ -90,7 +156,7 @@
   border-radius: 4px;
   z-index: 1;
   padding: 0;
-  line-height: 38px;
+  line-height: 33px;
   transition: background-color 0.2s ease-in;
   text-align: center;
 }
@@ -100,8 +166,8 @@
   content: "\f200";
   font-family: "dashicons";
   display: block;
-  font-size: 22px;
-  color: #000;
+  font-size: 20px;
+  color: #555d66;
   margin: 0;
   position: relative;
   top: 0;
@@ -124,22 +190,21 @@
 
 .epsilon-typography-advanced {
   background: #fff;
-  height: 38px;
-  width: 38px;
+  height: 33px;
+  width: 33px;
   border-radius: 4px;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
   -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
   box-shadow: 0 4px 5px rgba(0, 0, 0, .05);
   display: inline-block;
   text-align: center;
-  top: -11px;
   position: relative;
 
   .epsilon-typography-advanced-options-toggler {
-    font-size: 22px;
-    color: #000;
+    font-size: 20px;
+    color: #555d66;
     text-decoration: none;
-    line-height: 38px;
+    line-height: 33px;
     outline: none;
   }
 
@@ -155,10 +220,6 @@
   }
 
   .epsilon-typography-advanced-options-toggler {
-    &:hover,
-    &.active {
-      color: #57a7c9;
-    }
     &:focus {
       outline: none;
       box-shadow: none;
@@ -166,7 +227,7 @@
       -moz-box-shadow: none;
     }
     .dashicons {
-      line-height: 38px;
+      line-height: 33px;
     }
   }
 }
@@ -176,8 +237,8 @@
   background: #f4f4f4;
   position: relative;
   z-index: 10;
-  top: -12px;
-  width: 285px;
+  top: -3px;
+  width: 100%;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .05);

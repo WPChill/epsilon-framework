@@ -485,6 +485,59 @@
 /**
 * Typography controls
 */
+.epsilon-typography-container {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+}
+.epsilon-typography-container.group-of-full > div:nth-child(1) {
+  width: 100%;
+  padding-right: 105px;
+}
+.epsilon-typography-container.group-of-full > div:nth-child(2) {
+  position: absolute;
+  right: 70px;
+  top: 1px;
+}
+.epsilon-typography-container.group-of-full > div:nth-child(3) {
+  position: absolute;
+  right: 35px;
+  top: 1px;
+}
+.epsilon-typography-container.group-of-full > div:nth-child(4) {
+  position: absolute;
+  right: 0;
+  top: 1px;
+}
+.epsilon-typography-container.group-of-three > div:nth-child(1) {
+  width: 100%;
+  padding-right: 72px;
+}
+.epsilon-typography-container.group-of-three > div:nth-child(2) {
+  position: absolute;
+  right: 35px;
+  top: 1px;
+}
+.epsilon-typography-container.group-of-three > div:nth-child(3) {
+  position: absolute;
+  right: 0;
+  top: 1px;
+}
+.epsilon-typography-container.group-of-two > div:nth-child(1) {
+  width: 100%;
+  padding-right: 37px;
+}
+.epsilon-typography-container.group-of-two > div:nth-child(2) {
+  position: absolute;
+  right: 0;
+  top: 1px;
+}
+.epsilon-typography-container.group-of-one {
+  width: 100%;
+}
+.epsilon-typography-container > div {
+  box-sizing: border-box;
+}
 .epsilon-typography-container > div > label {
   margin-bottom: 5px;
   display: inline-block;
@@ -514,9 +567,8 @@
   position: relative;
 }
 .epsilon-typography-container .selectize-input {
-  width: 160px;
-  height: 40px;
-  line-height: 23px;
+  height: 34px;
+  line-height: 21px;
   border: none;
 }
 .epsilon-typography-container .selectize-dropdown {
@@ -542,8 +594,8 @@
 
 .epsilon-font-weight-switch,
 .epsilon-font-style-switch {
-  width: 38px;
-  height: 38px;
+  width: 33px;
+  height: 33px;
   border-radius: 4px;
   background: #fff;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
@@ -551,7 +603,6 @@
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   position: relative;
-  top: -1px;
 }
 
 .epsilon-font-style-switch-label,
@@ -563,7 +614,7 @@
   border-radius: 4px;
   z-index: 1;
   padding: 0;
-  line-height: 38px;
+  line-height: 33px;
   transition: background-color 0.2s ease-in;
   text-align: center;
 }
@@ -573,8 +624,8 @@
   content: "\f200";
   font-family: "dashicons";
   display: block;
-  font-size: 22px;
-  color: #000;
+  font-size: 20px;
+  color: #555d66;
   margin: 0;
   position: relative;
   top: 0;
@@ -597,22 +648,21 @@
 
 .epsilon-typography-advanced {
   background: #fff;
-  height: 38px;
-  width: 38px;
+  height: 33px;
+  width: 33px;
   border-radius: 4px;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
   display: inline-block;
   text-align: center;
-  top: -11px;
   position: relative;
 }
 .epsilon-typography-advanced .epsilon-typography-advanced-options-toggler {
-  font-size: 22px;
-  color: #000;
+  font-size: 20px;
+  color: #555d66;
   text-decoration: none;
-  line-height: 38px;
+  line-height: 33px;
   outline: none;
 }
 .epsilon-typography-advanced.epsilon-typography-advanced.active {
@@ -624,9 +674,6 @@
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
 }
-.epsilon-typography-advanced .epsilon-typography-advanced-options-toggler:hover, .epsilon-typography-advanced .epsilon-typography-advanced-options-toggler.active {
-  color: #57a7c9;
-}
 .epsilon-typography-advanced .epsilon-typography-advanced-options-toggler:focus {
   outline: none;
   box-shadow: none;
@@ -634,7 +681,7 @@
   -moz-box-shadow: none;
 }
 .epsilon-typography-advanced .epsilon-typography-advanced-options-toggler .dashicons {
-  line-height: 38px;
+  line-height: 33px;
 }
 
 .epsilon-typography-advanced-options {
@@ -642,8 +689,8 @@
   background: #f4f4f4;
   position: relative;
   z-index: 10;
-  top: -12px;
-  width: 285px;
+  top: -3px;
+  width: 100%;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
