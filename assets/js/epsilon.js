@@ -2831,6 +2831,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        newSection.container.find( '.epsilon-selectize' ).selectize( {
+          plugins: [ 'remove_button' ],
+        } );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2852,7 +2855,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
           EpsilonFramework.rangeSliders.init( newSection.container );
           EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
           EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
-          newSection.container.find( '.epsilon-selectize' ).selectize();
+          newSection.container.find( '.epsilon-selectize' ).selectize( {
+            plugins: [ 'remove_button' ],
+          } );
         }
       } );
     }
