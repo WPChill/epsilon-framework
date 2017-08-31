@@ -8,6 +8,10 @@ EpsilonFramework.colorPickers = {
     var selectors = jQuery( selectors ),
         self = this;
 
+    if ( 'function' !== typeof jQuery.fn.minicolors ) {
+      return;
+    }
+
     jQuery.each( selectors, function() {
       var settings = {
             changeDelay: 500,

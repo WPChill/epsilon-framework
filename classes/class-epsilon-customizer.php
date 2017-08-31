@@ -114,11 +114,11 @@ class Epsilon_Customizer {
 	 * @param array $args
 	 */
 	public static function add_field( $id, array $args = array() ) {
+		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'control';
 		/**
 		 * Add setting
 		 */
 		self::add_setting( $id, $args );
-
 		$args['backup'] = isset( $args['backup'] ) ? $args['backup'] : false;
 		/**
 		 * Get class name, if it's an epsilon control, we need to build the class name accordingly
@@ -178,7 +178,7 @@ class Epsilon_Customizer {
 	 * @param array $args
 	 */
 	public static function add_panel( $id, array $args = array() ) {
-		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'section';
+		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'panel';
 
 		$class = self::_get_panel_type( $args['type'] );
 		self::$manager->add_panel(

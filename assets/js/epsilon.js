@@ -24,6 +24,10 @@ EpsilonFramework.colorPickers = {
     var selectors = jQuery( selectors ),
         self = this;
 
+    if ( 'function' !== typeof jQuery.fn.minicolors ) {
+      return;
+    }
+
     jQuery.each( selectors, function() {
       var settings = {
             changeDelay: 500,
@@ -1367,7 +1371,7 @@ EpsilonFramework.sectionRepeater.base = {
       }
     }
 
-    control.currentIndex--;
+    control.currentIndex --;
   },
   /**
    * Add a new section handler
@@ -1391,6 +1395,10 @@ EpsilonFramework.sectionRepeater.base = {
     /**
      * Extend template data with what we passed in PHP
      */
+    if ( 'undefined' === typeof ( control.params.sections[ type ] ) ) {
+      return;
+    }
+
     templateData = jQuery.extend( true, {}, control.params.sections[ type ].fields );
 
     /**
@@ -2840,9 +2848,11 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
        */
       _.each( this.params.value, function( subValue ) {
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
-        EpsilonFramework.rangeSliders.init( newSection.container );
-        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        if ( 'undefined' !== typeof newSection ) {
+          EpsilonFramework.rangeSliders.init( newSection.container );
+          EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+          EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        }
       } );
     }
   },

@@ -48,7 +48,7 @@ EpsilonFramework.sectionRepeater.base = {
       }
     }
 
-    control.currentIndex--;
+    control.currentIndex --;
   },
   /**
    * Add a new section handler
@@ -72,6 +72,10 @@ EpsilonFramework.sectionRepeater.base = {
     /**
      * Extend template data with what we passed in PHP
      */
+    if ( 'undefined' === typeof ( control.params.sections[ type ] ) ) {
+      return;
+    }
+
     templateData = jQuery.extend( true, {}, control.params.sections[ type ].fields );
 
     /**
