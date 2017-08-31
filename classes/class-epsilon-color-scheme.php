@@ -142,6 +142,7 @@ class Epsilon_Color_Scheme {
 				'section'     => $properties['section'],
 				'settings'    => $control,
 				'priority'    => $i,
+				'lite'        => isset( $properties['lite'] ) ? $properties['lite'] : false,
 			) ) );
 			$i ++;
 		}

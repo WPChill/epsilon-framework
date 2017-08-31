@@ -31,6 +31,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $choices = array();
 
 	/**
+	 * @since 1.3.4
+	 * @var bool
+	 */
+	public $sortable = true;
+
+	/**
 	 * Icons array
 	 *
 	 * @since 1.2.0
@@ -66,8 +72,21 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		$json['value']    = $this->value();
 		$json['sections'] = $this->set_repeatable_sections();
 		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['sortable'] = $this->sortable;
 
 		return $json;
+	}
+
+	/**
+	 * Enqueues selectize js
+	 *
+	 * @since  1.3.4
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue() {
+		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
+		wp_enqueue_script( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
 	}
 
 	/**
@@ -172,6 +191,19 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				if ( 'epsilon-color-picker' === $v['type'] ) {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode']       = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'hex';
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] : '';
+				}
+
+				/**
+				 * Epsilon Upsell
+				 */
+				if ( 'epsilon-upsell' === $v['type'] ) {
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['label']              = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] : __( 'See what\'s in the PRO version', 'epsilon-framework' );
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['separator']          = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['separator'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['separator'] : '';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['button_text']        = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['button_text'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['button_text'] : '';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['button_url']         = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['button_url'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['button_url'] : '';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_text'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_text'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_text'] : '';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_url']  = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_url'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_url'] : '';
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['options']            = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['options'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['options'] : array();
 				}
 
 				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;

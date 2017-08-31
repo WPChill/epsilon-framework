@@ -408,21 +408,21 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 					add_query_arg(
 						array(
 							'action' => 'install-plugin',
-							'plugin' => $plugin_slug,
+							'plugin' => $this->_get_plugin_basename_from_slug( $plugin_slug ),
 						),
 						network_admin_url( 'update.php' )
 					),
-					'install-plugin_' . $plugin_slug
+					'install-plugin_' . $this->_get_plugin_basename_from_slug( $plugin_slug )
 				);
 				break;
 			case 'deactivate':
 				return add_query_arg(
 					array(
 						'action'        => 'deactivate',
-						'plugin'        => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
+						'plugin'        => rawurlencode( $this->_get_plugin_basename_from_slug( $plugin_slug ) ),
 						'plugin_status' => 'all',
 						'paged'         => '1',
-						'_wpnonce'      => wp_create_nonce( 'deactivate-plugin_' . $plugin_slug . '/' . $plugin_slug . '.php' ),
+						'_wpnonce'      => wp_create_nonce( 'deactivate-plugin_' . $this->_get_plugin_basename_from_slug( $plugin_slug ) ),
 					),
 					network_admin_url( 'plugins.php' )
 				);
@@ -431,10 +431,10 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 				return add_query_arg(
 					array(
 						'action'        => 'activate',
-						'plugin'        => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
+						'plugin'        => rawurlencode( $this->_get_plugin_basename_from_slug( $plugin_slug ) ),
 						'plugin_status' => 'all',
 						'paged'         => '1',
-						'_wpnonce'      => wp_create_nonce( 'activate-plugin_' . $plugin_slug . '/' . $plugin_slug . '.php' ),
+						'_wpnonce'      => wp_create_nonce( 'activate-plugin_' . $this->_get_plugin_basename_from_slug( $plugin_slug ) ),
 					),
 					network_admin_url( 'plugins.php' )
 				);
@@ -444,7 +444,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 					add_query_arg(
 						array(
 							'action' => 'upgrade-plugin',
-							'plugin' => rawurlencode( $plugin_slug . '/' . $plugin_slug . '.php' ),
+							'plugin' => rawurlencode( $this->_get_plugin_basename_from_slug( $plugin_slug ) ),
 						),
 						network_admin_url( 'update.php' )
 					),

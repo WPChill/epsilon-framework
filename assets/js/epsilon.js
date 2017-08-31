@@ -21,12 +21,18 @@ EpsilonFramework.sectionRepeater = 'undefined' === typeof( EpsilonFramework.sect
  */
 EpsilonFramework.colorPickers = {
   init: function( selectors ) {
-    var selectors = jQuery( selectors );
+    var selectors = jQuery( selectors ),
+        self = this;
+
+    if ( 'function' !== typeof jQuery.fn.minicolors ) {
+      return;
+    }
 
     jQuery.each( selectors, function() {
       var settings = {
-            changeDelay: 1000,
+            changeDelay: 500,
             theme: 'default',
+            change: self.changePallete
           },
           clear, instance;
 
@@ -57,6 +63,15 @@ EpsilonFramework.colorPickers = {
         instance.trigger( 'change' );
       } );
     } );
+  },
+  /**
+   * Real time changes to the "pallete"
+   *
+   * @param value
+   * @param opacity
+   */
+  changePallete: function( value, opacity ) {
+    jQuery( '.epsilon-color-scheme-selected' ).find( '*[data-field-id="' + jQuery( this ).attr( 'data-customize-setting-link' ) + '"]' ).css( 'background-color', value );
   }
 };
 /**
@@ -149,7 +164,7 @@ EpsilonFramework.colorSchemes = {
     /**
      * Advanced toggler
      */
-    jQuery( '.epsilon-color-schemes-advanced' ).on( 'click', function() {
+    jQuery( '.epsilon-control-dropdown' ).on( 'click', function() {
       jQuery( this ).toggleClass( 'active' );
       jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down dashicons-arrow-up' );
       context.slideToggle();
@@ -380,7 +395,7 @@ EpsilonFramework.layouts = {
      * Variables
      */
     this.context = context;
-    this.layoutButtons = this.context.find( '.epsilon-button-group > a' );
+    this.layoutButtons = this.context.find( '.epsilon-control-group > a' );
     this.resizeButtons = this.context.find( '.epsilon-layouts-setup > .epsilon-column > a' );
     this.maxColumns = this.layoutButtons.length;
     this.minSpan = parseFloat( this.context.attr( 'data-min-span' ) );
@@ -602,10 +617,19 @@ EpsilonFramework.layouts = {
         self = this;
 
     jQuery( instance.context ).on( 'epsilon_column_count_changed', function( e ) {
-      instance.context.find( '.epsilon-column' ).
-          removeClass( self.colClasses ).
-          addClass( 'col' + ( 12 / instance.activeColumns ) ).
-          attr( 'data-columns', ( 12 / instance.activeColumns ) );
+      switch ( instance.activeColumns ) {
+        case 2:
+          instance.context.find( '.epsilon-column' ).removeClass( self.colClasses );
+          instance.context.find( '.epsilon-column' ).first().addClass( 'col8' ).attr( 'data-columns', ( 8 ) );
+          instance.context.find( '.epsilon-column' ).last().addClass( 'col4' ).attr( 'data-columns', ( 4 ) );
+          break;
+        default:
+          instance.context.find( '.epsilon-column' ).
+              removeClass( self.colClasses ).
+              addClass( 'col' + ( 12 / instance.activeColumns ) ).
+              attr( 'data-columns', ( 12 / instance.activeColumns ) );
+          break;
+      }
     } );
   },
   /**
@@ -617,7 +641,7 @@ EpsilonFramework.layouts = {
     /**
      * On clicking the advanced options toggler,
      */
-    instance.context.on( 'click', '.epsilon-layouts-advanced-toggler', function( e ) {
+    instance.context.on( 'click', '.epsilon-control-advanced', function( e ) {
       e.preventDefault();
       jQuery( this ).toggleClass( 'active' );
       jQuery( '#' + jQuery( this ).attr( 'data-unique-id' ) ).slideToggle().addClass( 'active' );
@@ -709,11 +733,17 @@ EpsilonFramework.repeater.base = {
 
         // Remove the row from the rows collection
         delete control.rows[ index ];
-
-        // Update the new setting values
-        EpsilonFramework.repeater.base.setValue( control, currentSettings, true );
       }
     }
+    currentSettings = EpsilonFramework.repeater.base.cleanArray( currentSettings );
+    control.rows = EpsilonFramework.repeater.base.cleanArray( control.rows );
+
+    jQuery.each( control.rows, function( index, element ) {
+      EpsilonFramework.repeater.base.setRowIndex( element, index, control );
+    } );
+
+    // Update the new setting values
+    EpsilonFramework.repeater.base.setValue( control, currentSettings, true );
 
     // Remap the row numbers
     i = 1;
@@ -723,6 +753,8 @@ EpsilonFramework.repeater.base = {
         i ++;
       }
     }
+
+    control.currentIndex--;
   },
   /**
    * Add a new Row to the customizer
@@ -1227,6 +1259,24 @@ EpsilonFramework.repeater.base = {
       } );
     } );
   },
+
+  /**
+   * Cleans an array (undefined values), returns value
+   *
+   * @param actual
+   * @returns {Array}
+   */
+  cleanArray: function( actual ) {
+    var newArray = [],
+        self = this;
+    for ( var i = 0; i < actual.length; i ++ ) {
+      if ( actual[ i ] ) {
+        newArray.push( actual[ i ] );
+      }
+    }
+
+    return newArray;
+  },
 };
 
 /**
@@ -1300,10 +1350,17 @@ EpsilonFramework.sectionRepeater.base = {
         // Remove the sections from the rows collection
         delete control.sections[ index ];
 
+        currentSettings = EpsilonFramework.sectionRepeater.base.cleanArray( currentSettings );
+        control.sections = EpsilonFramework.sectionRepeater.base.cleanArray( control.sections );
+
         // Update the new setting values
         self.setValue( control, currentSettings, true );
       }
     }
+
+    jQuery.each( control.sections, function( index, element ) {
+      EpsilonFramework.sectionRepeater.base.setSectionIndex( element, index, control );
+    } );
 
     // Remap the row numbers
     i = 1;
@@ -1313,6 +1370,8 @@ EpsilonFramework.sectionRepeater.base = {
         i ++;
       }
     }
+
+    control.currentIndex --;
   },
   /**
    * Add a new section handler
@@ -1336,6 +1395,10 @@ EpsilonFramework.sectionRepeater.base = {
     /**
      * Extend template data with what we passed in PHP
      */
+    if ( 'undefined' === typeof ( control.params.sections[ type ] ) ) {
+      return;
+    }
+
     templateData = jQuery.extend( true, {}, control.params.sections[ type ].fields );
 
     /**
@@ -1794,6 +1857,23 @@ EpsilonFramework.sectionRepeater.base = {
     } );
   },
 
+  /**
+   * Cleans an array (undefined values), returns value
+   *
+   * @param actual
+   * @returns {Array}
+   */
+  cleanArray: function( actual ) {
+    var newArray = [],
+        self = this;
+    for ( var i = 0; i < actual.length; i ++ ) {
+      if ( actual[ i ] ) {
+        newArray.push( actual[ i ] );
+      }
+    }
+
+    return newArray;
+  },
 };
 EpsilonFramework.sectionRepeater.section = {
   /**
@@ -2083,6 +2163,14 @@ EpsilonFramework.recommendedActions = {
       jQuery( this ).find( 'span' ).toggleClass( 'dashicons-arrow-down-alt2' );
       jQuery( '.recommended-actions_container' ).slideToggle( 200 );
     } );
+
+    jQuery( document ).on( 'epsilon-plugin-activated', function( event, data ) {
+      var container = jQuery( 'span#' + data.plugin ).parents( '.epsilon-recommended-plugins' ),
+          next = container.next();
+      container.fadeOut( '200', function() {
+        next.css( { opacity: 1, height: 'initial' } ).fadeIn( '200' );
+      } );
+    } );
   },
 
   /**
@@ -2308,6 +2396,7 @@ EpsilonFramework.recommendedActions = {
     } );
   }
 };
+
 /**
  * Color Picker Control Constructor
  */
@@ -2673,7 +2762,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     /**
      * Start sorting
      */
-    this.initSortable();
+    if ( this.params.sortable ) {
+      this.initSortable();
+    }
 
     /**
      * Event that fires from the main page
@@ -2740,6 +2831,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        newSection.container.find( '.epsilon-selectize' ).selectize( {
+          plugins: [ 'remove_button' ],
+        } );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -2757,9 +2851,14 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
        */
       _.each( this.params.value, function( subValue ) {
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
-        EpsilonFramework.rangeSliders.init( newSection.container );
-        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        if ( 'undefined' !== typeof newSection ) {
+          EpsilonFramework.rangeSliders.init( newSection.container );
+          EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+          EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+          newSection.container.find( '.epsilon-selectize' ).selectize( {
+            plugins: [ 'remove_button' ],
+          } );
+        }
       } );
     }
   },
@@ -2931,6 +3030,136 @@ wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.exten
     } );
   }
 } );
+/**
+ * Nestable regular panels
+ */
+wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.extend( {
+  /**
+   * Embed Panel
+   */
+  _panelEmbed: wp.customize.Panel.prototype.embed,
+  /**
+   * Check if is contextually active
+   */
+  _panelIsContextuallyActive: wp.customize.Panel.prototype.isContextuallyActive,
+  /**
+   * Attach Events
+   */
+  _panelAttachEvents: wp.customize.Panel.prototype.attachEvents,
+  /**
+   * Ready event
+   */
+  ready: function() {
+    wp.customize.bind( 'pane-contents-reflowed', function() {
+      // Reflow panels
+      var panels = [];
+
+      wp.customize.panel.each( function( panel ) {
+        if ( 'epsilon-panel-regular' !== panel.params.type || 'undefined' === typeof panel.params.panel ) {
+          return;
+        }
+        panels.push( panel );
+      } );
+
+      panels.sort( wp.customize.utils.prioritySort ).reverse();
+
+      jQuery.each( panels, function( i, panel ) {
+        var parentContainer = jQuery( '#sub-accordion-panel-' + panel.params.panel );
+        parentContainer.children( '.panel-meta' ).after( panel.headContainer );
+      } );
+
+      jQuery( document ).trigger( 'epsilon-reflown-panels' );
+    } );
+  },
+  /**
+   * Attach events
+   */
+  attachEvents: function() {
+    var panel = this;
+    if ( 'epsilon-panel-regular' !== this.params.type || 'undefined' === typeof this.params.panel ) {
+      this._panelAttachEvents.call( this );
+      return;
+    }
+
+    this._panelAttachEvents.call( this );
+
+    panel.expanded.bind( function( expanded ) {
+
+      var parent = wp.customize.panel( panel.params.panel );
+      if ( expanded ) {
+        parent.contentContainer.addClass( 'current-panel-parent' );
+      } else {
+        parent.contentContainer.removeClass( 'current-panel-parent' );
+      }
+
+    } );
+
+    panel.container.find( '.customize-panel-back' ).off( 'click keydown' ).on( 'click keydown', function( event ) {
+      if ( wp.customize.utils.isKeydownButNotEnterEvent( event ) ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      if ( panel.expanded() ) {
+        wp.customize.panel( panel.params.panel ).expand();
+      }
+
+    } );
+  },
+  /**
+   * Is contextually active
+   * @returns {*}
+   */
+  isContextuallyActive: function() {
+    var panel = this,
+        children = this._children( 'panel', 'section' ),
+        activeCount = 0;
+
+    if ( 'epsilon-panel-regular' !== this.params.type ) {
+      return this._panelIsContextuallyActive.call( this );
+    }
+
+    wp.customize.panel.each( function( child ) {
+      if ( ! child.params.panel ) {
+        return;
+      }
+
+      if ( child.params.panel !== panel.id ) {
+        return;
+      }
+
+      children.push( child );
+    } );
+
+    children.sort( wp.customize.utils.prioritySort );
+
+    _( children ).each( function( child ) {
+      if ( child.active() && child.isContextuallyActive() ) {
+        activeCount += 1;
+      }
+    } );
+
+    return ( 0 !== activeCount );
+  },
+  /**
+   * Embed
+   */
+  embed: function() {
+    var panel = this,
+        parentContainer = jQuery( '#sub-accordion-panel-' + this.params.panel );
+
+    if ( 'epsilon-panel-regular' !== this.params.type || 'undefined' === typeof this.params.panel ) {
+      this._panelEmbed.call( this );
+      return;
+
+    }
+
+    this._panelEmbed.call( this );
+    parentContainer.append( panel.headContainer );
+  },
+} );
+
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
   attachEvents: function() {
   },

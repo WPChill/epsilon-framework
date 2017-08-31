@@ -23,11 +23,17 @@ EpsilonFramework.repeater.base = {
 
         // Remove the row from the rows collection
         delete control.rows[ index ];
-
-        // Update the new setting values
-        EpsilonFramework.repeater.base.setValue( control, currentSettings, true );
       }
     }
+    currentSettings = EpsilonFramework.repeater.base.cleanArray( currentSettings );
+    control.rows = EpsilonFramework.repeater.base.cleanArray( control.rows );
+
+    jQuery.each( control.rows, function( index, element ) {
+      EpsilonFramework.repeater.base.setRowIndex( element, index, control );
+    } );
+
+    // Update the new setting values
+    EpsilonFramework.repeater.base.setValue( control, currentSettings, true );
 
     // Remap the row numbers
     i = 1;
@@ -37,6 +43,8 @@ EpsilonFramework.repeater.base = {
         i ++;
       }
     }
+
+    control.currentIndex--;
   },
   /**
    * Add a new Row to the customizer
@@ -540,5 +548,23 @@ EpsilonFramework.repeater.base = {
         quicktags: true
       } );
     } );
+  },
+
+  /**
+   * Cleans an array (undefined values), returns value
+   *
+   * @param actual
+   * @returns {Array}
+   */
+  cleanArray: function( actual ) {
+    var newArray = [],
+        self = this;
+    for ( var i = 0; i < actual.length; i ++ ) {
+      if ( actual[ i ] ) {
+        newArray.push( actual[ i ] );
+      }
+    }
+
+    return newArray;
   },
 };

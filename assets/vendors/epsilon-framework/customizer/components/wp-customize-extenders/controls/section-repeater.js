@@ -53,7 +53,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
     /**
      * Start sorting
      */
-    this.initSortable();
+    if ( this.params.sortable ) {
+      this.initSortable();
+    }
 
     /**
      * Event that fires from the main page
@@ -120,6 +122,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         EpsilonFramework.rangeSliders.init( newSection.container );
         EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
         EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        newSection.container.find( '.epsilon-selectize' ).selectize( {
+          plugins: [ 'remove_button' ],
+        } );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
       }
@@ -137,9 +142,14 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
        */
       _.each( this.params.value, function( subValue ) {
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
-        EpsilonFramework.rangeSliders.init( newSection.container );
-        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
-        EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+        if ( 'undefined' !== typeof newSection ) {
+          EpsilonFramework.rangeSliders.init( newSection.container );
+          EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+          EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
+          newSection.container.find( '.epsilon-selectize' ).selectize( {
+            plugins: [ 'remove_button' ],
+          } );
+        }
       } );
     }
   },

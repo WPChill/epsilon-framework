@@ -42,6 +42,12 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	public $choices = array();
 
 	/**
+	 * @since 1.3.4
+	 * @var int
+	 */
+	public $styleHelper = 'full';
+
+	/**
 	 * @since  1.2.0
 	 * @access public
 	 * @var string
@@ -78,6 +84,33 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$json['fonts']        = $this->google_fonts();
 		$json['selectors']    = $this->set_selectors();
 		$json['stylesheet']   = $this->stylesheet;
+
+		$i = 0;
+
+		if ( in_array( 'font-family', $json['choices'] ) ) {
+			$i ++;
+		}
+
+		if ( in_array( 'font-weight', $json['choices'] ) ) {
+			$i ++;
+		}
+
+		if ( in_array( 'font-style', $json['choices'] ) ) {
+			$i ++;
+		}
+
+		if ( in_array( 'letter-spacing', $json['choices'] ) || in_array( 'line-height', $json['choices'] ) || in_array( 'font-size', $json['choices'] ) ) {
+			$i ++;
+		}
+
+		$arr = array(
+			1 => 'one',
+			2 => 'two',
+			3 => 'three',
+			4 => 'full',
+		);
+
+		$json['styleHelper'] = $arr[ $i ];
 
 		return $json;
 	}
@@ -239,7 +272,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 			<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_{{{ data.id }}}" <# if ( data.value ) { value="{{{ data.value }}}"  } #> {{{ data.link }}}/>
 		</div>
 
-		<div class="epsilon-typography-container" data-unique-id="{{{ data.id }}}">
+		<div class="epsilon-typography-container group-of-{{ data.styleHelper }}" data-unique-id="{{{ data.id }}}">
 			<# if( _.contains( data.choices, 'font-family' ) ) { #>
 				<div class="epsilon-typography-font-family">
 					<select id="{{{ data.id }}}-font-family" class="epsilon-typography-input">

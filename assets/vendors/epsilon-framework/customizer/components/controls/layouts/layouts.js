@@ -27,7 +27,7 @@ EpsilonFramework.layouts = {
      * Variables
      */
     this.context = context;
-    this.layoutButtons = this.context.find( '.epsilon-button-group > a' );
+    this.layoutButtons = this.context.find( '.epsilon-control-group > a' );
     this.resizeButtons = this.context.find( '.epsilon-layouts-setup > .epsilon-column > a' );
     this.maxColumns = this.layoutButtons.length;
     this.minSpan = parseFloat( this.context.attr( 'data-min-span' ) );
@@ -249,10 +249,19 @@ EpsilonFramework.layouts = {
         self = this;
 
     jQuery( instance.context ).on( 'epsilon_column_count_changed', function( e ) {
-      instance.context.find( '.epsilon-column' ).
-          removeClass( self.colClasses ).
-          addClass( 'col' + ( 12 / instance.activeColumns ) ).
-          attr( 'data-columns', ( 12 / instance.activeColumns ) );
+      switch ( instance.activeColumns ) {
+        case 2:
+          instance.context.find( '.epsilon-column' ).removeClass( self.colClasses );
+          instance.context.find( '.epsilon-column' ).first().addClass( 'col8' ).attr( 'data-columns', ( 8 ) );
+          instance.context.find( '.epsilon-column' ).last().addClass( 'col4' ).attr( 'data-columns', ( 4 ) );
+          break;
+        default:
+          instance.context.find( '.epsilon-column' ).
+              removeClass( self.colClasses ).
+              addClass( 'col' + ( 12 / instance.activeColumns ) ).
+              attr( 'data-columns', ( 12 / instance.activeColumns ) );
+          break;
+      }
     } );
   },
   /**
@@ -264,7 +273,7 @@ EpsilonFramework.layouts = {
     /**
      * On clicking the advanced options toggler,
      */
-    instance.context.on( 'click', '.epsilon-layouts-advanced-toggler', function( e ) {
+    instance.context.on( 'click', '.epsilon-control-advanced', function( e ) {
       e.preventDefault();
       jQuery( this ).toggleClass( 'active' );
       jQuery( '#' + jQuery( this ).attr( 'data-unique-id' ) ).slideToggle().addClass( 'active' );

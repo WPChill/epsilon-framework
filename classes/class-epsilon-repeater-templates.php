@@ -99,6 +99,20 @@ class Epsilon_Repeater_Templates {
 									<# }); #>
 								</select>
 							</label>
+						<# } else if ( 'selectize' === field.type ) { #>
+							<label>
+								<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+								<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+								<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+									<# _.each( field.choices, function( choice, i ) { #>
+										<#  if( field.multiple ) { #>
+											<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  } else { #>
+											<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+										<#  }  #>
+									<# }); #>
+								</select>
+							</label>
 						<# } else if ( 'checkbox' === field.type ) { #>
 							<label>
 								<input type="checkbox" value="true" data-field="{{{ field.id }}}" <# if ( field.default ) { #> checked="checked" <# } #> /> {{ field.label }}
@@ -121,7 +135,7 @@ class Epsilon_Repeater_Templates {
 							<label>
 								<span class="customize-control-title">
 									<# if( field.label ){ #>
-										<span class="customize-control-title">{{ field.label }}</span>
+										{{ field.label }}
 									<# } #>
 
 									<# if( field.description ){ #>
@@ -203,6 +217,38 @@ class Epsilon_Repeater_Templates {
 						<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
 							<div class="epsilon-customizer-navigation">
 								{{{ field.label }}} <a href="#" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
+							</div>
+						<# } else if ( 'epsilon-upsell' === field.type ) { #>
+							<div class="epsilon-upsell-label">
+								{{{ field.label }}}
+							</div>
+							<div class="epsilon-upsell-container">
+								<# if ( field.options ) { #>
+									<ul class="epsilon-upsell-options">
+										<# _.each(field.options, function( option, index) { #>
+											<li><i class="dashicons dashicons-editor-help">
+													<span class="mte-tooltip">{{ option.help }}</span>
+												</i>
+												{{ option.option }}
+											</li>
+											<# }) #>
+									</ul>
+								<# } #>
+
+								<div class="epsilon-button-group">
+									<# if ( field.button_text && field.button_url ) { #>
+										<a href="{{ field.button_url }}" class="button" target="_blank">{{
+											field.button_text }}</a>
+									<# } #>
+
+									<# if ( field.separator ) { #>
+										<span class="button-separator">{{ field.separator }}</span>
+									<# } #>
+
+									<# if ( field.second_button_text && field.second_button_url ) { #>
+										<a href="{{ field.second_button_url }}" class="button button-primary" target="_blank"> {{field.second_button_text }}</a>
+									<# } #>
+								</div>
 							</div>
 						<# } #>
 						</div>

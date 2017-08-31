@@ -131,6 +131,8 @@ class Epsilon_Framework {
 			}
 		}
 
+		require_once $path . '/customizer/panels/class-epsilon-panel-regular.php';
+
 		/**
 		 * Expose Manager to the Epsilon Customizer class.
 		 */
@@ -156,7 +158,7 @@ class Epsilon_Framework {
 	 */
 	public function customize_preview_styles() {
 		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
-		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.min.js', array(
+		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.js', array(
 			'jquery',
 			'customize-preview',
 		), 2, true );
@@ -175,7 +177,7 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.min.js', array(
+		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
 			'jquery',
 			'customize-controls',
 		) );

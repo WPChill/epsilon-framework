@@ -5,12 +5,18 @@
  */
 EpsilonFramework.colorPickers = {
   init: function( selectors ) {
-    var selectors = jQuery( selectors );
+    var selectors = jQuery( selectors ),
+        self = this;
+
+    if ( 'function' !== typeof jQuery.fn.minicolors ) {
+      return;
+    }
 
     jQuery.each( selectors, function() {
       var settings = {
-            changeDelay: 1000,
+            changeDelay: 500,
             theme: 'default',
+            change: self.changePallete
           },
           clear, instance;
 
@@ -41,5 +47,14 @@ EpsilonFramework.colorPickers = {
         instance.trigger( 'change' );
       } );
     } );
+  },
+  /**
+   * Real time changes to the "pallete"
+   *
+   * @param value
+   * @param opacity
+   */
+  changePallete: function( value, opacity ) {
+    jQuery( '.epsilon-color-scheme-selected' ).find( '*[data-field-id="' + jQuery( this ).attr( 'data-customize-setting-link' ) + '"]' ).css( 'background-color', value );
   }
 };

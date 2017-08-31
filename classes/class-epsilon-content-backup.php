@@ -35,6 +35,11 @@ class Epsilon_Content_Backup {
 	 */
 	public $mode = 'theme_mods';
 	/**
+	 * @since 1.3.4
+	 * @var WordPress Manager Object
+	 */
+	public $manager;
+	/**
 	 * The single instance of the backup class
 	 *
 	 * @var     object
@@ -48,11 +53,10 @@ class Epsilon_Content_Backup {
 	 * Epsilon_Content_Backup constructor.
 	 */
 	public function __construct() {
-		$theme                = wp_get_theme();
-		$this->slug           = $theme->get( 'TextDomain' );
-		$this->slug_sanitized = str_replace( '-', '_', $theme->get( 'TextDomain' ) );
-		$this->hash           = $this->calculate_hash();
-		$this->setting_page   = get_option( $this->slug_sanitized . '_backup_settings', false );
+		$theme              = wp_get_theme();
+		$this->slug         = get_stylesheet();
+		$this->setting_page = get_option( $this->slug . '_backup_settings', false );
+		$this->hash         = $this->calculate_hash();
 
 		if ( ! $this->setting_page || null === get_post( $this->setting_page ) ) {
 			$args = array(
@@ -64,7 +68,7 @@ class Epsilon_Content_Backup {
 
 			$this->setting_page = wp_insert_post( $args );
 			if ( ! is_wp_error( $this->setting_page ) ) {
-				update_option( $this->slug_sanitized . '_backup_settings', $this->setting_page );
+				update_option( $this->slug . '_backup_settings', $this->setting_page );
 			}
 		}
 
@@ -79,7 +83,11 @@ class Epsilon_Content_Backup {
 		/**
 		 * We need to use this hook so we have a reference of the fields that are required as back up
 		 */
-		add_action( 'customize_register', array( $this, 'backup_settings' ), 999 );
+		add_action( 'customize_save_after', array( $this, 'backup_settings' ) );
+		/**
+		 * Disable the form editor if we're in production
+		 */
+		add_action( 'edit_form_after_title', array( $this, 'disable_front_page_editor' ) );
 	}
 
 	/**
@@ -101,6 +109,21 @@ class Epsilon_Content_Backup {
 	 */
 	public function add_field( $id, $args ) {
 		$this->fields[ $id ] = $args;
+	}
+
+	/**
+	 * Disables the frontend editor
+	 *
+	 * @since 1.3.4
+	 */
+	public function disable_front_page_editor( $post ) {
+		if ( true === WP_DEBUG ) {
+			return false;
+		}
+
+		if ( $this->setting_page == $post->ID ) {
+			remove_post_type_support( $post->post_type, 'editor' );
+		}
 	}
 
 	/**
@@ -147,7 +170,7 @@ class Epsilon_Content_Backup {
 		$notifications = Epsilon_Notifications::get_instance();
 		$notifications->add_notice(
 			array(
-				'id'      => $this->slug_sanitized . '_content_backup',
+				'id'      => $this->slug . '_content_backup',
 				'type'    => 'notice notice-info',
 				'message' => '<p>' . esc_html__( 'This page contains the content created by the customizer.', 'epsilon-framework' ) . '</p>',
 			)
@@ -157,14 +180,11 @@ class Epsilon_Content_Backup {
 	/**
 	 * @since 1.2.0
 	 *
-	 * @param args
+	 * @param $manager WordPress Customizer Manager
 	 */
-	public function backup_settings( $args ) {
-		if ( defined( 'DOING_AJAX' ) ) {
-			return;
-		}
-
-		$check = $this->check_hash();
+	public function backup_settings( $manager ) {
+		$check         = $this->check_hash();
+		$this->manager = $manager;
 
 		if ( $check['status'] ) {
 			return;
@@ -255,12 +275,11 @@ class Epsilon_Content_Backup {
 	 * @return string;
 	 */
 	private function _parse_content( $field ) {
-		global $wp_customize;
 		if ( empty( $field['content'] ) ) {
 			return '';
 		}
 
-		$control = $wp_customize->get_control( $field['id'] );
+		$control = $this->manager->get_control( $field['id'] );
 		$content = '';
 		if ( 'post_meta' === $this->mode ) {
 			$field['content'] = $field['content'][ $field['id'] ];
@@ -269,7 +288,7 @@ class Epsilon_Content_Backup {
 		switch ( $field['type'] ) {
 			case 'epsilon-section-repeater':
 				foreach ( $field['content'] as $single_section ) {
-					$content .= '<!-- ' . $control->repeatable_sections[ $single_section['type'] ]['title'] . ' -->' . "\n";
+					$content .= '<!-- epsilon/' . $control->repeatable_sections[ $single_section['type'] ]['id'] . ' -->' . "\n";
 					foreach ( $single_section as $id => $val ) {
 						$args = array(
 							'val'    => $val,
@@ -285,9 +304,9 @@ class Epsilon_Content_Backup {
 
 						$content .= $this->create_content_value( $args['val'], $args['fields'][ $id ]['type'] );
 					}
-					$content .= '<!-- /' . $control->repeatable_sections[ $single_section['type'] ]['title'] . ' -->' . "\n";
+					$content .= '<!-- /epsilon/' . $control->repeatable_sections[ $single_section['type'] ]['id'] . ' -->' . "\n \n";
 				}
-				$content .= "\n";
+				$content .= "\n \n";
 				break;
 			default:
 				$content .= "\n";
@@ -350,13 +369,12 @@ class Epsilon_Content_Backup {
 	 * @return string
 	 */
 	private function create_content_value( $value, $type ) {
-		global $wp_customize;
 		switch ( $type ) {
 			case 'epsilon-image':
 				return '<img src="' . $value . '" />' . "\n";
 				break;
 			case 'hidden':
-				$control = $wp_customize->get_control( $value );
+				$control = $this->manager->get_control( $value );
 				if ( is_a( $control, 'Epsilon_Control_Repeater' ) ) {
 					switch ( $this->mode ) {
 						case 'post_meta':
@@ -373,26 +391,9 @@ class Epsilon_Content_Backup {
 							$val = get_theme_mod( $value, array() );
 							break;
 					}
+
 					$content = '';
-					foreach ( $val as $fields ) {
-						$content .= '<!-- ' . $control->label . ' -->' . "\n";
-						foreach ( $fields as $id => $f_val ) {
-							if ( empty( $f_val ) ) {
-								continue;
-							}
-
-							if ( 'epsilon-color-picker' === $control->fields[ $id ]['type'] || 'epsilon-icon-picker' === $control->fields[ $id ]['type'] ) {
-								continue;
-							};
-
-							if ( 'epsilon-image' === $control->fields[ $id ]['type'] ) {
-								$content .= '<img src="' . $f_val . '" />' . "\n";
-							} else {
-								$content .= $f_val . "\n";
-							}
-						}
-						$content .= '<!-- /' . $control->label . '-->' . "\n";
-					}
+					$content .= $this->format_block( $control, $val, $control->id );
 
 					return $content;
 				};// End if().
@@ -403,5 +404,67 @@ class Epsilon_Content_Backup {
 				return $value . "\n";
 				break;
 		}// End switch().
+	}
+
+	/**
+	 * Formats the repeater field HTML as per outside (if given) instructions
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param $control
+	 * @param $val
+	 * @param $id
+	 */
+	private function format_block( $control, $value, $id ) {
+		$parser = $this->slug . '_post_parser';
+
+		if ( ! class_exists( $parser ) ) {
+			return $this->_format_default( $control, $value, $id );
+		}
+
+		$parser = $parser::get_instance();
+		$method = 'parse_' . $id;
+		if ( ! method_exists( $parser, $method ) ) {
+			return $this->_format_default( $control, $value, $id );
+		}
+
+		return $parser->$method( $control, $value, $id );
+	}
+
+	/**
+	 * Provides a fallback for the content block formatting
+	 *
+	 * @since 1.3.4
+	 *
+	 * @param $control
+	 * @param $value
+	 * @param $id
+	 *
+	 * @return string
+	 */
+	private function _format_default( $control, $value, $id ) {
+		$content = '';
+		foreach ( $value as $fields ) {
+			$content .= '<!-- epsilon/' . $control->label . ' -->' . "\n";
+
+			foreach ( $fields as $id => $f_val ) {
+				if ( empty( $f_val ) ) {
+					continue;
+				}
+
+				if ( 'epsilon-color-picker' === $control->fields[ $id ]['type'] || 'epsilon-icon-picker' === $control->fields[ $id ]['type'] ) {
+					continue;
+				};
+
+				if ( 'epsilon-image' === $control->fields[ $id ]['type'] ) {
+					$content .= '<img src="' . $f_val . '" />' . "\n";
+				} else {
+					$content .= $f_val . "\n";
+				}
+			}
+			$content .= '<!-- /epsilon/' . $control->label . '-->' . "\n";
+		}
+
+		return $content;
 	}
 }

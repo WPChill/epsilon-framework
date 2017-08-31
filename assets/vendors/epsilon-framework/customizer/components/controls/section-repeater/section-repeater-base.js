@@ -27,10 +27,17 @@ EpsilonFramework.sectionRepeater.base = {
         // Remove the sections from the rows collection
         delete control.sections[ index ];
 
+        currentSettings = EpsilonFramework.sectionRepeater.base.cleanArray( currentSettings );
+        control.sections = EpsilonFramework.sectionRepeater.base.cleanArray( control.sections );
+
         // Update the new setting values
         self.setValue( control, currentSettings, true );
       }
     }
+
+    jQuery.each( control.sections, function( index, element ) {
+      EpsilonFramework.sectionRepeater.base.setSectionIndex( element, index, control );
+    } );
 
     // Remap the row numbers
     i = 1;
@@ -40,6 +47,8 @@ EpsilonFramework.sectionRepeater.base = {
         i ++;
       }
     }
+
+    control.currentIndex --;
   },
   /**
    * Add a new section handler
@@ -63,6 +72,10 @@ EpsilonFramework.sectionRepeater.base = {
     /**
      * Extend template data with what we passed in PHP
      */
+    if ( 'undefined' === typeof ( control.params.sections[ type ] ) ) {
+      return;
+    }
+
     templateData = jQuery.extend( true, {}, control.params.sections[ type ].fields );
 
     /**
@@ -521,4 +534,21 @@ EpsilonFramework.sectionRepeater.base = {
     } );
   },
 
+  /**
+   * Cleans an array (undefined values), returns value
+   *
+   * @param actual
+   * @returns {Array}
+   */
+  cleanArray: function( actual ) {
+    var newArray = [],
+        self = this;
+    for ( var i = 0; i < actual.length; i ++ ) {
+      if ( actual[ i ] ) {
+        newArray.push( actual[ i ] );
+      }
+    }
+
+    return newArray;
+  },
 };

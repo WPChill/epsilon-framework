@@ -117,22 +117,25 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 			<div class="customize-control-content">
 				<input {{{ data.link }}} class="epsilon-color-scheme-input" id="input_{{ data.id }}" type="hidden" <# if( data.value ) { #> value='{{{ data.value }}}' <# } #> />
 			</div>
-			<div class="epsilon-color-scheme-selected">
-				<div class="epsilon-color-scheme-palette">
+			<div class="epsilon-color-scheme-selected epsilon-control-set-dropdown">
+				<div class="epsilon-control-dropdown">
+					<i class="dashicons dashicons-arrow-down"/>
+				</div>
+				<div class="epsilon-control-styles">
 					<# _.each(data.selectedColors.colors, function(v, k) { #>
-						<span data-field-id="{{ k }}" style="background-color: {{ v }}"></span>
+						<a href="#" data-field-id="{{ k }}" style="background-color: {{ v }}"></a>
 					<# }); #>
 				</div>
-				<a class="epsilon-color-schemes-advanced" href="#"><span class="dashicons dashicons-arrow-down"></span></a>
 			</div>
+
 			<div id="color_scheme_{{ data.id }}" class="epsilon-color-scheme">
 				<# _.each(data.choices, function(el) { #>
 				<div class="epsilon-color-scheme-option <# if ( data.value === el.id ) { #> selected <# } #>" data-color-id="{{{ el.id }}}">
 					<input type="hidden" value='{{{ el.encodedColors }}}'/>
 					<span class="epsilon-color-scheme-name"> {{{ el.name }}} </span>
-					<div class="epsilon-color-scheme-palette">
+					<div class="epsilon-control-styles">
 						<# _.each(el.colors, function(v, k) { #>
-							<span data-field-id="{{ k }}" style="background-color: {{ v }}"></span>
+							<a href="#" data-field-id="{{ k }}" style="background-color: {{ v }}"></a>
 						<# }); #>
 					</div>
 				</div>
