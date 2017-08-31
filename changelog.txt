@@ -1,3 +1,10 @@
+v1.3.4
+	- HTML/CSS/JS improvements
+	- Added support for nested panels
+	- Color schemes improved
+	- Support for upsells in repeatable sections
+	- Fixed a bug in saving repeater fields
+
 v1.3.3
 	- Epsilon_Customizer will try to add objects through the manager passed by customize_register hook
 	- WP Filesystem calls sometime failed, we try to get contents with file_get_contents as well
