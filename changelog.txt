@@ -1,3 +1,6 @@
+v1.3.6
+	- Content parser should ignore selectized fields ( are only used for tagging )
+
 v1.3.5
 	- Load panels only if selected
 

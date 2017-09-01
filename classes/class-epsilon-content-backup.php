@@ -348,6 +348,7 @@ class Epsilon_Content_Backup {
 			'epsilon-icon-picker',
 			'epsilon-color-picker',
 			'select',
+			'selectize',
 		);
 		if ( in_array( $args['fields'][ $args['id'] ]['type'], $skip ) ) {
 			return false;
