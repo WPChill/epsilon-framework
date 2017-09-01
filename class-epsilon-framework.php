@@ -36,6 +36,14 @@ class Epsilon_Framework {
 		'pro',
 	);
 	/**
+	 * By default, load all panels
+	 *
+	 * @var array
+	 */
+	private $panels = array(
+		'regular',
+	);
+	/**
 	 * Default path is in /inc/libraries
 	 *
 	 * @var mixed|string
@@ -56,7 +64,7 @@ class Epsilon_Framework {
 	public function __construct( $args = array() ) {
 		foreach ( $args as $k => $v ) {
 
-			if ( ! in_array( $k, array( 'controls', 'sections', 'path', 'backup' ) ) ) {
+			if ( ! in_array( $k, array( 'controls', 'sections', 'panels', 'path', 'backup' ) ) ) {
 				continue;
 			}
 
@@ -131,7 +139,11 @@ class Epsilon_Framework {
 			}
 		}
 
-		require_once $path . '/customizer/panels/class-epsilon-panel-regular.php';
+		foreach ( $this->panels as $panel ) {
+			if ( file_exists( $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php' ) ) {
+				require_once $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php';
+			}
+		}
 
 		/**
 		 * Expose Manager to the Epsilon Customizer class.
