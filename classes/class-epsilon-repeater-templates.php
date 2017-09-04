@@ -227,7 +227,7 @@ class Epsilon_Repeater_Templates {
 									<ul class="epsilon-upsell-options">
 										<# _.each(field.options, function( option, index) { #>
 											<li><i class="dashicons dashicons-editor-help">
-													<span class="mte-tooltip">{{ option.help }}</span>
+													<span class="mte-tooltip">{{{ option.help }}}</span>
 												</i>
 												{{ option.option }}
 											</li>
