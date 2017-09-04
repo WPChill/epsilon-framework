@@ -1,3 +1,6 @@
+v1.3.7
+	- Fixed some reported issues
+
 v1.3.6
 	- Content parser should ignore selectized fields ( are only used for tagging )
 
