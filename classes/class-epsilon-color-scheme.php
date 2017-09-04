@@ -252,7 +252,7 @@ class Epsilon_Color_Scheme {
 	/**
 	 * @param $path
 	 *
-	 * @return bool|string
+	 * @return string
 	 */
 	public static function load_css_overrides( $path ) {
 		if ( file_exists( $path ) ) {
@@ -266,18 +266,6 @@ class Epsilon_Color_Scheme {
 			 * https://github.com/MachoThemes/epsilon-framework/issues/12
 			 */
 			$contents = $wp_filesystem->get_contents( $path );
-			if ( empty( $contents ) ) {
-				$contents_check = file_get_contents( $path );
-
-				/**
-				 * Verify the contents of the contents, this should always be a string ( it's CSS file )
-				 */
-				if ( is_string( $contents_check ) ) {
-					return $contents_check;
-				}
-
-				return false;
-			}
 
 			/**
 			 * Verify the contents of the contents, this should always be a string ( it's CSS file )
@@ -287,7 +275,7 @@ class Epsilon_Color_Scheme {
 			}
 		}
 
-		return false;
+		return '';
 	}
 
 	/**
@@ -296,11 +284,7 @@ class Epsilon_Color_Scheme {
 	public function epsilon_generate_color_scheme_css() {
 		$args = array();
 
-		if ( ! isset( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! is_array( $_POST['args'] ) ) {
+		if ( ! isset( $_POST['args'] ) || ! is_array( $_POST['args'] ) ) {
 			wp_die();
 		}
 

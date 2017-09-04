@@ -147,24 +147,13 @@ class Epsilon_Typography {
 
 		$path   = EPSILON_PATH . '/assets/data/gfonts.json';
 		$gfonts = $wp_filesystem->get_contents( $path );
-
-		/**
-		 * https://github.com/MachoThemes/epsilon-framework/issues/12
-		 */
-		if ( empty( $gfonts ) ) {
-			$gfonts_bkup = file_get_contents( $path );
-			if ( ! empty( $gfonts_bkup ) ) {
-				$gfonts = json_decode( $gfonts_bkup );
-			}
-		} else {
-			$gfonts = json_decode( $gfonts );
-		}
+		$gfonts = json_decode( $gfonts );
 
 		/**
 		 * If it's not a valid json ( json_decode returns null if invalid ), we terminate here.
 		 */
 		if ( null === $gfonts ) {
-			return false;
+			return new stdClass();
 		}
 
 		if ( empty( $font ) ) {
@@ -287,15 +276,7 @@ class Epsilon_Typography {
 			'json',
 		);
 
-		if ( ! isset( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! is_array( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! isset( $_POST['args']['json'] ) ) {
+		if ( ! isset( $_POST['args'] ) || ! is_array( $_POST['args'] ) || ! isset( $_POST['args']['json'] ) ) {
 			wp_die();
 		}
 

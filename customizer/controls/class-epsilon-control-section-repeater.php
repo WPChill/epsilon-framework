@@ -108,18 +108,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		}
 
 		$icons = $wp_filesystem->get_contents( $path );
+		$icons = json_decode( $icons );
 
-		/**
-		 * https://github.com/MachoThemes/epsilon-framework/issues/12
-		 */
-		if ( empty( $icons ) ) {
-			$icons_bkup = file_get_contents( $path );
-			if ( ! empty( $icons_bkup ) ) {
-				$icons = json_decode( $icons_bkup );
-			}
-		} else {
-			$icons = json_decode( $icons );
-		}
 
 		/**
 		 * In case the json could not be decoded, we return a new stdClass
