@@ -45,7 +45,7 @@
   .epsilon-dismiss-required-action {
     position: absolute;
     bottom: 5px;
-    right: 5px;
+    left: 5px;
     cursor: pointer;
   }
   p.title {
@@ -62,6 +62,7 @@
     border-top: 1px solid #fafafa;
     margin-top: 1em;
     padding-top: 1em;
+    text-align: right;
     p {
       margin-top: 0;
     }

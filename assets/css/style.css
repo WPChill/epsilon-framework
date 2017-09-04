@@ -1487,7 +1487,7 @@ body.adding-section .epsilon-add-new-section:before {
 .epsilon-recommended-actions .epsilon-dismiss-required-action {
   position: absolute;
   bottom: 5px;
-  right: 5px;
+  left: 5px;
   cursor: pointer;
 }
 .epsilon-recommended-actions p.title {
@@ -1504,6 +1504,7 @@ body.adding-section .epsilon-add-new-section:before {
   border-top: 1px solid #fafafa;
   margin-top: 1em;
   padding-top: 1em;
+  text-align: right;
 }
 .epsilon-recommended-actions .custom-action p {
   margin-top: 0;

@@ -202,7 +202,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 								<# if( data.plugins[plugin].plugin_slug ){ #>
 									<div class="custom-plugin">
 										<p class="plugin-card-{{ data.plugins[plugin].plugin_slug }} action_button {{ data.plugins[plugin].class }}">
-											<a data-slug="{{ data.plugins[plugin].plugin_slug }}" class="{{ data.plugins[plugin].button_class }}" href="{{ data.plugins[plugin].url }}">{{{ data.plugins[plugin].button_label }}}</a>
+											<a data-slug="{{ data.plugins[plugin].plugin_slug }}" class="{{ data.plugins[plugin].button_class }} button-primary" href="{{ data.plugins[plugin].url }}">{{{ data.plugins[plugin].button_label }}}</a>
 										</p>
 									</div>
 								<# } #>
