@@ -12,4 +12,5 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 } );
 
 wp.customize.bind( 'ready', function() {
+  EpsilonFramework.colorSchemes.init();
 } );

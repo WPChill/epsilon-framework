@@ -2434,8 +2434,6 @@ wp.customize.controlConstructor[ 'epsilon-color-scheme' ] = wp.customize.Control
   ready: function() {
     var control = this, section, instance;
 
-    EpsilonFramework.colorSchemes.init();
-
     jQuery( this.container ).find( '.epsilon-color-scheme-input' ).on( 'change', function() {
       control.setting.set( jQuery( this ).val() );
     } );
@@ -3226,4 +3224,5 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 } );
 
 wp.customize.bind( 'ready', function() {
+  EpsilonFramework.colorSchemes.init();
 } );
