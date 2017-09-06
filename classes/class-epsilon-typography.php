@@ -174,7 +174,7 @@ class Epsilon_Typography {
 		}
 
 		$defaults = array( 'Select font', 'Theme default', 'default_font' );
-		if ( in_array( $args, $defaults ) || empty( $args ) ) {
+		if ( in_array( $args, $defaults ) ) {
 			return false;
 		}
 
