@@ -50,10 +50,7 @@ EpsilonFramework.layouts = {
    * Initiate the layouts functionality (constructor)
    */
   init: function( selector ) {
-    var context = jQuery( selector );
-    jQuery.each( context, function() {
-      new EpsilonFramework.layouts.instance( jQuery( this ) );
-    } );
+    new EpsilonFramework.layouts.instance( jQuery( selector ).find( '.epsilon-layouts-container' ) );
   },
 
   /**

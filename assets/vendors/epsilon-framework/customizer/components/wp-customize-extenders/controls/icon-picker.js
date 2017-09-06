@@ -1,5 +1,5 @@
 /**
- * Icon Picker Control Constructor
+ * Epsilon Icon Picker Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
   ready: function() {

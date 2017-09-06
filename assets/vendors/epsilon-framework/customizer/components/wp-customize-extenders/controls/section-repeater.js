@@ -120,7 +120,8 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newSection.container );
-        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.colorPickers.init( newSection.container );
+        EpsilonFramework.customizerNavigation.init( newSection.container );
         EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
         newSection.container.find( '.epsilon-selectize' ).selectize( {
           plugins: [ 'remove_button' ],
@@ -144,7 +145,8 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
         if ( 'undefined' !== typeof newSection ) {
           EpsilonFramework.rangeSliders.init( newSection.container );
-          EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+          EpsilonFramework.colorPickers.init( newSection.container );
+          EpsilonFramework.customizerNavigation.init( newSection.container );
           EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
           newSection.container.find( '.epsilon-selectize' ).selectize( {
             plugins: [ 'remove_button' ],

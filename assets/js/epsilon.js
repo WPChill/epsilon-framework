@@ -20,49 +20,52 @@ EpsilonFramework.sectionRepeater = 'undefined' === typeof( EpsilonFramework.sect
  * @type {{init: EpsilonFramework.colorPickers.init}}
  */
 EpsilonFramework.colorPickers = {
-  init: function( selectors ) {
-    var selectors = jQuery( selectors ),
-        self = this;
+  /**
+   * Initiate a color picker
+   * @param selector
+   */
+  init: function( selector ) {
+    var selector = jQuery( selector ).find( '.epsilon-color-picker' ),
+        self = this,
+        settings = {
+          changeDelay: 500,
+          theme: 'default',
+          change: self.changePallete
+        },
+        clear,
+        instance;
 
     if ( 'function' !== typeof jQuery.fn.minicolors ) {
       return;
     }
 
-    jQuery.each( selectors, function() {
-      var settings = {
-            changeDelay: 500,
-            theme: 'default',
-            change: self.changePallete
-          },
-          clear, instance;
+    if ( '' !== selector.attr( 'placeholder' ) ) {
+      settings.defaultValue = selector.attr( 'placeholder' );
+    }
 
-      if ( '' !== jQuery( this ).attr( 'placeholder' ) ) {
-        settings.defaultValue = jQuery( this ).attr( 'placeholder' );
+    if ( 'rgba' === selector.attr( 'data-attr-mode' ) ) {
+      settings.format = 'rgb';
+      settings.opacity = true;
+    }
+
+    selector.minicolors( settings );
+
+    clear = selector.parents( '.customize-control-epsilon-color-picker' ).find( 'a' );
+    if ( ! clear.length ) {
+      clear = selector.parents( '.repeater-field-epsilon-color-picker' ).find( 'a' );
+    }
+
+    clear.on( 'click', function( e ) {
+      e.preventDefault();
+      instance = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
+      if ( ! instance.length ) {
+        instance = jQuery( this ).parents( '.repeater-field-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
       }
 
-      if ( 'rgba' === jQuery( this ).attr( 'data-attr-mode' ) ) {
-        settings.format = 'rgb';
-        settings.opacity = true;
-      }
-
-      jQuery( this ).minicolors( settings );
-
-      clear = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'a' );
-      if ( ! clear.length ) {
-        clear = jQuery( this ).parents( '.repeater-field-epsilon-color-picker' ).find( 'a' );
-      }
-
-      clear.on( 'click', function( e ) {
-        e.preventDefault();
-        instance = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
-        if ( ! instance.length ) {
-          instance = jQuery( this ).parents( '.repeater-field-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
-        }
-
-        instance.minicolors( 'value', jQuery( this ).attr( 'data-default' ) );
-        instance.trigger( 'change' );
-      } );
+      instance.minicolors( 'value', jQuery( this ).attr( 'data-default' ) );
+      instance.trigger( 'change' );
     } );
+
   },
   /**
    * Real time changes to the "pallete"
@@ -172,6 +175,25 @@ EpsilonFramework.colorSchemes = {
   }
 };
 
+/**
+ * Customizer navigation
+ * @type {{}}
+ */
+EpsilonFramework.customizerNavigation = {
+  /**
+   * Initiate customizer navigation
+   *
+   * @param selector
+   */
+  init: function( selector ) {
+    selector.find( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
+      e.preventDefault();
+      if ( 'undefined' !== typeof( wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ) ) ) {
+        wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+      }
+    } );
+  }
+};
 /**
  * Icon Picker Initiator
  *
@@ -418,10 +440,7 @@ EpsilonFramework.layouts = {
    * Initiate the layouts functionality (constructor)
    */
   init: function( selector ) {
-    var context = jQuery( selector );
-    jQuery.each( context, function() {
-      new EpsilonFramework.layouts.instance( jQuery( this ) );
-    } );
+    new EpsilonFramework.layouts.instance( jQuery( selector ).find( '.epsilon-layouts-container' ) );
   },
 
   /**
@@ -660,53 +679,53 @@ EpsilonFramework.rangeSliders = {
    * @param selector
    */
   init: function( selector ) {
-    var context = jQuery( selector ),
-        sliders = context.find( '.slider-container' );
+    var context = jQuery( selector ).hasClass( 'slider-container' ) ? jQuery( selector ) : jQuery( selector ).find( '.slider-container' ),
+        slider = context.find( '.ss-slider' ),
+        input = context.find( '.rl-slider' ),
+        inputId = input.attr( 'id' ),
+        id = slider.attr( 'id' );
 
-    jQuery.each( sliders, function() {
-      var slider = jQuery( this ).find( '.ss-slider' ),
-          input = jQuery( this ).find( '.rl-slider' ),
-          inputId = input.attr( 'id' ),
-          id = slider.attr( 'id' );
+    if ( ! context.length ) {
+      return;
+    }
 
+    jQuery( '#' + id ).slider( {
+      value: parseFloat( jQuery( '#' + inputId ).attr( 'value' ) ),
+      range: 'min',
+      min: parseFloat( jQuery( '#' + id ).attr( 'data-attr-min' ) ),
+      max: parseFloat( jQuery( '#' + id ).attr( 'data-attr-max' ) ),
+      step: parseFloat( jQuery( '#' + id ).attr( 'data-attr-step' ) ),
+      /**
+       * Removed Change event because server was flooded with requests from
+       * javascript, sending changesets on each increment.
+       *
+       * @param event
+       * @param ui
+       */
+      slide: function( event, ui ) {
+        jQuery( '#' + inputId ).attr( 'value', ui.value );
+      },
+      /**
+       * Bind the change event to the "actual" stop
+       * @param event
+       * @param ui
+       */
+      stop: function( event, ui ) {
+        jQuery( '#' + inputId ).trigger( 'change' );
+      }
+    } );
+
+    jQuery( input ).on( 'focus', function() {
+      jQuery( this ).blur();
+    } );
+
+    jQuery( '#' + inputId ).attr( 'value', ( jQuery( '#' + id ).slider( 'value' ) ) );
+    jQuery( '#' + inputId ).on( 'change', function() {
       jQuery( '#' + id ).slider( {
-        value: parseFloat( jQuery( '#' + inputId ).attr( 'value' ) ),
-        range: 'min',
-        min: parseFloat( jQuery( '#' + id ).attr( 'data-attr-min' ) ),
-        max: parseFloat( jQuery( '#' + id ).attr( 'data-attr-max' ) ),
-        step: parseFloat( jQuery( '#' + id ).attr( 'data-attr-step' ) ),
-        /**
-         * Removed Change event because server was flooded with requests from
-         * javascript, sending changesets on each increment.
-         *
-         * @param event
-         * @param ui
-         */
-        slide: function( event, ui ) {
-          jQuery( '#' + inputId ).attr( 'value', ui.value );
-        },
-        /**
-         * Bind the change event to the "actual" stop
-         * @param event
-         * @param ui
-         */
-        stop: function( event, ui ) {
-          jQuery( '#' + inputId ).trigger( 'change' );
-        }
-      } );
-
-      jQuery( input ).on( 'focus', function() {
-        jQuery( this ).blur();
-      } );
-
-      jQuery( '#' + inputId ).attr( 'value', ( jQuery( '#' + id ).slider( 'value' ) ) );
-      jQuery( '#' + inputId ).on( 'change', function() {
-        jQuery( '#' + id ).slider( {
-          value: jQuery( this ).val()
-        } );
+        value: jQuery( this ).val()
       } );
     } );
-  }
+  },
 };
 /**
  * Helper object, we can keep here functions that render content or help with UI interaction
@@ -1924,22 +1943,20 @@ EpsilonFramework.sectionRepeater.section = {
  */
 EpsilonFramework.textEditor = {
   init: function( selector ) {
-    var context = jQuery( selector );
-    jQuery.each( context, function() {
-      var editorId = jQuery( jQuery( this ).find( 'textarea' ) ).attr( 'id' );
+    var context = jQuery( selector ),
+        editorId = jQuery( context.find( 'textarea' ) ).attr( 'id' );
 
-      wp.editor.initialize( editorId, {
-        tinymce: {
-          wpautop: true,
-          setup: function( editor ) {
-            editor.on( 'change', function( e ) {
-              editor.save();
-              jQuery( editor.getElement() ).trigger( 'change' );
-            } );
-          }
-        },
-        quicktags: true
-      } );
+    wp.editor.initialize( editorId, {
+      tinymce: {
+        wpautop: true,
+        setup: function( editor ) {
+          editor.on( 'change', function( e ) {
+            editor.save();
+            jQuery( editor.getElement() ).trigger( 'change' );
+          } );
+        }
+      },
+      quicktags: true
     } );
   }
 };
@@ -1963,65 +1980,62 @@ EpsilonFramework.typography = {
   /**
    * Initiate function
    */
-  init: function() {
-    var selector = jQuery( '.epsilon-typography-container' ),
-        self = this;
+  init: function( control ) {
+    var self = this,
+        sliders,
+        container = control.container.find( '.epsilon-typography-container' ),
+        uniqueId = container.attr( 'data-unique-id' ),
+        selects = container.find( 'select' ),
+        inputs = container.find( '.epsilon-typography-input' );
 
-    if ( selector.length ) {
-      jQuery.each( selector, function() {
-        var container = jQuery( this ),
-            uniqueId = container.attr( 'data-unique-id' ),
-            selects = container.find( 'select' ),
-            inputs = container.find( '.epsilon-typography-input' ),
-            control = wp.customize.control( uniqueId );
-
-        /**
-         * Instantiate the selectize javascript plugin
-         * and the input type number
-         */
-        try {
-          self._selectize = selects.selectize();
-        }
-        catch ( err ) {
-          /**
-           * In case the selectize plugin is not loaded, raise an error
-           */
-          console.warn( 'selectize not yet loaded' );
-        }
-        /**
-         * On triggering the change event, create a json with the values and
-         * send it to the preview window
-         */
-        inputs.on( 'change', function() {
-          var val = EpsilonFramework.typography._parseJson( inputs, uniqueId, control );
-          jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
-        } );
-
-        /**
-         * On clicking the advanced options toggler,
-         */
-        container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
-          var toggle = jQuery( this ).attr( 'data-toggle' );
-          e.preventDefault();
-          jQuery( this ).toggleClass( 'active' ).parent().toggleClass( 'active' );
-          jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
-        } );
-      } );
-
-      /**
-       * Great use of the EpsilonFramework, ahoy!
-       */
-      EpsilonFramework.rangeSliders.init( '.epsilon-typography-container' );
-
-      /**
-       * Reset button
-       */
-      jQuery( '.epsilon-typography-default' ).on( 'click', function( e ) {
-        e.preventDefault();
-        EpsilonFramework.typography._resetDefault( jQuery( this ) );
-      } );
-
+    /**
+     * Instantiate the selectize javascript plugin
+     * and the input type number
+     */
+    try {
+      self._selectize = selects.selectize();
     }
+    catch ( err ) {
+      /**
+       * In case the selectize plugin is not loaded, raise an error
+       */
+      console.warn( 'selectize not yet loaded' );
+    }
+    /**
+     * On triggering the change event, create a json with the values and
+     * send it to the preview window
+     */
+    inputs.on( 'change', function() {
+      var val = EpsilonFramework.typography._parseJson( inputs, uniqueId, control );
+      jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
+    } );
+
+    /**
+     * On clicking the advanced options toggler,
+     */
+    container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
+      var toggle = jQuery( this ).attr( 'data-toggle' );
+      e.preventDefault();
+      jQuery( this ).toggleClass( 'active' ).parent().toggleClass( 'active' );
+      jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
+    } );
+
+    /**
+     * Great use of the EpsilonFramework, ahoy!
+     */
+    sliders = jQuery( '.epsilon-typography-container' ).find( '.slider-container' );
+    jQuery.each( sliders, function() {
+      EpsilonFramework.rangeSliders.init( this );
+    } );
+
+    /**
+     * Reset button
+     */
+    jQuery( '.epsilon-typography-default' ).on( 'click', function( e ) {
+      e.preventDefault();
+      EpsilonFramework.typography._resetDefault( jQuery( this ) );
+    } );
+
   },
 
   /**
@@ -2398,11 +2412,13 @@ EpsilonFramework.recommendedActions = {
 };
 
 /**
- * Color Picker Control Constructor
+ * Epsilon Color Picker Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
+
+    EpsilonFramework.colorPickers.init( this.container );
 
     control.container.on( 'change', 'input.epsilon-color-picker',
         function() {
@@ -2412,11 +2428,13 @@ wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control
   }
 } );
 /**
- * Color Schemes Control Constructor
+ * Epsilon Color Schemes Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-color-scheme' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this, section, instance;
+
+    EpsilonFramework.colorSchemes.init();
 
     jQuery( this.container ).find( '.epsilon-color-scheme-input' ).on( 'change', function() {
       control.setting.set( jQuery( this ).val() );
@@ -2424,14 +2442,15 @@ wp.customize.controlConstructor[ 'epsilon-color-scheme' ] = wp.customize.Control
   }
 } );
 /**
- * Customizer Navigation
+ * Epsilon Customizer Navigation Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-customizer-navigation' ] = wp.customize.Control.extend( {
   ready: function() {
+    EpsilonFramework.customizerNavigation.init( this.container );
   }
 } );
 /**
- * Icon Picker Control Constructor
+ * Epsilon Icon Picker Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
   ready: function() {
@@ -2447,7 +2466,7 @@ wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.
   }
 } );
 /**
- * Image Control Constructor
+ * Epsilon Image Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-image' ] = wp.customize.Control.extend( {
   ready: function() {
@@ -2457,12 +2476,12 @@ wp.customize.controlConstructor[ 'epsilon-image' ] = wp.customize.Control.extend
 } );
 
 /**
- * WP Customizer Layouts Control Constructor
+ * Epsilon Layouts Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
-
+    EpsilonFramework.layouts.init( this.container );
     /**
      * Save the layout
      */
@@ -2473,11 +2492,13 @@ wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.exte
 } );
 
 /**
- * WP Customizer Range Slider Control Constructor
+ * Epsilon Range Slider Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
+
+    EpsilonFramework.rangeSliders.init( this.container );
 
     control.container.on( 'change', 'input.rl-slider',
         function() {
@@ -2488,7 +2509,7 @@ wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.exten
 } );
 
 /**
- * WP Customizer Control Constructor
+ * Epsilon Repeater Field Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.extend( {
   ready: function() {
@@ -2562,7 +2583,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.colorPickers.init( newRow.container );
         EpsilonFramework.repeater.base.initTexteditor( newRow.container );
       } );
     }
@@ -2598,7 +2619,7 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.colorPickers.init( newRow.container );
         EpsilonFramework.repeater.base.initTexteditor( newRow.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
@@ -2829,7 +2850,8 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
          * init range sliders, color pickers
          */
         EpsilonFramework.rangeSliders.init( newSection.container );
-        EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+        EpsilonFramework.colorPickers.init( newSection.container );
+        EpsilonFramework.customizerNavigation.init( newSection.container );
         EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
         newSection.container.find( '.epsilon-selectize' ).selectize( {
           plugins: [ 'remove_button' ],
@@ -2853,7 +2875,8 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
         if ( 'undefined' !== typeof newSection ) {
           EpsilonFramework.rangeSliders.init( newSection.container );
-          EpsilonFramework.colorPickers.init( newSection.container.find( '.epsilon-color-picker' ) );
+          EpsilonFramework.colorPickers.init( newSection.container );
+          EpsilonFramework.customizerNavigation.init( newSection.container );
           EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
           newSection.container.find( '.epsilon-selectize' ).selectize( {
             plugins: [ 'remove_button' ],
@@ -2982,13 +3005,15 @@ wp.customize.controlConstructor[ 'epsilon-text-editor' ] = wp.customize.Control.
   ready: function() {
     var control = this;
 
+    EpsilonFramework.textEditor.init( this.container );
+
     control.container.on( 'change keyup', 'textarea', function() {
       control.setting.set( jQuery( this ).val() );
     } );
   }
 } );
 /**
- * WP Customizer Control Constructor
+ * Epsilon Toggle Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.extend( {
   ready: function() {
@@ -3003,13 +3028,15 @@ wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.exten
 } );
 
 /**
- * WP Customizer Typography Control Constructor
+ * Epsilon Typography Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
+
+    EpsilonFramework.typography.init( this );
     /**
-     * Save the layout
+     * Save the typography
      */
     jQuery( this.container ).find( '.customize-control-content > .epsilon-typography-input' ).on( 'change', function() {
       control.setting.set( jQuery( this ).val() );
@@ -3018,7 +3045,7 @@ wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.e
 } );
 
 /**
- * WP Customizer Upsell Control Constructor
+ * Epsilon Upsell Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.extend( {
   ready: function() {
@@ -3031,7 +3058,7 @@ wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.exten
   }
 } );
 /**
- * Nestable regular panels
+ * Nestable Regular Panels Constructor
  */
 wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.extend( {
   /**
@@ -3160,7 +3187,13 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
   },
 } );
 
+/**
+ * Recommended Section Constructor
+ */
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
+  ready: function() {
+    EpsilonFramework.recommendedActions.init();
+  },
   attachEvents: function() {
   },
   isContextuallyActive: function() {
@@ -3169,7 +3202,7 @@ wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.cu
 } );
 
 /**
- * Pro Section
+ * Pro Section Constructor
  */
 wp.customize.sectionConstructor[ 'epsilon-section-pro' ] = wp.customize.Section.extend( {
   attachEvents: function() {
@@ -3193,22 +3226,4 @@ jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
 } );
 
 wp.customize.bind( 'ready', function() {
-  EpsilonFramework.layouts.init( '.epsilon-layouts-container' );
-  EpsilonFramework.rangeSliders.init( '.customize-control-epsilon-slider' );
-  EpsilonFramework.colorPickers.init( '.epsilon-color-picker' );
-  EpsilonFramework.textEditor.init( '.customize-control-epsilon-text-editor' );
-
-  EpsilonFramework.typography.init();
-  EpsilonFramework.colorSchemes.init();
-  EpsilonFramework.recommendedActions.init();
-
-  /**
-   * @todo add it somewhere in JS
-   */
-  jQuery( '#customize-theme-controls' ).on( 'click', '.epsilon-customizer-navigation', function( e ) {
-    e.preventDefault();
-    if ( 'undefined' !== typeof(wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) )) ) {
-      wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
-    }
-  } );
 } );

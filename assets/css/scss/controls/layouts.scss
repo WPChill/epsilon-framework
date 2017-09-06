@@ -1,16 +1,9 @@
 /* Espilon Layout Control */
 
 .epsilon-layouts-container {
-  .epsilon-button-label {
-    display: inline-block;
-    margin-right: 20px;
-    text-align: left;
-  }
-
   a {
     outline: none;
     text-decoration: none;
-    color: #000;
     &:hover,
     &:focus {
       text-decoration: none;
@@ -18,35 +11,9 @@
     }
   }
 
-  .epsilon-layouts-advanced-toggler {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background: #fefefe;
-    padding: 9px;
-    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .1);
-    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .1);
-    box-shadow: 0 0 4px rgba(0, 0, 0, .1);
-    display: inline-block;
-    vertical-align: middle;
-    .dashicons {
-      line-height: 21px;
-    }
-    &.active {
-      background: #f4f4f4;
-      -webkit-border-bottom-right-radius: 0;
-      -moz-border-bottom-right-radius: 0;
-      border-bottom-right-radius: 0;
-      -webkit-border-bottom-left-radius: 0;
-      -moz-border-bottom-left-radius: 0;
-      border-bottom-left-radius: 0;
-      color: #79b5d1;
-    }
-  }
-
-  .epsilon-layouts-container-buttons {
-    label {
-      display: block;
+  .epsilon-control-group {
+    a {
+      line-height: 41px;
     }
   }
 

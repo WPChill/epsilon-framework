@@ -1,5 +1,5 @@
 /**
- * Nestable regular panels
+ * Nestable Regular Panels Constructor
  */
 wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.extend( {
   /**

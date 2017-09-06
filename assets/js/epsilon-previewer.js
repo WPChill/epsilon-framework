@@ -110,7 +110,8 @@ EpsilonPreviewer.typography = {
       data: object,
       complete: function( json ) {
         var style = jQuery( '#' + object.args.stylesheet + '-inline-css' ),
-            fontImport = object.args.json[ 'font-family' ] !== 'default_font' ? '<link href="https://fonts.googleapis.com/css?family=' + object.args.json[ 'font-family' ] + '" rel="stylesheet">' : null;
+            fontImport = object.args.json[ 'font-family' ] !== 'default_font' ? '<link href="https://fonts.googleapis.com/css?family=' + object.args.json[ 'font-family' ] +
+                '" rel="stylesheet">' : null;
         if ( ! style.length ) {
           style = jQuery( 'body' ).append( '<style type="text/css" id="' + object.args.stylesheet + '-inline-css" />' ).find( '#' + object.args.stylesheet + '-inline-css' );
         }

@@ -2,7 +2,7 @@
   "name": "epsilon-framework",
   "title": "Epsilon Framework",
   "author": "Macho Themes",
-  "version": "1.3.7",
+  "version": "1.4.0",
   "main": "gruntfile.js",
   "license": "GPL v3",
   "repository": "https://github.com/MachoThemes/epsilon-framework",

@@ -1,3 +1,6 @@
+v1.4.0
+	- Rewritten customizer controls code
+
 v1.3.7
 	- Fixed some reported issues
 

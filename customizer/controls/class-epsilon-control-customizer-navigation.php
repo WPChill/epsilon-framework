@@ -74,10 +74,11 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	 * @since 1.2.0
 	 */
 	public function content_template() {
-		?>
+		//@formatter:off ?>
 		{{{ data.label }}}
-		<a href="#" class="epsilon-customizer-navigation" data-customizer-section="{{{ data.navigateToId }}}">{{{
-			data.navigateToLabel }}}</a>
-		<?php
+		<a href="#" class="epsilon-customizer-navigation" data-customizer-section="{{{ data.navigateToId }}}">
+			{{{ data.navigateToLabel }}}
+		</a>
+		<?php //@formatter:on
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * WP Customizer Upsell Control Constructor
+ * Epsilon Upsell Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.extend( {
   ready: function() {

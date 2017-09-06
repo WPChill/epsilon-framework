@@ -496,18 +496,18 @@
 }
 .epsilon-typography-container.group-of-full > div:nth-child(2) {
   position: absolute;
-  right: 70px;
-  top: 1px;
+  right: 69px;
+  top: 0px;
 }
 .epsilon-typography-container.group-of-full > div:nth-child(3) {
   position: absolute;
-  right: 35px;
-  top: 1px;
+  right: 36px;
+  top: 0px;
 }
 .epsilon-typography-container.group-of-full > div:nth-child(4) {
   position: absolute;
   right: 0;
-  top: 1px;
+  top: 0px;
 }
 .epsilon-typography-container.group-of-three > div:nth-child(1) {
   width: 100%;
@@ -515,22 +515,22 @@
 }
 .epsilon-typography-container.group-of-three > div:nth-child(2) {
   position: absolute;
-  right: 35px;
-  top: 1px;
+  right: 36px;
+  top: 0px;
 }
 .epsilon-typography-container.group-of-three > div:nth-child(3) {
   position: absolute;
   right: 0;
-  top: 1px;
+  top: 0px;
 }
 .epsilon-typography-container.group-of-two > div:nth-child(1) {
   width: 100%;
-  padding-right: 37px;
+  padding-right: 38px;
 }
 .epsilon-typography-container.group-of-two > div:nth-child(2) {
   position: absolute;
   right: 0;
-  top: 1px;
+  top: 0px;
 }
 .epsilon-typography-container.group-of-one {
   width: 100%;
@@ -568,8 +568,11 @@
 }
 .epsilon-typography-container .selectize-input {
   height: 34px;
-  line-height: 21px;
-  border: none;
+  line-height: 14px;
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
 }
 .epsilon-typography-container .selectize-dropdown {
   z-index: 20;
@@ -595,12 +598,13 @@
 .epsilon-font-weight-switch,
 .epsilon-font-style-switch {
   width: 33px;
-  height: 33px;
+  height: 32px;
   border-radius: 4px;
   background: #fff;
-  -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   position: relative;
 }
@@ -614,7 +618,8 @@
   border-radius: 4px;
   z-index: 1;
   padding: 0;
-  line-height: 33px;
+  border-top: 2px solid #fff;
+  line-height: 30px;
   transition: background-color 0.2s ease-in;
   text-align: center;
 }
@@ -633,6 +638,7 @@
   left: 0;
   background-color: #fff;
   transition: all 0.2s ease-in 0s;
+  pointer-events: none;
 }
 
 .epsilon-font-style-switch-label:before {
@@ -644,16 +650,19 @@
 .epsilon-font-style-switch-checkbox:checked + label,
 .epsilon-font-style-switch-checkbox:checked + label:before {
   color: #57a7c9;
+  border-color: #57a7c9;
+  background: #fefefe;
 }
 
 .epsilon-typography-advanced {
   background: #fff;
-  height: 33px;
-  width: 33px;
+  height: 34px;
+  width: 34px;
   border-radius: 4px;
-  -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.05);
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
   display: inline-block;
   text-align: center;
   position: relative;
@@ -665,8 +674,14 @@
   line-height: 33px;
   outline: none;
 }
+.epsilon-typography-advanced .epsilon-typography-advanced-options-toggler:hover {
+  color: #57a7c9;
+}
 .epsilon-typography-advanced.epsilon-typography-advanced.active {
-  background: #f4f4f4;
+  background: #fefefe;
+}
+.epsilon-typography-advanced.epsilon-typography-advanced.active .epsilon-typography-advanced-options-toggler {
+  color: #57a7c9;
 }
 .epsilon-typography-advanced .epsilon-typography-advanced-options-toggler:focus {
   outline: none;
@@ -705,48 +720,29 @@
   padding-left: 20px;
 }
 
-/* Espilon Layout Control */
-.epsilon-layouts-container .epsilon-button-label {
-  display: inline-block;
-  margin-right: 20px;
-  text-align: left;
+.epsilon-font-weight-switch,
+.epsilon-font-weight-switch-label {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
+
+.epsilon-font-style-switch,
+.epsilon-font-style-switch-label {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Espilon Layout Control */
 .epsilon-layouts-container a {
   outline: none;
   text-decoration: none;
-  color: #000;
 }
 .epsilon-layouts-container a:hover, .epsilon-layouts-container a:focus {
   text-decoration: none;
   color: #79b5d1;
 }
-.epsilon-layouts-container .epsilon-layouts-advanced-toggler {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background: #fefefe;
-  padding: 9px;
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  display: inline-block;
-  vertical-align: middle;
-}
-.epsilon-layouts-container .epsilon-layouts-advanced-toggler .dashicons {
-  line-height: 21px;
-}
-.epsilon-layouts-container .epsilon-layouts-advanced-toggler.active {
-  background: #f4f4f4;
-  -webkit-border-bottom-right-radius: 0;
-  -moz-border-bottom-right-radius: 0;
-  border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
-  -moz-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
-  color: #79b5d1;
-}
-.epsilon-layouts-container .epsilon-layouts-container-buttons label {
-  display: block;
+.epsilon-layouts-container .epsilon-control-group a {
+  line-height: 41px;
 }
 .epsilon-layouts-container .epsilon-layouts-container-advanced {
   -webkit-border-radius: 3px;
@@ -929,7 +925,6 @@
   width: 100%;
   clear: both;
   padding-bottom: 12px;
-  border-bottom: 1px dotted #CCC;
 }
 .customize-control-epsilon-repeater .repeater-field .customize-control-title {
   font-size: 13px;
@@ -1028,9 +1023,30 @@
   text-align: center;
 }
 
+.repeater-field-text input {
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  padding: 7px;
+  border-radius: 4px;
+}
+
+.repeater-field-epsilon-text-editor .customize-control-title {
+  display: inline-block;
+  float: left;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  position: relative;
+  top: 5px;
+}
+
 .customize-control-epsilon-section-repeater {
   margin: -12px;
   width: 105%;
+}
+.customize-control-epsilon-section-repeater .repeater-field {
+  margin-bottom: 15px;
 }
 .customize-control-epsilon-section-repeater .selectize-control.plugin-remove_button [data-value] .remove {
   font-family: 'OpenSans';
@@ -1311,22 +1327,26 @@ body.adding-section .epsilon-add-new-section:before {
   display: inline-block;
   background: #fff;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 4px;
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
 }
 .epsilon-icon-container .epsilon-icon-name {
   display: inline-block;
   float: left;
-  padding: 10px;
+  padding: 6px;
 }
 .epsilon-icon-container i {
   margin-left: 5px;
-  margin-right: 15px;
+  margin-right: 5px;
 }
 .epsilon-icon-container .icon-label {
   display: inline-block;
 }
 .epsilon-icon-container .epsilon-open-icon-picker {
-  padding: 10px;
+  padding: 6px;
   float: right;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -1638,6 +1658,9 @@ body.adding-section .epsilon-add-new-section:before {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
   border-radius: 3px;
 }
+.epsilon-control-advanced.active, .epsilon-control-advanced:hover {
+  color: #57a7c9;
+}
 
 .epsilon-control-dropdown {
   border-left: none;
@@ -1784,10 +1807,10 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 .epsilon-control-group a.active {
-  background-color: rgba(47, 33, 54, 0);
-  -webkit-box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
-  -moz-box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
+  background-color: #fefefe;
+  -webkit-box-shadow: inset 0 3px 0px #57a7c9, inset 2px 0px 5px 0px rgba(0, 0, 0, 0.05), inset -2px 0px 5px 0px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 3px 0px #57a7c9, inset 2px 0px 5px 0px rgba(0, 0, 0, 0.05), inset -2px 0px 5px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 0px #57a7c9, inset 2px 0px 5px 0px rgba(0, 0, 0, 0.05), inset -2px 0px 5px 0px rgba(0, 0, 0, 0.05);
 }
 
 .epsilon-control-group i {

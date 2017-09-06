@@ -18,65 +18,62 @@ EpsilonFramework.typography = {
   /**
    * Initiate function
    */
-  init: function() {
-    var selector = jQuery( '.epsilon-typography-container' ),
-        self = this;
+  init: function( control ) {
+    var self = this,
+        sliders,
+        container = control.container.find( '.epsilon-typography-container' ),
+        uniqueId = container.attr( 'data-unique-id' ),
+        selects = container.find( 'select' ),
+        inputs = container.find( '.epsilon-typography-input' );
 
-    if ( selector.length ) {
-      jQuery.each( selector, function() {
-        var container = jQuery( this ),
-            uniqueId = container.attr( 'data-unique-id' ),
-            selects = container.find( 'select' ),
-            inputs = container.find( '.epsilon-typography-input' ),
-            control = wp.customize.control( uniqueId );
-
-        /**
-         * Instantiate the selectize javascript plugin
-         * and the input type number
-         */
-        try {
-          self._selectize = selects.selectize();
-        }
-        catch ( err ) {
-          /**
-           * In case the selectize plugin is not loaded, raise an error
-           */
-          console.warn( 'selectize not yet loaded' );
-        }
-        /**
-         * On triggering the change event, create a json with the values and
-         * send it to the preview window
-         */
-        inputs.on( 'change', function() {
-          var val = EpsilonFramework.typography._parseJson( inputs, uniqueId, control );
-          jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
-        } );
-
-        /**
-         * On clicking the advanced options toggler,
-         */
-        container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
-          var toggle = jQuery( this ).attr( 'data-toggle' );
-          e.preventDefault();
-          jQuery( this ).toggleClass( 'active' ).parent().toggleClass( 'active' );
-          jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
-        } );
-      } );
-
-      /**
-       * Great use of the EpsilonFramework, ahoy!
-       */
-      EpsilonFramework.rangeSliders.init( '.epsilon-typography-container' );
-
-      /**
-       * Reset button
-       */
-      jQuery( '.epsilon-typography-default' ).on( 'click', function( e ) {
-        e.preventDefault();
-        EpsilonFramework.typography._resetDefault( jQuery( this ) );
-      } );
-
+    /**
+     * Instantiate the selectize javascript plugin
+     * and the input type number
+     */
+    try {
+      self._selectize = selects.selectize();
     }
+    catch ( err ) {
+      /**
+       * In case the selectize plugin is not loaded, raise an error
+       */
+      console.warn( 'selectize not yet loaded' );
+    }
+    /**
+     * On triggering the change event, create a json with the values and
+     * send it to the preview window
+     */
+    inputs.on( 'change', function() {
+      var val = EpsilonFramework.typography._parseJson( inputs, uniqueId, control );
+      jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
+    } );
+
+    /**
+     * On clicking the advanced options toggler,
+     */
+    container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
+      var toggle = jQuery( this ).attr( 'data-toggle' );
+      e.preventDefault();
+      jQuery( this ).toggleClass( 'active' ).parent().toggleClass( 'active' );
+      jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
+    } );
+
+    /**
+     * Great use of the EpsilonFramework, ahoy!
+     */
+    sliders = jQuery( '.epsilon-typography-container' ).find( '.slider-container' );
+    jQuery.each( sliders, function() {
+      EpsilonFramework.rangeSliders.init( this );
+    } );
+
+    /**
+     * Reset button
+     */
+    jQuery( '.epsilon-typography-default' ).on( 'click', function( e ) {
+      e.preventDefault();
+      EpsilonFramework.typography._resetDefault( jQuery( this ) );
+    } );
+
   },
 
   /**
