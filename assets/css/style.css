@@ -1289,6 +1289,11 @@ body.adding-section .epsilon-add-new-section:before {
   right: 35px;
 }
 
+.customize-control-epsilon-section-repeater .repeater-field-epsilon-customizer-navigation .epsilon-customizer-navigation {
+  width: 100%;
+  text-align: center;
+}
+
 .epsilon-controller-image-container .placeholder {
   width: 100%;
   position: relative;
