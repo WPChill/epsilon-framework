@@ -1591,6 +1591,47 @@ body.adding-section .epsilon-add-new-section:before {
   padding-top: 4px;
 }
 
+.doubled-section-parent {
+  display: inline-block;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  left: -450px;
+  max-width: 450px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #eee;
+  -webkit-transition: left .18s;
+  transition: left .18s;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding-top: 45px;
+}
+
+.epsilon-close-doubled-section {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+body.adding-doubled-section .wp-full-overlay-main {
+  left: 450px;
+}
+body.adding-doubled-section #customize-preview {
+  opacity: 0.4;
+}
+body.adding-doubled-section .doubled-section-parent {
+  left: 0;
+}
+
+.control-section-epsilon-section-doubled.doubled-section-opened {
+  display: inline-block;
+  max-width: 450px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .in-sub-panel #customize-theme-controls .customize-pane-child.current-panel-parent,
 #customize-theme-controls .customize-pane-child.current-section-parent {
   -webkit-transform: translateX(-100%);

@@ -30,6 +30,14 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	public $navigate_to_label;
 
 	/**
+	 * Opens a doubled section
+	 *
+	 * @since 1.4.0
+	 * @var bool
+	 */
+	public $opens_doubled = false;
+
+	/**
 	 * Epsilon_Control_Customizer_Navigation constructor.
 	 *
 	 * @since 1.2.0
@@ -55,6 +63,7 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 		$json['id']              = $this->id;
 		$json['navigateToId']    = $this->navigate_to_id;
 		$json['navigateToLabel'] = $this->navigate_to_label;
+		$json['opensDoubled']    = $this->opens_doubled;
 
 		return $json;
 	}

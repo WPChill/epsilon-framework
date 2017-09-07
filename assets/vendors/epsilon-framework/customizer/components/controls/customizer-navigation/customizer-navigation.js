@@ -12,7 +12,12 @@ EpsilonFramework.customizerNavigation = {
     selector.find( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
       e.preventDefault();
       if ( 'undefined' !== typeof( wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ) ) ) {
-        wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+        if ( jQuery( this ).attr( 'data-doubled' ) ) {
+          wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).headContainer.trigger( 'click' );
+        } else {
+          wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
+        }
+
       }
     } );
   }

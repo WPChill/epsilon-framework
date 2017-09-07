@@ -216,7 +216,7 @@ class Epsilon_Repeater_Templates {
 							</div>
 						<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
 							<div class="epsilon-customizer-navigation">
-								{{{ field.label }}} <a href="#" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
+								{{{ field.label }}} <a href="#" data-doubled="{{ field.opensDoubled }}" class="epsilon-customizer-navigation" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
 							</div>
 						<# } else if ( 'epsilon-upsell' === field.type ) { #>
 							<div class="epsilon-upsell-label">
