@@ -2,6 +2,10 @@
   margin: -12px;
   width: 105%;
 
+  .repeater-field {
+    margin-bottom: 15px;
+  }
+
   .selectize-control.plugin-remove_button [data-value] .remove {
     font-family: 'OpenSans';
   }
@@ -266,3 +270,13 @@ body.adding-section {
     right: 35px;
   }
 }
+
+.customize-control-epsilon-section-repeater {
+  .repeater-field-epsilon-customizer-navigation{
+    .epsilon-customizer-navigation {
+      width:100%;
+      text-align:center;
+    }
+  }
+}
+

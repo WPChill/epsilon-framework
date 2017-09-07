@@ -1,3 +1,7 @@
+v1.4.0
+	- Rewritten customizer controls code
+	- Created a new custom section that "doubles" the regular panels/sections - Used for rendering repeater fields
+
 v1.3.7
 	- Fixed some reported issues
 

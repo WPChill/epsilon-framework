@@ -1,10 +1,10 @@
 /**
- * WP Customizer Layouts Control Constructor
+ * Epsilon Layouts Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
-
+    EpsilonFramework.layouts.init( this.container );
     /**
      * Save the layout
      */

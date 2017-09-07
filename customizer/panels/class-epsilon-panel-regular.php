@@ -15,6 +15,13 @@ class Epsilon_Panel_Regular extends WP_Customize_Panel {
 	 */
 	public $panel;
 	/**
+	 * Panel can be hidden
+	 *
+	 * @since 1.4.0
+	 * @var bool
+	 */
+	public $hidden = false;
+	/**
 	 * @var string
 	 */
 	public $type = 'epsilon-panel-regular';
@@ -50,6 +57,7 @@ class Epsilon_Panel_Regular extends WP_Customize_Panel {
 		$array['content']        = $this->get_content();
 		$array['active']         = $this->active();
 		$array['instanceNumber'] = $this->instance_number;
+		$array['hidden']         = $this->hidden;
 
 		return $array;
 	}

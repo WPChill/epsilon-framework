@@ -1,4 +1,4 @@
-.customize-control-epsilon-repeater{
+.customize-control-epsilon-repeater {
   position: relative;
   .repeater-fields {
     .repeater-row {
@@ -71,7 +71,6 @@
     width: 100%;
     clear: both;
     padding-bottom: 12px;
-    border-bottom: 1px dotted #CCC;
 
     .customize-control-title {
       font-size: 13px;
@@ -188,4 +187,26 @@
 
 .button-holder {
   text-align: center;
+}
+
+.repeater-field-text {
+  input {
+    border: solid 1px rgba(219, 219, 219, 0.9);
+    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+    padding: 7px;
+    border-radius: 4px;
+  }
+}
+
+.repeater-field-epsilon-text-editor {
+  .customize-control-title {
+    display: inline-block;
+    float: left;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    position: relative;
+    top: 5px;
+  }
 }

@@ -161,7 +161,6 @@ class Epsilon_Typography {
 		}
 
 		return $gfonts->$font;
-
 	}
 
 	/**
@@ -170,7 +169,6 @@ class Epsilon_Typography {
 	 * @return bool
 	 */
 	public function set_font( $args ) {
-
 		if ( is_array( $args ) ) {
 			$args = $args['font-family'];
 		}

@@ -1,0 +1,46 @@
+.doubled-section-parent {
+  display: inline-block;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  left: -450px;
+  max-width: 450px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #eee;
+  -webkit-transition: left .18s;
+  transition: left .18s;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding-top: 45px;
+}
+
+.epsilon-close-doubled-section {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+body.adding-doubled-section {
+  .wp-full-overlay-main {
+    left: 450px;
+  }
+
+  #customize-preview {
+    opacity: 0.4;
+  }
+
+  .doubled-section-parent {
+    left: 0;
+  }
+}
+
+.customize-pane-child.control-section-epsilon-section-doubled {
+  &.doubled-section-opened {
+    display: inline-block;
+    max-width: 450px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

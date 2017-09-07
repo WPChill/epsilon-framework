@@ -1,5 +1,5 @@
 /**
- * WP Customizer Control Constructor
+ * Epsilon Toggle Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.extend( {
   ready: function() {
