@@ -85,6 +85,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @return void
 	 */
 	public function enqueue() {
+		wp_enqueue_style( 'minicolors', EPSILON_URI . '/assets/vendors/minicolors/jquery.minicolors.css' );
+		wp_enqueue_script( 'minicolors', EPSILON_URI . '/assets/vendors/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.2.0', true );
 		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
 		wp_enqueue_script( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
 	}
