@@ -24,6 +24,11 @@
   transform: translateX(-100%);
 }
 
+.epsilon-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
 /* debug blocks */
 .epsilon-control-container {
   background: #CCE6FF;

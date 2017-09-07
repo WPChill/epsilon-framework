@@ -2436,6 +2436,9 @@ EpsilonFramework.sectionDoubled = {
    * @param selector
    */
   init: function( section ) {
+    /**
+     * save instance of section
+     */
     this.section = section;
     /**
      * Move out of the ugly list, this has overflow hidden and we can`t display it properly
@@ -2511,7 +2514,12 @@ EpsilonFramework.sectionDoubled = {
         jQuery( 'body' ).toggleClass( 'adding-doubled-section' );
       }
 
-      section.container.addClass( 'doubled-section-opened' );
+      jQuery.each( section.container, function( e ) {
+        if ( jQuery( this ).is( 'li' ) ) {
+          return;
+        }
+        jQuery( this ).addClass( 'doubled-section-opened' );
+      } );
 
     } );
 
@@ -3182,6 +3190,12 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
    * Ready event
    */
   ready: function() {
+    /**
+     * Hide the panel
+     */
+    if ( this.params.hidden ) {
+      this.container.addClass( 'epsilon-hidden' );
+    }
     wp.customize.bind( 'pane-contents-reflowed', function() {
       // Reflow panels
       var panels = [];

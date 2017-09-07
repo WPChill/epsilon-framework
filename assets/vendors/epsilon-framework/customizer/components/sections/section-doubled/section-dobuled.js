@@ -19,6 +19,9 @@ EpsilonFramework.sectionDoubled = {
    * @param selector
    */
   init: function( section ) {
+    /**
+     * save instance of section
+     */
     this.section = section;
     /**
      * Move out of the ugly list, this has overflow hidden and we can`t display it properly
@@ -94,7 +97,12 @@ EpsilonFramework.sectionDoubled = {
         jQuery( 'body' ).toggleClass( 'adding-doubled-section' );
       }
 
-      section.container.addClass( 'doubled-section-opened' );
+      jQuery.each( section.container, function( e ) {
+        if ( jQuery( this ).is( 'li' ) ) {
+          return;
+        }
+        jQuery( this ).addClass( 'doubled-section-opened' );
+      } );
 
     } );
 

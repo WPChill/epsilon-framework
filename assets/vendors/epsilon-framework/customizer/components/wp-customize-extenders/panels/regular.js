@@ -18,6 +18,12 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
    * Ready event
    */
   ready: function() {
+    /**
+     * Hide the panel
+     */
+    if ( this.params.hidden ) {
+      this.container.addClass( 'epsilon-hidden' );
+    }
     wp.customize.bind( 'pane-contents-reflowed', function() {
       // Reflow panels
       var panels = [];

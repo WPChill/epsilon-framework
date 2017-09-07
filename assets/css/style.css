@@ -1625,7 +1625,7 @@ body.adding-doubled-section .doubled-section-parent {
   left: 0;
 }
 
-.control-section-epsilon-section-doubled.doubled-section-opened {
+.customize-pane-child.control-section-epsilon-section-doubled.doubled-section-opened {
   display: inline-block;
   max-width: 450px;
   width: 100%;
@@ -1637,6 +1637,11 @@ body.adding-doubled-section .doubled-section-parent {
   -webkit-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
   transform: translateX(-100%);
+}
+
+.epsilon-hidden {
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* debug blocks */
