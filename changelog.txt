@@ -1,3 +1,6 @@
+v1.4.2
+	- Typography control css fix ( bold and italic were not grouped )
+
 v1.4.1
 	- Changed button class to hero
 

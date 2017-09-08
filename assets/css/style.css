@@ -511,11 +511,11 @@
 }
 .epsilon-typography-container.group-of-three > div:nth-child(1) {
   width: 100%;
-  padding-right: 72px;
+  padding-right: 70px;
 }
 .epsilon-typography-container.group-of-three > div:nth-child(2) {
   position: absolute;
-  right: 36px;
+  right: 33px;
   top: 0px;
 }
 .epsilon-typography-container.group-of-three > div:nth-child(3) {
