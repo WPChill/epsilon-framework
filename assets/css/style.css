@@ -1310,6 +1310,12 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
   font-style: italic;
 }
+
+.epsilon-controller-image-container .epsilon-image {
+border: 1px dashed #EEE;
+padding: 5px 5px 0 5px;
+}
+
 .epsilon-controller-image-container .epsilon-image img {
   width: 100%;
 }
