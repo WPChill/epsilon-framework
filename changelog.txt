@@ -1,3 +1,9 @@
+v1.4.3
+	- Repeatable sections will close when you open another one
+	- Various PHP/JS fixes
+	- Enhancements to repeatable sections behavior
+	- CSS Fixes
+
 v1.4.2
 	- Typography control css fix ( bold and italic were not grouped )
 
