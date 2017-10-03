@@ -1884,6 +1884,14 @@ EpsilonFramework.sectionRepeater.base = {
     instance.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
       instance.container.toggleClass( 'minimized' );
       instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+      jQuery.each( instance.container.siblings(), function( index, element ) {
+        if ( ! jQuery( element ).hasClass( 'minimized' ) ) {
+          jQuery( element ).addClass( 'minimized' );
+          jQuery( element ).find( '.repeater-row-content' ).slideToggle( 300, function() {
+            jQuery( element ).find( 'repeater-row-header' ).addClass( 'minimized' ).find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+          } );
+        }
+      } );
     } );
   },
 
