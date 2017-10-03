@@ -54,6 +54,14 @@ class Epsilon_Control_Slider extends WP_Customize_Control {
 		$json['value']          = $this->value();
 		$json['sliderControls'] = $this->choices;
 
+		$slider_defaults = array(
+			'min'  => 0,
+			'max'  => 10,
+			'step' => 1,
+		);
+
+		$json['sliderControls'] = wp_parse_args( $this->choices, $slider_defaults );
+
 		return $json;
 	}
 

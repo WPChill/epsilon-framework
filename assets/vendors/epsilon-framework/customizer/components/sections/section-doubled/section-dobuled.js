@@ -77,6 +77,10 @@ EpsilonFramework.sectionDoubled = {
           strippedIdContainer;
       e.preventDefault();
 
+      if ( jQuery( 'body' ).hasClass( 'adding-section' ) ) {
+        return;
+      }
+
       /**
        * We need to close everything on click
        * @type {*|{}}
