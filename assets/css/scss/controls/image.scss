@@ -1,4 +1,5 @@
 .epsilon-controller-image-container {
+ 
   .placeholder {
     width: 100%;
     position: relative;
@@ -16,6 +17,10 @@
     }
   }
   .epsilon-image {
+    
+     border: 1px dashed #EEE;
+     padding: 5px 5px 0 5px;
+    
     img {
       width: 100%;
     }
