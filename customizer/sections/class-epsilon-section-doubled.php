@@ -53,7 +53,7 @@ class Epsilon_Section_Doubled extends WP_Customize_Section {
 			<ul class="accordion-section-content">
 				<li class="customize-section-description-container section-meta <# if ( data.description_hidden ) { #>customize-info<# } #>" >
 					<button type="button" class="button epsilon-close-doubled-section" aria-expanded="false" aria-controls="available-sections">
-						<?php esc_html_e( 'Close Section', 'epsilon-framework' ); ?>
+						<span class="screen-reader-text"><?php esc_html_e( 'Close', 'epsilon-framework' ); ?></span>
 					</button>
 					<div class="customize-section-title">
 						<h3>

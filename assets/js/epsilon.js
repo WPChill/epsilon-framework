@@ -1543,10 +1543,16 @@ EpsilonFramework.sectionRepeater.base = {
         } );
 
         body.removeClass( 'adding-section' );
+        body.removeClass( 'adding-doubled-section' );
+        body.find( '.doubled-section-opened' ).removeClass( 'doubled-section-opened' );
       } );
     } );
 
     context.container.find( '.epsilon-add-new-section' ).on( 'click keydown', function( e ) {
+      if ( jQuery( 'body' ).hasClass( 'adding-doubled-section' ) ) {
+        return;
+      }
+
       isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
 
       body.toggleClass( 'adding-section' );
@@ -2493,6 +2499,10 @@ EpsilonFramework.sectionDoubled = {
           strippedIdHead,
           strippedIdContainer;
       e.preventDefault();
+
+      if ( jQuery( 'body' ).hasClass( 'adding-section' ) ) {
+        return;
+      }
 
       /**
        * We need to close everything on click
