@@ -272,6 +272,7 @@ class Epsilon_Customizer {
 	 * @param $type
 	 */
 	public static function _get_type( $type = '', $prefix = '' ) {
+		$class = '';
 		if ( 'setting' === $prefix && ( 'epsilon-section-repeater' === $type || 'epsilon-repeater' === $type ) ) {
 			$type = 'epsilon-repeater';
 		}
