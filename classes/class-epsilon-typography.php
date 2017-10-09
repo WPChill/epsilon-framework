@@ -253,10 +253,13 @@ class Epsilon_Typography {
 
 		if ( '' !== $css ) {
 			$this->font_imports = array_unique( $this->font_imports );
+
+			$i = 0;
 			foreach ( $this->font_imports as $font ) {
 				if ( null !== $font ) {
-					wp_enqueue_style( 'epsilon-google-fonts', '//fonts.googleapis.com/css?family=' . $font, array(), false, 'all' );
+					wp_enqueue_style( 'epsilon-google-fonts-' . $i, '//fonts.googleapis.com/css?family=' . $font, array(), false, 'all' );
 				}
+				$i ++;
 			}
 		}
 
