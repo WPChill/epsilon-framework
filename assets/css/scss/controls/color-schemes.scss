@@ -75,3 +75,42 @@
     line-height: 38px;
   }
 }
+
+.epsilon-control-styles {
+  height: 35px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px 0 0 3px;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.epsilon-control-styles a:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.epsilon-control-styles a {
+  height: 35px;
+  display: table-cell;
+  position: relative;
+}
+
+.epsilon-control-styles a:first-child:before,
+.epsilon-control-styles a:last-child:before {
+  position: absolute;
+  content: " ";
+  background: #000;
+  opacity: .2;
+  width: 1px;
+  height: 35px;
+  top: 0;
+}
+
+.epsilon-control-styles a:first-child:before {
+  left: 0;
+}
+
+.epsilon-control-styles a:last-child:before {
+  right: 0;
+}

@@ -51,7 +51,6 @@
 .epsilon-control-set-dropdown,
 .epsilon-control-container label {
   background: transparent;
-  /*  */
 }
 
 .epsilon-control-container {
@@ -123,64 +122,6 @@
 .epsilon-control-field a {
   text-decoration: none;
   color: #555555;
-}
-
-.epsilon-control-styles {
-  height: 35px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 3px 0 0 3px;
-}
-
-.epsilon-control-styles:before,
-.epsilon-control-styles:after {
-  position: absolute;
-  content: " ";
-  opacity: .2;
-  background: #000;
-  width: 100%;
-  height: 1px;
-  left: 0;
-  z-index: 2;
-}
-
-.epsilon-control-styles:before {
-  top: 0;
-}
-
-.epsilon-control-styles:after {
-  bottom: 0;
-}
-
-.epsilon-control-styles a:first-child {
-  border-radius: 3px 0 0 3px;
-}
-
-.epsilon-control-styles a {
-  display: block;
-  height: 35px;
-  float: left;
-  width: 20%;
-  position: relative;
-}
-
-.epsilon-control-styles a:first-child:before,
-.epsilon-control-styles a:last-child:before {
-  position: absolute;
-  content: " ";
-  background: #000;
-  opacity: .2;
-  width: 1px;
-  height: 35px;
-  top: 0;
-}
-
-.epsilon-control-styles a:first-child:before {
-  left: 0;
-}
-
-.epsilon-control-styles a:last-child:before {
-  right: 0;
 }
 
 .epsilon-control-set,
