@@ -1071,6 +1071,7 @@
   border-radius: 4px;
 }
 
+.customize-control-epsilon-text-editor .customize-control-title,
 .repeater-field-epsilon-text-editor .customize-control-title {
   display: inline-block;
   float: left;
@@ -1078,6 +1079,10 @@
   padding-bottom: 0;
   position: relative;
   top: 5px;
+}
+
+.customize-control-epsilon-text-editor .customize-control-title {
+  top: 2px;
 }
 
 .customize-control-epsilon-section-repeater {
