@@ -96,6 +96,10 @@
   left: 0;
 }
 
+.slider-container {
+  position: relative;
+  padding-left: 40px;
+}
 .slider-container input[type="text"] {
   border: none;
   text-align: center;
@@ -110,6 +114,9 @@
   box-shadow: inset 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
   width: 42px;
   height: 22px;
+  position: absolute;
+  left: 0;
+  top: 2px;
 }
 .slider-container .ui-slider {
   position: relative;
@@ -120,7 +127,7 @@
   margin-top: 10px;
   margin-left: 10px;
   display: inline-block;
-  width: 202px;
+  width: 97%;
   background: #d6d6d6;
 }
 .slider-container .ui-slider .ui-slider-handle {
@@ -497,7 +504,6 @@
 }
 
 .epsilon-control-styles a {
-  height: 35px;
   display: table-cell;
   position: relative;
 }
