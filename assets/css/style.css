@@ -1096,6 +1096,9 @@
 .customize-control-epsilon-section-repeater .repeater-sections {
   width: 100%;
 }
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-index {
+  display: none;
+}
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header {
   color: #555d66;
   background-color: #fff;
@@ -1115,7 +1118,7 @@
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header:before {
   font-family: 'Dashicons';
-  content: "\f545";
+  content: "\f333";
   vertical-align: middle;
   font-size: 15px;
   margin-right: 15px;

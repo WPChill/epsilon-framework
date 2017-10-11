@@ -1587,7 +1587,7 @@ EpsilonFramework.sectionRepeater.base = {
    * @param control
    */
   updateLabel: function( section, control ) {
-    section.header.find( '.repeater-row-label' ).text( '#' + ( section.sectionIndex + 1 ) + ' - ' + section.label );
+    section.header.find( '.repeater-row-label' ).html( '<span class="repeater-index">#' + ( section.sectionIndex + 1 ) + ' - </span>' + section.label );
   },
   /**
    * Update a single field inside a row.
