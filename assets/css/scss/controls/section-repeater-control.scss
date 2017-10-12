@@ -18,6 +18,9 @@
     width: 100%;
 
     .repeater-row {
+      .repeater-index {
+        display: none;
+      }
       .repeater-row-header {
         color: #555d66;
         background-color: #fff;
@@ -36,7 +39,7 @@
         border-left-color: #0073aa;
         &:before {
           font-family: 'Dashicons';
-          content: "\f545";
+          content: "\f333";
           vertical-align: middle;
           font-size: 15px;
           margin-right: 15px;
@@ -272,10 +275,10 @@ body.adding-section {
 }
 
 .customize-control-epsilon-section-repeater {
-  .repeater-field-epsilon-customizer-navigation{
+  .repeater-field-epsilon-customizer-navigation {
     .epsilon-customizer-navigation {
-      width:100%;
-      text-align:center;
+      width: 100%;
+      text-align: center;
     }
   }
 }

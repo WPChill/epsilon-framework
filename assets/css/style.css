@@ -1071,6 +1071,7 @@
   border-radius: 4px;
 }
 
+.customize-control-epsilon-text-editor .customize-control-title,
 .repeater-field-epsilon-text-editor .customize-control-title {
   display: inline-block;
   float: left;
@@ -1078,6 +1079,10 @@
   padding-bottom: 0;
   position: relative;
   top: 5px;
+}
+
+.customize-control-epsilon-text-editor .customize-control-title {
+  top: 2px;
 }
 
 .customize-control-epsilon-section-repeater {
@@ -1095,6 +1100,9 @@
 }
 .customize-control-epsilon-section-repeater .repeater-sections {
   width: 100%;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-index {
+  display: none;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header {
   color: #555d66;
@@ -1115,7 +1123,7 @@
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-header:before {
   font-family: 'Dashicons';
-  content: "\f545";
+  content: "\f333";
   vertical-align: middle;
   font-size: 15px;
   margin-right: 15px;
@@ -1709,13 +1717,14 @@ body.adding-doubled-section .doubled-section-parent {
   background: #eee;
 }
 .customize-pane-child.control-section-epsilon-section-doubled .customize-section-title {
-  margin: 0 -24px;
+  margin: -1px -24px 0;
   padding: 5px 0;
   border-top: 1px solid #ddd;
 }
 .customize-pane-child.control-section-epsilon-section-doubled .customize-section-title h3 {
   font-weight: 200;
   font-size: 20px;
+  padding: 10px 10px 11px 14px;
 }
 .customize-pane-child.control-section-epsilon-section-doubled .customize-section-title .customize-action {
   font-size: 13px;

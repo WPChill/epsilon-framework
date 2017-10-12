@@ -200,6 +200,7 @@
   }
 }
 
+.customize-control-epsilon-text-editor,
 .repeater-field-epsilon-text-editor {
   .customize-control-title {
     display: inline-block;
@@ -208,5 +209,11 @@
     padding-bottom: 0;
     position: relative;
     top: 5px;
+  }
+}
+
+.customize-control-epsilon-text-editor{
+  .customize-control-title {
+    top: 2px;
   }
 }

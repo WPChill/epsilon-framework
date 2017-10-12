@@ -124,7 +124,7 @@ EpsilonFramework.layouts = {
        * Visual changes
        */
       jQuery( this ).
-          toggleClass( 'active' ).
+          addClass( 'active' ).
           siblings( 'a' ).
           removeClass( 'active' );
     } );
