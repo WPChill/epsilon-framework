@@ -26,9 +26,9 @@ EpsilonFramework.sectionRepeater.section = {
       EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
     } );
 
-    this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
+    this.container.on( 'keyup change', 'input, select, textarea', _.debounce( function( e ) {
       self.container.trigger( 'section:update', [ self.sectionIndex, self.type, jQuery( e.target ).data( 'field' ), e.target, control ] );
-    } );
+    }, 500 ) );
 
     /**
      * Remove event

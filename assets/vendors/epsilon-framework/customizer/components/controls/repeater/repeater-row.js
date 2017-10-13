@@ -32,9 +32,9 @@ EpsilonFramework.repeater.row = {
       EpsilonFramework.repeater.base.removeRow( self );
     } );
 
-    this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
+    this.container.on( 'keyup change', 'input, select, textarea', _.debounce( function( e ) {
       self.container.trigger( 'row:update', [ self.rowIndex, jQuery( e.target ).data( 'field' ), e.target, control ] );
-    } );
+    }, 500 ) );
 
     EpsilonFramework.repeater.base.updateLabel( self, control );
   }

@@ -1086,7 +1086,7 @@ EpsilonFramework.repeater.base = {
   /**
    * Load Underscores template
    *
-   * @since 1.2.0
+   * @since 1.0.0
    * @returns {Function}
    */
   repeaterTemplate: function() {
@@ -1337,9 +1337,9 @@ EpsilonFramework.repeater.row = {
       EpsilonFramework.repeater.base.removeRow( self );
     } );
 
-    this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
+    this.container.on( 'keyup change', 'input, select, textarea', _.debounce( function( e ) {
       self.container.trigger( 'row:update', [ self.rowIndex, jQuery( e.target ).data( 'field' ), e.target, control ] );
-    } );
+    }, 500 ) );
 
     EpsilonFramework.repeater.base.updateLabel( self, control );
   }
@@ -1941,9 +1941,9 @@ EpsilonFramework.sectionRepeater.section = {
       EpsilonFramework.sectionRepeater.base.toggleMinimize( self );
     } );
 
-    this.container.on( 'keyup change', 'input, select, textarea', function( e ) {
+    this.container.on( 'keyup change', 'input, select, textarea', _.debounce( function( e ) {
       self.container.trigger( 'section:update', [ self.sectionIndex, self.type, jQuery( e.target ).data( 'field' ), e.target, control ] );
-    } );
+    }, 500 ) );
 
     /**
      * Remove event

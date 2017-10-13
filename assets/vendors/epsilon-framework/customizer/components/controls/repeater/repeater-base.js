@@ -352,7 +352,7 @@ EpsilonFramework.repeater.base = {
   /**
    * Load Underscores template
    *
-   * @since 1.2.0
+   * @since 1.0.0
    * @returns {Function}
    */
   repeaterTemplate: function() {
