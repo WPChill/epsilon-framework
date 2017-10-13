@@ -34,6 +34,7 @@ class Epsilon_Framework {
 	private $sections = array(
 		'recommended-actions',
 		'pro',
+		'doubled',
 	);
 	/**
 	 * By default, load all panels
@@ -43,6 +44,22 @@ class Epsilon_Framework {
 	private $panels = array(
 		'regular',
 	);
+	/**
+	 * @var bool
+	 */
+	private $plugin = false;
+	/**
+	 * If we're in a plugin, set up uri manually
+	 *
+	 * @var string
+	 */
+	private $plugin_uri = '';
+	/**
+	 * If we're in a plugin, set up paths manually
+	 *
+	 * @var string
+	 */
+	private $plugin_dir = '';
 	/**
 	 * Default path is in /inc/libraries
 	 *
@@ -64,7 +81,19 @@ class Epsilon_Framework {
 	public function __construct( $args = array() ) {
 		foreach ( $args as $k => $v ) {
 
-			if ( ! in_array( $k, array( 'controls', 'sections', 'panels', 'path', 'backup' ) ) ) {
+			if ( ! in_array(
+				$k,
+				array(
+					'controls',
+					'sections',
+					'panels',
+					'path',
+					'backup',
+					'plugin_uri',
+					'plugin_dir',
+				)
+			)
+			) {
 				continue;
 			}
 
@@ -77,11 +106,60 @@ class Epsilon_Framework {
 		$backup = Epsilon_Content_Backup::get_instance();
 
 		/**
-		 * Define URI and PATH for the framework
+		 * Define Framework uri and paths
 		 */
-		define( 'EPSILON_URI', get_template_directory_uri() . $this->path . '/epsilon-framework' );
-		define( 'EPSILON_PATH', get_template_directory() . $this->path . '/epsilon-framework' );
-		define( 'EPSILON_BACKUP', $this->backup );
+		$this->define_paths();
+
+		/**
+		 * Enqueue scripts and styles
+		 */
+		$this->start_enqueues();
+
+		/**
+		 * AJAX handling moved to a different class
+		 */
+		new Epsilon_Ajax_Controller();
+	}
+
+	/**
+	 * Init custom controls
+	 *
+	 * @param object $wp_customize
+	 */
+	public function init_controls( $wp_customize ) {
+		foreach ( $this->controls as $control ) {
+			if ( file_exists( EPSILON_PATH . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
+				require_once EPSILON_PATH . '/customizer/controls/class-epsilon-control-' . $control . '.php';
+			}
+			if ( file_exists( EPSILON_PATH . '/customizer/settings/class-epsilon-setting-' . $control . '.php' ) ) {
+				require_once EPSILON_PATH . '/customizer/settings/class-epsilon-setting-' . $control . '.php';
+			}
+		}
+
+		foreach ( $this->sections as $section ) {
+			if ( file_exists( EPSILON_PATH . '/customizer/sections/class-epsilon-section-' . $section . '.php' ) ) {
+				require_once EPSILON_PATH . '/customizer/sections/class-epsilon-section-' . $section . '.php';
+			}
+		}
+
+		foreach ( $this->panels as $panel ) {
+			if ( file_exists( EPSILON_PATH . '/customizer/panels/class-epsilon-panel-' . $panel . '.php' ) ) {
+				require_once EPSILON_PATH . '/customizer/panels/class-epsilon-panel-' . $panel . '.php';
+			}
+		}
+
+		/**
+		 * Expose Manager to the Epsilon Customizer class.
+		 */
+		Epsilon_Customizer::get_instance( $wp_customize );
+	}
+
+	/**
+	 * Centralize scripts and styles in a function for easier maintenance
+	 *
+	 * @since 1.1.0
+	 */
+	public function start_enqueues() {
 		/**
 		 * Admin enqueues
 		 */
@@ -91,21 +169,8 @@ class Epsilon_Framework {
 		 * Customizer enqueues & controls
 		 */
 		add_action( 'customize_register', array( $this, 'init_controls' ), 10 );
-
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customizer_enqueue_scripts' ), 25 );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_styles' ), 25 );
-
-		/**
-		 * Action for easier AJAX handling
-		 */
-		add_action( 'wp_ajax_epsilon_framework_ajax_action', array(
-			$this,
-			'epsilon_framework_ajax_action',
-		) );
-		add_action( 'wp_ajax_nopriv_epsilon_framework_ajax_action', array(
-			$this,
-			'epsilon_framework_ajax_action',
-		) );
 
 		/**
 		 * Repeater fields templates
@@ -117,60 +182,25 @@ class Epsilon_Framework {
 	}
 
 	/**
-	 * Init custom controls
-	 *
-	 * @param object $wp_customize
-	 */
-	public function init_controls( $wp_customize ) {
-		$path = get_template_directory() . $this->path . '/epsilon-framework';
-
-		foreach ( $this->controls as $control ) {
-			if ( file_exists( $path . '/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
-				require_once $path . '/customizer/controls/class-epsilon-control-' . $control . '.php';
-			}
-			if ( file_exists( $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php' ) ) {
-				require_once $path . '/customizer/settings/class-epsilon-setting-' . $control . '.php';
-			}
-		}
-
-		foreach ( $this->sections as $section ) {
-			if ( file_exists( $path . '/customizer/sections/class-epsilon-section-' . $section . '.php' ) ) {
-				require_once $path . '/customizer/sections/class-epsilon-section-' . $section . '.php';
-			}
-		}
-
-		foreach ( $this->panels as $panel ) {
-			if ( file_exists( $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php' ) ) {
-				require_once $path . '/customizer/panels/class-epsilon-panel-' . $panel . '.php';
-			}
-		}
-
-		/**
-		 * Expose Manager to the Epsilon Customizer class.
-		 */
-		Epsilon_Customizer::get_instance( $wp_customize );
-	}
-
-	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function enqueue() {
-		wp_enqueue_script( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
+		wp_enqueue_script( 'epsilon-admin', EPSILON_URI . '/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
 		wp_localize_script( 'epsilon-admin', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
 			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
 			'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
 		) );
-		wp_enqueue_style( 'epsilon-admin', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style-admin.css' );
+		wp_enqueue_style( 'epsilon-admin', EPSILON_URI . '/assets/css/style-admin.css' );
 	}
 
 	/**
 	 * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
 	 */
 	public function customize_preview_styles() {
-		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
-		wp_enqueue_script( 'epsilon-previewer', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon-previewer.js', array(
+		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
+		wp_enqueue_script( 'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-previewer.js', array(
 			'jquery',
 			'customize-preview',
 		), 2, true );
@@ -189,7 +219,7 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/js/epsilon.js', array(
+		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon.js', array(
 			'jquery',
 			'customize-controls',
 		) );
@@ -207,104 +237,34 @@ class Epsilon_Framework {
 			'row'        => esc_html__( 'Row', 'epsilon-framework' ),
 		) );
 
-		wp_enqueue_style( 'font-awesome', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/vendors/fontawesome/font-awesome.css' );
-		wp_enqueue_style( 'epsilon-styles', get_template_directory_uri() . $this->path . '/epsilon-framework/assets/css/style.css' );
+		wp_enqueue_style( 'font-awesome', EPSILON_URI . '/assets/vendors/fontawesome/font-awesome.css' );
+		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
 	}
 
 	/**
-	 * Function that retrieves image sizes defined in theme
-	 *
-	 * @return array
+	 * Define epsilon loading paths
+	 */
+	public function define_paths() {
+		$dir_uri = get_template_directory_uri();
+		$dir     = get_template_directory();
+
+		if ( $this->plugin ) {
+			$dir_uri = $this->plugin_uri;
+			$dir     = $this->plugin_path;
+		}
+		/**
+		 * Define URI and PATH for the framework
+		 */
+		define( 'EPSILON_URI', $dir_uri . $this->path . '/epsilon-framework' );
+		define( 'EPSILON_PATH', $dir . $this->path . '/epsilon-framework' );
+		define( 'EPSILON_BACKUP', $this->backup );
+	}
+
+	/**
+	 * @deprecated since 1.1.0
 	 */
 	public static function get_image_sizes() {
-		global $_wp_additional_image_sizes;
-
-		$sizes = array();
-
-		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
-				$sizes[ $_size ]['width']  = get_option( "{$_size}_size_w" );
-				$sizes[ $_size ]['height'] = get_option( "{$_size}_size_h" );
-				$sizes[ $_size ]['crop']   = (bool) get_option( "{$_size}_crop" );
-			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
-				$sizes[ $_size ] = array(
-					'width'  => $_wp_additional_image_sizes[ $_size ]['width'],
-					'height' => $_wp_additional_image_sizes[ $_size ]['height'],
-					'crop'   => $_wp_additional_image_sizes[ $_size ]['crop'],
-				);
-			}
-		}
-
-		return $sizes;
+		return Epsilon_Ajax_Controller::get_image_sizes();
 	}
 
-	/**
-	 * Ajax handler
-	 */
-	public function epsilon_framework_ajax_action() {
-		if ( isset( $_POST['args'], $_POST['args']['nonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['args']['nonce'] ), 'epsilon_nonce' ) ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status' => false,
-						'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
-					)
-				)
-			);
-		}
-
-		$args_action = array_map( 'sanitize_text_field', wp_unslash( $_POST['args']['action'] ) );
-
-		if ( count( $args_action ) !== 2 ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status' => false,
-						'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
-					)
-				)
-			);
-		}
-
-		if ( ! class_exists( $args_action[0] ) ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status' => false,
-						'error'  => esc_html__( 'Class does not exist', 'epsilon-framework' ),
-					)
-				)
-			);
-		}
-
-		$class  = $args_action[0];
-		$method = $args_action[1];
-		$args   = array_map( 'sanitize_text_field', wp_unslash( $_POST['args']['args'] ) );
-
-		$response = $class::$method( $args );
-
-		if ( is_array( $response ) ) {
-			wp_die( wp_json_encode( $response ) );
-		}
-
-		if ( 'ok' === $response ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status'  => true,
-						'message' => 'ok',
-					)
-				)
-			);
-		}
-
-		wp_die(
-			wp_json_encode(
-				array(
-					'status'  => false,
-					'message' => 'nok',
-				)
-			)
-		);
-	}
 }

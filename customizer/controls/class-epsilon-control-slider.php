@@ -23,7 +23,7 @@ class Epsilon_Control_Slider extends WP_Customize_Control {
 	/**
 	 * Min/Max/Step options
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $choices = array();
@@ -68,7 +68,7 @@ class Epsilon_Control_Slider extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Slider constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id

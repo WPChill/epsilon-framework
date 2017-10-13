@@ -6,12 +6,12 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Class Epsilon_Control_Text_Editor
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 class Epsilon_Control_Text_Editor extends WP_Customize_Control {
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $type = 'epsilon-text-editor';
@@ -29,7 +29,7 @@ class Epsilon_Control_Text_Editor extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function json() {
@@ -42,7 +42,7 @@ class Epsilon_Control_Text_Editor extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function enqueue() {
 		if ( function_exists( 'wp_enqueue_editor' ) ) {
@@ -58,7 +58,7 @@ class Epsilon_Control_Text_Editor extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * Display the control's content
 	 */
 	public function content_template() {
@@ -81,7 +81,7 @@ class Epsilon_Control_Text_Editor extends WP_Customize_Control {
 	/**
 	 * Empty, as it should be
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 	}

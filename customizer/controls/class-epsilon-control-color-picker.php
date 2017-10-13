@@ -8,17 +8,17 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $type = 'epsilon-color-picker';
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $default = '';
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $mode = '';
@@ -31,7 +31,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Color_Picker constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
@@ -62,7 +62,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function enqueue() {
 		wp_enqueue_style( 'minicolors', EPSILON_URI . '/assets/vendors/minicolors/jquery.minicolors.css' );
@@ -93,7 +93,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 	/**
 	 * Empty, as it should be
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 	}

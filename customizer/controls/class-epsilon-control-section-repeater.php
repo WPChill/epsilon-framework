@@ -6,7 +6,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Class Epsilon_Control_Section_Repeater
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	/**
@@ -19,13 +19,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $type = 'epsilon-section-repeater';
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $repeatable_sections = array();
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $choices = array();
@@ -39,7 +39,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	/**
 	 * Icons array
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $icons = array();
@@ -47,7 +47,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
@@ -59,7 +59,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -92,7 +92,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function get_icons() {
 		global $wp_filesystem;
@@ -124,7 +124,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function set_repeatable_sections() {
 		if ( empty( $this->repeatable_sections ) || ! is_array( $this->repeatable_sections ) ) {
@@ -211,7 +211,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	/**
 	 * Empty
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 
