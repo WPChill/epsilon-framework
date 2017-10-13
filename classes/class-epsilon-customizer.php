@@ -6,7 +6,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Easier way to add panels,sections,controls
  *
- * @since 1.2.0
+ * @since 1.0.0
  *
  * Class Epsilon_Customizer
  */
@@ -61,7 +61,7 @@ class Epsilon_Customizer {
 	/**
 	 * This function is called by self::add_field()
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $id
 	 */
@@ -108,7 +108,7 @@ class Epsilon_Customizer {
 	/**
 	 * Add control function ( this will automatically add the setting, based on the field type )
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param       $id
 	 * @param array $args
@@ -152,7 +152,7 @@ class Epsilon_Customizer {
 	/**
 	 * Add section
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param       $id
 	 * @param array $args
@@ -173,7 +173,7 @@ class Epsilon_Customizer {
 	/**
 	 * Add panel
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param array $args
 	 */
@@ -193,7 +193,7 @@ class Epsilon_Customizer {
 	/**
 	 * Add multiple customizer elements at once
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param array $collection
 	 */
@@ -267,7 +267,7 @@ class Epsilon_Customizer {
 	/**
 	 * Get the class name and field type
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $type
 	 */

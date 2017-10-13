@@ -4,22 +4,22 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * @since 1.2.0
+ * @since 1.0.0
  * Class Epsilon_Notifications
  */
 class Epsilon_Notifications {
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var null
 	 */
 	private static $instance = null;
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $notices = array();
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $html = '<div class="epsilon-framework-notice is-dismissible %1$s" data-unique-id="%2$s">%3$s</div>';
@@ -56,7 +56,7 @@ class Epsilon_Notifications {
 	/**
 	 * Displays notices in the frontend
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function display_notices() {
 		foreach ( $this->notices as $notice ) {
@@ -71,7 +71,7 @@ class Epsilon_Notifications {
 	/**
 	 * Dismiss notice AJAX
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $args
 	 */

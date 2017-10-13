@@ -4,33 +4,33 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * @since 1.2.0
+ * @since 1.0.0
  *
  * Class Epsilon_Content_Backup
  */
 class Epsilon_Content_Backup {
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $fields = array();
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $slug = '';
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var int
 	 */
 	public $setting_page;
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $hash;
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $mode = 'theme_mods';
@@ -49,7 +49,7 @@ class Epsilon_Content_Backup {
 	private static $_instance = null;
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * Epsilon_Content_Backup constructor.
 	 */
 	public function __construct() {
@@ -91,7 +91,7 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return Epsilon_Content_Backup
 	 */
 	public static function get_instance() {
@@ -105,7 +105,7 @@ class Epsilon_Content_Backup {
 	/**
 	 * Registers a field in the "backup" collection
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function add_field( $id, $args ) {
 		$this->fields[ $id ] = $args;
@@ -139,7 +139,7 @@ class Epsilon_Content_Backup {
 	/**
 	 * Check the status of the settings page, it should always be draft
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function check_page_status() {
 		$post = get_post( $this->setting_page );
@@ -156,7 +156,7 @@ class Epsilon_Content_Backup {
 	/**
 	 * Adds a notice to the page
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function add_notice_to_page( $post_type, $post ) {
 		if ( 'page' !== $post_type ) {
@@ -178,7 +178,7 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $manager WordPress Customizer Manager
 	 */
@@ -199,7 +199,7 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return array
 	 */
 	private function check_hash() {
@@ -229,7 +229,7 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return string
 	 */
 	private function parse_content() {
@@ -271,7 +271,7 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return string;
 	 */
 	private function _parse_content( $field ) {

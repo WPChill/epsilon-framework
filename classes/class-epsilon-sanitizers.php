@@ -8,7 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Sanitizers {
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $value
 	 *
@@ -35,7 +35,7 @@ class Epsilon_Sanitizers {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $value
 	 *
@@ -46,7 +46,7 @@ class Epsilon_Sanitizers {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * Simple function to validate choices from radio buttons
 	 *
@@ -67,7 +67,7 @@ class Epsilon_Sanitizers {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $input
 	 *
@@ -78,7 +78,7 @@ class Epsilon_Sanitizers {
 	}
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param $input
 	 *
