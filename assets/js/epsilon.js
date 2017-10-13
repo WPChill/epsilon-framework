@@ -1099,7 +1099,7 @@ EpsilonFramework.repeater.base = {
         };
 
     return function( data ) {
-      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).html(), null, options );
+      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content-field' ).html(), null, options );
       return compiled( data );
     };
   },
@@ -1402,11 +1402,12 @@ EpsilonFramework.sectionRepeater.base = {
    */
   add: function( control, type, data ) {
     var self = this,
-        template = _.memoize( EpsilonFramework.repeater.base.repeaterTemplate() ),
+        template = _.memoize( EpsilonFramework.sectionRepeater.base.repeaterTemplate() ),
         settingValue = self.getValue( control ),
         newSectionSetting = {},
         templateData,
         newSection,
+        fields,
         i;
 
     /**
@@ -1423,7 +1424,13 @@ EpsilonFramework.sectionRepeater.base = {
       return;
     }
 
-    templateData = jQuery.extend( true, {}, control.params.sections[ type ].fields );
+    /**
+     * Form the new fields with the static ones
+     */
+    fields = jQuery.extend( true, {}, control.params.sections[ type ].fields, control.params.sections[ type ].customization.styling,
+        control.params.sections[ type ].customization.layout );
+
+    templateData = jQuery.extend( true, {}, fields, { customization: control.params.sections[ type ].customization } );
 
     /**
      * In case we added the row with "known" data, we need to overwrite the array
@@ -1597,26 +1604,30 @@ EpsilonFramework.sectionRepeater.base = {
    */
   updateField: function( sectionIndex, sectionType, fieldId, element, control ) {
     var section,
-        currentSettings;
+        currentSettings,
+        type;
 
     if ( ! control.sections[ sectionIndex ] ) {
       return;
     }
 
-    if ( ! control.params.sections[ sectionType ].fields[ fieldId ] ) {
-      return;
-    }
+    // if ( ! control.params.sections[ sectionType ].fields[ fieldId ] ) {
+    //   return;
+    // }
 
     section = control.sections[ sectionIndex ];
     currentSettings = EpsilonFramework.sectionRepeater.base.getValue( control );
 
     element = jQuery( element );
 
+    type = EpsilonFramework.sectionRepeater.base.getFieldGroup( fieldId, control, sectionType );
     if ( _.isUndefined( currentSettings[ section.sectionIndex ][ fieldId ] ) ) {
       return;
     }
 
-    switch ( control.params.sections[ sectionType ].fields[ fieldId ].type ) {
+    type = EpsilonFramework.sectionRepeater.base.getFieldGroup( fieldId, control, sectionType );
+
+    switch ( type ) {
       case 'checkbox':
       case 'epsilon-toggle':
         currentSettings[ section.sectionIndex ][ fieldId ] = element.prop( 'checked' );
@@ -1628,6 +1639,28 @@ EpsilonFramework.sectionRepeater.base = {
 
     EpsilonFramework.sectionRepeater.base.setValue( control, currentSettings, true );
   },
+
+  /**
+   * @since 1.1.0
+   *
+   * @param fieldId
+   * @param control
+   * @param sectionType
+   */
+  getFieldGroup: function( fieldId, control, sectionType ) {
+    if ( control.params.sections[ sectionType ].fields[ fieldId ] ) {
+      return control.params.sections[ sectionType ][ group ][ fieldId ].type;
+    }
+
+    if ( control.params.sections[ sectionType ].customization.styling[ fieldId ] ) {
+      return control.params.sections[ sectionType ].customization.styling[ fieldId ].type;
+    }
+
+    if ( control.params.sections[ sectionType ].customization.layout[ fieldId ] ) {
+      return control.params.sections[ sectionType ].customization.layout[ fieldId ].type;
+    }
+  },
+
   /**
    * Remove a row from the instance
    *
@@ -1638,6 +1671,26 @@ EpsilonFramework.sectionRepeater.base = {
       jQuery( this ).detach();
     } );
     instance.container.trigger( 'section:remove', [ instance.sectionIndex ] );
+  },
+  /**
+   * Load Underscores template
+   *
+   * @since 1.0.0
+   * @returns {Function}
+   */
+  repeaterTemplate: function() {
+    var compiled,
+        options = {
+          evaluate: /<#([\s\S]+?)#>/g,
+          interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
+          escape: /\{\{([^\}]+?)\}\}(?!\})/g,
+          variable: 'data'
+        };
+
+    return function( data ) {
+      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content-section' ).html(), null, options );
+      return compiled( data );
+    };
   },
   /**
    * Set section's index
@@ -1882,8 +1935,8 @@ EpsilonFramework.sectionRepeater.base = {
     instance.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
       instance.container.toggleClass( 'minimized' );
       instance.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
-      jQuery('body').removeClass( 'adding-section' );
-      jQuery('body').removeClass( 'adding-doubled-section' );
+      jQuery( 'body' ).removeClass( 'adding-section' );
+      jQuery( 'body' ).removeClass( 'adding-doubled-section' );
       jQuery.each( instance.container.siblings(), function( index, element ) {
         if ( ! jQuery( element ).hasClass( 'minimized' ) ) {
           jQuery( element ).addClass( 'minimized' );

@@ -203,9 +203,78 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;
 			} // End foreach().
+			if ( empty( $this->repeatable_sections[ $key ]['customization'] ) ) {
+				$this->repeatable_sections[ $key ]['customization'] = array(
+					'enabled' => false,
+					'styling' => array(),
+					'layout'  => array(),
+				);
+			}
+
+
+			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
+			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
 		} // End foreach().
 
 		return $this->repeatable_sections;
+	}
+
+	/**
+	 * Create from a field of keys, "usable" fields
+	 *
+	 * @param array $styling
+	 */
+	public function create_styling_fields( $styling = array(), $key ) {
+		$sizes = Epsilon_Framework::get_image_sizes();
+		$arr   = array();
+		foreach ( $styling as $prop ) {
+			switch ( $prop ) {
+				case 'background-color':
+					$temp = array(
+						'id'          => $key . '_background_color',
+						'label'       => __( 'Background Color', 'epsilon-framework' ),
+						'description' => '',
+						'default'     => '',
+						'type'        => 'epsilon-color-picker',
+						'mode'        => 'hex',
+						'defaultVal'  => '',
+						'group'       => 'styling',
+					);
+
+					$arr[ $key . '_background_color' ] = $temp;
+					break;
+				case 'background-image':
+					$temp = array(
+						'id'          => $key . '_background_image',
+						'label'       => __( 'Background Image', 'epsilon-framework' ),
+						'description' => '',
+						'type'        => 'epsilon-image',
+						'group'       => 'styling',
+						'size'        => 'full',
+						'sizeArray'   => $sizes,
+						'mode'        => 'url',
+					);
+
+					$arr[ $key . '_background_image' ] = $temp;
+					break;
+				default:
+					break;
+			}
+		}
+
+		return $arr;
+
+	}
+
+	/**
+	 * Create from a field of keys, "usable" fields
+	 *
+	 * @param array $styling
+	 */
+	public function create_layout_fields( $layout = array() ) {
+		$arr = array();
+
+		return $arr;
 	}
 
 	/**
@@ -262,7 +331,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
 							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
 							<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-							<input type="hidden" value="{{ temp }}"/>
+							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}"/>
 						</div>
 					<# } #>
 				</div>

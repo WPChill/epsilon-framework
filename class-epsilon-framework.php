@@ -179,6 +179,10 @@ class Epsilon_Framework {
 			'Epsilon_Repeater_Templates',
 			'field_repeater_js_template',
 		), 0 );
+		add_action( 'customize_controls_print_footer_scripts', array(
+			'Epsilon_Repeater_Templates',
+			'section_repeater_js_template',
+		), 0 );
 	}
 
 	/**
@@ -264,7 +268,7 @@ class Epsilon_Framework {
 	 * @deprecated since 1.1.0
 	 */
 	public static function get_image_sizes() {
-		return Epsilon_Ajax_Controller::get_image_sizes();
+		return Epsilon_Helper::get_image_sizes();
 	}
 
 }

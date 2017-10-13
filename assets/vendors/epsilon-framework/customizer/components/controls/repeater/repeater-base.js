@@ -365,7 +365,7 @@ EpsilonFramework.repeater.base = {
         };
 
     return function( data ) {
-      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content' ).html(), null, options );
+      compiled = _.template( jQuery( '.customize-control-epsilon-repeater-content-field' ).html(), null, options );
       return compiled( data );
     };
   },
