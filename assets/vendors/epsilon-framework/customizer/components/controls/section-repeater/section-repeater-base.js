@@ -273,7 +273,6 @@ EpsilonFramework.sectionRepeater.base = {
 
     element = jQuery( element );
 
-    type = EpsilonFramework.sectionRepeater.base.getFieldGroup( fieldId, control, sectionType );
     if ( _.isUndefined( currentSettings[ section.sectionIndex ][ fieldId ] ) ) {
       return;
     }
@@ -302,7 +301,7 @@ EpsilonFramework.sectionRepeater.base = {
    */
   getFieldGroup: function( fieldId, control, sectionType ) {
     if ( control.params.sections[ sectionType ].fields[ fieldId ] ) {
-      return control.params.sections[ sectionType ][ group ][ fieldId ].type;
+      return control.params.sections[ sectionType ].fields[ fieldId ].type;
     }
 
     if ( control.params.sections[ sectionType ].customization.styling[ fieldId ] ) {

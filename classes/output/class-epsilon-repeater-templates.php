@@ -74,19 +74,20 @@ class Epsilon_Repeater_Templates {
 				</div>
 				<div class="repeater-row-content">
 					<# if( data.customization.enabled ) { #>
+					<nav>
 						<# if( data.customization.enabled ) { #>
-							<a href="#">Fields</a>
+							<a href="#" class="active" data-item="regular">Fields</a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.styling) ) { #>
-							<a href="#">Styles</a>
+							<a href="#" data-item="styling">Styles</a>
 						<# } #>
 							<# if( ! _.isEmpty(data.customization.layout) ) { #>
-							<a href="#">Layout</a>
+							<a href="#" data-item="layout">Layout</a>
 						<# } #>
 					<# } #>
-
+					</nav>
 					<# _.each( data, function( field, i ) { #>
-						<div class="repeater-field repeater-field-{{{ field.type }}}" group="<# if(field.group){ #>{{{ field.group }}}<# } else { #>regular<# } #>" >
+						<div class="repeater-field repeater-field-{{{ field.type }}}" data-group="<# if(field.group){ #>{{{ field.group }}}<# } else { #>regular<# } #>" >
 						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'hidden' === field.type ) { #>
 							<?php self::text_field(); ?>
 						<# } else if ( 'epsilon-toggle' === field.type ) { #>

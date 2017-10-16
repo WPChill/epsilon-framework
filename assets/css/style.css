@@ -1347,6 +1347,13 @@ body.adding-section .epsilon-add-new-section:before {
   text-align: center;
 }
 
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+}
+
 .epsilon-controller-image-container .placeholder {
   width: 100%;
   position: relative;

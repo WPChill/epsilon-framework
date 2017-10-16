@@ -15,6 +15,12 @@ EpsilonFramework.sectionRepeater.section = {
     this.type = type;
     this.header = this.container.find( '.repeater-row-header' );
 
+    jQuery( this.container ).find( '[data-group="regular"]' ).wrapAll( '<div data-tab-id="regular" class="tab-panel regular active"></div>' );
+    jQuery( this.container ).find( '[data-group="styling"]' ).wrapAll( '<div data-tab-id="styling" class="tab-panel styling"></div>' );
+    jQuery( this.container ).find( '[data-group="layout"]' ).wrapAll( '<div data-tab-id="layout" class="tab-panel layout"></div>' );
+
+    EpsilonFramework.sectionRepeater.section.handleTabs( this.container );
+
     /**
      * Events
      */
@@ -39,4 +45,20 @@ EpsilonFramework.sectionRepeater.section = {
 
     EpsilonFramework.sectionRepeater.base.updateLabel( self, control );
   },
+  /**
+   * Handle tabs functionality
+   * @param container
+   */
+  handleTabs: function( container ) {
+    var self = container,
+        wrapper = self.find( 'nav' ),
+        tabs = self.find( '[data-tab-id]' ),
+        items = wrapper.find( 'a' );
+
+    jQuery( wrapper ).on( 'click', items, function( event ) {
+      event.preventDefault();
+      tabs.removeClass( 'active' );
+      self.find( '[data-tab-id="' + jQuery( event.target ).attr( 'data-item' ) + '"]' ).addClass( 'active' );
+    } );
+  }
 };
