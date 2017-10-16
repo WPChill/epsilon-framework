@@ -15,7 +15,7 @@ EpsilonFramework.colorSchemes = {
     if ( ! context.length ) {
       return;
     }
-
+    
     options = context.find( '.epsilon-color-scheme-option' );
     input = context.parent().find( '[data-customize-setting-link]' ).first();
     json = jQuery.parseJSON( options.first().find( 'input' ).val() );

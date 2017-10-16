@@ -1,9 +1,11 @@
-/**
- * Epsilon Image Control Constructor
- */
+declare var wp: any;
+import * as $ from 'jquery';
+
+import { EpsilonImage } from '../controls/image';
+
 wp.customize.controlConstructor[ 'epsilon-image' ] = wp.customize.Control.extend( {
   ready: function() {
     var control = this;
-    EpsilonFramework.image.init( this );
+    new EpsilonImage( control );
   }
 } );

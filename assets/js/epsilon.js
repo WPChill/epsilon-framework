@@ -15,69 +15,6 @@ EpsilonFramework.repeater = 'undefined' === typeof( EpsilonFramework.repeater ) 
 EpsilonFramework.sectionRepeater = 'undefined' === typeof( EpsilonFramework.sectionRepeater ) ? {} : EpsilonFramework.sectionRepeater;
 
 /**
- * Improved Color Picker
- *
- * @type {{init: EpsilonFramework.colorPickers.init}}
- */
-EpsilonFramework.colorPickers = {
-  /**
-   * Initiate a color picker
-   * @param selector
-   */
-  init: function( selector ) {
-    var selector = jQuery( selector ).find( '.epsilon-color-picker' ),
-        self = this,
-        settings = {
-          changeDelay: 500,
-          theme: 'default',
-          change: self.changePallete
-        },
-        clear,
-        instance;
-
-    if ( 'function' !== typeof jQuery.fn.minicolors ) {
-      return;
-    }
-
-    if ( '' !== selector.attr( 'placeholder' ) ) {
-      settings.defaultValue = selector.attr( 'placeholder' );
-    }
-
-    if ( 'rgba' === selector.attr( 'data-attr-mode' ) ) {
-      settings.format = 'rgb';
-      settings.opacity = true;
-    }
-
-    selector.minicolors( settings );
-
-    clear = selector.parents( '.customize-control-epsilon-color-picker' ).find( 'a' );
-    if ( ! clear.length ) {
-      clear = selector.parents( '.repeater-field-epsilon-color-picker' ).find( 'a' );
-    }
-
-    clear.on( 'click', function( e ) {
-      e.preventDefault();
-      instance = jQuery( this ).parents( '.customize-control-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
-      if ( ! instance.length ) {
-        instance = jQuery( this ).parents( '.repeater-field-epsilon-color-picker' ).find( 'input.epsilon-color-picker' );
-      }
-
-      instance.minicolors( 'value', jQuery( this ).attr( 'data-default' ) );
-      instance.trigger( 'change' );
-    } );
-
-  },
-  /**
-   * Real time changes to the "pallete"
-   *
-   * @param value
-   * @param opacity
-   */
-  changePallete: function( value, opacity ) {
-    jQuery( '.epsilon-color-scheme-selected' ).find( '*[data-field-id="' + jQuery( this ).attr( 'data-customize-setting-link' ) + '"]' ).css( 'background-color', value );
-  }
-};
-/**
  * Color scheme generator
  */
 EpsilonFramework.colorSchemes = {
@@ -94,7 +31,7 @@ EpsilonFramework.colorSchemes = {
     if ( ! context.length ) {
       return;
     }
-
+    
     options = context.find( '.epsilon-color-scheme-option' );
     input = context.parent().find( '[data-customize-setting-link]' ).first();
     json = jQuery.parseJSON( options.first().find( 'input' ).val() );
@@ -175,224 +112,6 @@ EpsilonFramework.colorSchemes = {
   }
 };
 
-/**
- * Customizer navigation
- * @type {{}}
- */
-EpsilonFramework.customizerNavigation = {
-  /**
-   * Initiate customizer navigation
-   *
-   * @param selector
-   */
-  init: function( selector ) {
-    selector.find( '.epsilon-customizer-navigation' ).on( 'click', function( e ) {
-      e.preventDefault();
-      if ( 'undefined' !== typeof( wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ) ) ) {
-        if ( jQuery( this ).attr( 'data-doubled' ) ) {
-          wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).headContainer.trigger( 'click' );
-        } else {
-          wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) ).focus();
-        }
-
-      }
-    } );
-  }
-};
-/**
- * Icon Picker Initiator
- *
- * @type {{init: EpsilonFramework.iconPickers.init}}
- */
-EpsilonFramework.iconPickers = {
-  /**
-   * Context
-   */
-  control: null,
-  /**
-   * Init the icon picker
-   *
-   * @param control
-   * @param inRepeater
-   */
-  init: function( control, inRepeater ) {
-    this.control = control;
-    var icon, label, filter, temp, collection = control.container.find( '.epsilon-icons > i' ), input = control.container.find( '.search-container input' );
-
-    /**
-     * Icon container toggler
-     */
-    control.container.on( 'click', '.epsilon-open-icon-picker', function( e ) {
-      e.preventDefault();
-      jQuery( this ).toggleClass( 'opened-icon-picker' );
-      control.container.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
-    } );
-
-    /**
-     * Icon selection
-     */
-    control.container.on( 'click', '.epsilon-icons-container .epsilon-icons > i', function( e ) {
-      control.container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
-      icon = jQuery( this ).addClass( 'selected' ).attr( 'data-icon' );
-      label = jQuery( this ).addClass( 'selected' ).attr( 'data-search' );
-      control.container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
-      control.container.find( '.epsilon-icon-name > .icon-label' ).html( label );
-
-      /**
-       * Set value
-       */
-      if ( ! inRepeater ) {
-        control.setting.set( icon );
-      } else {
-        control.container.find( '.epsilon-icon-picker' ).attr( 'value', icon ).trigger( 'change' );
-      }
-    } );
-
-    /**
-     * Search functionality
-     */
-    control.container.on( 'keyup change', '.search-container input', _.debounce( function( e ) {
-      filter = input.val().toLowerCase();
-
-      jQuery.each( collection, function() {
-        temp = jQuery( this ).attr( 'data-search' ).toLowerCase();
-        jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
-      } );
-
-    }, 1000 ) );
-  }
-};
-/**
- * Initiate the Image Control
- */
-
-EpsilonFramework.image = {
-  /**
-   * Initiator
-   */
-  init: function( control ) {
-    var self = this,
-        image,
-        temp,
-        size,
-        setting = {},
-        thumb;
-
-    /**
-     * Image selection
-     */
-    control.container.on( 'click', '.image-upload-button', function( e ) {
-      /**
-       * Open the wp.media frame
-       */
-      image = wp.media( {
-        multiple: false,
-      } ).open();
-
-      /**
-       * On selection, save the data in a JSON
-       */
-      image.on( 'select', function() {
-        temp = image.state().get( 'selection' ).first();
-        size = input.attr( 'data-size' );
-
-        if ( 'undefined' === typeof (temp.toJSON().sizes[ size ]) ) {
-          size = 'full';
-        }
-
-        setting.id = temp.id;
-        setting.url = temp.toJSON().sizes[ size ].url;
-        self.saveValue( control, setting );
-        self.setImage( control, setting.url );
-
-        /**
-         * Show buttons
-         */
-        control.container.find( '.actions .image-upload-remove-button' ).show();
-        if ( ! _.isEmpty( control.params.default ) ) {
-          control.container.find( '.actions .image-default-button' ).show();
-        }
-      } );
-    } );
-
-    /**
-     * Image deletion
-     */
-    control.container.on( 'click', '.image-upload-remove-button', function( e ) {
-      e.preventDefault();
-      thumb = control.container.find( '.epsilon-image' );
-      self.saveValue( control, '' );
-
-      if ( thumb.length ) {
-        thumb.find( 'img' ).fadeOut( 200, function() {
-          thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( EpsilonTranslations.selectFile );
-        } );
-      }
-
-      /**
-       * If we don`t have an image, we can hide these buttons
-       */
-      jQuery( this ).hide();
-      if ( ! _.isEmpty( control.params.default ) ) {
-        control.container.find( '.actions .image-default-button' ).show();
-      }
-    } );
-
-    control.container.on( 'click', '.image-default-button', function( e ) {
-      e.preventDefault();
-      thumb = control.container.find( '.epsilon-image' );
-
-      self.saveValue( control, control.params.default );
-      self.setImage( control, control.params.default.url );
-
-      control.container.find( '.actions .image-upload-remove-button' ).show();
-    } );
-  },
-
-  /**
-   * Set image in the customizer option control
-   *
-   * @param control
-   * @param image
-   */
-  setImage: function( control, image ) {
-    /**
-     * If we already have an image, we need to return that div, else we grab the placeholder
-     *
-     * @type {*}
-     */
-    var thumb = control.container.find( '.epsilon-image' ).length ? control.container.find( '.epsilon-image' ) : control.container.find( '.placeholder' );
-
-    /**
-     * We "reload" the image container
-     */
-    if ( thumb.length ) {
-      thumb.removeClass( 'epsilon-image placeholder' ).addClass( 'epsilon-image' );
-      thumb.html( '' );
-      thumb.append( '<img style="display:none" src="' + image + '" />' );
-      thumb.find( 'img' ).fadeIn( 200 );
-    }
-  },
-
-  /**
-   * Save value in database
-   *
-   * @param control
-   * @param val
-   */
-  saveValue: function( control, val ) {
-    var input = control.container.find( '.epsilon-controller-image-container > input' );
-
-    if ( 'object' === typeof(val) ) {
-      control.setting.set( JSON.stringify( val ) );
-      jQuery( input ).attr( 'value', JSON.stringify( val ) ).trigger( 'change' );
-    } else {
-      control.setting.set( '' );
-      jQuery( input ).attr( 'value', '' ).trigger( 'change' );
-    }
-
-  },
-};
 /**
  * Initiate the Layouts Control
  *
@@ -671,66 +390,6 @@ EpsilonFramework.layouts = {
       jQuery( '#' + jQuery( this ).attr( 'data-unique-id' ) ).slideToggle().addClass( 'active' );
     } );
   }
-};
-/**
- * Range Slider Initiator
- *
- * @type {{init: EpsilonFramework.rangeSliders.init}}
- */
-EpsilonFramework.rangeSliders = {
-  /**
-   * Init wrapper
-   *
-   * @param selector
-   */
-  init: function( selector ) {
-    var context = jQuery( selector ).hasClass( 'slider-container' ) ? jQuery( selector ) : jQuery( selector ).find( '.slider-container' ),
-        slider = context.find( '.ss-slider' ),
-        input = context.find( '.rl-slider' ),
-        inputId = input.attr( 'id' ),
-        id = slider.attr( 'id' );
-
-    if ( ! context.length ) {
-      return;
-    }
-
-    jQuery( '#' + id ).slider( {
-      value: parseFloat( jQuery( '#' + inputId ).attr( 'value' ) ),
-      range: 'min',
-      min: parseFloat( jQuery( '#' + id ).attr( 'data-attr-min' ) ),
-      max: parseFloat( jQuery( '#' + id ).attr( 'data-attr-max' ) ),
-      step: parseFloat( jQuery( '#' + id ).attr( 'data-attr-step' ) ),
-      /**
-       * Removed Change event because server was flooded with requests from
-       * javascript, sending changesets on each increment.
-       *
-       * @param event
-       * @param ui
-       */
-      slide: function( event, ui ) {
-        jQuery( '#' + inputId ).attr( 'value', ui.value );
-      },
-      /**
-       * Bind the change event to the "actual" stop
-       * @param event
-       * @param ui
-       */
-      stop: function( event, ui ) {
-        jQuery( '#' + inputId ).trigger( 'change' );
-      }
-    } );
-
-    jQuery( input ).on( 'focus', function() {
-      jQuery( this ).blur();
-    } );
-
-    jQuery( '#' + inputId ).attr( 'value', ( jQuery( '#' + id ).slider( 'value' ) ) );
-    jQuery( '#' + inputId ).on( 'change', function() {
-      jQuery( '#' + id ).slider( {
-        value: jQuery( this ).val()
-      } );
-    } );
-  },
 };
 /**
  * Helper object, we can keep here functions that render content or help with UI interaction
@@ -2029,216 +1688,192 @@ EpsilonFramework.sectionRepeater.section = {
     } );
   }
 };
-/**
- * Icon Picker Initiator
- *
- * @type {{init: EpsilonFramework.iconPickers.init}}
- */
-EpsilonFramework.textEditor = {
-  init: function( selector ) {
-    var context = jQuery( selector ),
-        editorId = jQuery( context.find( 'textarea' ) ).attr( 'id' );
-
-    wp.editor.initialize( editorId, {
-      tinymce: {
-        wpautop: true,
-        setup: function( editor ) {
-          editor.on( 'change', function( e ) {
-            editor.save();
-            jQuery( editor.getElement() ).trigger( 'change' );
-          } );
-        }
-      },
-      quicktags: true
-    } );
-  }
-};
-/**
- * Typography functions
- *
- * @type {{_selectize: null, _linkedFonts: {}, init: EpsilonFramework.typography.init, _resetDefault: EpsilonFramework.typography._resetDefault, _parseJson:
- *     EpsilonFramework.typography._parseJson}}
- */
-EpsilonFramework.typography = {
-  /**
-   * Selectize instance
-   */
-  _selectize: null,
-
-  /**
-   * K/V Pair
-   */
-  _linkedFonts: {},
-
-  /**
-   * Initiate function
-   */
-  init: function( control ) {
-    var self = this,
-        sliders,
-        container = control.container.find( '.epsilon-typography-container' ),
-        uniqueId = container.attr( 'data-unique-id' ),
-        selects = container.find( 'select' ),
-        inputs = container.find( '.epsilon-typography-input' );
-
-    /**
-     * Instantiate the selectize javascript plugin
-     * and the input type number
-     */
-    try {
-      self._selectize = selects.selectize();
-    }
-    catch ( err ) {
-      /**
-       * In case the selectize plugin is not loaded, raise an error
-       */
-      console.warn( 'selectize not yet loaded' );
-    }
-    /**
-     * On triggering the change event, create a json with the values and
-     * send it to the preview window
-     */
-    inputs.on( 'change', function() {
-      var val = EpsilonFramework.typography._parseJson( inputs, uniqueId, control );
-      jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
-    } );
-
-    /**
-     * On clicking the advanced options toggler,
-     */
-    container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
-      var toggle = jQuery( this ).attr( 'data-toggle' );
-      e.preventDefault();
-      jQuery( this ).toggleClass( 'active' ).parent().toggleClass( 'active' );
-      jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
-    } );
-
-    /**
-     * Great use of the EpsilonFramework, ahoy!
-     */
-    sliders = jQuery( '.epsilon-typography-container' ).find( '.slider-container' );
-    jQuery.each( sliders, function() {
-      EpsilonFramework.rangeSliders.init( this );
-    } );
-
-    /**
-     * Reset button
-     */
-    jQuery( '.epsilon-typography-default' ).on( 'click', function( e ) {
-      e.preventDefault();
-      EpsilonFramework.typography._resetDefault( jQuery( this ) );
-    } );
-
-  },
-
-  /**
-   * Reset defaults
-   *
-   * @param element
-   * @private
-   */
-  _resetDefault: function( element ) {
-    var container = jQuery( element ).parent(),
-        uniqueId = container.attr( 'data-unique-id' ),
-        selects = container.find( 'select' ),
-        inputs = container.find( 'inputs' ),
-        val,
-        control = wp.customize.control( uniqueId );
-
-    var fontFamily = selects[ 0 ].selectize;
-
-    var object = {
-          'action': 'epsilon_generate_typography_css',
-          'class': 'Epsilon_Typography',
-          'id': uniqueId,
-          'data': {
-            'selectors': control.params.selectors,
-            'stylesheet': control.params.stylesheet,
-            'json': {}
-          }
-        },
-        api = wp.customize;
-
-    fontFamily.setValue( 'default_font' );
-
-    if ( jQuery( '#' + uniqueId + '-font-size' ).length ) {
-      val = jQuery( '#' + uniqueId + '-font-size' ).
-          attr( 'data-default-font-size' );
-
-      jQuery( '#' + uniqueId + '-font-size' ).
-          val( val ).
-          trigger( 'change' ).
-          trigger( 'blur' );
-      object.data.json[ 'font-size' ] = '';
-    }
-
-    if ( jQuery( '#' + uniqueId + '-line-height' ).length ) {
-      val = jQuery( '#' + uniqueId + '-line-height' ).
-          attr( 'data-default-line-height' );
-
-      jQuery( '#' + uniqueId + '-line-height' ).
-          val( val ).
-          trigger( 'change' ).
-          trigger( 'blur' );
-      object.data.json[ 'line-height' ] = '';
-    }
-
-    if ( jQuery( '#' + uniqueId + '-letter-spacing' ).length ) {
-      val = jQuery( '#' + uniqueId + '-letter-spacing' ).
-          attr( 'data-default-letter-spacing' );
-
-      jQuery( '#' + uniqueId + '-letter-spacing' ).
-          val( val ).
-          trigger( 'change' ).
-          trigger( 'blur' );
-      object.data.json[ 'letter-spacing' ] = '';
-    }
-
-    object.data.json[ 'font-family' ] = 'default_font';
-    object.data.json[ 'font-weight' ] = '';
-    object.data.json[ 'font-style' ] = '';
-
-    api.previewer.send( 'update-inline-typography-css', object );
-  },
-
-  /**
-   * Parse/create the json and send it to the preview window
-   *
-   * @param inputs
-   * @param id
-   * @private
-   */
-  _parseJson: function( inputs, id, control ) {
-    var object = {
-          'action': 'epsilon_generate_typography_css',
-          'class': 'Epsilon_Typography',
-          'id': id,
-          'data': {
-            'selectors': control.params.selectors,
-            'stylesheet': control.params.stylesheet,
-            'json': {}
-          }
-        },
-        api = wp.customize;
-
-    jQuery.each( inputs, function( index, value ) {
-      var key = jQuery( value ).attr( 'id' ),
-          replace = id + '-',
-          type = jQuery( this ).attr( 'type' );
-      key = key.replace( replace, '' );
-
-      if ( 'checkbox' === type ) {
-        object.data.json[ key ] = jQuery( this ).prop( 'checked' ) ? jQuery( value ).val() : '';
-      } else {
-        object.data.json[ key ] = jQuery( value ).val();
-      }
-
-    } );
-
-    api.previewer.send( 'update-inline-typography-css', object );
-    return JSON.stringify( object.data );
-  }
-};
+// /**
+//  * Typography functions
+//  *
+//  * @type {{_selectize: null, _linkedFonts: {}, init: EpsilonFramework.typography.init, _resetDefault: EpsilonFramework.typography._resetDefault, _parseJson:
+//  *     EpsilonFramework.typography._parseJson}}
+//  */
+// EpsilonFramework.typography = {
+//   /**
+//    * Selectize instance
+//    */
+//   _selectize: null,
+//
+//   /**
+//    * K/V Pair
+//    */
+//   _linkedFonts: {},
+//
+//   /**
+//    * Initiate function
+//    */
+//   init: function( control ) {
+//     var self = this,
+//         sliders,
+//         container = control.container.find( '.epsilon-typography-container' ),
+//         uniqueId = container.attr( 'data-unique-id' ),
+//         selects = container.find( 'select' ),
+//         inputs = container.find( '.epsilon-typography-input' );
+//
+//     /**
+//      * Instantiate the selectize javascript plugin
+//      * and the input type number
+//      */
+//     try {
+//       self._selectize = selects.selectize();
+//     }
+//     catch ( err ) {
+//       /**
+//        * In case the selectize plugin is not loaded, raise an error
+//        */
+//       console.warn( 'selectize not yet loaded' );
+//     }
+//     /**
+//      * On triggering the change event, create a json with the values and
+//      * send it to the preview window
+//      */
+//     inputs.on( 'change', function() {
+//       var val = EpsilonFramework.typography._parseJson( inputs, uniqueId, control );
+//       jQuery( '#hidden_input_' + uniqueId ).val( val ).trigger( 'change' );
+//     } );
+//
+//     /**
+//      * On clicking the advanced options toggler,
+//      */
+//     container.find( '.epsilon-typography-advanced-options-toggler' ).on( 'click', function( e ) {
+//       var toggle = jQuery( this ).attr( 'data-toggle' );
+//       e.preventDefault();
+//       jQuery( this ).toggleClass( 'active' ).parent().toggleClass( 'active' );
+//       jQuery( '#' + toggle ).slideToggle().addClass( 'active' );
+//     } );
+//
+//     /**
+//      * Great use of the EpsilonFramework, ahoy!
+//      */
+//     sliders = jQuery( '.epsilon-typography-container' ).find( '.slider-container' );
+//     jQuery.each( sliders, function() {
+//       EpsilonFramework.rangeSliders.init( this );
+//     } );
+//
+//     /**
+//      * Reset button
+//      */
+//     jQuery( '.epsilon-typography-default' ).on( 'click', function( e ) {
+//       e.preventDefault();
+//       EpsilonFramework.typography._resetDefault( jQuery( this ) );
+//     } );
+//
+//   },
+//
+//   /**
+//    * Reset defaults
+//    *
+//    * @param element
+//    * @private
+//    */
+//   _resetDefault: function( element ) {
+//     var container = jQuery( element ).parent(),
+//         uniqueId = container.attr( 'data-unique-id' ),
+//         selects = container.find( 'select' ),
+//         inputs = container.find( 'inputs' ),
+//         val,
+//         control = wp.customize.control( uniqueId );
+//
+//     var fontFamily = selects[ 0 ].selectize;
+//
+//     var object = {
+//           'action': 'epsilon_generate_typography_css',
+//           'class': 'Epsilon_Typography',
+//           'id': uniqueId,
+//           'data': {
+//             'selectors': control.params.selectors,
+//             'stylesheet': control.params.stylesheet,
+//             'json': {}
+//           }
+//         },
+//         api = wp.customize;
+//
+//     fontFamily.setValue( 'default_font' );
+//
+//     if ( jQuery( '#' + uniqueId + '-font-size' ).length ) {
+//       val = jQuery( '#' + uniqueId + '-font-size' ).
+//           attr( 'data-default-font-size' );
+//
+//       jQuery( '#' + uniqueId + '-font-size' ).
+//           val( val ).
+//           trigger( 'change' ).
+//           trigger( 'blur' );
+//       object.data.json[ 'font-size' ] = '';
+//     }
+//
+//     if ( jQuery( '#' + uniqueId + '-line-height' ).length ) {
+//       val = jQuery( '#' + uniqueId + '-line-height' ).
+//           attr( 'data-default-line-height' );
+//
+//       jQuery( '#' + uniqueId + '-line-height' ).
+//           val( val ).
+//           trigger( 'change' ).
+//           trigger( 'blur' );
+//       object.data.json[ 'line-height' ] = '';
+//     }
+//
+//     if ( jQuery( '#' + uniqueId + '-letter-spacing' ).length ) {
+//       val = jQuery( '#' + uniqueId + '-letter-spacing' ).
+//           attr( 'data-default-letter-spacing' );
+//
+//       jQuery( '#' + uniqueId + '-letter-spacing' ).
+//           val( val ).
+//           trigger( 'change' ).
+//           trigger( 'blur' );
+//       object.data.json[ 'letter-spacing' ] = '';
+//     }
+//
+//     object.data.json[ 'font-family' ] = 'default_font';
+//     object.data.json[ 'font-weight' ] = '';
+//     object.data.json[ 'font-style' ] = '';
+//
+//     api.previewer.send( 'update-inline-typography-css', object );
+//   },
+//
+//   /**
+//    * Parse/create the json and send it to the preview window
+//    *
+//    * @param inputs
+//    * @param id
+//    * @private
+//    */
+//   _parseJson: function( inputs, id, control ) {
+//     var object = {
+//           'action': 'epsilon_generate_typography_css',
+//           'class': 'Epsilon_Typography',
+//           'id': id,
+//           'data': {
+//             'selectors': control.params.selectors,
+//             'stylesheet': control.params.stylesheet,
+//             'json': {}
+//           }
+//         },
+//         api = wp.customize;
+//
+//     jQuery.each( inputs, function( index, value ) {
+//       var key = jQuery( value ).attr( 'id' ),
+//           replace = id + '-',
+//           type = jQuery( this ).attr( 'type' );
+//       key = key.replace( replace, '' );
+//
+//       if ( 'checkbox' === type ) {
+//         object.data.json[ key ] = jQuery( this ).prop( 'checked' ) ? jQuery( value ).val() : '';
+//       } else {
+//         object.data.json[ key ] = jQuery( value ).val();
+//       }
+//
+//     } );
+//
+//     api.previewer.send( 'update-inline-typography-css', object );
+//     return JSON.stringify( object.data );
+//   }
+// };
 
 /**
  * Recommended action section scripting
@@ -2619,22 +2254,6 @@ EpsilonFramework.sectionDoubled = {
 };
 
 /**
- * Epsilon Color Picker Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    EpsilonFramework.colorPickers.init( this.container );
-
-    control.container.on( 'change', 'input.epsilon-color-picker',
-        function() {
-          control.setting.set( jQuery( this ).val() );
-        }
-    );
-  }
-} );
-/**
  * Epsilon Color Schemes Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-color-scheme' ] = wp.customize.Control.extend( {
@@ -2646,40 +2265,6 @@ wp.customize.controlConstructor[ 'epsilon-color-scheme' ] = wp.customize.Control
     } );
   }
 } );
-/**
- * Epsilon Customizer Navigation Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-customizer-navigation' ] = wp.customize.Control.extend( {
-  ready: function() {
-    EpsilonFramework.customizerNavigation.init( this.container );
-  }
-} );
-/**
- * Epsilon Icon Picker Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    EpsilonFramework.iconPickers.init( control, false );
-
-    control.container.on( 'change', 'input.epsilon-icon-picker',
-        function() {
-          control.setting.set( jQuery( this ).val() );
-        }
-    );
-  }
-} );
-/**
- * Epsilon Image Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-image' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-    EpsilonFramework.image.init( this );
-  }
-} );
-
 /**
  * Epsilon Layouts Control Constructor
  */
@@ -2693,23 +2278,6 @@ wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.exte
     jQuery( this.container ).find( 'input' ).on( 'change', function() {
       control.setting.set( jQuery( this ).val() );
     } );
-  }
-} );
-
-/**
- * Epsilon Range Slider Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    EpsilonFramework.rangeSliders.init( this.container );
-
-    control.container.on( 'change', 'input.rl-slider',
-        function() {
-          control.setting.set( jQuery( this ).val() );
-        }
-    );
   }
 } );
 
@@ -2787,8 +2355,8 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
         /**
          * init range sliders, color pickers
          */
-        EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container );
+        //EpsilonFramework.rangeSliders.init( newRow.container );
+        //EpsilonFramework.colorPickers.init( newRow.container );
         EpsilonFramework.repeater.base.initTexteditor( newRow.container );
       } );
     }
@@ -2823,8 +2391,8 @@ wp.customize.controlConstructor[ 'epsilon-repeater' ] = wp.customize.Control.ext
         /**
          * init range sliders, color pickers
          */
-        EpsilonFramework.rangeSliders.init( newRow.container );
-        EpsilonFramework.colorPickers.init( newRow.container );
+        //EpsilonFramework.rangeSliders.init( newRow.container );
+        //EpsilonFramework.colorPickers.init( newRow.container );
         EpsilonFramework.repeater.base.initTexteditor( newRow.container );
       } else {
         jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
@@ -3054,9 +2622,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
         /**
          * init range sliders, color pickers
          */
-        EpsilonFramework.rangeSliders.init( newSection.container );
-        EpsilonFramework.colorPickers.init( newSection.container );
-        EpsilonFramework.customizerNavigation.init( newSection.container );
+        //EpsilonFramework.rangeSliders.init( newSection.container );
+        //EpsilonFramework.colorPickers.init( newSection.container );
+        //EpsilonFramework.customizerNavigation.init( newSection.container );
         EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
         newSection.container.find( '.epsilon-selectize' ).selectize( {
           plugins: [ 'remove_button' ],
@@ -3079,9 +2647,9 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
       _.each( this.params.value, function( subValue ) {
         newSection = EpsilonFramework.sectionRepeater.base.add( control, subValue[ 'type' ], subValue );
         if ( 'undefined' !== typeof newSection ) {
-          EpsilonFramework.rangeSliders.init( newSection.container );
-          EpsilonFramework.colorPickers.init( newSection.container );
-          EpsilonFramework.customizerNavigation.init( newSection.container );
+          //EpsilonFramework.rangeSliders.init( newSection.container );
+          //EpsilonFramework.colorPickers.init( newSection.container );
+          //EpsilonFramework.customizerNavigation.init( newSection.container );
           EpsilonFramework.sectionRepeater.base.initTexteditor( control, newSection.container );
           newSection.container.find( '.epsilon-selectize' ).selectize( {
             plugins: [ 'remove_button' ],
@@ -3203,51 +2771,22 @@ wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Con
   }
 
 } );
-/**
- * Epsilon Text Editor Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-text-editor' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    EpsilonFramework.textEditor.init( this.container );
-
-    control.container.on( 'change keyup', 'textarea', function() {
-      control.setting.set( jQuery( this ).val() );
-    } );
-  }
-} );
-/**
- * Epsilon Toggle Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-toggle' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    control.container.on( 'change', 'input.onoffswitch-checkbox',
-        function() {
-          control.setting.set( jQuery( this ).prop( 'checked' ) );
-        }
-    );
-  }
-} );
-
-/**
- * Epsilon Typography Control Constructor
- */
-wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
-  ready: function() {
-    var control = this;
-
-    EpsilonFramework.typography.init( this );
-    /**
-     * Save the typography
-     */
-    jQuery( this.container ).find( '.customize-control-content > .epsilon-typography-input' ).on( 'change', function() {
-      control.setting.set( jQuery( this ).val() );
-    } );
-  }
-} );
+// /**
+//  * Epsilon Typography Control Constructor
+//  */
+// wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.extend( {
+//   ready: function() {
+//     var control = this;
+//
+//     EpsilonFramework.typography.init( this );
+//     /**
+//      * Save the typography
+//      */
+//     jQuery( this.container ).find( '.customize-control-content > .epsilon-typography-input' ).on( 'change', function() {
+//       control.setting.set( jQuery( this ).val() );
+//     } );
+//   }
+// } );
 
 /**
  * Epsilon Upsell Control Constructor
@@ -3446,10 +2985,9 @@ wp.customize.sectionConstructor[ 'epsilon-section-pro' ] = wp.customize.Section.
  */
 jQuery( document ).on( 'widget-updated widget-added', function( a, selector ) {
   if ( jQuery().slider ) {
-    EpsilonFramework.rangeSliders.init( selector );
+    //EpsilonFramework.rangeSliders.init( selector );
   }
 } );
-
 wp.customize.bind( 'ready', function() {
   EpsilonFramework.colorSchemes.init();
 } );
