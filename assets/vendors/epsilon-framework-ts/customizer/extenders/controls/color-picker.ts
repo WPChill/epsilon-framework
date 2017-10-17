@@ -1,7 +1,7 @@
 declare var wp: any;
 import * as $ from 'jquery';
 
-import { EpsilonColorPicker } from '../controls/color-picker';
+import { EpsilonColorPicker } from '../../controls/color-picker';
 
 wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control.extend( {
   ready: function() {

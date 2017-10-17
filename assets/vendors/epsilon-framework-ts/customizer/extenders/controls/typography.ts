@@ -1,7 +1,7 @@
 declare var wp: any;
 import * as $ from 'jquery';
 
-import { EpsilonTypography } from '../controls/typography';
+import { EpsilonTypography } from '../../controls/typography';
 
 /**
  * Epsilon Typography Control Constructor
@@ -17,7 +17,6 @@ wp.customize.controlConstructor[ 'epsilon-typography' ] = wp.customize.Control.e
      */
     control.container.on( 'change', '.customize-control-content > .epsilon-typography-input',
         function( e: Event ) {
-          console.log( e.target );
           control.setting.set( jQuery( e.target ).val() );
         }
     );

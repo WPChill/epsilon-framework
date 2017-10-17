@@ -1,9 +1,14 @@
+declare var wp: any;
+import * as $ from 'jquery';
+
+import { EpsilonSectionRecommended } from '../../sections/recommended-actions';
+
 /**
  * Recommended Section Constructor
  */
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
   ready: function() {
-    EpsilonFramework.recommendedActions.init();
+    new EpsilonSectionRecommended( this );
   },
   attachEvents: function() {
   },

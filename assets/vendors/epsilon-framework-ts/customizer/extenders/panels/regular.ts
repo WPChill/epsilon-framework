@@ -1,3 +1,7 @@
+declare var wp: any;
+declare var _: any;
+import * as $ from 'jquery';
+
 /**
  * Nestable Regular Panels Constructor
  */
@@ -26,9 +30,9 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
     }
     wp.customize.bind( 'pane-contents-reflowed', function() {
       // Reflow panels
-      var panels = [];
+      let panels: any = [];
 
-      wp.customize.panel.each( function( panel ) {
+      wp.customize.panel.each( function( panel: any ) {
         if ( 'epsilon-panel-regular' !== panel.params.type || 'undefined' === typeof panel.params.panel ) {
           return;
         }
@@ -57,7 +61,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
 
     this._panelAttachEvents.call( this );
 
-    panel.expanded.bind( function( expanded ) {
+    panel.expanded.bind( function( expanded: any ) {
 
       var parent = wp.customize.panel( panel.params.panel );
       if ( expanded ) {
@@ -68,7 +72,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
 
     } );
 
-    panel.container.find( '.customize-panel-back' ).off( 'click keydown' ).on( 'click keydown', function( event ) {
+    panel.container.find( '.customize-panel-back' ).off( 'click keydown' ).on( 'click keydown', function( event: Event ) {
       if ( wp.customize.utils.isKeydownButNotEnterEvent( event ) ) {
         return;
       }
@@ -94,7 +98,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
       return this._panelIsContextuallyActive.call( this );
     }
 
-    wp.customize.panel.each( function( child ) {
+    wp.customize.panel.each( function( child: any ) {
       if ( ! child.params.panel ) {
         return;
       }
@@ -108,7 +112,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
 
     children.sort( wp.customize.utils.prioritySort );
 
-    _( children ).each( function( child ) {
+    _( children ).each( function( child: any ) {
       if ( child.active() && child.isContextuallyActive() ) {
         activeCount += 1;
       }

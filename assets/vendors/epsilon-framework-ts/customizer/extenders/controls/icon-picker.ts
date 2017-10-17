@@ -1,7 +1,7 @@
 declare var wp: any;
 import * as $ from 'jquery';
 
-import { EpsilonIconPicker } from '../controls/icon-picker';
+import { EpsilonIconPicker } from '../../controls/icon-picker';
 
 wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
   ready: function() {

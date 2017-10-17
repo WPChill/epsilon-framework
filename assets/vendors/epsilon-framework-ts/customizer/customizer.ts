@@ -5,11 +5,27 @@ import * as $ from 'jquery';
 /**
  * Controls
  */
-import './extenders/range-slider';
-import './extenders/icon-picker';
-import './extenders/text-editor';
-import './extenders/toggle';
-import './extenders/color-picker';
-import './extenders/customizer-navigation';
-import './extenders/image';
-import './extenders/typography'
+import './extenders/controls/range-slider';
+import './extenders/controls/icon-picker';
+import './extenders/controls/text-editor';
+import './extenders/controls/toggle';
+import './extenders/controls/color-picker';
+import './extenders/controls/customizer-navigation';
+import './extenders/controls/image';
+import './extenders/controls/typography';
+import './extenders/controls/color-schemes';
+import './extenders/controls/upsell';
+import './extenders/controls/layouts';
+import './extenders/controls/repeater';
+
+/**
+ * Panels
+ */
+import './extenders/panels/regular';
+
+/**
+ * Sections
+ */
+import './extenders/sections/section-doubled';
+import './extenders/sections/section-pro';
+import './extenders/sections/recommended-actions';

@@ -1,6 +1,6 @@
 declare var wp: any;
 import * as $ from 'jquery';
-import { EpsilonTextEditor } from '../controls/text-editor';
+import { EpsilonTextEditor } from '../../controls/text-editor';
 
 wp.customize.controlConstructor[ 'epsilon-text-editor' ] = wp.customize.Control.extend( {
   ready: function() {

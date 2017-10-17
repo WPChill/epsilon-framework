@@ -1,7 +1,7 @@
 declare var wp: any;
 import * as $ from 'jquery';
 
-import { EpsilonRangeSlider } from '../controls/range-slider';
+import { EpsilonRangeSlider} from '../../controls/range-slider';
 
 wp.customize.controlConstructor[ 'epsilon-slider' ] = wp.customize.Control.extend( {
   ready: function() {

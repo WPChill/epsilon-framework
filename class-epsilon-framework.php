@@ -223,10 +223,10 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon.js', array(
-			'jquery',
-			'customize-controls',
-		) );
+//		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon.js', array(
+//			'jquery',
+//			'customize-controls',
+//		) );
 
 		wp_enqueue_script( 'epsilon-customizer', EPSILON_URI . '/assets/js/epsilon-framework-customizer.js', array(
 			'jquery',
@@ -240,7 +240,7 @@ class Epsilon_Framework {
 			'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
 		) );
 
-		wp_localize_script( 'epsilon-object', 'EpsilonTranslations', array(
+		wp_localize_script( 'epsilon-customizer', 'EpsilonTranslations', array(
 			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
 			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
 			'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
