@@ -3,7 +3,9 @@ var webpack = require( 'webpack' );
 
 module.exports = {
   entry: {
-    customizer: './assets/vendors/epsilon-framework-ts/customizer/customizer.ts'
+    customizer: './assets/vendors/epsilon-framework/customizer/customizer.ts',
+    admin: './assets/vendors/epsilon-framework/admin/admin.ts',
+    previewer: './assets/vendors/epsilon-framework/previewer/previewer.ts'
   },
   output: {
     path: path.resolve( __dirname, './assets/js/' ),

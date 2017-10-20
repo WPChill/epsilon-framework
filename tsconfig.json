@@ -16,6 +16,6 @@
     ]
   },
   "include": [
-    "./assets/vendors/epsilon-framework-ts/**/*"
+    "./assets/vendors/epsilon-framework/**/*"
   ],
 }

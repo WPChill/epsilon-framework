@@ -171,7 +171,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				 */
 				if ( 'epsilon-image' === $v['type'] ) {
 					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['default'] ) ) {
-						$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = array();
+						$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = '';
 					}
 
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['size']      = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] : 'full';
@@ -249,6 +249,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'label'       => __( 'Background Image', 'epsilon-framework' ),
 						'description' => '',
 						'type'        => 'epsilon-image',
+						'default'     => '',
 						'group'       => 'styling',
 						'size'        => 'full',
 						'sizeArray'   => $sizes,

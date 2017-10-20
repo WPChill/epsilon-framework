@@ -261,7 +261,6 @@ class Epsilon_Repeater_Templates {
 				<# } #>
 			</span>
 		</label>
-
 		<div class="epsilon-controller-image-container image-upload">
 			<input type="hidden" data-field="{{ field.id }}" data-size="{{ field.size }}" data-save-mode="{{ field.mode }}"/>
 			<# if ( field.default ) { #>
@@ -368,7 +367,7 @@ class Epsilon_Repeater_Templates {
 	public static function epsilon_picker(){
 		?>
 		<label>
-			<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.value }}" />
+			<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.default }}" />
 			<span class="customize-control-title epsilon-color-picker-title">
 				{{{ field.label }}}
 				<a href="#" data-default="{{ field.defaultVal }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>

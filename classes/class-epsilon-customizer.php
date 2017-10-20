@@ -326,6 +326,9 @@ class Epsilon_Customizer {
 			case 'radio':
 				$sanitizer = array( 'Epsilon_Sanitizers', 'radio_buttons' );
 				break;
+			case 'epsilon-image':
+				$sanitizer = 'esc_url_raw';
+				break;
 			case 'epsilon-text-editor':
 				$sanitizer = array( 'Epsilon_Sanitizers', 'textarea_nl2br' );
 				break;
@@ -349,7 +352,8 @@ class Epsilon_Customizer {
 				$sanitizer = 'sanitize_text_field';
 				break;
 			case 'epsilon-color-picker':
-				$sanitizer = 'sanitize_hex_color';
+				$sanitizer    = 'sanitize_hex_color';
+				$args['mode'] = isset( $args['mode'] ) ? $args['mode'] : 'hex';
 				if ( 'rgba' === $args['mode'] ) {
 					$sanitizer = array( 'Epsilon_Sanitizers', 'rgba' );
 				}

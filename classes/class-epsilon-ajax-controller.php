@@ -66,7 +66,7 @@ class Epsilon_Ajax_Controller {
 
 		$class  = $args_action[0];
 		$method = $args_action[1];
-		$args   = array_map( 'sanitize_text_field', wp_unslash( $_POST['args']['args'] ) );
+		$args   = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments', wp_unslash( $_POST['args']['args'] ) );
 
 		$response = $class::$method( $args );
 
@@ -93,5 +93,18 @@ class Epsilon_Ajax_Controller {
 				)
 			)
 		);
+	}
+
+	/**
+	 * Sanitize arguments
+	 *
+	 * @param $args
+	 */
+	public static function sanitize_arguments( $args ) {
+		if ( is_array( $args ) ) {
+			return array_map( 'sanitize_text_field', $args );
+		} else {
+			return sanitize_text_field( $args );
+		}
 	}
 }
