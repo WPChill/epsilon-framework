@@ -1,7 +1,5 @@
-import * as $ from 'jquery';
-import { EpsilonAjaxRequest } from '../../utils/epsilon-ajax-request';
-
 declare var EpsilonWPUrls: any;
+import { EpsilonAjaxRequest } from '../../utils/epsilon-ajax-request';
 
 export class EpsilonSectionRecommended {
   /**

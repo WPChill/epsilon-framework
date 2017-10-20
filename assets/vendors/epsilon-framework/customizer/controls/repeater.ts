@@ -1,12 +1,10 @@
-import { EpsilonRepeaterSectionRow } from './repeater/repeater-section-row';
-
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 
 import { EpsilonRepeaterRow } from './repeater/repeater-row';
 import { EpsilonRepeaterAddons } from './repeater/repeater-addons';
 import { EpsilonRepeaterUtils } from './repeater/repeater-utils';
+import { EpsilonRepeaterSectionRow } from './repeater/repeater-section-row';
 
 export class EpsilonFieldRepeater {
   /**
@@ -52,7 +50,7 @@ export class EpsilonFieldRepeater {
    * Object constructor
    * @param control
    */
-  constructor( control: { container: JQuery, setting: void, params: { rowLabel: any, value: number, id: string, fields: object, choices: { limit: number } } } ) {
+  public constructor( control: { container: JQuery, setting: void, params: { rowLabel: any, value: number, id: string, fields: object, choices: { limit: number } } } ) {
     this.control = control;
     this.context = control.container;
     this.utils = this.loadUtils();

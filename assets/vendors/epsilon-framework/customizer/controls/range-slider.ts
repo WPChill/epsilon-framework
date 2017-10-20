@@ -1,8 +1,4 @@
-import * as $ from 'jquery';
 import Slider = JQueryUI.Slider;
-
-/// <reference types="jqueryui" />
-
 /**
  * Espilon Range Slider Module
  */
@@ -35,7 +31,7 @@ export class EpsilonRangeSlider {
    * Class constructor
    * @param {{container: JQuery; params: {value: number; id: string; sliderControls: {min: number; max: number; step: number}}}} control
    */
-  constructor( control: { container: JQuery, params: { value: number, id: string, sliderControls: { min: number, max: number, step: number } } } ) {
+  public constructor( control: { container: JQuery, params: { value: number, id: string, sliderControls: { min: number, max: number, step: number } } } ) {
     this.context = jQuery( control.container ).hasClass( 'slider-container' ) ? jQuery( control.container ) : jQuery( control.container ).find( '.slider-container' );
     this.min = control.params.sliderControls.min;
     this.max = control.params.sliderControls.max;

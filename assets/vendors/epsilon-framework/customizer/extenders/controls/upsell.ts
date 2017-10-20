@@ -1,5 +1,4 @@
 declare var wp: any;
-import * as $ from 'jquery';
 
 wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.extend( {
   ready: function() {

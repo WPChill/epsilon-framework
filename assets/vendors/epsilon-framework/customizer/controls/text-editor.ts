@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 declare var wp: any;
 
 /**
@@ -19,7 +17,7 @@ export class EpsilonTextEditor {
    * Class Constructor
    * @param {{container: JQuery; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } }, repeater: boolean = false, deconstruct: boolean = false ) {
+  public constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } }, repeater: boolean = false, deconstruct: boolean = false ) {
     this.context = jQuery( control.container );
     this.editorId = control.params.id + '-editor';
 

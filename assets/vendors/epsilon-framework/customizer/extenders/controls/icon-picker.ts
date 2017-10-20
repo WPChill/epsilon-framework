@@ -1,5 +1,4 @@
 declare var wp: any;
-import * as $ from 'jquery';
 
 import { EpsilonIconPicker } from '../../controls/icon-picker';
 

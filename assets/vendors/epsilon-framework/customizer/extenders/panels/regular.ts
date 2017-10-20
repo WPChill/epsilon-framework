@@ -1,6 +1,5 @@
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 
 /**
  * Nestable Regular Panels Constructor

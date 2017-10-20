@@ -1,7 +1,8 @@
+import { EpsilonButtonGroup } from '../button-group';
+
 declare var EpsilonTranslations: any;
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 import { EpsilonRangeSlider } from '../range-slider';
 import { EpsilonRepeaterRow } from './repeater-row';
 import { EpsilonIconPicker } from '../icon-picker';
@@ -32,7 +33,7 @@ export class EpsilonRepeaterAddons {
    * @param {EpsilonFieldRepeater | EpsilonSectionRepeater} control
    * @param {EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any} row
    */
-  constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater, row: EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any ) {
+  public constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater, row: EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any ) {
     this.control = control;
     this.row = row;
     this.proxy = this.control.control.params;
@@ -51,10 +52,24 @@ export class EpsilonRepeaterAddons {
     this.initIconPicker();
     this.initTextEditor();
     this.initColorPickers();
+    this.initButtonGroup();
     if ( this.row.hasOwnProperty( 'type' ) ) {
       this.initCustomizerNavigation();
       this.initSelectize();
     }
+  }
+
+  /**
+   * Initiate button group
+   */
+  public initButtonGroup(): void {
+    const self = this;
+    let settings: any = {
+      container: self.row.container,
+      repeater: true,
+    };
+    
+    new EpsilonButtonGroup( settings );
   }
 
   /**

@@ -1,5 +1,4 @@
 declare var wp: any;
-import * as $ from 'jquery';
 
 import { EpsilonRangeSlider} from '../../controls/range-slider';
 

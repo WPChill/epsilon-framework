@@ -13,7 +13,7 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
    */
   public type: string;
 
-  constructor(
+  public constructor(
       instance: EpsilonSectionRepeater | EpsilonFieldRepeater,
       rowContainer: JQuery,
       type: string ) {
@@ -43,15 +43,21 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
    * @param container
    */
   private _handleTabs() {
-    const self = this,
-        wrapper = self.container.find( 'nav' ),
+    const self = this;
+    let wrapper = self.container.find( 'nav' ),
         tabs = self.container.find( '[data-tab-id]' ),
-        items = wrapper.find( 'a' );
+        tab: JQuery;
 
-    jQuery( wrapper ).on( 'click', items, function( event ) {
+    jQuery( wrapper ).on( 'click', 'a', function( this: any, event: JQueryEventConstructor ) {
       event.preventDefault();
-      tabs.removeClass( 'active' );
-      self.container.find( '[data-tab-id="' + jQuery( event.target ).attr( 'data-item' ) + '"]' ).addClass( 'active' );
+      jQuery( this ).siblings().removeClass( 'active' );
+      jQuery( this ).addClass( 'active' );
+      tab = self.container.find( '[data-tab-id="' + jQuery( this ).attr( 'data-item' ) + '"]' );
+      if ( tab.length ) {
+        tabs.removeClass( 'active' );
+        tab.addClass( 'active' );
+      }
+
     } );
   }
 

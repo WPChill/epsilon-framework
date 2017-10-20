@@ -1,6 +1,5 @@
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 import { EpsilonFieldRepeater } from '../repeater';
 import { EpsilonRepeaterAddons } from './repeater-addons';
 import { EpsilonTextEditor } from '../text-editor';

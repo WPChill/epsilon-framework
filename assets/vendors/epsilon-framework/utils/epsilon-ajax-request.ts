@@ -1,5 +1,4 @@
 declare var require: any, wp: any, EpsilonWPUrls: any;
-import * as $ from 'jquery';
 
 /**
  * Ajax request class

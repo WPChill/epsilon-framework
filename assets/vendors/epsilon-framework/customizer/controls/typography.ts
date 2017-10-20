@@ -1,4 +1,3 @@
-import * as $ from 'jquery';
 import { EpsilonRangeSlider } from './range-slider';
 
 declare var wp: any;
@@ -49,7 +48,7 @@ export class EpsilonTypography {
    * Class Constructor
    * @param {{container: JQuery; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, params: { value: number, id: string, default: string, stylesheet: string, selectors: string } } ) {
+  public constructor( control: { container: JQuery, params: { value: number, id: string, default: string, stylesheet: string, selectors: string } } ) {
     this.control = control;
     this.context = jQuery( control.container );
     this.container = this.context.find( '.epsilon-typography-container' );

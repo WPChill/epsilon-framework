@@ -25,6 +25,7 @@ class Epsilon_Framework {
 		'icon-picker',
 		'customizer-navigation',
 		'color-scheme',
+		'button-group',
 	);
 	/**
 	 * By default, it loads all sections

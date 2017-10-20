@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 declare var _: any;
 declare var wp: any;
 
@@ -20,7 +18,7 @@ export class EpsilonColorSchemes {
    * Class Constructor
    * @param {{container: JQuery; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, params: { value: number, id: string, default: string, stylesheet: string } } ) {
+  public constructor( control: { container: JQuery, params: { value: number, id: string, default: string, stylesheet: string } } ) {
     this.control = control;
     this.context = this.control.container.find( '.epsilon-color-scheme' );
 

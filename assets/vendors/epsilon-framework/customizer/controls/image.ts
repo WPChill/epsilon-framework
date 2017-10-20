@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 declare var EpsilonTranslations: any;
 declare var wp: any;
 declare var _: any;
@@ -21,7 +19,7 @@ export class EpsilonImage {
    * Class Constructor
    * @param {{container: JQuery; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, params: { value: number, id: string, default: string } } ) {
+  public constructor( control: { container: JQuery, params: { value: number, id: string, default: string } } ) {
     this.control = control;
     this.context = jQuery( control.container );
 

@@ -165,6 +165,16 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = wp_parse_args( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'], $default );
 				}
+				/**
+				 * Epsilon Button Group defaults
+				 */
+				if ( 'epsilon-button-group' === $v['type'] ) {
+					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] ) ) {
+						$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = array();
+					}
+
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['groupType'] = $this->set_group_type( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] );
+				}
 
 				/**
 				 * Epsilon Image
@@ -220,6 +230,22 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	}
 
 	/**
+	 * Set group type
+	 */
+	public function set_group_type( $choices = array() ) {
+		$arr = array(
+			0 => 'none',
+			1 => 'one',
+			2 => 'two',
+			3 => 'three',
+			4 => 'four',
+		);
+
+		return $arr[ count( $choices ) ];
+	}
+
+
+	/**
 	 * Create from a field of keys, "usable" fields
 	 *
 	 * @param array $styling
@@ -258,10 +284,50 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 					$arr[ $key . '_background_image' ] = $temp;
 					break;
+				case 'background-position':
+					$temp = array(
+						'id'          => $key . '_background_position',
+						'label'       => __( 'Background Position', 'epsilon-framework' ),
+						'description' => '',
+						'default'     => 'center',
+						'type'        => 'select',
+						'group'       => 'styling',
+						'choices'     => array(
+							'topleft'     => __( 'Center', 'epsilon-framework' ),
+							'top'         => __( 'Top', 'epsilon-framework' ),
+							'topright'    => __( 'Top Right', 'epsilon-framework' ),
+							'left'        => __( 'Left', 'epsilon-framework' ),
+							'center'      => __( 'Center', 'epsilon-framework' ),
+							'right'       => __( 'Right', 'epsilon-framework' ),
+							'bottomleft'  => __( 'Bottom Left', 'epsilon-framework' ),
+							'bottom'      => __( 'Bottom', 'epsilon-framework' ),
+							'bottomright' => __( 'Bottom Right', 'epsilon-framework' ),
+						),
+					);
+
+					$arr[ $key . '_background_position' ] = $temp;
+					break;
+				case 'background-size':
+					$temp = array(
+						'id'          => $key . '_background_size',
+						'label'       => __( 'Background Size', 'epsilon-framework' ),
+						'description' => '',
+						'default'     => 'cover',
+						'type'        => 'select',
+						'group'       => 'styling',
+						'choices'     => array(
+							'cover'   => __( 'Cover', 'epsilon-framework' ),
+							'contain' => __( 'Contain', 'epsilon-framework' ),
+							'initial' => __( 'Initial', 'epsilon-framework' ),
+						),
+					);
+
+					$arr[ $key . '_background_size' ] = $temp;
+					break;
 				default:
 					break;
-			}
-		}
+			}// End switch().
+		}// End foreach().
 
 		return $arr;
 
@@ -272,8 +338,149 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 *
 	 * @param array $styling
 	 */
-	public function create_layout_fields( $layout = array() ) {
+	public function create_layout_fields( $layout = array(), $key ) {
 		$arr = array();
+		foreach ( $layout as $prop ) {
+			switch ( $prop ) {
+				case 'column-alignment':
+					$temp = array(
+						'id'        => $key . '_column_alignment',
+						'type'      => 'epsilon-button-group',
+						'label'     => __( 'Alignment', 'epsilon-framework' ),
+						'group'     => 'layout',
+						'groupType' => 'three',
+						'choices'   => array(
+							'left'   => array(
+								'icon'  => 'dashicons-editor-alignleft',
+								'value' => 'left',
+							),
+							'center' => array(
+								'icon'  => 'dashicons-editor-aligncenter',
+								'value' => 'center',
+							),
+							'right'  => array(
+								'icon'  => 'dashicons-editor-alignright',
+								'value' => 'right',
+							),
+						),
+						'default'   => 'center',
+					);
+
+					$arr[ $key . '_column_alignment' ] = $temp;
+					break;
+
+				case 'column-vertical-alignment':
+					$temp = array(
+						'id'        => $key . '_column_vertical_alignment',
+						'type'      => 'epsilon-button-group',
+						'label'     => __( 'Vertical Alignment', 'epsilon-framework' ),
+						'group'     => 'layout',
+						'groupType' => 'three',
+						'choices'   => array(
+							'left'   => array(
+								'icon'  => 'dashicons-editor-alignleft',
+								'value' => 'left',
+							),
+							'center' => array(
+								'icon'  => 'dashicons-editor-aligncenter',
+								'value' => 'center',
+							),
+							'right'  => array(
+								'icon'  => 'dashicons-editor-alignright',
+								'value' => 'right',
+							),
+						),
+						'default'   => 'center',
+					);
+
+					$arr[ $key . '_column_vertical_alignment' ] = $temp;
+					break;
+
+				case 'column-stretch':
+					$temp = array(
+						'id'        => $key . '_column_stretch',
+						'type'      => 'epsilon-button-group',
+						'label'     => __( 'Vertical Alignment', 'epsilon-framework' ),
+						'group'     => 'layout',
+						'groupType' => 'three',
+						'choices'   => array(
+							'left'   => array(
+								'icon'  => 'dashicons-editor-alignleft',
+								'value' => 'left',
+							),
+							'center' => array(
+								'icon'  => 'dashicons-editor-aligncenter',
+								'value' => 'center',
+							),
+							'right'  => array(
+								'icon'  => 'dashicons-editor-alignright',
+								'value' => 'right',
+							),
+						),
+						'default'   => 'center',
+					);
+
+					$arr[ $key . '_column_stretch' ] = $temp;
+					break;
+
+				case 'column-spacing':
+					$temp = array(
+						'id'        => $key . '_column_spacing',
+						'type'      => 'epsilon-button-group',
+						'label'     => __( 'Column Spacing', 'epsilon-framework' ),
+						'group'     => 'layout',
+						'groupType' => 'two',
+						'choices'   => array(
+							'left'   => array(
+								'icon'  => 'dashicons-editor-alignleft',
+								'value' => 'left',
+							),
+							'center' => array(
+								'icon'  => 'dashicons-editor-aligncenter',
+								'value' => 'center',
+							),
+						),
+						'default'   => 'center',
+					);
+
+					$arr[ $key . '_column_spacing' ] = $temp;
+					break;
+
+				case 'column-group':
+					$temp = array(
+						'id'        => $key . '_column_group',
+						'type'      => 'epsilon-button-group',
+						'label'     => __( 'Column Spacing', 'epsilon-framework' ),
+						'group'     => 'layout',
+						'groupType' => 'four',
+						'choices'   => array(
+							1 => array(
+								'value' => 1,
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/one-column.png',
+							),
+							2 => array(
+								'value' => 2,
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/two-column.png',
+							),
+							3 => array(
+								'value' => 3,
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/three-column.png',
+							),
+							4 => array(
+								'value' => 4,
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/four-column.png',
+							),
+						),
+						'default'   => 4,
+					);
+
+					$arr[ $key . '_column_group' ] = $temp;
+					break;
+
+				default:
+					break;
+			}// End switch().
+		}// End foreach().
 
 		return $arr;
 	}

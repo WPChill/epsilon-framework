@@ -1,6 +1,5 @@
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 
 import { EpsilonRepeaterUtils } from './repeater-utils';
 import { EpsilonFieldRepeater } from '../repeater';
@@ -33,7 +32,7 @@ export class EpsilonRepeaterRow {
    * @param {{container: JQuery; setting: void; params: {value: number; id: string}}} instance
    * @param {JQuery} rowContainer
    */
-  constructor( instance: EpsilonFieldRepeater | EpsilonSectionRepeater, rowContainer: JQuery ) {
+  public constructor( instance: EpsilonFieldRepeater | EpsilonSectionRepeater, rowContainer: JQuery ) {
     const self = this;
     this.index = instance.currentIndex;
     this.container = rowContainer;

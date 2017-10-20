@@ -358,6 +358,9 @@ class Epsilon_Customizer {
 					$sanitizer = array( 'Epsilon_Sanitizers', 'rgba' );
 				}
 				break;
+			case 'epsilon-button-group':
+				$sanitizer = array( 'Epsilon_Sanitizers', 'radio_buttons' );
+				break;
 			case 'epsilon-selectize':
 				$sanitize = array( 'Epsilon_Sanitizers', 'selectize' );
 				break;

@@ -12,7 +12,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    * Object constructor
    * @param control
    */
-  constructor( control: { container: JQuery, setting: void, params: { rowLabel: any, value: number, id: string, fields: object, choices: { limit: number } } } ) {
+  public constructor( control: { container: JQuery, setting: void, params: { rowLabel: any, value: number, id: string, fields: object, choices: { limit: number } } } ) {
     super( control );
     /**
      * We need to move this element to the bottom of the page so it renders properly

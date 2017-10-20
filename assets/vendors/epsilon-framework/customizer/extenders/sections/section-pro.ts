@@ -1,6 +1,4 @@
 declare var wp: any;
-import * as $ from 'jquery';
-
 /**
  * Pro Section Constructor
  */

@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 declare var wp: any;
 
 /**
@@ -19,7 +17,7 @@ export class EpsilonCustomizerNavigation {
    * Class Constructor
    * @param {{container: JQuery; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, params: { value: number, id: string } } ) {
+  public constructor( control: { container: JQuery, params: { value: number, id: string } } ) {
     this.context = jQuery( control.container );
     this.init();
   }

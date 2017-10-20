@@ -1,11 +1,9 @@
-import { EpsilonSectionRepeater } from '../section-repeater';
-
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 import { EpsilonRepeaterUtils } from './repeater-utils';
 import { EpsilonRepeaterSectionRow } from './repeater-section-row';
 import { EpsilonFieldRepeater } from '../repeater';
+import { EpsilonSectionRepeater } from '../section-repeater';
 
 export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   /**

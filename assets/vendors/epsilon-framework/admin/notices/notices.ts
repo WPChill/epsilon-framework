@@ -1,11 +1,7 @@
 import { EpsilonAjaxRequest } from '../../utils/epsilon-ajax-request';
 
-declare var require: any;
-declare var wp: any;
 declare var EpsilonWPUrls: any;
 declare var userSettings: any;
-
-import * as $ from 'jquery';
 
 /**
  * Epsilon Notices Class
@@ -14,7 +10,7 @@ export class EpsilonNotices {
   /**
    * Class constructor
    */
-  constructor() {
+  public constructor() {
     const self = this;
   }
 

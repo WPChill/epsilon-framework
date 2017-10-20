@@ -2,7 +2,6 @@ declare var require: any;
 declare var EpsilonWPUrls: any;
 declare var wp: any;
 declare var _: any;
-import * as $ from 'jquery';
 
 export class EpsilonSectionEditorPreviewer {
   /**

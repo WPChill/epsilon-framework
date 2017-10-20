@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 declare var _: any;
 
 /**
@@ -31,7 +29,7 @@ export class EpsilonIconPicker {
    * Class Constructor
    * @param {{container: JQuery; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } }, repeater: boolean ) {
+  public constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } }, repeater: boolean ) {
     this.control = control;
     this.context = this.control.container;
     this.collection = this.context.find( '.epsilon-icons > i' );

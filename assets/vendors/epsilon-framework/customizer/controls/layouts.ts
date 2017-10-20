@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 /**
  * Espilon Layouts Module
  */
@@ -57,7 +55,7 @@ export class EpsilonLayouts {
    * Class Constructor
    * @param {{container: JQuery; setting: void; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, setting: void, params: { value: number, id: string, minSpan: string } } ) {
+  public constructor( control: { container: JQuery, setting: void, params: { value: number, id: string, minSpan: string } } ) {
     this.control = control;
     this.context = this.control.container;
     this.layoutButtons = this.context.find( '.epsilon-control-group > a' );
@@ -322,7 +320,7 @@ export class EpsilonLayouts {
         span: columns
       };
 
-      json.columns[ index ] = Obj;
+      json.columns[ index + 1 ] = Obj;
     } );
 
     if ( null === json.columnsCount ) {

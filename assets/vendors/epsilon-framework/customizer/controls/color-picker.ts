@@ -1,5 +1,3 @@
-import * as $ from 'jquery';
-
 /**
  * Espilon Color Picker Module
  */
@@ -25,7 +23,7 @@ export class EpsilonColorPicker {
    * Class Constructor
    * @param {{container: JQuery; setting: void; params: {value: number; id: string}}} control
    */
-  constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } } ) {
+  public constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } } ) {
     const self = this;
     let clear: JQuery;
     this.control = control;

@@ -18,6 +18,7 @@ import './extenders/controls/upsell';
 import './extenders/controls/layouts';
 import './extenders/controls/repeater';
 import './extenders/controls/section-repeater';
+import './extenders/controls/button-group';
 /**
  * Panels
  */
