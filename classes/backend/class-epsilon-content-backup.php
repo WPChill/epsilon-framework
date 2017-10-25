@@ -131,7 +131,7 @@ class Epsilon_Content_Backup {
 		$this->pages[ $page_id ] = array(
 			'id'       => $page_id,
 			'field_id' => $id,
-			'args'     => $args,
+			'fields'   => $args,
 		);
 	}
 
@@ -240,7 +240,7 @@ class Epsilon_Content_Backup {
 
 		$this->mode = 'post_meta';
 		foreach ( $this->pages as $page ) {
-			if ( $check[ $page['id']['status'] ] ) {
+			if ( $check[ $page['id'] ]['status'] ) {
 				continue;
 			};
 
@@ -319,7 +319,7 @@ class Epsilon_Content_Backup {
 		$collection = array();
 
 		$options = get_post_meta( $page['id'] );
-		if ( array_key_exists( $page['field_id'], $options ) ) {
+		foreach ( $page['fields'] as $field ) {
 			$collection[ $page['field_id'] ] = array(
 				'id'      => $page['field_id'],
 				'content' => get_post_meta( $page['id'], $page['field_id'], true ),
@@ -458,7 +458,16 @@ class Epsilon_Content_Backup {
 			'epsilon-color-picker',
 			'select',
 			'selectize',
+			'epsilon-button-group',
 		);
+
+		/**
+		 * Customization fields, should bot be backedup
+		 */
+		if ( ! array_key_exists( $args['id'], $args['fields'] ) ) {
+			return false;
+		}
+
 		if ( in_array( $args['fields'][ $args['id'] ]['type'], $skip ) ) {
 			return false;
 		}

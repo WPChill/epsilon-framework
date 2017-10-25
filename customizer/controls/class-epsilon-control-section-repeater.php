@@ -382,17 +382,17 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'group'     => 'layout',
 						'groupType' => 'three',
 						'choices'   => array(
-							'left'   => array(
-								'icon'  => 'dashicons-editor-alignleft',
-								'value' => 'left',
+							'top'   => array(
+								'value' => 'boxedcenter',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-alignbottom.png',
 							),
-							'center' => array(
-								'icon'  => 'dashicons-editor-aligncenter',
-								'value' => 'center',
+							'middle' => array(
+								'value' => 'boxedcenter',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-alignmiddle.png',
 							),
-							'right'  => array(
-								'icon'  => 'dashicons-editor-alignright',
-								'value' => 'right',
+							'bottom'  => array(
+								'value' => 'boxedcenter',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-aligntop.png',
 							),
 						),
 						'default'   => 'center',
@@ -405,21 +405,21 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					$temp = array(
 						'id'        => $key . '_column_stretch',
 						'type'      => 'epsilon-button-group',
-						'label'     => __( 'Vertical Alignment', 'epsilon-framework' ),
+						'label'     => __( 'Column Stretch', 'epsilon-framework' ),
 						'group'     => 'layout',
 						'groupType' => 'three',
 						'choices'   => array(
-							'left'   => array(
-								'icon'  => 'dashicons-editor-alignleft',
-								'value' => 'left',
+							'boxedcenter' => array(
+								'value' => 'boxedcenter',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-boxedcenter.png',
 							),
-							'center' => array(
-								'icon'  => 'dashicons-editor-aligncenter',
-								'value' => 'center',
+							'boxedin'     => array(
+								'value' => 'boxedin',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-boxedin.png',
 							),
-							'right'  => array(
-								'icon'  => 'dashicons-editor-alignright',
-								'value' => 'right',
+							'fullwidth'   => array(
+								'value' => 'fullwidth',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-fullwidth.png',
 							),
 						),
 						'default'   => 'center',
@@ -436,13 +436,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'group'     => 'layout',
 						'groupType' => 'two',
 						'choices'   => array(
-							'left'   => array(
-								'icon'  => 'dashicons-editor-alignleft',
-								'value' => 'left',
+							'spaced' => array(
+								'value' => 'spaced',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-colspaced.png',
 							),
-							'center' => array(
-								'icon'  => 'dashicons-editor-aligncenter',
-								'value' => 'center',
+							'colfit' => array(
+								'value' => 'colfit',
+								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-colfit.png',
 							),
 						),
 						'default'   => 'center',
@@ -455,7 +455,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					$temp = array(
 						'id'        => $key . '_column_group',
 						'type'      => 'epsilon-button-group',
-						'label'     => __( 'Column Spacing', 'epsilon-framework' ),
+						'label'     => __( 'Column Group', 'epsilon-framework' ),
 						'group'     => 'layout',
 						'groupType' => 'four',
 						'choices'   => array(
