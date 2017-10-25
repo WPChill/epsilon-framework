@@ -86,6 +86,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
         addons = new EpsilonRepeaterAddons( self, row );
         addons.initPlugins();
         jQuery( 'body' ).removeClass( 'adding-section' );
+        jQuery( '#sections-left-' + self.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
 
       } else {
         jQuery( self.control.selector + ' .limit' ).addClass( 'highlight' );

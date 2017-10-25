@@ -160,10 +160,6 @@
 }
 
 body.adding-section {
-  .available-sections {
-    left: 0;
-    visibility: visible;
-  }
   .wp-full-overlay-main {
     left: 300px;
   }
@@ -193,6 +189,10 @@ body.adding-section {
   transition: left .18s;
   border-right: 1px solid #ddd;
   padding-top: 60px;
+  &.opened {
+    left: 0;
+    visibility: visible;
+  }
   .customize-section-title {
     display: none;
   }
