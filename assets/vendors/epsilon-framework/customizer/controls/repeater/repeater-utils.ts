@@ -342,6 +342,7 @@ export class EpsilonRepeaterUtils {
    * Toggles the row vizibility
    */
   public toggleMinimize( row: EpsilonRepeaterRow | EpsilonRepeaterSectionRow, section: boolean = false ): void {
+    const self = this;
     if ( row.hasOwnProperty( 'type' ) ) {
       section = true;
     }
@@ -356,6 +357,7 @@ export class EpsilonRepeaterUtils {
       if ( section ) {
         jQuery( 'body' ).removeClass( 'adding-section' );
         jQuery( 'body' ).removeClass( 'adding-doubled-section' );
+        jQuery( '#sections-left-' + self.control.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
 
         jQuery.each( row.container.siblings(), function( index: number, element: any ) {
           if ( ! jQuery( element ).hasClass( 'minimized' ) ) {

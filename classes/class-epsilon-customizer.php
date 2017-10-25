@@ -14,17 +14,23 @@ class Epsilon_Customizer {
 	/**
 	 * Holds the WP Customizer Object
 	 *
-	 * @since 1.3.3
+	 * @since 1.0.0
 	 * @var WP Customize Object
 	 */
 	public static $manager;
-
+	/**
+	 * URL Being edited
+	 *
+	 * @since 1.2.0
+	 * @var
+	 */
+	public static $url = null;
 	/**
 	 * The single instance of the backup class
 	 *
 	 * @var     object
 	 * @access   private
-	 * @since    1.3.3
+	 * @since    1.0.0
 	 */
 	private static $_instance = null;
 
@@ -115,6 +121,11 @@ class Epsilon_Customizer {
 	 */
 	public static function add_field( $id, array $args = array() ) {
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'control';
+		if ( 'epsilon-section-repeater' === $args['type'] && true === $args['page_builder'] ) {
+			self::add_page_builder( $id, $args );
+
+			return;
+		}
 		/**
 		 * Add setting
 		 */
@@ -130,6 +141,7 @@ class Epsilon_Customizer {
 		 */
 		$must_backup = array(
 			'epsilon-section-repeater',
+			'epsilon-repeater',
 		);
 
 		if ( in_array( $args['type'], $must_backup ) || true === $args['backup'] ) {
@@ -370,5 +382,65 @@ class Epsilon_Customizer {
 		}// End switch().
 
 		return $sanitizer;
+	}
+
+	/**
+	 * Page builder functionality
+	 *
+	 * @since 1.2.0
+	 */
+	public static function add_page_builder( $id, $args ) {
+		$pages = new WP_Query(
+			array(
+				'post_type'   => 'page',
+				'nopaging'    => true,
+				'post_status' => 'publish',
+			)
+		);
+
+		if ( $pages->have_posts() ) {
+			//Translators: Select contact form label
+			while ( $pages->have_posts() ) {
+				$pages->the_post();
+
+				$args['backup']       = isset( $args['backup'] ) ? $args['backup'] : false;
+				$args['save_as_meta'] = get_the_ID();
+				$args['label']        = esc_html( get_the_title() );
+
+				/**
+				 * Add setting
+				 */
+				self::add_setting( $id . '_' . get_the_ID(), $args );
+
+				/**
+				 * Get class name, if it's an epsilon control, we need to build the class name accordingly
+				 */
+				$field_type = self::_get_type( $args['type'], 'control' );
+
+				/**
+				 * This array SHOULD always be backed up
+				 */
+				$must_backup = array(
+					'epsilon-section-repeater',
+				);
+
+				if ( in_array( $args['type'], $must_backup ) || true === $args['backup'] ) {
+					$instance = Epsilon_Content_Backup::get_instance();
+					$instance->add_pages( get_the_ID(), $id . '_' . get_the_ID(), $args );
+				}
+
+				/**
+				 * Register the control
+				 */
+				self::$manager->add_control(
+					new Epsilon_Control_Section_Repeater(
+						self::$manager,
+						$id . '_' . get_the_ID(),
+						$args
+					)
+				);
+			}// End while().
+		}// End if().
+		wp_reset_postdata();
 	}
 }

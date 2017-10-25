@@ -45,6 +45,11 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	protected $icons = array();
 
 	/**
+	 * @var null
+	 */
+	protected $save_as_meta = null;
+
+	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
 	 * @since 1.0.0
@@ -492,6 +497,22 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 */
 	public function render_content() {
 
+	}
+
+	/**
+	 * Active callback override
+	 */
+	public function active_callback() {
+		$id = absint( url_to_postid( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
+		if ( 0 === $id ) {
+			$id = absint( get_option( 'page_on_front', 0 ) );
+		}
+
+		if ( absint( $this->save_as_meta ) === $id ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

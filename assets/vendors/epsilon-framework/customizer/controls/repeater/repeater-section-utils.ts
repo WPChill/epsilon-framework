@@ -20,7 +20,8 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    */
   public addButton() {
     const self = this;
-    var isAddBtn,
+    let isAddBtn,
+        sections = jQuery( '#sections-left-' + self.control.control.params.id ).find( '.available-sections' ),
         body = jQuery( 'body' );
 
     /**
@@ -43,6 +44,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
 
         body.removeClass( 'adding-section' );
         body.find( '.doubled-section-opened' ).removeClass( 'doubled-section-opened' );
+        sections.removeClass( 'opened' );
       } );
     } );
 
@@ -54,6 +56,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
       isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
 
       body.toggleClass( 'adding-section' );
+      sections.toggleClass( 'opened' );
       if ( body.hasClass( 'adding-section' ) && ! isAddBtn ) {
         self.control.control.close();
       }

@@ -1232,10 +1232,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body.adding-section .available-sections {
-  left: 0;
-  visibility: visible;
-}
 body.adding-section .wp-full-overlay-main {
   left: 300px;
 }
@@ -1264,6 +1260,10 @@ body.adding-section .epsilon-add-new-section:before {
   transition: left .18s;
   border-right: 1px solid #ddd;
   padding-top: 60px;
+}
+.available-sections.opened {
+  left: 0;
+  visibility: visible;
 }
 .available-sections .customize-section-title {
   display: none;
