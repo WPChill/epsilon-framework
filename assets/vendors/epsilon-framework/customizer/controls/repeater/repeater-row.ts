@@ -86,6 +86,8 @@ export class EpsilonRepeaterRow {
     this.container.on( 'keyup change', 'input, select, textarea', function( this: any, e: any ) {
       control.utils.updateField( self, jQuery( e.target ).data( 'field' ), e.target );
       control.utils.updateLabel( self );
+
+      self.container.trigger( 'row:update', [ self.index, jQuery( e.target ).data( 'field' ), e.target ] );
     } );
   }
 }

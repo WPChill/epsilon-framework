@@ -13,6 +13,12 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
    */
   public type: string;
 
+  /**
+   * Constructor
+   * @param {EpsilonSectionRepeater | EpsilonFieldRepeater} instance
+   * @param {JQuery} rowContainer
+   * @param {string} type
+   */
   public constructor(
       instance: EpsilonSectionRepeater | EpsilonFieldRepeater,
       rowContainer: JQuery,

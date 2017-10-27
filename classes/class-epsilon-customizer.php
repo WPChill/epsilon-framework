@@ -121,7 +121,7 @@ class Epsilon_Customizer {
 	 */
 	public static function add_field( $id, array $args = array() ) {
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'control';
-		if ( 'epsilon-section-repeater' === $args['type'] && true === $args['page_builder'] ) {
+		if ( 'epsilon-section-repeater' === $args['type'] && ( isset( $args['page_builder'] ) && true === $args['page_builder'] ) ) {
 			self::add_page_builder( $id, $args );
 
 			return;

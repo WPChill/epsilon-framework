@@ -199,10 +199,12 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    * @public
    */
   public updateRepeater( instance: any, fieldId: string, element: JQuery ) {
+    const self = this;
     let row: EpsilonRepeaterSectionRow | any = this.control.rows[ instance.index ],
         value: { [key: number]: any } = this.getValue(),
         section: EpsilonRepeaterSectionRow,
-        type: string;
+        type: string,
+        data: any;
 
     if ( ! row ) {
       return;
@@ -221,6 +223,21 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
       default:
         value[ row.index ][ fieldId ] = jQuery( element ).val();
         break;
+    }
+
+    if ( self.control.control.params[ 'selective_refresh' ] ) {
+      /**
+       * Partial refresh
+       * @type {{control; postId; index: any; value: any}}
+       */
+      data = {
+        control: this.control.control.id,
+        postId: this.control.control.params[ 'save_as_meta' ],
+        value: value[ row.index ],
+        index: row.index,
+      };
+
+      wp.customize.previewer.send( 'updated-section-repeater', data );
     }
 
     this.setValue( value );

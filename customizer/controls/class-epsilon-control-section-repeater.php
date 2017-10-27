@@ -50,6 +50,20 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	protected $save_as_meta = null;
 
 	/**
+	 * Page builder
+	 *
+	 * @var
+	 */
+	protected $page_builder = false;
+
+	/**
+	 * Selective refresh
+	 *
+	 * @var bool
+	 */
+	protected $selective_refresh = false;
+
+	/**
 	 * Epsilon_Control_Section_Repeater constructor.
 	 *
 	 * @since 1.0.0
@@ -71,13 +85,15 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']       = $this->id;
-		$json['link']     = $this->get_link();
-		$json['choices']  = $this->choices;
-		$json['value']    = $this->value();
-		$json['sections'] = $this->set_repeatable_sections();
-		$json['default']  = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
-		$json['sortable'] = $this->sortable;
+		$json['id']                = $this->id;
+		$json['link']              = $this->get_link();
+		$json['choices']           = $this->choices;
+		$json['value']             = $this->value();
+		$json['sections']          = $this->set_repeatable_sections();
+		$json['default']           = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['sortable']          = $this->sortable;
+		$json['save_as_meta']      = $this->save_as_meta;
+		$json['selective_refresh'] = $this->selective_refresh;
 
 		return $json;
 	}
@@ -382,7 +398,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'group'     => 'layout',
 						'groupType' => 'three',
 						'choices'   => array(
-							'top'   => array(
+							'top'    => array(
 								'value' => 'boxedcenter',
 								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-alignbottom.png',
 							),
@@ -390,7 +406,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 								'value' => 'boxedcenter',
 								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-alignmiddle.png',
 							),
-							'bottom'  => array(
+							'bottom' => array(
 								'value' => 'boxedcenter',
 								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-aligntop.png',
 							),
@@ -503,6 +519,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * Active callback override
 	 */
 	public function active_callback() {
+		if ( ! $this->page_builder ) {
+			return true;
+		}
+
 		$id = absint( url_to_postid( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
 		if ( 0 === $id ) {
 			$id = absint( get_option( 'page_on_front', 0 ) );

@@ -66,7 +66,12 @@ class Epsilon_Ajax_Controller {
 
 		$class  = $args_action[0];
 		$method = $args_action[1];
-		$args   = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments', wp_unslash( $_POST['args']['args'] ) );
+
+		if ( 'generate_partial_section' === $method ) {
+			$args = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments_for_output', wp_unslash( $_POST['args']['args'] ) );
+		} else {
+			$args = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments', wp_unslash( $_POST['args']['args'] ) );
+		}
 
 		$response = $class::$method( $args );
 
@@ -105,6 +110,19 @@ class Epsilon_Ajax_Controller {
 			return array_map( 'sanitize_text_field', $args );
 		} else {
 			return sanitize_text_field( $args );
+		}
+	}
+
+	/**
+	 * Sanitize arguments for output
+	 *
+	 * @param $args
+	 */
+	public static function sanitize_arguments_for_output( $args ) {
+		if ( is_array( $args ) ) {
+			return array_map( 'Epsilon_Ajax_Controller::sanitize_arguments_for_output', $args );
+		} else {
+			return wp_kses_post( $args );
 		}
 	}
 }

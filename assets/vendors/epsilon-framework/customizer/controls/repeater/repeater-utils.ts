@@ -199,6 +199,10 @@ export class EpsilonRepeaterUtils {
 
     this.control.rows = newRows;
     this.setValue( newSettings );
+
+    if ( self.control.control.params[ 'selective_refresh' ] ) {
+      wp.customize.previewer.refresh();
+    }
   }
 
   /**

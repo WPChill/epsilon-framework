@@ -88,6 +88,10 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
         jQuery( 'body' ).removeClass( 'adding-section' );
         jQuery( '#sections-left-' + self.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
 
+        if ( self.control.params[ 'selective_refresh' ] ) {
+          wp.customize.previewer.refresh();
+        }
+
       } else {
         jQuery( self.control.selector + ' .limit' ).addClass( 'highlight' );
       }
