@@ -197,7 +197,7 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 						<# if( !data.plugins[plugin].check ){ #>
 							<div class="epsilon-recommended-plugins">
 								<p class="title">{{{ data.plugins[plugin].title }}}</p>
-								<span data-option="{{ data.plugin_option }}" data-action="dismiss" class="dashicons dashicons-visibility epsilon-recommended-plugin-button" id="{{ data.plugins[plugin].id }}"></span>
+								<span data-option="{{ data.plugin_option }}" data-action="dismiss" class="dashicons dashicons-hidden epsilon-recommended-plugin-button" id="{{ data.plugins[plugin].id }}"></span>
 								<div class="description">{{{ data.plugins[plugin].description }}}</div>
 								<# if( data.plugins[plugin].plugin_slug ){ #>
 									<div class="custom-plugin">
