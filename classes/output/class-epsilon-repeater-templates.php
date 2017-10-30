@@ -43,6 +43,8 @@ class Epsilon_Repeater_Templates {
 								<?php self::epsilon_icon_picker(); ?>
 							<# } else if ( 'epsilon-image' === field.type ) { #>
 								<?php self::epsilon_image(); ?>
+							<# } else if ( 'epsilon-button-group' === field.type ) { #>
+								<?php self::epsilon_button_group(); ?>
 							<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
 								<?php self::epsilon_navigation(); ?>
 							<# } else if ( 'epsilon-upsell' === field.type ) { #>
@@ -76,13 +78,13 @@ class Epsilon_Repeater_Templates {
 					<# if( data.customization.enabled ) { #>
 					<nav>
 						<# if( data.customization.enabled ) { #>
-							<a href="#" class="active" data-item="regular">Fields</a>
+							<a href="#" class="active" data-item="regular"><span class="dashicons dashicons-welcome-write-blog"></span> <?php echo __('Fields' ,'epsilon-framework'); ?></a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.styling) ) { #>
-							<a href="#" data-item="styling">Styles</a>
+							<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span> <?php echo __('Styles' ,'epsilon-framework'); ?></a>
 						<# } #>
 							<# if( ! _.isEmpty(data.customization.layout) ) { #>
-							<a href="#" data-item="layout">Layout</a>
+							<a href="#" data-item="layout"><span class="dashicons dashicons-layout"></span> <?php echo __('Layout' ,'epsilon-framework'); ?></a>
 						<# } #>
 					<# } #>
 					</nav>
@@ -112,6 +114,8 @@ class Epsilon_Repeater_Templates {
 							<?php self::epsilon_icon_picker(); ?>
 						<# } else if ( 'epsilon-image' === field.type ) { #>
 							<?php self::epsilon_image(); ?>
+						<# } else if ( 'epsilon-button-group' === field.type ) { #>
+							<?php self::epsilon_button_group(); ?>
 						<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
 							<?php self::epsilon_navigation(); ?>
 						<# } else if ( 'epsilon-upsell' === field.type ) { #>
@@ -261,7 +265,6 @@ class Epsilon_Repeater_Templates {
 				<# } #>
 			</span>
 		</label>
-
 		<div class="epsilon-controller-image-container image-upload">
 			<input type="hidden" data-field="{{ field.id }}" data-size="{{ field.size }}" data-save-mode="{{ field.mode }}"/>
 			<# if ( field.default ) { #>
@@ -368,7 +371,7 @@ class Epsilon_Repeater_Templates {
 	public static function epsilon_picker(){
 		?>
 		<label>
-			<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.value }}" />
+			<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}"  value="{{ field.default }}" />
 			<span class="customize-control-title epsilon-color-picker-title">
 				{{{ field.label }}}
 				<a href="#" data-default="{{ field.defaultVal }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
@@ -457,6 +460,44 @@ class Epsilon_Repeater_Templates {
 				<# }); #>
 			</select>
 		</label>
+		<?php
+	}
+
+	/**
+	 * Button group
+	 */
+	public static function epsilon_button_group(){
+		?>
+		<div class="epsilon-control-container">
+			<label>
+				<span class="customize-control-title">
+					{{{ field.label }}}
+					<# if( field.description ){ #>
+						<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+							<span class="mte-tooltip">
+								{{{ field.description }}}
+							</span>
+						</i>
+					<# } #>
+				</span>
+			</label>
+			<div class="epsilon-control-set">
+				<div class="epsilon-control-group epsilon-group-{{ field.groupType }}">
+				<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}">
+					<# for( var i in field.choices ) { #>
+						<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
+							<# if( ! _.isUndefined( field.choices[i].icon ) ) { #>
+								<i class="dashicons {{ field.choices[i].icon }}"/>
+							<# } #>
+
+							<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
+								<img src="{{ field.choices[i].png }}" />
+							<# } #>
+						</a>
+					<# } #>
+				</div>
+			</div>
+		</div>
 		<?php
 	}
 }

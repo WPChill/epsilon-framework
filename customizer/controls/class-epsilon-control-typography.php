@@ -304,7 +304,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						<label for="{{{ data.id }}}-font-size">
 							<?php echo esc_html__( 'Font Size', 'epsilon-framework' ); ?>
 						</label>
-						<div class="slider-container">
+						<div class="slider-container" data-slider-type="font-size">
 							<input data-default-font-size="{{{ data.fontDefaults[data.id]['font-size'] }}}" type="text" class="epsilon-typography-input rl-slider" id="{{{ data.id }}}-font-size" value="{{{ data.inputs['font-size'] }}}"/>
 							<div id="slider_{{{ data.id }}}-font-size" data-attr-min="0" data-attr-max="40" data-attr-step="1" class="ss-slider"></div>
 						</div>
@@ -313,7 +313,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						<label for="{{{ data.id }}}-line-height">
 							<?php echo esc_html__( 'Line Height', 'epsilon-framework' ); ?>
 						</label>
-						<div class="slider-container">
+						<div class="slider-container" data-slider-type="line-height">
 							<input data-default-line-height="{{{ data.fontDefaults[data.id]['line-height'] }}}" type="text" class="epsilon-typography-input rl-slider" id="{{{ data.id }}}-line-height" value="{{{ data.inputs['line-height'] }}}"/>
 							<div id="slider_{{{ data.id }}}-line-height" data-attr-min="0" data-attr-max="40" data-attr-step="1" class="ss-slider"></div>
 						</div>
@@ -322,7 +322,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						<label for="{{{ data.id }}}-letter-spacing">
 							<?php echo esc_html__( 'Letter Spacing', 'epsilon-framework' ); ?>
 						</label>
-						<div class="slider-container">
+						<div class="slider-container" data-slider-type="letter-spacing">
 							<input data-default-letter-spacing="{{{ data.fontDefaults[data.id]['letter-spacing'] }}}" type="text" class="epsilon-typography-input rl-slider" id="{{{ data.id }}}-letter-spacing" value="{{{ data.inputs['letter-spacing'] }}}"/>
 							<div id="slider_{{{ data.id }}}-letter-spacing" data-attr-min="0" data-attr-max="5" data-attr-step="0.1" class="ss-slider"></div>
 						</div>

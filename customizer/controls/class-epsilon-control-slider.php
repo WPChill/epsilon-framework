@@ -102,7 +102,7 @@ class Epsilon_Control_Slider extends WP_Customize_Control {
 		</label>
 		<div class="slider-container">
 			<input disabled type="text" class="rl-slider" id="input_{{ data.id }}" value="{{ data.value }}" {{{ data.link }}}/>
-			<div id="slider_{{{ data.id }}}" data-attr-min="{{ data.sliderControls.min }}" data-attr-max="{{ data.sliderControls.max }}" data-attr-step="{{ data.sliderControls.step }}" class="ss-slider"></div>
+			<div id="slider_{{{ data.id }}}" class="ss-slider"></div>
 		</div>
 		<?php
 		//@formatter:on

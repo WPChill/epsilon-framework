@@ -174,6 +174,14 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 				$this->fields[ $key ]['choices'] = wp_parse_args( $this->fields[ $key ]['choices'], $default );
 			}
 
+			if ( 'epsilon-button-group' === $value['type'] ) {
+				if ( ! isset( $this->fields[ $key ]['choices'] ) ) {
+					$this->fields[ $key ]['choices'] = array();
+				}
+
+				$this->fields[ $key ]['groupType'] = $this->set_group_type( $this->fields[ $key ]['choices'] );
+			}
+
 			/**
 			 * Epsilon Image
 			 */
@@ -197,6 +205,21 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		} // End foreach().
 
 		return $this->fields;
+	}
+
+	/**
+	 * Set group type
+	 */
+	public function set_group_type( $choices = array() ) {
+		$arr = array(
+			0 => 'none',
+			1 => 'one',
+			2 => 'two',
+			3 => 'three',
+			4 => 'four',
+		);
+
+		return $arr[ count( $choices ) ];
 	}
 
 	/**
