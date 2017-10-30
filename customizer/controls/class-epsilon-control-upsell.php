@@ -148,7 +148,7 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 	/**
 	 * Empty
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 

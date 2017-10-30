@@ -6,7 +6,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Class Epsilon_Control_Repeater
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
@@ -18,22 +18,22 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 */
 	public $type = 'epsilon-repeater';
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $choices = array();
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array|mixed
 	 */
 	public $fields = array();
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $row_label = array();
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $button_label = null;
@@ -49,7 +49,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
 	 * Icons array
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	protected $icons = array();
@@ -57,7 +57,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Repeater constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
@@ -71,7 +71,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
 	 * Load the necessary styles and scripts
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function enqueue() {
 		wp_enqueue_script( 'jquery-ui-sortable' );
@@ -132,7 +132,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
 	 * Set defaults, label and add an ID for the fields
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return array|mixed
 	 */
 	public function get_fields() {
@@ -174,6 +174,14 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 				$this->fields[ $key ]['choices'] = wp_parse_args( $this->fields[ $key ]['choices'], $default );
 			}
 
+			if ( 'epsilon-button-group' === $value['type'] ) {
+				if ( ! isset( $this->fields[ $key ]['choices'] ) ) {
+					$this->fields[ $key ]['choices'] = array();
+				}
+
+				$this->fields[ $key ]['groupType'] = $this->set_group_type( $this->fields[ $key ]['choices'] );
+			}
+
 			/**
 			 * Epsilon Image
 			 */
@@ -200,9 +208,24 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	}
 
 	/**
+	 * Set group type
+	 */
+	public function set_group_type( $choices = array() ) {
+		$arr = array(
+			0 => 'none',
+			1 => 'one',
+			2 => 'two',
+			3 => 'three',
+			4 => 'four',
+		);
+
+		return $arr[ count( $choices ) ];
+	}
+
+	/**
 	 * Setup the row's label
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @return array
 	 */
 	public function get_row_label() {
@@ -227,7 +250,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
 	 * As it should be
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 
@@ -236,7 +259,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	/**
 	 * Displays the control content.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function content_template() {
 		//@formatter:off  ?>

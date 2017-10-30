@@ -22,12 +22,14 @@ class Epsilon_Autoloader {
 		$directories = array(
 			dirname( __FILE__ ) . '/',
 			dirname( __FILE__ ) . '/classes/',
-			dirname( __FILE__ ) . '/classes/epsilon-demo-generators/',
+			dirname( __FILE__ ) . '/classes/backend/',
+			dirname( __FILE__ ) . '/classes/helpers/',
+			dirname( __FILE__ ) . '/classes/output/',
 			dirname( __FILE__ ) . '/customizer/',
 			dirname( __FILE__ ) . '/customizer/controls/',
+			dirname( __FILE__ ) . '/customizer/panels/',
 			dirname( __FILE__ ) . '/customizer/sections/',
 			dirname( __FILE__ ) . '/customizer/settings/',
-			dirname( __FILE__ ) . '/classes/epsilon-demo-generators/',
 		);
 
 		foreach ( $directories as $directory ) {
