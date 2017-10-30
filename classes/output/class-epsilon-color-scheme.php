@@ -41,15 +41,6 @@ class Epsilon_Color_Scheme {
 		$this->css     = $args['css'];
 		$this->set_customizer_controls( $args );
 
-		add_action( 'wp_ajax_epsilon_generate_color_scheme_css', array(
-			$this,
-			'epsilon_generate_color_scheme_css',
-		) );
-		add_action( 'wp_ajax_nopriv_epsilon_generate_color_scheme_css', array(
-			$this,
-			'epsilon_generate_color_scheme_css',
-		) );
-
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'customize_register', array( $this, 'add_controls_settings' ) );
 	}
@@ -281,35 +272,32 @@ class Epsilon_Color_Scheme {
 	/**
 	 * Generate the color scheme css
 	 */
-	public function epsilon_generate_color_scheme_css() {
-		$args = array();
+	public static function epsilon_generate_color_scheme_css( $params ) {
+		$args     = array();
+		$response = array(
+			'status'  => true,
+			'message' => 'ok',
+		);
 
-		if ( ! isset( $_POST['args'] ) || ! is_array( $_POST['args'] ) ) {
-			wp_die();
-		}
-
-		if ( ! empty( $_POST['args'] ) ) {
-			/**
-			 * Sanitize the $_POST['args']
-			 */
-			foreach ( $_POST['args'] as $k => $v ) {
-				$args[ $k ] = sanitize_hex_color( $v );
-			}
+		foreach ( $params as $k => $v ) {
+			$args[ $k ] = sanitize_hex_color( $v );
 		}
 
 		/**
 		 * Grab the instance of the Epsilon Color Scheme
 		 */
-		$color_scheme = Epsilon_Color_Scheme::get_instance( $this->handler );
+		$color_scheme = Epsilon_Color_Scheme::get_instance();
 
 		/**
 		 * Update the option array
 		 */
 		$color_scheme->update_colors( $args );
+
 		/**
 		 * Echo the css inline sheet
 		 */
-		echo $color_scheme->generate_live_css();
-		wp_die();
+		$response['css'] = $color_scheme->generate_live_css();
+
+		return $response;
 	}
 }

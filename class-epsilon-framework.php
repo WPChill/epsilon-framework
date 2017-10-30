@@ -25,6 +25,7 @@ class Epsilon_Framework {
 		'icon-picker',
 		'customizer-navigation',
 		'color-scheme',
+		'button-group',
 	);
 	/**
 	 * By default, it loads all sections
@@ -189,7 +190,7 @@ class Epsilon_Framework {
 	 * @since 1.0.0
 	 */
 	public function enqueue() {
-		wp_enqueue_script( 'epsilon-admin', EPSILON_URI . '/assets/js/epsilon-admin.min.js', array( 'jquery' ) );
+		wp_enqueue_script( 'epsilon-admin', EPSILON_URI . '/assets/js/epsilon-framework-admin.js', array( 'jquery' ) );
 		wp_localize_script( 'epsilon-admin', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),
@@ -204,7 +205,7 @@ class Epsilon_Framework {
 	 */
 	public function customize_preview_styles() {
 		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
-		wp_enqueue_script( 'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-previewer.js', array(
+		wp_enqueue_script( 'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-framework-previewer.js', array(
 			'jquery',
 			'customize-preview',
 		), 2, true );
@@ -223,10 +224,11 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon.js', array(
+		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon-framework-customizer.js', array(
 			'jquery',
 			'customize-controls',
 		) );
+
 		wp_localize_script( 'epsilon-object', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),
 			'theme'      => get_template_directory_uri(),

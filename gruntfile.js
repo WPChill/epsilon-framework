@@ -94,17 +94,6 @@ module.exports = function( grunt ) {
   } );
 
   grunt.config( 'watch', {
-    js: {
-      files: [
-        'assets/vendors/epsilon-framework/**/*.js',
-        'assets/vendors/epsilon-framework/**/**/*.js',
-        'assets/vendors/epsilon-framework/**/**/**/*.js',
-        'assets/vendors/epsilon-framework/**/**/**/**/*.js' ],
-      tasks: [ 'concat-epsilon' ],
-      options: {
-        spawn: false
-      }
-    },
     scss: {
       tasks: [ 'sass:dist' ],
       files: [

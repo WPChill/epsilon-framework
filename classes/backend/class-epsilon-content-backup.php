@@ -25,6 +25,11 @@ class Epsilon_Content_Backup {
 	 */
 	public $setting_page;
 	/**
+	 * @since 1.2.0
+	 * @var
+	 */
+	public $pages = array();
+	/**
 	 * @since 1.0.0
 	 * @var string
 	 */
@@ -35,10 +40,10 @@ class Epsilon_Content_Backup {
 	 */
 	public $mode = 'theme_mods';
 	/**
-	 * @since 1.3.4
+	 * @since 1.2.0
 	 * @var WordPress Manager Object
 	 */
-	public $manager;
+	public $manager = null;
 	/**
 	 * The single instance of the backup class
 	 *
@@ -85,6 +90,10 @@ class Epsilon_Content_Backup {
 		 */
 		add_action( 'customize_save_after', array( $this, 'backup_settings' ) );
 		/**
+		 * Save page builder
+		 */
+		add_action( 'customize_save_after', array( $this, 'save_page_builder' ) );
+		/**
 		 * Disable the form editor if we're in production
 		 */
 		add_action( 'edit_form_after_title', array( $this, 'disable_front_page_editor' ) );
@@ -112,6 +121,21 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
+	 * Pages who should be backed up
+	 *
+	 * @param $page_id
+	 * @param $id
+	 * @param $args
+	 */
+	public function add_pages( $page_id, $id, $args ) {
+		$this->pages[ $page_id ] = array(
+			'id'       => $page_id,
+			'field_id' => $id,
+			'fields'   => $args,
+		);
+	}
+
+	/**
 	 * Disables the frontend editor
 	 *
 	 * @since 1.3.4
@@ -133,7 +157,14 @@ class Epsilon_Content_Backup {
 		$hash = array(
 			'theme_mods' => md5( json_encode( get_option( 'theme_mods_' . $this->slug ) ) ),
 			'post_meta'  => md5( json_encode( get_post_meta( $this->setting_page ) ) ),
+			'pages'      => array(),
 		);
+
+		foreach ( $this->pages as $page ) {
+			$hash['pages'][ $page['id'] ] = md5( json_encode( get_post_meta( $page['id'] ) ) );
+		}
+
+		return $hash;
 	}
 
 	/**
@@ -200,6 +231,30 @@ class Epsilon_Content_Backup {
 
 	/**
 	 * @since 1.0.0
+	 *
+	 * @param $manager WordPress Customizer Manager
+	 */
+	public function save_page_builder( $manager ) {
+		$this->manager = $manager;
+		$check         = $this->check_advanced_hash();
+
+		$this->mode = 'post_meta';
+		foreach ( $this->pages as $page ) {
+			if ( $check[ $page['id'] ]['status'] ) {
+				continue;
+			};
+
+			$settings = array(
+				'ID'           => $page['id'],
+				'post_content' => $this->parse_content_advanced( $page ),
+			);
+
+			wp_update_post( $settings );
+		};
+	}
+
+	/**
+	 * @since 1.0.0
 	 * @return array
 	 */
 	private function check_hash() {
@@ -226,6 +281,57 @@ class Epsilon_Content_Backup {
 		}
 
 		return $arr;
+	}
+
+	/**
+	 * @since 1.0.0
+	 * @return array
+	 */
+	private function check_advanced_hash() {
+		$arr = array();
+
+		foreach ( $this->pages as $page ) {
+			$arr[ $page['id'] ] = array(
+				'status' => true,
+			);
+
+			$last_known_hash = get_transient( $this->slug . '_' . $page['id'] . '_hash_update' );
+			if ( false === $last_known_hash ) {
+				set_transient( $this->slug . '_' . $page['id'] . '_hash_update', $this->hash['pages'][ $page['id'] ], 5 * MINUTE_IN_SECONDS );
+			}
+
+			if ( $last_known_hash !== $this->hash['pages'][ $page['id'] ] ) {
+				$arr[ $page['id'] ] = array(
+					'status' => false,
+				);
+			}
+		}
+
+		return $arr;
+	}
+
+	/**
+	 * @since 1.2.0
+	 * @return string
+	 */
+	private function parse_content_advanced( $page ) {
+		$content    = '';
+		$collection = array();
+
+		$options = get_post_meta( $page['id'] );
+		foreach ( $page['fields'] as $field ) {
+			$collection[ $page['field_id'] ] = array(
+				'id'      => $page['field_id'],
+				'content' => get_post_meta( $page['id'], $page['field_id'], true ),
+				'type'    => 'epsilon-section-repeater',
+			);
+		}
+
+		foreach ( $collection as $field => $props ) {
+			$content .= $this->_parse_content( $props );
+		}
+
+		return $content;
 	}
 
 	/**
@@ -308,6 +414,9 @@ class Epsilon_Content_Backup {
 				}
 				$content .= "\n \n";
 				break;
+			case 'epsilon-repeater':
+				$content .= $this->_format_default( $control, $field['content'], $control->id );
+				break;
 			default:
 				$content .= "\n";
 				$content .= $field['content'];
@@ -349,7 +458,16 @@ class Epsilon_Content_Backup {
 			'epsilon-color-picker',
 			'select',
 			'selectize',
+			'epsilon-button-group',
 		);
+
+		/**
+		 * Customization fields, should bot be backedup
+		 */
+		if ( ! array_key_exists( $args['id'], $args['fields'] ) ) {
+			return false;
+		}
+
 		if ( in_array( $args['fields'][ $args['id'] ]['type'], $skip ) ) {
 			return false;
 		}

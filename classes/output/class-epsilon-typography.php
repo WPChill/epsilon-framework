@@ -65,15 +65,6 @@ class Epsilon_Typography {
 		/**
 		 * Add the actions for the customizer previewer
 		 */
-		add_action( 'wp_ajax_epsilon_generate_typography_css', array(
-			$this,
-			'epsilon_generate_typography_css',
-		) );
-		add_action( 'wp_ajax_nopriv_epsilon_generate_typography_css', array(
-			$this,
-			'epsilon_generate_typography_css',
-		) );
-
 		add_action( 'wp_ajax_epsilon_retrieve_font_weights', array(
 			$this,
 			'epsilon_retrieve_font_weights',
@@ -271,34 +262,23 @@ class Epsilon_Typography {
 	/**
 	 * Generate typography CSS
 	 */
-	public function epsilon_generate_typography_css() {
-		$args = array(
-			'selectors',
-			'json',
+	public static function epsilon_generate_typography_css( $params ) {
+		$response = array(
+			'status'     => true,
+			'message'    => 'ok',
+			'stylesheet' => '',
 		);
 
-		if ( ! isset( $_POST['args'] ) || ! is_array( $_POST['args'] ) || ! isset( $_POST['args']['json'] ) ) {
-			wp_die();
-		}
-
-		/**
-		 * Sanitize the $_POST['args']
-		 */
-		if ( ! empty( $_POST['args']['json'] ) ) {
-			foreach ( $_POST['args']['json'] as $k => $v ) {
-				$args['json'][ $k ] = sanitize_text_field( wp_unslash( $v ) );
-			}
-		}
-
-		$args['selectors'] = esc_attr( $_POST['args']['selectors'] );
-
 		$typography = Epsilon_Typography::get_instance();
-		$typography->set_font( $args['json'] );
+		$typography->set_font( $params['json'] );
 
 		/**
 		 * Echo the css inline sheet
 		 */
-		echo $typography->generate_css( $args );
-		wp_die();
+		$response['css']        = $typography->generate_css( $params );
+		$response['fonts']      = array_filter( $typography->font_imports );
+		$response['stylesheet'] = $params['id'];
+
+		return $response;
 	}
 }
