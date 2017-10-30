@@ -62,8 +62,6 @@ export class EpsilonRepeaterUtils {
         i ++;
       }
     }
-
-    this.control.handleRowDecrementor();
   }
 
   /**
@@ -405,6 +403,9 @@ export class EpsilonRepeaterUtils {
      */
     row.container.on( 'row:remove', function( this: any, e: any, index: number ) {
       self.delete( row, index );
+      if ( self.control.control.params[ 'selective_refresh' ] ) {
+        wp.customize.previewer.refresh();
+      }
     } );
 
     /**
