@@ -6,7 +6,7 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Class Epsilon_Control_Layouts
  *
- * @since 1.2.0
+ * @since 1.0.0
  */
 class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
@@ -21,7 +21,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * Layouts array
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $layouts = array();
@@ -29,7 +29,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * Defaults array
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $default = array();
@@ -44,7 +44,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * Minimum span ( no column will go lower than this )
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var int
 	 */
 	public $min_span;
@@ -52,7 +52,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Layout constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
@@ -113,7 +113,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * Create a custom array to hold options
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @acces private
 	 */
 	private function get_layouts() {
@@ -149,7 +149,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * As it should be
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 	}
@@ -157,7 +157,7 @@ class Epsilon_Control_Layouts extends WP_Customize_Control {
 	/**
 	 * Displays the control content.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function content_template() {
 		//@formatter:off ?>

@@ -8,19 +8,19 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Control_Image extends WP_Customize_Control {
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $type = 'epsilon-image';
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var array
 	 */
 	public $default;
 
 	/**
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $size = 'full';
@@ -28,7 +28,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Image constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
@@ -74,7 +74,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 	/**
 	 * Empty, as it should be
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 
@@ -83,7 +83,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 	/**
 	 * Controller template
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function content_template() {
 		//@formatter:off ?>

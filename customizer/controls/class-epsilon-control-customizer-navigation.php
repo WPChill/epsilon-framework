@@ -10,21 +10,21 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	/**
 	 * Control type
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $type = 'epsilon-customizer-navigation';
 	/**
 	 * Id of the section we`re navigating to
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $navigate_to_id;
 	/**
 	 * Anchor label
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 * @var string
 	 */
 	public $navigate_to_label;
@@ -40,7 +40,7 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	/**
 	 * Epsilon_Control_Customizer_Navigation constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 *
 	 * @param WP_Customize_Manager $manager
 	 * @param string               $id
@@ -71,7 +71,7 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	/**
 	 * Empty as it should be
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function render_content() {
 
@@ -80,7 +80,7 @@ class Epsilon_Control_Customizer_Navigation extends WP_Customize_Control {
 	/**
 	 * Render the content template
 	 *
-	 * @since 1.2.0
+	 * @since 1.0.0
 	 */
 	public function content_template() {
 		//@formatter:off ?>
