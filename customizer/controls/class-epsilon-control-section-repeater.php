@@ -155,6 +155,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 		foreach ( $this->repeatable_sections as $key => $value ) {
 			foreach ( $value['fields'] as $k => $v ) {
+				$this->repeatable_sections[ $key ]['fields'][ $k ]['metaId'] = ! empty( $this->save_as_meta ) ? $this->save_as_meta : '';
+
 				if ( ! isset( $v['default'] ) ) {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = '';
 				}

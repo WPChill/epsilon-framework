@@ -437,7 +437,7 @@ class Epsilon_Repeater_Templates {
 					<span class="description customize-control-description">{{ field.description }}</span>
 				<# } #>
 			</span>
-			<textarea id="{{{ field.id }}}-{{ index }}" data-field="{{{ field.id }}}" class="widefat text wp-editor-area" >{{{ field.default }}}</textarea>
+			<textarea id="{{{ field.id }}}-{{ index }}<# if( '' !== field.metaId ){ #>-{{ field.metaId }}<# } #>" data-field="{{{ field.id }}}" class="widefat text wp-editor-area" >{{{ field.default }}}</textarea>
 		</label>
 		<?php
 	}
