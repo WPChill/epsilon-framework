@@ -398,6 +398,14 @@ class Epsilon_Customizer {
 			)
 		);
 
+		$ids = array();
+
+		if ( $pages->have_posts() ) {
+			foreach ( $pages->posts as $page ) {
+				$ids[] = $page->ID;
+			}
+		}
+
 		if ( $pages->have_posts() ) {
 			//Translators: Select contact form label
 			while ( $pages->have_posts() ) {
