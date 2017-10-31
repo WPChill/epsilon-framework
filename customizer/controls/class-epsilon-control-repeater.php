@@ -45,7 +45,12 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 * @var array
 	 */
 	protected $filtered_value = array();
-
+	/**
+	 * Save as meta
+	 *
+	 * @var string
+	 */
+	public $save_as_meta = '';
 	/**
 	 * Icons array
 	 *
@@ -86,14 +91,15 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']          = $this->id;
-		$json['link']        = $this->get_link();
-		$json['value']       = $this->value();
-		$json['choices']     = $this->choices;
-		$json['fields']      = $this->get_fields();
-		$json['rowLabel']    = $this->get_row_label();
-		$json['buttonLabel'] = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'epsilon-framework' );
-		$json['default']     = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']           = $this->id;
+		$json['link']         = $this->get_link();
+		$json['value']        = $this->value();
+		$json['choices']      = $this->choices;
+		$json['fields']       = $this->get_fields();
+		$json['rowLabel']     = $this->get_row_label();
+		$json['save_as_meta'] = $this->save_as_meta;
+		$json['buttonLabel']  = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'epsilon-framework' );
+		$json['default']      = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
 	}
@@ -141,6 +147,8 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		}
 		$sizes = Epsilon_Framework::get_image_sizes();
 		foreach ( $this->fields as $key => $value ) {
+			$this->fields[ $key ]['metaId'] = ! empty( $this->save_as_meta ) ? $this->save_as_meta : '';
+
 			if ( ! isset( $value['default'] ) ) {
 				$this->fields[ $key ]['default'] = '';
 			}

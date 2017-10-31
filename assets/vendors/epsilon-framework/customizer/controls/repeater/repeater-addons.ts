@@ -1,8 +1,8 @@
-import { EpsilonButtonGroup } from '../button-group';
-
 declare var EpsilonTranslations: any;
 declare var wp: any;
 declare var _: any;
+
+import { EpsilonButtonGroup } from '../button-group';
 import { EpsilonRangeSlider } from '../range-slider';
 import { EpsilonRepeaterRow } from './repeater-row';
 import { EpsilonIconPicker } from '../icon-picker';
@@ -68,7 +68,7 @@ export class EpsilonRepeaterAddons {
       container: self.row.container,
       repeater: true,
     };
-    
+
     new EpsilonButtonGroup( settings );
   }
 
@@ -338,20 +338,21 @@ export class EpsilonRepeaterAddons {
    */
   public initTextEditor(): void {
     const self = this;
-    let settings: any,
-        textareas: JQuery = jQuery( self.row.container ).find( 'textarea' );
+    let textareas: JQuery = jQuery( self.row.container ).find( 'textarea' );
 
-    jQuery.each( textareas, function( this: any, index: number, el: any ) {
-      settings = {
-        container: jQuery( this ).parent(),
-        params: {
-          id: jQuery( this ).attr( 'id' )
-        }
-      };
+    for ( let i = 0; i < textareas.length; i ++ ) {
+      setTimeout( function() {
+        let settings: any = {
+          container: jQuery( textareas[ i ] ).parent(),
+          params: {
+            id: jQuery( textareas[ i ] ).attr( 'id' )
+          }
+        };
 
-      new EpsilonTextEditor( settings, true );
+        new EpsilonTextEditor( settings, true );
+      }, 100 * i );
 
-    } );
+    }
   }
 
   /**

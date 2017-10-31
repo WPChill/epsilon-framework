@@ -170,9 +170,9 @@ export class EpsilonFieldRepeater {
       handle: '.repeater-row-header',
       axis: 'y',
       distance: 15,
-      update: function( e, data ) {
-        control.utils.sort( data );
-      }
+      stop: function( e, data ) {
+        setTimeout( control.utils.sort( data ), 200 );
+      },
     } );
 
   }

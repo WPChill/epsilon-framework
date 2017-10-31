@@ -184,16 +184,20 @@ export class EpsilonRepeaterUtils {
       newSettings[ newPosition ] = settings[ oldPosition ];
     } );
 
-    /**
-     * Text editor needs to be reinitiated after sorting (else it loses the "visual" part)
-     */
+    let textareas: JQuery = rows.find( 'textarea' );
+    for ( let i = 0; i < textareas.length; i ++ ) {
+      setTimeout( function() {
+        let settings: any = {
+          container: jQuery( textareas[ i ] ).parent(),
+          params: {
+            id: jQuery( textareas[ i ] ).attr( 'id' )
+          }
+        };
 
-    textEditorSettings = {
-      container: data.item,
-      params: { id: jQuery( data.item ).find( 'textarea' ).attr( 'id' ) }
-    };
+        new EpsilonTextEditor( settings, true, true );
+      }, 100 * i );
 
-    new EpsilonTextEditor( textEditorSettings, true, true );
+    }
 
     this.control.rows = newRows;
     this.setValue( newSettings );
@@ -403,6 +407,11 @@ export class EpsilonRepeaterUtils {
      */
     row.container.on( 'row:remove', function( this: any, e: any, index: number ) {
       self.delete( row, index );
+
+      if ( 'epsilon-section-repeater' === self.control.control.params.type ) {
+        jQuery( 'body' ).removeClass( 'adding-doubled-section' );
+      }
+
       if ( self.control.control.params[ 'selective_refresh' ] ) {
         wp.customize.previewer.refresh();
       }
