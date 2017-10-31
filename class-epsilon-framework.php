@@ -60,7 +60,7 @@ class Epsilon_Framework {
 	 *
 	 * @var string
 	 */
-	private $plugin_dir = '';
+	private $plugin_path = '';
 	/**
 	 * Default path is in /inc/libraries
 	 *
