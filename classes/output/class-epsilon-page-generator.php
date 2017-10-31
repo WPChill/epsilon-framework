@@ -88,7 +88,11 @@ class Epsilon_Page_Generator {
 		global $wp_customize;
 
 		$customizer_setting = get_theme_mod( $this->option, array() );
-		$post               = $wp_customize->post_value( $wp_customize->get_setting( $this->option ) );
+		if ( null === $wp_customize->get_setting( $this->option ) ) {
+			return false;
+		}
+
+		$post = $wp_customize->post_value( $wp_customize->get_setting( $this->option ) );
 
 		if ( null !== $post ) {
 			return $customizer_setting;
@@ -117,6 +121,8 @@ class Epsilon_Page_Generator {
 		 */
 		if ( is_customize_preview() ) {
 			global $wp_customize;
+			var_dump( $wp_customize->get_setting( $key ) );
+			die();
 			$post = $wp_customize->post_value( $wp_customize->get_setting( $key ) );
 			if ( null !== $post ) {
 				return $data;
