@@ -121,8 +121,6 @@ class Epsilon_Page_Generator {
 		 */
 		if ( is_customize_preview() ) {
 			global $wp_customize;
-			var_dump( $wp_customize->get_setting( $key ) );
-			die();
 			$post = $wp_customize->post_value( $wp_customize->get_setting( $key ) );
 			if ( null !== $post ) {
 				return $data;
