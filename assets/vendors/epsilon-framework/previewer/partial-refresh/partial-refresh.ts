@@ -76,7 +76,7 @@ export class EpsilonPartialRefresh {
     this.standBySection( self.sections[ object.index ].section );
 
     jQuery( Ajax ).on( 'epsilon-received-success', function( e: JQueryEventConstructor ) {
-      self.liveSection( self.sections[ object.index ].section, Ajax.result.section );
+      self.liveSection( object.index, self.sections[ object.index ].section, Ajax.result.section );
       jQuery( document ).trigger( 'epsilon-selective-refresh-ready' );
     } );
   }
@@ -93,9 +93,11 @@ export class EpsilonPartialRefresh {
    *
    * @param {JQuery} section
    */
-  public liveSection( section: JQuery, result: any ) {
+  public liveSection( sectionIndex: number, section: JQuery, result: any ) {
     const self = this;
-    section.html( result );
+    section.replaceWith( result );
+    self.sections = [];
+    self.registerSections();
     section.animate( { opacity: 1 } );
   }
 }
