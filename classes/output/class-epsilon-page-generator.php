@@ -151,8 +151,9 @@ class Epsilon_Page_Generator {
 	 * Add actions before each section, maybe users would find them useful
 	 */
 	public function generate_output() {
-		if ( empty( $this->sections ) ) {
+		if ( empty( $this->sections ) && ! $this->sections ) {
 			get_template_part( 'template-parts/frontpage/content-section-base' );
+			return;
 		}
 
 		foreach ( $this->sections as $index => $section ) {
