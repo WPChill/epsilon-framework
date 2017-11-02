@@ -53,13 +53,14 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
     const control = this;
     if ( this.control.params.value.length ) {
       for ( let i = 0; i < this.control.params.value.length; i ++ ) {
-        let row: EpsilonRepeaterSectionRow,
+        let row: EpsilonRepeaterSectionRow | boolean,
             addons: EpsilonRepeaterAddons;
 
         row = control.utils.add( control.control.params.value[ i ] );
-
-        addons = new EpsilonRepeaterAddons( control, row );
-        addons.initPlugins();
+        if ( false !== row ) {
+          addons = new EpsilonRepeaterAddons( control, row );
+          addons.initPlugins();
+        }
       }
     }
   }
