@@ -43,4 +43,4 @@ class Epsilon_Autoloader {
 	}
 }
 
-$autoloader = new Epsilon_Autoloader();
+new Epsilon_Autoloader();

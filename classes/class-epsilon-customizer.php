@@ -392,9 +392,11 @@ class Epsilon_Customizer {
 	public static function add_page_builder( $id, $args ) {
 		$pages = new WP_Query(
 			array(
-				'post_type'   => 'page',
-				'nopaging'    => true,
-				'post_status' => 'publish',
+				'post_type'    => 'page',
+				'nopaging'     => true,
+				'post__not_in' => array(
+					Epsilon_Content_Backup::get_instance()->setting_page,
+				),
 			)
 		);
 
@@ -407,7 +409,6 @@ class Epsilon_Customizer {
 		}
 
 		if ( $pages->have_posts() ) {
-			//Translators: Select contact form label
 			while ( $pages->have_posts() ) {
 				$pages->the_post();
 
@@ -449,6 +450,7 @@ class Epsilon_Customizer {
 				);
 			}// End while().
 		}// End if().
+
 		wp_reset_postdata();
 	}
 }
