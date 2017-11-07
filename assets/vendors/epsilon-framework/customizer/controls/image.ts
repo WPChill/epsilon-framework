@@ -1,6 +1,9 @@
+declare var EpsilonWPUrls: any;
 declare var EpsilonTranslations: any;
 declare var wp: any;
 declare var _: any;
+
+import { EpsilonAjaxRequest } from '../../utils/epsilon-ajax-request';
 
 /**
  * Epsilon Image
@@ -85,7 +88,22 @@ export class EpsilonImage {
 
       if ( thumb.length ) {
         thumb.find( 'img' ).fadeOut( 200, function() {
-          thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( EpsilonTranslations.selectFile );
+          let html = EpsilonTranslations.selectFile + '<span class="recommended-size"></span>',
+              Ajax: EpsilonAjaxRequest,
+              data = {
+                action: [ 'Epsilon_Helper', 'get_image_sizes' ],
+                nonce: EpsilonWPUrls.ajax_nonce,
+                args: [],
+              };
+
+          thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( html );
+          Ajax = new EpsilonAjaxRequest( data );
+          Ajax.request();
+          jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+            if ( ! _.isUndefined( Ajax.result[ size ] ) ) {
+              thumb.find( '.recommended-size' ).text( Ajax.result[ size ].width + ' x ' + Ajax.result[ size ].height );
+            }
+          } );
         } );
       }
 

@@ -101,10 +101,12 @@ class Epsilon_Framework {
 			$this->$k = $v;
 		}
 
-		/**
-		 * Let's initiate a backup instance
-		 */
-		$backup = Epsilon_Content_Backup::get_instance();
+		if ( $this->backup ) {
+			/**
+			 * Let's initiate a backup instance
+			 */
+			$backup = Epsilon_Content_Backup::get_instance();
+		}
 
 		/**
 		 * Define Framework uri and paths
@@ -265,12 +267,4 @@ class Epsilon_Framework {
 		define( 'EPSILON_PATH', $dir . $this->path . '/epsilon-framework' );
 		define( 'EPSILON_BACKUP', $this->backup );
 	}
-
-	/**
-	 * @deprecated since 1.1.0
-	 */
-	public static function get_image_sizes() {
-		return Epsilon_Helper::get_image_sizes();
-	}
-
 }
