@@ -190,11 +190,31 @@ class Epsilon_Content_Backup {
 	 * @since 1.0.0
 	 */
 	public function add_notice_to_page( $post_type, $post ) {
+		$continue = false;
+
 		if ( 'page' !== $post_type ) {
 			return;
 		}
 
-		if ( $this->setting_page !== $post->ID ) {
+		/**
+		 * Need to make sure we are in a page that has content saved in the customizer
+		 *
+		 * Verify the last element of the explode meta,
+		 * if it's the same as the post ID it means we're doing it right
+		 */
+		$meta = get_post_meta( $post->ID );
+		foreach ( $meta as $key => $value ) {
+			$key = explode( '_', $key );
+			if ( end( $key ) === $post->ID ) {
+				$continue = true;
+			}
+		}
+
+		if ( $this->setting_page === $post->ID ) {
+			$continue = true;
+		}
+
+		if ( ! $continue ) {
 			return;
 		}
 
