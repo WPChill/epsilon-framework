@@ -145,7 +145,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		if ( empty( $this->fields ) || ! is_array( $this->fields ) ) {
 			$this->fields = array();
 		}
-		$sizes = Epsilon_Framework::get_image_sizes();
+		$sizes = Epsilon_Helper::get_image_sizes();
 		foreach ( $this->fields as $key => $value ) {
 			$this->fields[ $key ]['metaId'] = ! empty( $this->save_as_meta ) ? $this->save_as_meta : '';
 

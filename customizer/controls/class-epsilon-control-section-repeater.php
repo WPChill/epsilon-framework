@@ -151,7 +151,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		if ( empty( $this->repeatable_sections ) || ! is_array( $this->repeatable_sections ) ) {
 			$this->repeatable_sections = array();
 		}
-		$sizes = Epsilon_Framework::get_image_sizes();
+		$sizes = Epsilon_Helper::get_image_sizes();
 
 		foreach ( $this->repeatable_sections as $key => $value ) {
 			foreach ( $value['fields'] as $k => $v ) {
@@ -274,7 +274,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @param array $styling
 	 */
 	public function create_styling_fields( $styling = array(), $key ) {
-		$sizes = Epsilon_Framework::get_image_sizes();
+		$sizes = Epsilon_Helper::get_image_sizes();
 		$arr   = array();
 		foreach ( $styling as $prop ) {
 			switch ( $prop ) {

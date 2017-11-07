@@ -54,7 +54,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 		$json['value']          = $this->sanitize_value();
 		$json['default']        = $this->default;
 		$json['size']           = $this->size;
-		$json['sizeArray']      = Epsilon_Framework::get_image_sizes();
+		$json['sizeArray']      = Epsilon_Helper::get_image_sizes();
 
 		return $json;
 	}
