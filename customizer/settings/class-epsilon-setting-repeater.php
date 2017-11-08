@@ -113,7 +113,21 @@ class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 	 */
 	protected function get_root_value( $default = null ) {
 		if ( ! empty( $this->save_as_meta ) ) {
-			$arr = get_post_meta( $this->save_as_meta, $this->id, true );
+			$draft = $this->manager->changeset_post_id();
+			$arr   = null === $draft ? get_post_meta( $this->save_as_meta, $this->id, true ) : get_post( $draft );
+
+			if ( null !== $draft && is_a( $arr, 'WP_Post' ) ) {
+				$theme_slug = get_stylesheet();
+				$string     = $theme_slug . '::' . $this->id;
+				$known      = $arr->post_content;
+				$arr        = array();
+				$known      = json_decode( $known, true );
+				if ( isset( $known[ $string ] ) && ! empty( $known[ $string ]['value'] ) ) {
+					$arr = array(
+						$this->id => $known[ $string ]['value'],
+					);
+				}
+			}
 
 			if ( empty( $arr ) ) {
 				$arr = array(
