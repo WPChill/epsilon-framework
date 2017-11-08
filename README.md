@@ -1,3 +1,3 @@
-# Epsilon Framework v1.1.2
+# Epsilon Framework v1.1.4
 
 MachoThemes' theme framework.
