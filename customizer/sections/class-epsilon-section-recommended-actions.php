@@ -360,8 +360,8 @@ class Epsilon_Section_Recommended_Actions extends WP_Customize_Section {
 
 			$info = $this->_call_plugin_api( $k );
 
-			$t['description'] = $info->short_description;
-			$t['title']       = $t['button_label'] . ': ' . $info->name;
+			$t['description'] = isset( $info->short_description ) ? $info->short_description : '';
+			$t['title']       = $t['button_label'] . ': ' . isset( $info->name ) ? $info->name : '';
 
 			$arr[] = $t;
 		}// End foreach().

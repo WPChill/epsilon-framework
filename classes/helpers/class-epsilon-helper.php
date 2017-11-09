@@ -34,4 +34,47 @@ class Epsilon_Helper {
 
 		return $sizes;
 	}
+
+	/**
+	 * Format a CSS string used in the section repeater template
+	 */
+	public static function get_css_string( $fields ) {
+		$css        = '';
+		$translator = array(
+			'topleft'     => 'top left',
+			'top'         => 'top',
+			'topright'    => 'top right',
+			'left'        => 'left',
+			'center'      => 'center',
+			'right'       => 'right',
+			'bottomleft'  => 'bottom left',
+			'bottom'      => 'bottom',
+			'bottomright' => 'bottom right',
+		);
+
+		foreach ( $fields as $key => $value ) {
+			if ( empty( $value ) ) {
+				continue;
+			}
+			switch ( $key ) {
+				case 'background-image':
+					$css .= $key . ': url(' . esc_url( $value ) . ');';
+					break;
+				case 'background-position':
+					$css .= $key . ': ' . esc_attr( isset( $translator[ $value ] ) ? $translator[ $value ] : 'center' ) . ';';
+					break;
+				case 'background-size':
+					$css .= $key . ': ' . esc_attr( $value ) . ';';
+					break;
+				case 'background-color':
+					$css .= $key . ':' . esc_attr( $value ) . ';';
+					break;
+				default:
+					$css .= '';
+					break;
+			}
+		}
+
+		return $css;
+	}
 }
