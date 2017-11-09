@@ -236,14 +236,19 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;
 			} // End foreach().
-			if ( empty( $this->repeatable_sections[ $key ]['customization'] ) ) {
-				$this->repeatable_sections[ $key ]['customization'] = array(
+
+			if ( ! isset( $this->repeatable_sections[ $key ]['customization'] ) ) {
+				$this->repeatable_sections[ $key ]['customization'] = array();
+			}
+
+			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args(
+				$this->repeatable_sections[ $key ]['customization'],
+				array(
 					'enabled' => false,
 					'styling' => array(),
 					'layout'  => array(),
-				);
-			}
-
+				)
+			);
 
 			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
 			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
@@ -316,7 +321,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'type'        => 'select',
 						'group'       => 'styling',
 						'choices'     => array(
-							'topleft'     => __( 'Center', 'epsilon-framework' ),
+							'topleft'     => __( 'Top Left', 'epsilon-framework' ),
 							'top'         => __( 'Top', 'epsilon-framework' ),
 							'topright'    => __( 'Top Right', 'epsilon-framework' ),
 							'left'        => __( 'Left', 'epsilon-framework' ),
