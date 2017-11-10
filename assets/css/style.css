@@ -60,7 +60,6 @@
   display: inline-block;
   width: 100%;
   font-size: 12px;
-  font-family: 'Open Sans';
   color: #8b9096;
 }
 .epsilon-upsell-options li i {
@@ -378,7 +377,6 @@
   margin-left: 50px;
 }
 .epsilon-color-picker-title .epsilon-color-picker-description {
-  font-family: 'Open Sans';
   font-size: 13px;
   line-height: 16px;
   font-weight: initial;
@@ -1097,9 +1095,6 @@
 }
 .customize-control-epsilon-section-repeater .repeater-field {
   margin-bottom: 25px;
-}
-.customize-control-epsilon-section-repeater .selectize-control.plugin-remove_button [data-value] .remove {
-  font-family: 'OpenSans';
 }
 .customize-control-epsilon-section-repeater .customize-control-title {
   padding: 12px;
