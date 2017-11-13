@@ -53,7 +53,7 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 	 * @param array                $args
 	 */
 	public function __construct( WP_Customize_Manager $manager, $id, array $args ) {
-		//$this->allowed = apply_filters( 'epsilon_upsell_control_display', true );
+		$this->allowed = apply_filters( 'epsilon_upsell_control_display', true );
 		parent::__construct( $manager, $id, $args );
 		$manager->register_control_type( 'Epsilon_Control_Upsell' );
 
