@@ -259,6 +259,11 @@ class Epsilon_Content_Backup {
 				continue;
 			};
 
+			$meta = get_post_meta( $page['id'], $page['field_id'], true );
+			if ( empty( $meta[ $page['field_id'] ] ) ) {
+				continue;
+			}
+
 			$settings = array(
 				'ID'           => $page['id'],
 				'post_content' => $this->parse_content_advanced( $page ),
