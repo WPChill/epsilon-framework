@@ -1,3 +1,7 @@
+v1.1.7
+	- Issue with range slider in section repeater ( was not initiated properly )
+	- Fixed typos
+
 v1.1.6
 	- Epsilon Content Backup fix. Was saving customizer "settings" where it wasn't needed
 
