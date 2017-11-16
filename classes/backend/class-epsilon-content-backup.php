@@ -476,6 +476,8 @@ class Epsilon_Content_Backup {
 		$skip = array(
 			'epsilon-customizer-navigation',
 			'epsilon-icon-picker',
+			'epsilon-toggle',
+			'epsilon-slider',
 			'epsilon-color-picker',
 			'select',
 			'selectize',
