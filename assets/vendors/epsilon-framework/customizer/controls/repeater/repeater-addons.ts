@@ -398,7 +398,11 @@ export class EpsilonRepeaterAddons {
         };
 
         if ( self.row.hasOwnProperty( 'type' ) ) {
-          sliderSettings.params.value = parseFloat( self.control.control.params.value[ self.row.index ][ k ] );
+          sliderSettings.params.value = parseFloat( self.proxy.fields[ k ].default );
+          if ( 'undefined' !== typeof self.control.control.params.value[ self.row.index ] ) {
+            sliderSettings.params.value = parseFloat( self.control.control.params.value[ self.row.index ][ k ] );
+          }
+
           new EpsilonRangeSlider( sliderSettings );
           return;
         }
@@ -406,6 +410,7 @@ export class EpsilonRepeaterAddons {
         if ( 'undefined' !== typeof self.proxy.value[ self.row.index ] ) {
           sliderSettings.params.value = parseFloat( self.proxy.value[ self.row.index ][ k ] );
         }
+
         new EpsilonRangeSlider( sliderSettings );
       }
     }
