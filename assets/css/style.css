@@ -1331,6 +1331,10 @@ body.adding-section .epsilon-add-new-section:before {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.available-sections-list .epsilon-section .epsilon-section-image-description.active {
+  border-radius: 5px;
+  border-color: transparent;
+}
 .available-sections-list .epsilon-section .epsilon-section-image-description:hover {
   border-color: #57a7c9;
   -webkit-transition: .15s all ease-in-out;
