@@ -107,6 +107,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
      */
     jQuery( '#sections-left-' + this.control.params.id ).on( 'click', '.epsilon-section [data-action="info"]', function( this: any, e ) {
       e.preventDefault();
+      jQuery( this ).parent().find( '.epsilon-section-image-description' ).toggleClass( 'active' );
       jQuery( this ).parent().find( '.epsilon-section-description' ).toggleClass( 'active' );
     } );
 
