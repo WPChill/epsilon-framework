@@ -48,7 +48,7 @@ export class EpsilonIconPicker {
     /**
      * Icon container toggler
      */
-    this.context.on( 'click', '.epsilon-open-icon-picker', function( e: Event ) {
+    this.context.on( 'click', '.epsilon-icon-container', function( e: Event ) {
       e.preventDefault();
       jQuery( e.target ).toggleClass( 'opened-icon-picker' );
       self.context.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
