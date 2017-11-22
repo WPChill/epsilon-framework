@@ -31,11 +31,16 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public $choices = array();
 
 	/**
-	 * @since 1.3.4
+	 * @since 1.0.0
 	 * @var bool
 	 */
 	public $sortable = true;
 
+	/**
+	 * @since 1.2.0
+	 * @var int
+	 */
+	protected $integration_count = 0;
 	/**
 	 * Icons array
 	 *
@@ -85,15 +90,17 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']                = $this->id;
-		$json['link']              = $this->get_link();
-		$json['choices']           = $this->choices;
-		$json['value']             = $this->value();
-		$json['sections']          = $this->set_repeatable_sections();
-		$json['default']           = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
-		$json['sortable']          = $this->sortable;
-		$json['save_as_meta']      = $this->save_as_meta;
-		$json['selective_refresh'] = $this->selective_refresh;
+		$json['id']                 = $this->id;
+		$json['link']               = $this->get_link();
+		$json['choices']            = $this->choices;
+		$json['value']              = $this->value();
+		$json['sections']           = $this->set_repeatable_sections();
+		$json['integrations']       = $this->check_integrations();
+		$json['integrations_count'] = $this->integration_count;
+		$json['default']            = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['sortable']           = $this->sortable;
+		$json['save_as_meta']       = $this->save_as_meta;
+		$json['selective_refresh']  = $this->selective_refresh;
 
 		return $json;
 	}
@@ -110,6 +117,21 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		wp_enqueue_script( 'minicolors', EPSILON_URI . '/assets/vendors/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.2.0', true );
 		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
 		wp_enqueue_script( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
+	}
+
+	/**
+	 * @since 1.2.0
+	 */
+	public function check_integrations() {
+		$integration = false;
+		foreach ( $this->repeatable_sections as $section ) {
+			if ( isset( $section['integration'] ) && $section['integration']['status'] && $section['integration']['check'] ) {
+				$integration = true;
+				$this->integration_count ++;
+			}
+		}
+
+		return $integration;
 	}
 
 	/**
@@ -239,6 +261,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 			if ( ! isset( $this->repeatable_sections[ $key ]['customization'] ) ) {
 				$this->repeatable_sections[ $key ]['customization'] = array();
+			}
+
+			if ( ! isset( $this->repeatable_sections[ $key ]['image'] ) ) {
+				$this->repeatable_sections[ $key ]['image'] = EPSILON_URI . '/assets/img/ewf-icon-section-default.png';
 			}
 
 			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args(
@@ -407,15 +433,15 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'choices'   => array(
 							'top'    => array(
 								'value' => 'boxedcenter',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-alignbottom.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-alignbottom.png',
 							),
 							'middle' => array(
 								'value' => 'boxedcenter',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-alignmiddle.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-alignmiddle.png',
 							),
 							'bottom' => array(
 								'value' => 'boxedcenter',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-aligntop.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-aligntop.png',
 							),
 						),
 						'default'   => 'center',
@@ -434,15 +460,15 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'choices'   => array(
 							'boxedcenter' => array(
 								'value' => 'boxedcenter',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-boxedcenter.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-boxedcenter.png',
 							),
 							'boxedin'     => array(
 								'value' => 'boxedin',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-boxedin.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-boxedin.png',
 							),
 							'fullwidth'   => array(
 								'value' => 'fullwidth',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-fullwidth.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-fullwidth.png',
 							),
 						),
 						'default'   => 'center',
@@ -461,11 +487,11 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'choices'   => array(
 							'spaced' => array(
 								'value' => 'spaced',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-colspaced.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-colspaced.png',
 							),
 							'colfit' => array(
 								'value' => 'colfit',
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/epsilon-section-colfit.png',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-colfit.png',
 							),
 						),
 						'default'   => 'center',
@@ -484,19 +510,19 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'choices'   => array(
 							1 => array(
 								'value' => 1,
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/one-column.png',
+								'png'   => EPSILON_URI . '/assets/img/one-column.png',
 							),
 							2 => array(
 								'value' => 2,
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/two-column.png',
+								'png'   => EPSILON_URI . '/assets/img/two-column.png',
 							),
 							3 => array(
 								'value' => 3,
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/three-column.png',
+								'png'   => EPSILON_URI . '/assets/img/three-column.png',
 							),
 							4 => array(
 								'value' => 4,
-								'png'   => get_template_directory_uri() . '/inc/libraries/epsilon-framework/assets/img/four-column.png',
+								'png'   => EPSILON_URI . '/assets/img/four-column.png',
 							),
 						),
 						'default'   => 4,
@@ -582,12 +608,49 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					<p class="screen-reader-text" id="sections-search-desc-{{ data.id }}"><?php esc_html_e( 'The search results will be updated as you type.', 'epsilon-framework' ); ?></p>
 				</div>
 				<div class="available-sections-list">
-					<# for (section in data.sections) { #>
-					<# var temp = JSON.stringify(data.sections[section].fields); #>
-						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-							<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}"/>
+					<# if ( data.integrations ) { #>
+						<nav class="available-sections-tab-nav">
+							<a href="#" data-tab="normal" class="available-sections-tab-toggler active"><span class="dashicons dashicons-menu"></span> <?php esc_html_e( 'Sections', 'epsilon-framework' ); ?></a>
+							<a href="#" data-tab="integrations" class="available-sections-tab-toggler"><span class="dashicons dashicons-admin-plugins"></span> <?php esc_html_e( 'Integrations', 'epsilon-framework' ); ?> <span class="badge">{{ data.integrations_count }}</span></a>
+						</nav>
+					<# } #>
+
+					<# if ( data.integrations ) { #>
+						<div data-tab-id="normal" class="normal-sections available-sections-tab-content active">
+					<# } #>
+						<# for (section in data.sections) { #>
+						<# var temp = JSON.stringify(data.sections[section].fields); #>
+							<# if ( _.isUndefined(data.sections[section].integration) ) { #>
+								<div class="epsilon-section" data-id="{{ data.sections[section].id }}" >
+									<div class="epsilon-section-image-description">
+										<img src="{{ data.sections[section].image }}" />
+										<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+									</div>
+									<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+									<button class="button button-primary" data-action="add"> <i class="fa fa-plus" aria-hidden="true"></i> </button>
+									<button class="button button-info" data-action="info"> <i class="fa fa-question" aria-hidden="true"></i> </button>
+									<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}"/>
+								</div>
+							<# } #>
+						<# } #>
+
+					<# if ( data.integrations ) { #>
+						</div>
+						<div data-tab-id="integrations" class="integrations-sections available-sections-tab-content">
+							<# for (section in data.sections) { #>
+								<# if ( ! _.isUndefined(data.sections[section].integration) ) { #>
+									<div class="epsilon-section" data-id="{{ data.sections[section].id }}" >
+										<div class="epsilon-section-image-description">
+											<img src="{{ data.sections[section].image }}" />
+											<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+										</div>
+										<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+										<button class="button button-primary" data-action="add"> <i class="fa fa-plus" aria-hidden="true"></i> </button>
+										<button class="button button-info" data-action="info"> <i class="fa fa-question" aria-hidden="true"></i> </button>
+										<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}"/>
+									</div>
+								<# } #>
+							<# } #>
 						</div>
 					<# } #>
 				</div>
