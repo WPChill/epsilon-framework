@@ -1254,7 +1254,7 @@ body.adding-section .epsilon-add-new-section:before {
   -webkit-transition: left .18s;
   transition: left .18s;
   border-right: 1px solid #ddd;
-  padding-top: 48px;
+  padding-top: 60px;
 }
 .available-sections.opened {
   left: 0;
@@ -1314,6 +1314,7 @@ body.adding-section .epsilon-add-new-section:before {
   padding: 10px 10px 6px;
   cursor: pointer;
   position: relative;
+  background: #eee;
 }
 .available-sections-list .epsilon-section:first-of-type {
   padding-top: 32px;
@@ -1322,6 +1323,7 @@ body.adding-section .epsilon-add-new-section:before {
   padding-bottom: 32px;
 }
 .available-sections-list .epsilon-section .epsilon-section-image-description {
+  background: #fff;
   position: relative;
   display: block;
   width: 100%;
@@ -1388,6 +1390,7 @@ body.adding-section .epsilon-add-new-section:before {
 .available-sections-list .epsilon-section .epsilon-section-title {
   display: inline-block;
   font-size: 13px;
+  margin-left: 2px;
   color: #656c74;
   margin-top: 2px;
   padding-bottom: 5px;
@@ -1435,7 +1438,7 @@ body.adding-section .epsilon-add-new-section:before {
 .available-sections-list .available-sections-tab-nav .available-sections-tab-toggler:hover, .available-sections-list .available-sections-tab-nav .available-sections-tab-toggler:focus, .available-sections-list .available-sections-tab-nav .available-sections-tab-toggler.active {
   outline: none;
   color: #57a7c9;
-  background: #fff;
+  background: #eee;
   position: relative;
   -webkit-box-shadow: none;
   box-shadow: none;
