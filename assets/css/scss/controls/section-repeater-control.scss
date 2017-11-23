@@ -184,7 +184,7 @@ body.adding-section {
   -webkit-transition: left .18s;
   transition: left .18s;
   border-right: 1px solid #ddd;
-  padding-top: 48px;
+  padding-top: 60px;
   &.opened {
     left: 0;
     visibility: visible;
@@ -247,6 +247,7 @@ body.adding-section {
     padding: 10px 10px 6px;
     cursor: pointer;
     position: relative;
+    background: #eee;
     &:first-of-type {
       padding-top: 32px;
     }
@@ -254,6 +255,7 @@ body.adding-section {
       padding-bottom: 32px;
     }
     .epsilon-section-image-description {
+      background: #fff;
       position: relative;
       display: block;
       width: 100%;
@@ -320,6 +322,7 @@ body.adding-section {
     .epsilon-section-title {
       display: inline-block;
       font-size: 13px;
+      margin-left: 2px;
       color: #656c74;
       margin-top: 2px;
       padding-bottom: 5px;
@@ -370,7 +373,7 @@ body.adding-section {
       &.active {
         outline: none;
         color: #57a7c9;
-        background: #fff;
+        background: #eee;
         position: relative;
         -webkit-box-shadow: none;
         box-shadow: none;
