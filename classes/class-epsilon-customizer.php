@@ -392,9 +392,10 @@ class Epsilon_Customizer {
 	public static function add_page_builder( $id, $args ) {
 		$pages = new WP_Query(
 			array(
-				'post_type'    => 'page',
-				'nopaging'     => true,
-				'post__not_in' => array(
+				'post_type'        => 'page',
+				'nopaging'         => true,
+				'suppress_filters' => true,
+				'post__not_in'     => array(
 					Epsilon_Content_Backup::get_instance()->setting_page,
 				),
 			)
@@ -452,5 +453,31 @@ class Epsilon_Customizer {
 		}// End if().
 
 		wp_reset_postdata();
+	}
+
+	/**
+	 * Add quick action links to posts
+	 */
+	public static function add_action_links( $actions, $post ) {
+		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+			return $actions;
+		}
+
+		if ( 'draft' === $post->post_status ) {
+			return $actions;
+		}
+
+		if ( defined( 'POLYLANG_VERSION' ) ) {
+			$language = pll_get_post_language( $post->ID, 'slug' );
+			$default  = pll_default_language( 'slug' );
+			if ( $language !== $default ) {
+				return $actions;
+			}
+		}
+
+
+		$actions['customize'] = '<a href="' . esc_url( get_admin_url() . 'customize.php?url=' . get_permalink( $post->ID ) ) . '" />' . esc_html__( 'Customize', 'epsilon-framework' ) . '</a>';
+
+		return $actions;
 	}
 }
