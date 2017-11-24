@@ -157,12 +157,7 @@ class Epsilon_Content_Backup {
 		$hash = array(
 			'theme_mods' => md5( json_encode( get_option( 'theme_mods_' . $this->slug ) ) ),
 			'post_meta'  => md5( json_encode( get_post_meta( $this->setting_page ) ) ),
-			'pages'      => array(),
 		);
-
-		foreach ( $this->pages as $page ) {
-			$hash['pages'][ $page['id'] ] = md5( json_encode( get_post_meta( $page['id'] ) ) );
-		}
 
 		return $hash;
 	}
@@ -264,6 +259,11 @@ class Epsilon_Content_Backup {
 				continue;
 			};
 
+			$meta = get_post_meta( $page['id'], $page['field_id'], true );
+			if ( empty( $meta[ $page['field_id'] ] ) ) {
+				continue;
+			}
+
 			$settings = array(
 				'ID'           => $page['id'],
 				'post_content' => $this->parse_content_advanced( $page ),
@@ -316,11 +316,12 @@ class Epsilon_Content_Backup {
 			);
 
 			$last_known_hash = get_transient( $this->slug . '_' . $page['id'] . '_hash_update' );
+			$hash            = md5( json_encode( get_post_meta( $page['id'] ) ) );
 			if ( false === $last_known_hash ) {
-				set_transient( $this->slug . '_' . $page['id'] . '_hash_update', $this->hash['pages'][ $page['id'] ], 5 * MINUTE_IN_SECONDS );
+				set_transient( $this->slug . '_' . $page['id'] . '_hash_update', $hash, 5 * MINUTE_IN_SECONDS );
 			}
 
-			if ( $last_known_hash !== $this->hash['pages'][ $page['id'] ] ) {
+			if ( $last_known_hash !== $hash ) {
 				$arr[ $page['id'] ] = array(
 					'status' => false,
 				);
@@ -475,6 +476,8 @@ class Epsilon_Content_Backup {
 		$skip = array(
 			'epsilon-customizer-navigation',
 			'epsilon-icon-picker',
+			'epsilon-toggle',
+			'epsilon-slider',
 			'epsilon-color-picker',
 			'select',
 			'selectize',
