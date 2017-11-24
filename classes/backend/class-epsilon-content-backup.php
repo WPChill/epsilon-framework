@@ -594,6 +594,14 @@ class Epsilon_Content_Backup {
 					continue;
 				}
 
+				if ( ! isset( $control->fields[ $id ] ) ) {
+					continue;
+				}
+
+				if ( ! isset( $control->fields[ $id ]['type'] ) ) {
+					continue;
+				}
+
 				if ( 'epsilon-color-picker' === $control->fields[ $id ]['type'] || 'epsilon-icon-picker' === $control->fields[ $id ]['type'] ) {
 					continue;
 				};
