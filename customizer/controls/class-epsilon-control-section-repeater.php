@@ -432,19 +432,19 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'groupType' => 'three',
 						'choices'   => array(
 							'top'    => array(
-								'value' => 'boxedcenter',
-								'png'   => EPSILON_URI . '/assets/img/epsilon-section-alignbottom.png',
+								'value' => 'top',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-aligntop.png',
 							),
 							'middle' => array(
-								'value' => 'boxedcenter',
+								'value' => 'middle',
 								'png'   => EPSILON_URI . '/assets/img/epsilon-section-alignmiddle.png',
 							),
 							'bottom' => array(
-								'value' => 'boxedcenter',
-								'png'   => EPSILON_URI . '/assets/img/epsilon-section-aligntop.png',
+								'value' => 'bottom',
+								'png'   => EPSILON_URI . '/assets/img/epsilon-section-alignbottom.png',
 							),
 						),
-						'default'   => 'center',
+						'default'   => 'alignmiddle',
 					);
 
 					$arr[ $key . '_column_vertical_alignment' ] = $temp;
