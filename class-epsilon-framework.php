@@ -88,6 +88,7 @@ class Epsilon_Framework {
 					'controls',
 					'sections',
 					'panels',
+					'plugin',
 					'path',
 					'backup',
 					'plugin_uri',
@@ -117,6 +118,11 @@ class Epsilon_Framework {
 		 * Enqueue scripts and styles
 		 */
 		$this->start_enqueues();
+
+		/**
+		 * Add quick links
+		 */
+		$this->add_action_links();
 
 		/**
 		 * AJAX handling moved to a different class
@@ -155,6 +161,13 @@ class Epsilon_Framework {
 		 * Expose Manager to the Epsilon Customizer class.
 		 */
 		Epsilon_Customizer::get_instance( $wp_customize );
+	}
+
+	/**
+	 * Add quick links to point in customizer
+	 */
+	public function add_action_links() {
+		add_filter( 'page_row_actions', array( 'Epsilon_Customizer', 'add_action_links' ), 99, 2 );
 	}
 
 	/**
