@@ -1,3 +1,10 @@
+v1.2.0
+	- Added support for integrations tab
+	- Reskinned section repeater preview
+	- Implemented polylang / wpml functionality
+	- Added quick actions in Page table ( "Customize" link )
+	- Fixed an issue with page saving
+
 v1.1.7
 	- Issue with range slider in section repeater ( was not initiated properly )
 	- Fixed typos
