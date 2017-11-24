@@ -34,7 +34,11 @@
     border-bottom-right-radius: 5px;
     background-color: #fff;
     border-left: 1px solid #dddddd;
-    &.opened-icon-picker {
+  }
+
+  &.opened-icon-picker {
+    background-color: #f4f4f4;
+    .epsilon-open-icon-picker {
       background-color: #f4f4f4;
     }
   }

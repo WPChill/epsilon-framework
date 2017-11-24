@@ -257,7 +257,7 @@ export class EpsilonRepeaterAddons {
         /***
          * Toggle
          */
-        self.row.container.on( 'click keypress', '.epsilon-icon-picker-repeater-container .epsilon-open-icon-picker', function( this: any, e: any ) {
+        self.row.container.on( 'click keypress', '.epsilon-icon-picker-repeater-container .epsilon-icon-container', function( this: any, e: any ) {
           e.preventDefault();
 
           if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {

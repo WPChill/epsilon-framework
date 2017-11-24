@@ -27,6 +27,10 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
      * Initiate Search on sections
      */
     this._initSearch();
+    /**
+     * Handle integration tab functionality
+     */
+    this._handleIntegrations();
   }
 
   /**
@@ -76,13 +80,13 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
     /**
      * Addition of sections
      */
-    jQuery( '#sections-left-' + this.control.params.id ).on( 'click', '.epsilon-section', function( this: any, e ) {
+    jQuery( '#sections-left-' + this.control.params.id ).on( 'click', '.epsilon-section [data-action="add"]', function( this: any, e ) {
       e.preventDefault();
       if ( ! self.limit || self.currentIndex < self.limit ) {
         let row: EpsilonRepeaterSectionRow,
             addons: EpsilonRepeaterAddons;
 
-        row = self.utils.add( { type: jQuery( this ).attr( 'data-id' ) } );
+        row = self.utils.add( { type: jQuery( this ).parent().attr( 'data-id' ) } );
 
         addons = new EpsilonRepeaterAddons( self, row );
         addons.initPlugins();
@@ -98,6 +102,18 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
       }
     } );
 
+    /**
+     * Section description
+     */
+    jQuery( '#sections-left-' + this.control.params.id ).on( 'click', '.epsilon-section [data-action="info"]', function( this: any, e ) {
+      e.preventDefault();
+      jQuery( this ).parent().find( '.epsilon-section-image-description' ).toggleClass( 'active' );
+      jQuery( this ).parent().find( '.epsilon-section-description' ).toggleClass( 'active' );
+    } );
+
+    /**
+     * Section remove
+     */
     this.context.on( 'click', '.repeater-row-remove', function( this: any, e: Event ) {
       self.handleRowDecrementor();
       if ( ! self.limit || self.currentIndex < self.limit ) {
@@ -176,6 +192,27 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
       } );
 
     }, 1000 ) );
+  }
+
+  /**
+   * Handles the "tab" navigation in the available section list
+   * @private
+   */
+  private _handleIntegrations() {
+    if ( ! this.control.params.integrations ) {
+      return;
+    }
+
+    jQuery( '#sections-left-' + this.control.params.id ).on( 'click', '.available-sections-tab-toggler', function( this: any, e: JQueryEventConstructor ) {
+      let tab: any | string = jQuery( this ).attr( 'data-tab' );
+      jQuery( this ).siblings().removeClass( 'active' );
+      jQuery( this ).addClass( 'active' );
+      e.preventDefault();
+      if ( 'undefined' !== typeof tab ) {
+        jQuery( '[data-tab-id="' + tab + '"]' ).siblings( 'div' ).removeClass( 'active' ).slideUp();
+        jQuery( '[data-tab-id="' + tab + '"]' ).slideDown().addClass( 'active' );
+      }
+    } );
   }
 
   /**
