@@ -70,7 +70,8 @@ class Epsilon_Ajax_Controller {
 		if ( 'generate_partial_section' === $method ) {
 			$args = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments_for_output', wp_unslash( $_POST['args']['args'] ) );
 		} else {
-			$args = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments', wp_unslash( $_POST['args']['args'] ) );
+			$args = isset( $_POST['args']['args'] ) ? $_POST['args']['args'] : $_POST['args'];
+			$args = array_map( 'Epsilon_Ajax_Controller::sanitize_arguments', wp_unslash( $args ) );
 		}
 
 		$response = $class::$method( $args );
