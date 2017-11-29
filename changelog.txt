@@ -1,3 +1,6 @@
+v1.2.1
+	- AJAX controller would throw a warning/notice on php 7
+
 v1.2.0
 	- Added support for integrations tab
 	- Reskinned section repeater preview
