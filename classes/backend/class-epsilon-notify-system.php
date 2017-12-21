@@ -92,6 +92,47 @@ class Epsilon_Notify_System {
 	}
 
 	/**
+	 * Verify the status of a plugin
+	 *
+	 * @param string      $get         Return title/description/etc.
+	 * @param string      $slug        Plugin slug.
+	 * @param string      $plugin_name Plugin name.
+	 * @param bool|string $special     Callback to verify a certain plugin
+	 *
+	 * @return mixed
+	 */
+	public static function plugin_verifier( $slug = '', $get = '', $plugin_name = '', $special = false ) {
+		if ( false !== $special ) {
+			$arr = self::$special();
+		} else {
+			$arr = array(
+				'installed' => Epsilon_Notify_System::check_plugin_is_installed( $slug ),
+				'active'    => Epsilon_Notify_System::check_plugin_is_active( $slug ),
+			);
+
+			if ( empty( $get ) ) {
+				$arr = array_filter( $arr );
+
+				return 2 === count( $arr );
+			}
+		}
+
+		// Translators: %s is the plugin name.
+		$arr['title'] = sprintf( __( 'Install: %s', 'epsilon-framework' ), $plugin_name );
+		// Translators: %s is the plugin name.
+		$arr['description'] = sprintf( __( 'Please install %s in order to create the demo content.', 'epsilon-framework' ), $plugin_name );
+
+		if ( $arr['installed'] ) {
+			// Translators: %s is the plugin name
+			$arr['title'] = sprintf( __( 'Activate: %s', 'epsilon-framework' ), $plugin_name );
+			// Translators: %s is the plugin name
+			$arr['description'] = sprintf( __( 'Please activate %s in order to create the demo content.', 'epsilon-framework' ), $plugin_name );
+		}
+
+		return $arr[ $get ];
+	}
+
+	/**
 	 * @param $args
 	 *
 	 * @return string
