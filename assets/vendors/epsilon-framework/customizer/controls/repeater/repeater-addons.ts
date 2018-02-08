@@ -175,7 +175,7 @@ export class EpsilonRepeaterAddons {
       setting.id = temp.id;
       setting.url = temp.toJSON().sizes[ size ].url;
 
-      val = ('url' === input.attr( 'data-save-mode' ) ) ? setting.url : setting.id;
+      val = ('url' === input.attr( 'data-save-mode' )) ? setting.url : setting.id;
       input.val( val );
 
       self._setImage( container, setting.url );
@@ -409,6 +409,7 @@ export class EpsilonRepeaterAddons {
 
         if ( 'undefined' !== typeof self.proxy.value[ self.row.index ] ) {
           sliderSettings.params.value = parseFloat( self.proxy.value[ self.row.index ][ k ] );
+          sliderSettings.container = jQuery( sliderSettings.container ).find( '.epsilon-slider:not(.initiated)' ).first().addClass( 'initiated' );
         }
 
         new EpsilonRangeSlider( sliderSettings );
