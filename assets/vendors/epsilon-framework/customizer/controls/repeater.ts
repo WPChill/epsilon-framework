@@ -69,7 +69,7 @@ export class EpsilonFieldRepeater {
      * @type {boolean}
      */
     if ( ! _.isUndefined( this.control.params.choices.limit ) ) {
-      this.limit = ( 0 >= this.control.params.choices.limit ) ? false : parseInt( this.control.params.choices.limit );
+      this.limit = (0 >= this.control.params.choices.limit) ? false : parseInt( this.control.params.choices.limit );
     }
     /**
      * Handle events

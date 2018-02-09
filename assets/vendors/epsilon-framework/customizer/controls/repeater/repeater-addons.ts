@@ -409,8 +409,9 @@ export class EpsilonRepeaterAddons {
 
         if ( 'undefined' !== typeof self.proxy.value[ self.row.index ] ) {
           sliderSettings.params.value = parseFloat( self.proxy.value[ self.row.index ][ k ] );
-          sliderSettings.container = jQuery( sliderSettings.container ).find( '.epsilon-slider:not(.initiated)' ).first().addClass( 'initiated' );
         }
+
+        sliderSettings.container = jQuery( sliderSettings.container ).find( '.epsilon-slider:not(.initiated)' ).first().addClass( 'initiated' );
 
         new EpsilonRangeSlider( sliderSettings );
       }
