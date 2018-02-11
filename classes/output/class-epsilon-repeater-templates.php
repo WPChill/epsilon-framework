@@ -241,7 +241,7 @@ class Epsilon_Repeater_Templates {
 	*/
 	public static function epsilon_navigation(){
 		?>
-		<div class="epsilon-customizer-navigation">
+		<div class="epsilon-customizer-navigation-container">
 			{{{ field.label }}}
 			<a href="#" data-doubled="{{ field.opensDoubled }}" class="epsilon-customizer-navigation button button-primary button-hero" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
 		</div>
