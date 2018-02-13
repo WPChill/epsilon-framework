@@ -1,24 +1,24 @@
-.wp-admin .checkbox_switch {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 15px;
+.repeater-field-epsilon-toggle .checkbox_switch {
+  display: block;
+  height:22px !important;
 }
 
 .customize-control-title.onoffswitch_label {
-  width: 71%;
+	display:block;
+	float:left;
+	margin:0;
+	height:22px;
+	line-height:22px;
 }
 
 .onoffswitch_label {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 21px;
-  margin-top: -1px;
+  display: block;
 }
 
 .onoffswitch {
   position: relative;
   width: 52px;
-  display: inline-block;
+  display: block;
   float: right;
   -webkit-user-select: none;
   -moz-user-select: none;

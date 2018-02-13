@@ -2,10 +2,6 @@
   margin: -12px;
   width: 105%;
 
-  .repeater-field {
-    margin-bottom: 25px;
-  }
-
   .customize-control-title {
     padding: 12px;
   }
@@ -63,46 +59,60 @@
       }
 
       .repeater-row-content {
-        padding: 15px;
+        padding:0 20px 20px 20px;
         background: #fff;
+		
         nav {
-          margin: -15px -15px 15px;
+          margin: 0 -20px 0 -20px;
           background: #f3f3f5;
-          border-bottom: #d3d3d4;
+          border-bottom:1px solid #d3d3d4;
           text-align: center;
           box-sizing: border-box;
+		  
+		  
           a {
             color: #60676f;
             box-sizing: border-box;
-            padding: 12px 15px;
-            margin-top: 3px;
+            padding: 8px 12px 8px 12px;
+            margin-top: 6px;
             display: inline-block;
             text-decoration: none;
             outline: none;
-            margin-right: 3px;
+			display:inline-block;
+            margin-right: 2px;
+			border:1px solid #F3F3F5;
+			border-bottom:1px solid #D3D3D4;
+			border-top:none;
+			margin-bottom:-1px;
+			
+			
+			
             &:last-of-type {
               margin-right: 0;
             }
 
             &:hover,
-            &:focus,
+            &:focus{
+				color: #008EC2;
+				outline:0 !important;
+				box-shadow: none;
+			}
+			&:active {
+				outline:0 !important;
+			}
+			
             &.active {
-              outline: none;
-              color: #57a7c9;
+              outline:0 !important;
+              color: #0073AA;
+			  border-color:#D3D3D4;
+			  border-bottom-color:#fff;
+			  
+			  
+			  border-top:2px solid #2C96D6;
               background: #fff;
               position: relative;
               -webkit-box-shadow: none;
               box-shadow: none;
-              &:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 3px;
-                background: #57a7c9;
-                display: block;
-                content: '';
-              }
             }
           }
         }
@@ -112,10 +122,11 @@
       }
 
       .repeater-row-footer {
-        padding-top: 10px;
-        padding-bottom: 10px;
+		line-height:20px;
+		height:20px;
+        /* padding-top: 10px;*/
         border-top: 1px solid #efefef;
-        margin-top: 15px;
+        margin-top: 18px;
       }
     }
 
