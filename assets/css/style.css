@@ -394,7 +394,19 @@
 }
 
 .minicolors-theme-default .epsilon-color-picker {
-  display: none;
+  z-index: 100;
+  position: absolute;
+  top: -20px;
+  left: 50px;
+  opacity: 0;
+  visibility: hidden;
+  width: 153px !important;
+  padding: 5px;
+  transition: all .1s ease-in;
+}
+.minicolors-theme-default.minicolors-focus .epsilon-color-picker {
+  opacity: 1;
+  visibility: visible;
 }
 .minicolors-theme-default .minicolors-input-swatch {
   width: 31px;
