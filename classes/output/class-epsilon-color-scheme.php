@@ -53,7 +53,7 @@ class Epsilon_Color_Scheme {
 		$options  = array();
 		foreach ( $args['fields'] as $control => $prop ) {
 			$controls[ $control ] = $prop;
-			$options[ $control ]  = $prop['default'];
+			$options[ $control ]  = ! empty( $prop['default'] ) ? $prop['default'] : '';
 		}
 
 		$this->customizer_controls = $controls;
@@ -121,12 +121,28 @@ class Epsilon_Color_Scheme {
 		global $wp_customize;
 		$i = 3;
 		foreach ( $this->customizer_controls as $control => $properties ) {
+			$defaults = array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_hex_color',
+				'label'             => '',
+				'description'       => '',
+				'section'           => '',
+			);
+
+			$properties = wp_parse_args( $properties, $defaults );
+
 			$wp_customize->add_setting( $control, array(
 				'default'           => $properties['default'],
 				'sanitize_callback' => 'sanitize_hex_color',
 				'transport'         => 'postMessage',
 			) );
-			$wp_customize->add_control( $control, array() );
+
+			if ( ! empty( $properties['separator'] ) ) {
+				$this->add_separator( $control, $properties, $i );
+				$i ++;
+				continue;
+			}
+
 			$wp_customize->add_control( new Epsilon_Control_Color_Picker( $wp_customize, $control, array(
 				'label'       => $properties['label'],
 				'description' => $properties['description'],
@@ -137,6 +153,24 @@ class Epsilon_Color_Scheme {
 			) ) );
 			$i ++;
 		}
+	}
+
+	/**
+	 * Add separators
+	 *
+	 * @param $control
+	 * @param $properties
+	 * @param $i
+	 */
+	public function add_separator( $control, $properties, $i ) {
+		global $wp_customize;
+		$wp_customize->add_control( new Epsilon_Control_Separator( $wp_customize, $control, array(
+			'label'       => $properties['label'],
+			'description' => $properties['description'],
+			'section'     => $properties['section'],
+			'settings'    => $control,
+			'priority'    => $i,
+		) ) );
 	}
 
 	/**
@@ -228,6 +262,9 @@ class Epsilon_Color_Scheme {
 		}
 
 		foreach ( $this->customizer_controls as $control => $prop ) {
+			if ( ! empty( $prop['separator'] ) ) {
+				continue;
+			}
 			if ( ! $prop['hover-state'] ) {
 				continue;
 			}

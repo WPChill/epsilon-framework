@@ -22,7 +22,21 @@
 
 .minicolors-theme-default {
   .epsilon-color-picker {
-    display: none;
+    z-index: 100;
+    position: absolute;
+    top: -20px;
+    left: 50px;
+    opacity: 0;
+    visibility: hidden;
+    width: 153px !important;
+    padding: 5px;
+    transition: all .1s ease-in;
+  }
+  &.minicolors-focus {
+    .epsilon-color-picker {
+      opacity: 1;
+      visibility: visible;
+    }
   }
   .minicolors-input-swatch {
     width: 31px;
@@ -35,8 +49,8 @@
 }
 
 .lite {
-  opacity:0;
-  visibility:hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .minicolors-position-left .minicolors-panel {
