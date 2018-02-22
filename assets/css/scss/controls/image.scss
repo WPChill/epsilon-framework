@@ -1,5 +1,5 @@
 .epsilon-controller-image-container {
- 
+
   .placeholder {
     width: 100%;
     position: relative;
@@ -11,6 +11,7 @@
     box-sizing: border-box;
     padding: 9px 0;
     line-height: 20px;
+	
     .recommended-size {
       display: block;
       font-style: italic;
@@ -19,18 +20,25 @@
   .epsilon-image {
     
      border: 1px dashed #EEE;
-     padding: 5px 5px 0 5px;
+     padding: 6px;
+	 margin-bottom:6px;
     
     img {
       width: 100%;
+	  display:block;
     }
   }
   .actions {
     display: block;
     text-align: center;
+	padding-bottom:1px;
+	
+	.image-upload-remove-button,
     .image-upload-button,
     .image-default-button {
-      margin-top: 12px;
+		margin: 0;
+		display:inline-block;
+		min-width:30%;
     }
 
   }
