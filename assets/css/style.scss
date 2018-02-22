@@ -54,7 +54,6 @@
 }
 
 .epsilon-control-container {
-  padding: 15px 0 5px 0;
 }
 
 .epsilon-control-container label {
@@ -223,3 +222,91 @@
     content: '';
   }
 }
+
+
+
+
+
+
+
+/* 
+	Controls Spacing Debug 
+*/
+.repeater-row-content { }
+
+.repeater-field {
+	padding:18px 0 6px 0;
+	margin:0;
+	
+	&.repeater-field-epsilon-text-editor { 
+		padding-top:12px; 
+		
+		.customize-control-title { top:10px; }
+	}
+	
+	select {
+		display:block;
+		margin:0;
+		line-height:35px;
+		height:35px;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	
+	&.repeater-field-text input {
+		background-color:#fff;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+		-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+		box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+	}
+	
+	&.repeater-field-epsilon-customizer-navigation {
+		padding-bottom:8px;
+	}
+	
+	
+	&.repeater-field- {
+		display:none;
+	}
+	
+	&.repeater-field-hidden {
+		display:none;
+	}	
+}
+
+.customize-control-title { 
+	height:20px;
+	line-height:20px;
+	display:block;
+	margin-bottom:6px;
+	font-weight:normal;
+}
+
+
+
+
+
+/* Debug Colors */
+$debug-field-background-even: rgba(0,135,255, 0.3) !default;
+$debug-field-background-odd: rgba(0,135,255, 0.1) !default;
+$debug-field-title-background: rgba(255,165,0,0.4) !default;
+
+
+/*
+.repeater-field:nth-child(even)	 {
+	background: $debug-field-background-even !important;
+}
+
+.repeater-field:nth-child(odd)	 { 
+	background: $debug-field-background-odd !important;
+} 
+
+.repeater-row-footer,
+.customize-control-title,
+.repeater-field-epsilon-slider .slider-container,
+.epsilon-controller-image-container .actions {
+	background:$debug-field-title-background !important;
+}
+*/
+
