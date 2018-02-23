@@ -122,8 +122,12 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 					<i class="dashicons dashicons-arrow-down"/>
 				</div>
 				<div class="epsilon-control-styles">
+					<# var i = 0; #>
 					<# _.each(data.selectedColors.colors, function(v, k) { #>
+						<# if ( i < 5 ){ #>
 						<a href="#" data-field-id="{{ k }}" style="background-color: {{ v }}"></a>
+						<# } #>
+					<# i++ #>
 					<# }); #>
 				</div>
 			</div>
@@ -134,8 +138,12 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 					<input type="hidden" value='{{{ el.encodedColors }}}'/>
 					<span class="epsilon-color-scheme-name"> {{{ el.name }}} </span>
 					<div class="epsilon-control-styles">
+						<# var i = 0 #>
 						<# _.each(el.colors, function(v, k) { #>
+							<# if ( i < 5 ){ #>
 							<a href="#" data-field-id="{{ k }}" style="background-color: {{ v }}"></a>
+							<# } #>
+						<# i++ #>
 						<# }); #>
 					</div>
 				</div>
