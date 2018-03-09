@@ -1,3 +1,5 @@
+import { EpsilonSectionFocus } from './section-focus/section-focus';
+
 declare var require: any;
 declare var wp: any;
 import * as $ from 'jquery';
@@ -12,4 +14,5 @@ wp.customize.bind( 'preview-ready', function() {
   new EpsilonTypographyPreviewer();
   new EpsilonSectionEditorPreviewer();
   new EpsilonPartialRefresh();
+  new EpsilonSectionFocus();
 } );
