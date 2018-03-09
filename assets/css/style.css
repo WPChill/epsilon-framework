@@ -1189,7 +1189,7 @@
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content nav a {
   color: #60676f;
   box-sizing: border-box;
-  padding: 8px 12px 8px 12px;
+  padding: 8px 5px 8px 5px;
   margin-top: 6px;
   display: inline-block;
   text-decoration: none;
@@ -2196,9 +2196,6 @@ body.adding-doubled-section .doubled-section-parent {
   padding-bottom: 8px;
 }
 .repeater-field.repeater-field- {
-  display: none;
-}
-.repeater-field.repeater-field-hidden {
   display: none;
 }
 

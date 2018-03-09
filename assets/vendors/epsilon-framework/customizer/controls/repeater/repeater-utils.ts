@@ -341,7 +341,7 @@ export class EpsilonRepeaterUtils {
       }
     }
 
-    row.header.find( '.repeater-row-label' ).text( row.label.value + ' ' + ( row.index + 1 ) );
+    row.header.find( '.repeater-row-label' ).text( row.label.value + ' ' + (row.index + 1) );
   }
 
   /**
@@ -364,6 +364,8 @@ export class EpsilonRepeaterUtils {
         jQuery( 'body' ).removeClass( 'adding-section' );
         jQuery( 'body' ).removeClass( 'adding-doubled-section' );
         jQuery( '#sections-left-' + self.control.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
+
+        wp.customize.previewer.send( 'epsilon-section-focused', { index: row.index, closed: row.container.hasClass( 'minimized' ) } );
 
         jQuery.each( row.container.siblings(), function( index: number, element: any ) {
           if ( ! jQuery( element ).hasClass( 'minimized' ) ) {

@@ -61,19 +61,19 @@
       .repeater-row-content {
         padding:0 20px 20px 20px;
         background: #fff;
-		
+
         nav {
           margin: 0 -20px 0 -20px;
           background: #f3f3f5;
           border-bottom:1px solid #d3d3d4;
           text-align: center;
           box-sizing: border-box;
-		  
-		  
+
+
           a {
             color: #60676f;
             box-sizing: border-box;
-            padding: 8px 12px 8px 12px;
+            padding: 8px 5px 8px 5px;
             margin-top: 6px;
             display: inline-block;
             text-decoration: none;
@@ -84,9 +84,9 @@
 			border-bottom:1px solid #D3D3D4;
 			border-top:none;
 			margin-bottom:-1px;
-			
-			
-			
+
+
+
             &:last-of-type {
               margin-right: 0;
             }
@@ -100,14 +100,14 @@
 			&:active {
 				outline:0 !important;
 			}
-			
+
             &.active {
               outline:0 !important;
               color: #0073AA;
 			  border-color:#D3D3D4;
 			  border-bottom-color:#fff;
-			  
-			  
+
+
 			  border-top:2px solid #2C96D6;
               background: #fff;
               position: relative;

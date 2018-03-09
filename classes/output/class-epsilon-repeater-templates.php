@@ -21,6 +21,8 @@ class Epsilon_Repeater_Templates {
 						<div class="repeater-field repeater-field-{{{ field.type }}}">
 							<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'hidden' === field.type ) { #>
 								<?php self::text_field(); ?>
+							<# } else if ( 'epsilon-section-class' === field.type ) { #>
+								<?php self::section_class(); ?>
 							<# } else if ( 'epsilon-toggle' === field.type ) { #>
 								<?php self::epsilon_toggle(); ?>
 							<# } else if ( 'epsilon-slider' === field.type ) { #>
@@ -78,13 +80,16 @@ class Epsilon_Repeater_Templates {
 					<# if( data.customization.enabled ) { #>
 					<nav>
 						<# if( data.customization.enabled ) { #>
-							<a href="#" class="active" data-item="regular"><span class="dashicons dashicons-welcome-write-blog"></span> <?php echo __('Fields' ,'epsilon-framework'); ?></a>
+							<a href="#" class="active" data-item="regular"><span class="dashicons dashicons-welcome-write-blog"></span> <?php echo __('Content' ,'epsilon-framework'); ?></a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.styling) ) { #>
-							<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span> <?php echo __('Styles' ,'epsilon-framework'); ?></a>
+							<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span> <?php echo __('Style' ,'epsilon-framework'); ?></a>
 						<# } #>
-							<# if( ! _.isEmpty(data.customization.layout) ) { #>
+						<# if( ! _.isEmpty(data.customization.layout) ) { #>
 							<a href="#" data-item="layout"><span class="dashicons dashicons-layout"></span> <?php echo __('Layout' ,'epsilon-framework'); ?></a>
+						<# } #>
+						<# if( ! _.isEmpty(data.customization.colors) ) { #>
+							<a href="#" data-item="colors"><span class="dashicons dashicons-admin-appearance"></span> <?php echo __('Colors' ,'epsilon-framework'); ?></a>
 						<# } #>
 					<# } #>
 					</nav>
@@ -92,6 +97,8 @@ class Epsilon_Repeater_Templates {
 						<div class="repeater-field repeater-field-{{{ field.type }}}" data-group="<# if(field.group){ #>{{{ field.group }}}<# } else { #>regular<# } #>" >
 						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'hidden' === field.type ) { #>
 							<?php self::text_field(); ?>
+						<# } else if ( 'epsilon-section-class' === field.type ) { #>
+							<?php self::section_class(); ?>
 						<# } else if ( 'epsilon-toggle' === field.type ) { #>
 							<?php self::epsilon_toggle(); ?>
 						<# } else if ( 'epsilon-slider' === field.type ) { #>
@@ -132,6 +139,19 @@ class Epsilon_Repeater_Templates {
 			</li>
 		</script>
 		<?php //@formatter:on
+	}
+
+	/**
+	 * Section class
+	 */
+	public static function section_class(){
+		?>
+		<label>
+			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }} - {{{ field.default }}}</span><# } #>
+			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+			<input type="hidden" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ fieldExtras }}>
+		</label>
+		<?php
 	}
 
 	/**

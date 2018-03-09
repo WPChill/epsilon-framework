@@ -382,6 +382,8 @@ export class EpsilonRepeaterAddons {
         sliderSettings: any,
         val: any;
 
+    this.initCustomization();
+
     for ( let k in self.proxy.fields ) {
       if ( 'epsilon-slider' === self.proxy.fields[ k ].type ) {
         init = true;
@@ -416,5 +418,47 @@ export class EpsilonRepeaterAddons {
         new EpsilonRangeSlider( sliderSettings );
       }
     }
+  }
+
+  public initCustomization() {
+    const self = this;
+    let init = false,
+        sliderSettings: any,
+        val: any;
+
+    if ( ! this.proxy.customization ) {
+      return;
+    }
+
+    if ( ! this.proxy.customization.enabled ) {
+      return;
+    }
+
+    if ( typeof this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ] === 'undefined' ) {
+      return;
+    }
+
+    init = true;
+    sliderSettings = {
+      container: this.row.container.find( '.tab-panel.styling .epsilon-slider' ),
+      params: {
+        id: this.proxy.id + '_background_color_opacity',
+        sliderControls: {
+          min: this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].choices.min,
+          max: this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].choices.max,
+          step: this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].choices.step,
+        }
+      }
+    };
+
+    if ( this.row.hasOwnProperty( 'type' ) ) {
+      sliderSettings.params.value = parseFloat( this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].default );
+      if ( 'undefined' !== typeof this.control.control.params.value[ this.row.index ] &&
+          'undefined' !== typeof this.control.control.params.value[ this.row.index ][ this.proxy.id + '_background_color_opacity' ] ) {
+        sliderSettings.params.value = parseFloat( this.control.control.params.value[ this.row.index ][ this.proxy.id + '_background_color_opacity' ] );
+      }
+    }
+
+    return new EpsilonRangeSlider( sliderSettings );
   }
 }

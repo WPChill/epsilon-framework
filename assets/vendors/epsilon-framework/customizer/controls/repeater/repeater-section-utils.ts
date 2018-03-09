@@ -115,7 +115,8 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
      * Form the new fields with the static ones
      */
     fields = jQuery.extend( true, {}, this.control.control.params.sections[ data.type ].fields, this.control.control.params.sections[ data.type ].customization.styling,
-        this.control.control.params.sections[ data.type ].customization.layout );
+        this.control.control.params.sections[ data.type ].customization.layout,
+        this.control.control.params.sections[ data.type ].customization.colors );
 
     /**
      * Extend template data with what we passed in PHP
