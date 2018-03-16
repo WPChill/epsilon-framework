@@ -157,7 +157,6 @@ export class EpsilonRepeaterAddons {
         val: string | any,
         input: JQuery,
         image = wp.media( {
-          frame: 'image',
           multiple: false,
         } ).open();
 
