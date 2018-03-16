@@ -136,7 +136,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
       /**
        * In case the section does not exist, we can terminate
        */
-      if ( 'undefined' === typeof( wp.customize.section( data.customizerSection ) ) ) {
+      if ( 'undefined' === typeof(wp.customize.section( data.customizerSection )) ) {
         return;
       }
 
@@ -144,7 +144,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
        * Iterate over the controls, minimize everything
        */
       _.each( self.rows, function( sect: EpsilonRepeaterSectionRow, index: number ) {
-        if ( ! sect.container.hasClass( 'minimized' ) && index !== data.section ) {
+        if ( ! sect.container.hasClass( 'minimized' ) && sect.index != data.section ) {
           self.utils.toggleMinimize( sect );
         }
       } );
@@ -156,6 +156,10 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
        */
       if ( ! _.isUndefined( self.rows[ data.section ] ) && self.rows[ data.section ].container.hasClass( 'minimized' ) ) {
         self.utils.toggleMinimize( self.rows[ data.section ] );
+      }
+
+      if ( typeof data.sectionTab === 'string' ) {
+        self.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).click();
       }
     } );
   }
