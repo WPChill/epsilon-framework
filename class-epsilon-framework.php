@@ -243,7 +243,7 @@ class Epsilon_Framework {
 		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon-framework-customizer.js', array(
 			'jquery',
 			'customize-controls',
-		) );
+		), false, true );
 
 		wp_localize_script( 'epsilon-object', 'EpsilonWPUrls', array(
 			'siteurl'    => get_option( 'siteurl' ),

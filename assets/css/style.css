@@ -1513,6 +1513,34 @@ body.adding-section .epsilon-add-new-section:before {
   padding: 0 10px;
 }
 
+.epsilon-pencil-button-group {
+  background: #0085ba;
+  color: #fff;
+  border-radius: 15px;
+  display: inline-block;
+  position: absolute;
+  z-index: 100;
+  padding: 0 2px;
+  border: 1px solid #fff;
+  -webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
+  box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
+}
+.epsilon-pencil-button-group .dashicons {
+  line-height: 26px;
+}
+.epsilon-pencil-button-group a {
+  color: #fff;
+  padding: 0 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+.epsilon-pencil-button-group a:last-of-type {
+  margin-right: 0;
+  border-right: none;
+}
+.epsilon-pencil-button-group a:hover, .epsilon-pencil-button-group a:focus {
+  color: #fff;
+}
+
 .epsilon-section-editor {
   background: #0085ba !important;
   color: #fff;

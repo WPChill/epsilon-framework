@@ -9,6 +9,69 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Helper {
 	/**
+	 * Generate an edit shortcut for the frontend sections
+	 */
+	public static function generate_pencil( $class_name = '', $section_type = '' ) {
+		$sections = $class_name::get_instance();
+		if ( ! isset( $sections->sections[ $section_type ] ) ) {
+			return '';
+		}
+
+		if ( ! is_customize_preview() ) {
+			return '';
+		}
+
+		if ( isset( $sections->sections[ $section_type ]['customization'] ) && ! $sections->sections[ $section_type ]['customization']['enabled'] ) {
+			return '<a href="#" class="epsilon-section-editor"><span class="dashicons dashicons-edit"></span></a>';
+		}
+
+		$customization = array(
+			'regular' => true,
+			'styling' => ! empty( $sections->sections[ $section_type ]['customization']['styling'] ),
+			'layout'  => ! empty( $sections->sections[ $section_type ]['customization']['layout'] ),
+			'colors'  => ! empty( $sections->sections[ $section_type ]['customization']['colors'] ),
+		);
+
+		$icons = array(
+			'regular' => 'edit',
+			'layout'  => 'layout',
+			'colors'  => 'admin-appearance',
+			'styling' => 'admin-customizer',
+		);
+
+		$customization = array_filter( $customization );
+
+		$html = '<div class="epsilon-pencil-button-group">';
+		foreach ( $customization as $k => $v ) {
+			$html .= '<a href="#" data-focus="' . $k . '"><span class="dashicons dashicons-' . $icons[ $k ] . '"></span></a>';
+		}
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * Allowed kses
+	 *
+	 * @return array
+	 */
+	public static function allowed_kses_pencil() {
+		return array(
+			'div'  => array(
+				'class' => true,
+			),
+			'a'    => array(
+				'class'      => true,
+				'data-focus' => true,
+				'href'       => true,
+			),
+			'span' => array(
+				'class' => true,
+			)
+		);
+	}
+
+	/**
 	 * Function that retrieves image sizes defined in theme
 	 *
 	 * @return array
