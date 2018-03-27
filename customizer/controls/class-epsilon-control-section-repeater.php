@@ -207,6 +207,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				}
 
 				if ( 'epsilon-customizer-navigation' === $v['type'] ) {
+					$this->repeatable_sections[ $key ]['fields'][ $k ]['group'] = 'outofit';
+
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['opensDouble'] = false;
 				}
 				/**

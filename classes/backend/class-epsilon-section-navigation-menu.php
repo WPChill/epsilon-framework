@@ -91,7 +91,9 @@ class Epsilon_Section_Navigation_Menu {
 				       type="text"
 				       class="regular-text menu-item-textbox"/>
 			</p>
-
+			<p>
+				<?php esc_html_e('Only sections that have an ID are selectable, please edit section id\'s to see all the sections!', 'epsilon-framework');?>
+			</p>
 			<p class="button-controls wp-clearfix">
 			<span class="add-to-menu">
 				<input type="submit" <?php wp_nav_menu_disabled_check( $nav_menu_selected_id ); ?>

@@ -42,6 +42,7 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
     jQuery( this.container ).find( '[data-group="styling"]' ).wrapAll( '<div data-tab-id="styling" class="tab-panel styling"></div>' );
     jQuery( this.container ).find( '[data-group="layout"]' ).wrapAll( '<div data-tab-id="layout" class="tab-panel layout"></div>' );
     jQuery( this.container ).find( '[data-group="colors"]' ).wrapAll( '<div data-tab-id="colors" class="tab-panel colors"></div>' );
+    jQuery( this.container ).find( '[data-group="outofit"]' ).insertBefore( this.container.find( '.repeater-row-footer' ) );
     this._handleTabs();
   }
 

@@ -4,6 +4,7 @@
 
   .customize-control-title {
     padding: 12px;
+    display: inline-block;
   }
 
   .repeater-sections {
@@ -432,6 +433,7 @@ body.adding-section {
   border-radius: 15px;
   display: inline-block;
   position: absolute;
+  left: 0;
   z-index: 100;
   padding: 0 2px;
   border: 1px solid #fff;
