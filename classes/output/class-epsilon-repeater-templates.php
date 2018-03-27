@@ -148,7 +148,13 @@ class Epsilon_Repeater_Templates {
 		?>
 		<label>
 			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }} - {{{ field.default }}}</span><# } #>
-			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+				<span class="mte-tooltip">
+					{{{ field.description }}}
+				</span>
+			</i>
+			<# } #>
 			<input type="hidden" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ fieldExtras }}>
 		</label>
 		<?php
@@ -166,7 +172,13 @@ class Epsilon_Repeater_Templates {
 
 		<label>
 			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
-			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+				<span class="mte-tooltip">
+					{{{ field.description }}}
+				</span>
+			</i>
+			<# } #>
 			<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ fieldExtras }}>
 		</label>
 		<?php
@@ -179,7 +191,13 @@ class Epsilon_Repeater_Templates {
 		?>
 		<label>
 			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
-			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+			</i>
+			<# } #>
 			<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
 				<# _.each( field.choices, function( choice, i ) { #>
 					<#  if( field.multiple ) { #>
@@ -200,7 +218,13 @@ class Epsilon_Repeater_Templates {
 		?>
 		<label>
 			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
-			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+			</i>
+			<# } #>
 
 			<# _.each( field.choices, function( choice, i ) { #>
 				<label><input type="radio" name="{{{ field.id }}}{{ index }}" data-field="{{{ field.id }}}" value="{{{ i }}}" <# if ( field.default == i ) { #> checked="checked" <# } #>> {{ choice }} <br/></label>
@@ -215,7 +239,13 @@ class Epsilon_Repeater_Templates {
 	public static function textarea_field(){
 		?>
 			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
-			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+		<# if( field.description ){ #>
+		<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+		</i>
+		<# } #>
 			<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
 		<?php
 	}
@@ -263,6 +293,13 @@ class Epsilon_Repeater_Templates {
 		?>
 		<div class="epsilon-customizer-navigation-container">
 			{{{ field.label }}}
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+				<span class="mte-tooltip">
+					{{{ field.description }}}
+				</span>
+			</i>
+			<# } #>
 			<a href="#" data-doubled="{{ field.opensDoubled }}" class="epsilon-customizer-navigation button button-primary button-hero" data-field="{{ field.id }}" data-customizer-section="{{{ field.navigateToId }}}">{{{ field.navigateToLabel }}}</a>
 		</div>
 		<?php
@@ -469,7 +506,13 @@ class Epsilon_Repeater_Templates {
 		?>
 		<label>
 			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
-			<# if ( field.description ) { #><span class="description customize-control-description">{{ field.description }}</span><# } #>
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+			</i>
+			<# } #>
 			<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
 				<# _.each( field.choices, function( choice, i ) { #>
 					<#  if( field.multiple ) { #>

@@ -1004,6 +1004,7 @@
 .customize-control-epsilon-repeater .repeater-field .customize-control-title {
   font-size: 13px;
   line-height: initial;
+  display: inline-block;
 }
 .customize-control-epsilon-repeater .repeater-field .customize-control-description {
   font-size: 13px;
@@ -1127,6 +1128,7 @@
 }
 .customize-control-epsilon-section-repeater .customize-control-title {
   padding: 12px;
+  display: inline-block;
 }
 .customize-control-epsilon-section-repeater .repeater-sections {
   width: 100%;
@@ -1519,6 +1521,7 @@ body.adding-section .epsilon-add-new-section:before {
   border-radius: 15px;
   display: inline-block;
   position: absolute;
+  left: 0;
   z-index: 100;
   padding: 0 2px;
   border: 1px solid #fff;
