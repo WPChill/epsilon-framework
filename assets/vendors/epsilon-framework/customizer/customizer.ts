@@ -19,6 +19,7 @@ import './extenders/controls/layouts';
 import './extenders/controls/repeater';
 import './extenders/controls/section-repeater';
 import './extenders/controls/button-group';
+import './extenders/controls/page-changer';
 /**
  * Panels
  */

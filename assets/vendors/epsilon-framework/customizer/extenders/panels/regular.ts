@@ -20,7 +20,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
   /**
    * Ready event
    */
-  ready: function() {
+  ready() {
     /**
      * Hide the panel
      */
@@ -51,7 +51,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
   /**
    * Attach events
    */
-  attachEvents: function() {
+  attachEvents() {
     var panel = this;
     if ( 'epsilon-panel-regular' !== this.params.type || 'undefined' === typeof this.params.panel ) {
       this._panelAttachEvents.call( this );
@@ -71,7 +71,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
 
     } );
 
-    panel.container.find( '.customize-panel-back' ).off( 'click keydown' ).on( 'click keydown', function( event: Event ) {
+    panel.container.find( '.customize-panel-back' ).off( 'click keydown' ).on( 'click keydown', ( event: Event ) => {
       if ( wp.customize.utils.isKeydownButNotEnterEvent( event ) ) {
         return;
       }
@@ -88,7 +88,7 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
    * Is contextually active
    * @returns {*}
    */
-  isContextuallyActive: function() {
+  isContextuallyActive() {
     var panel = this,
         children = this._children( 'panel', 'section' ),
         activeCount = 0;
@@ -117,12 +117,12 @@ wp.customize.panelConstructor[ 'epsilon-panel-regular' ] = wp.customize.Panel.ex
       }
     } );
 
-    return ( 0 !== activeCount );
+    return (0 !== activeCount);
   },
   /**
    * Embed
    */
-  embed: function() {
+  embed() {
     var panel = this,
         parentContainer = jQuery( '#sub-accordion-panel-' + this.params.panel );
 

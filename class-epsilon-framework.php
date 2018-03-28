@@ -27,6 +27,7 @@ class Epsilon_Framework {
 		'color-scheme',
 		'button-group',
 		'separator',
+		'page-changer',
 	);
 	/**
 	 * By default, it loads all sections

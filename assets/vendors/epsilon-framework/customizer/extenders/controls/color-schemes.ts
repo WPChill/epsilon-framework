@@ -6,7 +6,7 @@ import { EpsilonColorSchemes } from '../../controls/color-schemes';
  * Epsilon Color Schemes Control Constructor
  */
 wp.customize.controlConstructor[ 'epsilon-color-scheme' ] = wp.customize.Control.extend( {
-  ready: function() {
+  ready() {
     var control = this, section, instance;
 
     wp.customize.bind( 'ready', function() {
