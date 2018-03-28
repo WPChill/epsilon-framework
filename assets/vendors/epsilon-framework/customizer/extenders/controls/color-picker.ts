@@ -3,7 +3,7 @@ declare var wp: any;
 import { EpsilonColorPicker } from '../../controls/color-picker';
 
 wp.customize.controlConstructor[ 'epsilon-color-picker' ] = wp.customize.Control.extend( {
-  ready: function() {
+  ready() {
     var control = this;
 
     new EpsilonColorPicker( control );

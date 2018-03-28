@@ -1589,6 +1589,14 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
 }
 
+.repeater-field-hidden {
+  padding: 0 !important;
+}
+
+.repeater-field-epsilon-section-class {
+  display: none;
+}
+
 .epsilon-controller-image-container .placeholder {
   width: 100%;
   position: relative;

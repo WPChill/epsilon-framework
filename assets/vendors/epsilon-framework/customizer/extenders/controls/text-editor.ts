@@ -2,7 +2,7 @@ declare var wp: any;
 import { EpsilonTextEditor } from '../../controls/text-editor';
 
 wp.customize.controlConstructor[ 'epsilon-text-editor' ] = wp.customize.Control.extend( {
-  ready: function() {
+  ready() {
     var control = this;
 
     new EpsilonTextEditor( control );
