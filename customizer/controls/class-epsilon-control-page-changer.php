@@ -26,6 +26,18 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 		$manager->register_control_type( 'Epsilon_Control_Page_Changer' );
 	}
 
+	/**
+	 * Enqueues selectize js
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function enqueue() {
+		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
+		wp_enqueue_script( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.min.js', array( 'jquery' ), '1.0.0', true );
+	}
+
 
 	/**
 	 * Add custom parameters to pass to the JS via JSON.
@@ -62,7 +74,7 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 	 */
 	public function get_pages() {
 		$arr   = array();
-		$pages = get_pages();
+		$pages = get_pages( array( 'exclude' => get_option( 'page_for_posts' ) ) );
 
 		foreach ( $pages as $key => $page ) {
 			$arr[ $page->ID ] = array(
