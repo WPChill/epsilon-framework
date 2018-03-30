@@ -28,6 +28,7 @@ class Epsilon_Framework {
 		'button-group',
 		'separator',
 		'page-changer',
+		'image-dimensions',
 	);
 	/**
 	 * By default, it loads all sections
