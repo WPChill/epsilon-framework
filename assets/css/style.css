@@ -1753,6 +1753,31 @@ body.adding-section .epsilon-add-new-section:before {
   display: inline-block;
 }
 
+.epsilon-controller-image-dimensions-container {
+  display: block;
+  width: 100%;
+}
+.epsilon-controller-image-dimensions-container .col-4 {
+  display: inline-block;
+  width: 43%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  padding-right: 10px;
+}
+.epsilon-controller-image-dimensions-container .col-4:last-of-type {
+  padding-right: 0;
+  width: 14%;
+}
+.epsilon-controller-image-dimensions-container .col-4 .mini-label {
+  display: block;
+}
+.epsilon-controller-image-dimensions-container .col-4 input[type="text"] {
+  min-width: 0;
+  width: 100%;
+}
+
 /* Start Sections */
 #customize-controls .control-section-epsilon-section-pro .accordion-section-title:hover,
 #customize-controls .control-section-epsilon-section-pro .accordion-section-title:focus {

@@ -153,6 +153,7 @@ class Epsilon_Page_Generator {
 	public function generate_output() {
 		if ( empty( $this->sections ) && ! $this->sections ) {
 			get_template_part( 'template-parts/frontpage/content-section-base' );
+
 			return;
 		}
 
@@ -175,8 +176,10 @@ class Epsilon_Page_Generator {
 	 */
 	public function section_template( $template = '', $args = array(), $section_id = '' ) {
 		$template_part = $args['type'] . '-section';
+		$has_id        = isset( $this->sections[ $section_id ][ $args['type'] . '_section_unique_id' ] ) ? $this->sections[ $section_id ][ $args['type'] . '_section_unique_id' ] : null;
+
 		set_query_var( 'section_id', $section_id );
-		get_template_part( 'template-parts/frontpage/' . $template_part );
+		get_template_part( 'template-parts/frontpage/' . $template_part, $has_id );
 	}
 
 	/**
