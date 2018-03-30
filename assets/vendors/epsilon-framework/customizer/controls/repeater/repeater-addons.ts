@@ -384,7 +384,6 @@ export class EpsilonRepeaterAddons {
    * Initiate range sliders in the section repeater
    */
   private initRangeSlidersSectionRepeater() {
-    console.log( this.proxy.fields );
     let sliders = _.filter( this.proxy.fields, ( element: any ) => { return element.type === 'epsilon-slider'; } );
 
     sliders.map( ( element: any ) => {
