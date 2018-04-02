@@ -12,6 +12,7 @@
 @import "scss/controls/image";
 @import "scss/controls/icon-picker";
 @import "scss/controls/customizer-navigation";
+@import "scss/controls/image-dimensions";
 /* Start Sections */
 @import "scss/sections/pro-section";
 @import "scss/sections/recommended-actions";
@@ -301,3 +302,13 @@ $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 }
 */
 
+.selectize-input {
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+}
+
+.selectize-dropdown {
+  z-index: 20;
+}

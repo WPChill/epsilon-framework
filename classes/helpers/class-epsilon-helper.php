@@ -140,4 +140,51 @@ class Epsilon_Helper {
 
 		return $css;
 	}
+
+	/**
+	 * Gets an image with custom dimensions
+	 */
+	public static function get_image_with_custom_dimensions( $control = '' ) {
+		$decoded = json_decode( get_theme_mod( $control, '{}' ), true );
+		if ( empty( $decoded ) ) {
+			return the_custom_logo();
+		}
+
+		$associated_image = get_theme_mod( $decoded['linked_control'], false );
+
+		if ( ! $associated_image ) {
+			return;
+		}
+
+		$image_alt = get_post_meta( $associated_image, '_wp_attachment_image_alt', true );
+		$attr      = array(
+			'class'    => '',
+			'itemprop' => '',
+		);
+
+		if ( empty( $image_alt ) ) {
+			$attr['alt'] = get_bloginfo( 'name', 'display' );
+		}
+
+		if ( 'custom_logo' === $decoded['linked_control'] ) {
+			$attr['class']    = 'custom-logo logo';
+			$attr['itemprop'] = 'logo';
+
+			$html = sprintf(
+				'<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
+				esc_url( home_url( '/' ) ),
+				wp_get_attachment_image(
+					$associated_image,
+					array(
+						$decoded['width'],
+						$decoded['height']
+					),
+					false,
+					$attr
+				)
+			);
+		}
+
+		echo $html;
+	}
 }

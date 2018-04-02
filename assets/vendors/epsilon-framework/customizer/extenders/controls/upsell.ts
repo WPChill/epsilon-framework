@@ -1,7 +1,7 @@
 declare var wp: any;
 
 wp.customize.controlConstructor[ 'epsilon-upsell' ] = wp.customize.Control.extend( {
-  ready: function() {
+  ready() {
     var control = this;
     control.container.on( 'click', '.epsilon-upsell-label', function( this: any, e: Event ) {
       e.preventDefault();

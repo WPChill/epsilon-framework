@@ -62,7 +62,6 @@ class Epsilon_Section_Repeater_Helper {
 		$this->set_column_group();
 		$this->set_column_stretch();
 		$this->set_column_spacing();
-		$this->set_column_group();
 		$this->set_row_spacing();
 		$this->set_row_spacing_bottom();
 		$this->set_title_align();

@@ -1203,6 +1203,9 @@
   border-top: none;
   margin-bottom: -1px;
 }
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content nav a .label {
+  display: none;
+}
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content nav a:last-of-type {
   margin-right: 0;
 }
@@ -1224,6 +1227,9 @@
   position: relative;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content nav a.active .label {
+  display: inline-block;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row .repeater-row-content .customize-control-title {
   padding: initial;
@@ -1589,6 +1595,14 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
 }
 
+.repeater-field-hidden {
+  padding: 0 !important;
+}
+
+.repeater-field-epsilon-section-class {
+  display: none;
+}
+
 .epsilon-controller-image-container .placeholder {
   width: 100%;
   position: relative;
@@ -1737,6 +1751,31 @@ body.adding-section .epsilon-add-new-section:before {
   margin-top: 10px;
   margin-top: 10px;
   display: inline-block;
+}
+
+.epsilon-controller-image-dimensions-container {
+  display: block;
+  width: 100%;
+}
+.epsilon-controller-image-dimensions-container .col-4 {
+  display: inline-block;
+  width: 43%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  padding-right: 10px;
+}
+.epsilon-controller-image-dimensions-container .col-4:last-of-type {
+  padding-right: 0;
+  width: 14%;
+}
+.epsilon-controller-image-dimensions-container .col-4 .mini-label {
+  display: block;
+}
+.epsilon-controller-image-dimensions-container .col-4 input[type="text"] {
+  min-width: 0;
+  width: 100%;
 }
 
 /* Start Sections */
@@ -2255,3 +2294,13 @@ body.adding-doubled-section .doubled-section-parent {
 	background:$debug-field-title-background !important;
 }
 */
+.selectize-input {
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+}
+
+.selectize-dropdown {
+  z-index: 20;
+}

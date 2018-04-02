@@ -3,7 +3,7 @@ declare var wp: any;
 import { EpsilonIconPicker } from '../../controls/icon-picker';
 
 wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.extend( {
-  ready: function() {
+  ready() {
     var control = this;
 
     new EpsilonIconPicker( control, false );

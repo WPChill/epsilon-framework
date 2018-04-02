@@ -3,7 +3,7 @@ declare var wp: any;
 import { EpsilonSectionRepeater } from '../../controls/section-repeater';
 
 wp.customize.controlConstructor[ 'epsilon-section-repeater' ] = wp.customize.Control.extend( {
-  ready: function() {
+  ready() {
     let control: any = this,
         id: string | any = jQuery( this.container ).attr( 'id' ),
         node: Node | null = document.getElementById( id ),

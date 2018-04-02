@@ -66,6 +66,19 @@ class Epsilon_Section_Attr_Helper {
 	}
 
 	/**
+	 * I know that we can't have more than one IDS on a html tag
+	 *
+	 * @param array $element
+	 */
+	public function id_attribute_generator( $element = array() ) {
+		if ( empty( $element ) ) {
+			return false;
+		}
+
+		echo $this->generate_attribute( 'id', $element );
+	}
+
+	/**
 	 * @param array $element
 	 */
 	public function class_attribute_generator( $element = array() ) {

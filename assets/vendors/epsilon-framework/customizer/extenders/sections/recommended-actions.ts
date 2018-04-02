@@ -6,7 +6,7 @@ import { EpsilonSectionRecommended } from '../../sections/recommended-actions';
  * Recommended Section Constructor
  */
 wp.customize.sectionConstructor[ 'epsilon-section-recommended-actions' ] = wp.customize.Section.extend( {
-  ready: function() {
+  ready() {
     new EpsilonSectionRecommended( this );
   },
   attachEvents: function() {
