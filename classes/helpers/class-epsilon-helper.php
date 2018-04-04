@@ -170,18 +170,12 @@ class Epsilon_Helper {
 			$attr['class']    = 'custom-logo logo';
 			$attr['itemprop'] = 'logo';
 
+			$image = wp_get_attachment_image_src( $associated_image, 'full' );
+
 			$html = sprintf(
-				'<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url">%2$s</a>',
+				'<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url"><img src="%2$s" alt="' . $attr['alt'] . '" itemprop="logo" width="' . $decoded['width'] . '" height="' . $decoded['height'] . ' "/></a>',
 				esc_url( home_url( '/' ) ),
-				wp_get_attachment_image(
-					$associated_image,
-					array(
-						$decoded['width'],
-						$decoded['height']
-					),
-					false,
-					$attr
-				)
+				$image[0]
 			);
 		}
 
