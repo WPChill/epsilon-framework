@@ -160,6 +160,9 @@ class Epsilon_Section_Attr_Helper {
 		}
 		if ( ! empty( $this->options[ $this->key . '_background_parallax' ] ) ) {
 			$additional[] = 'ewf-section--parallax';
+		}		
+		if ( ! empty( $this->options[ $this->key . '_row_title_align' ] ) ) {
+			$additional[] = 'ewf-section--title-'. $this->options[ $this->key . '_row_title_align' ];
 		}
 
 		return $additional;
