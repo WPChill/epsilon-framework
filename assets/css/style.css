@@ -89,7 +89,8 @@
     text-align: center;
     position: static;
     -webkit-transform: none;
-    transform: none; }
+    transform: none;
+    display: block; }
   .epsilon-upsell-container .epsilon-button-group .button {
     display: block;
     width: 100%;
