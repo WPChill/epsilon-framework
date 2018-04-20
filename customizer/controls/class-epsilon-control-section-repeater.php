@@ -188,7 +188,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			$this->repeatable_sections[ $key ]['fields'][ $key . '_section_class' ] = array(
 				'label'   => esc_html__( 'Section Class' ),
 				'type'    => 'epsilon-section-class',
-				'default' => 'section-' . $key . '-' . rand( 1, 99999999999 ),
+				'default' => 'section-' . $key . '-' . mt_rand( 1, mt_getrandmax()),
 			);
 
 			foreach ( $value['fields'] as $k => $v ) {
