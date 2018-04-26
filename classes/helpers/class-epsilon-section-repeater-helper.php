@@ -350,7 +350,7 @@ class Epsilon_Section_Repeater_Helper {
 						'type'        => 'epsilon-slider',
 						'default'     => isset( $values['default'] ) ? $values['default'] : 1,
 						'choices'     => array(
-							'step' => .1,
+							'step' => .05,
 							'min'  => 0,
 							'max'  => 1,
 						),

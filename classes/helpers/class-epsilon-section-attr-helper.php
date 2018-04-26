@@ -147,7 +147,9 @@ class Epsilon_Section_Attr_Helper {
 			$additional[] = $this->options[ $this->key . '_section_class' ];
 		}
 		if ( ! empty( $this->options[ $this->key . '_column_vertical_alignment' ] ) ) {
-			$additional[] = 'ewf-valign--' . $this->options[ $this->key . '_column_vertical_alignment' ];
+			if ($this->options[ $this->key . '_column_vertical_alignment' ] != 'top'){
+				$additional[] = 'ewf-valign--' . $this->options[ $this->key . '_column_vertical_alignment' ];
+			}
 		}
 		if ( ! empty( $this->options[ $this->key . '_column_alignment' ] ) ) {
 			$additional[] = 'ewf-text-align--' . $this->options[ $this->key . '_column_alignment' ];
