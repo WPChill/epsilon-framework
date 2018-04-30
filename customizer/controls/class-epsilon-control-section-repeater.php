@@ -186,7 +186,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			 * Adds the new section class
 			 */
 			$this->repeatable_sections[ $key ]['fields'][ $key . '_section_class' ] = array(
-				'label'   => esc_html__( 'Section Class' ),
+				'label'   => esc_html__( 'Section Class', 'epsilon-framework' ),
 				'type'    => 'epsilon-section-class',
 				'default' => 'section-' . $key . '-' . mt_rand( 1, mt_getrandmax()),
 			);
