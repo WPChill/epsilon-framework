@@ -65,14 +65,14 @@ class Epsilon_Section_Navigation_Menu {
 		<div class="customlinkdiv" id="epsilon-section-navigation-menu">
 			<input type="hidden"
 			       value="custom"
-			       name="menu-item[<?php esc_attr_e( $_nav_menu_placeholder ); ?>][menu-item-type]"/>
+			       name="menu-item[<?php echo esc_attr( $_nav_menu_placeholder ); ?>][menu-item-type]"/>
 			<p id="menu-item-url-wrap" class="wp-clearfix">
 				<label class="howto"
 				       for="custom-menu-item-url">
 					<?php esc_html_e( 'Section', 'epsilon-framework' ); ?>
 				</label>
 				<select id="epsilon-section-id"
-				        name="menu-item[<?php esc_attr_e( $_nav_menu_placeholder ); ?>][menu-item-url]"
+				        name="menu-item[<?php echo esc_attr( $_nav_menu_placeholder ); ?>][menu-item-url]"
 				        type="text"
 				        class="code menu-item-textbox">
 					<option value="0"><?php esc_html_e( 'Select a Section', 'epsilon-framework' ); ?></option>
@@ -87,7 +87,7 @@ class Epsilon_Section_Navigation_Menu {
 					<?php esc_html_e( 'Label', 'epsilon-framework' ); ?>
 				</label>
 				<input id="epsilon-section-label"
-				       name="menu-item[<?php esc_attr_e( $_nav_menu_placeholder ); ?>][menu-item-title]"
+				       name="menu-item[<?php echo esc_attr( $_nav_menu_placeholder ); ?>][menu-item-title]"
 				       type="text"
 				       class="regular-text menu-item-textbox"/>
 			</p>
