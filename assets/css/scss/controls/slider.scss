@@ -36,6 +36,7 @@
 	
 	
     .ui-slider-handle {
+      outline: none;
       position: absolute;
       z-index: 2;
       top: -10px;
@@ -53,6 +54,9 @@
       box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
       border: solid 1px #d7d7d7;
       transform: translateX(-50%);
+
+
+
     }
     .ui-slider-range {
       position: absolute;
