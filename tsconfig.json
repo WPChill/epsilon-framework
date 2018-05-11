@@ -2,8 +2,9 @@
   "compilerOptions": {
     "outDir": "./built/",
     "sourceMap": false,
-    "strict": true,
-    "noImplicitReturns": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
