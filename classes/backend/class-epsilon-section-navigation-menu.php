@@ -137,7 +137,7 @@ class Epsilon_Section_Navigation_Menu {
 			return $arr;
 		}
 
-		$fp = Epsilon_Page_Generator::get_instance( $this->option, $this->id );
+		$fp = new Epsilon_Page_Generator( $this->option, $this->id );
 
 		if ( ! $fp->sections ) {
 			return $arr;
