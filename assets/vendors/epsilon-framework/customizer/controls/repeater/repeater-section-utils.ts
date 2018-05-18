@@ -1,9 +1,13 @@
+import { EpsilonRepeaterAddons } from './repeater-addons';
+
+declare var EpsilonWPUrls: any;
 declare var wp: any;
 declare var _: any;
 import { EpsilonRepeaterUtils } from './repeater-utils';
 import { EpsilonRepeaterSectionRow } from './repeater-section-row';
 import { EpsilonFieldRepeater } from '../repeater';
 import { EpsilonSectionRepeater } from '../section-repeater';
+import { EpsilonAjaxRequest } from '../../../utils/epsilon-ajax-request';
 
 export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   /**
@@ -15,8 +19,58 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   }
 
   /**
+   * Import button
+   */
+  public importButton() {
+    const self = this;
+    this.control.context.find( '.epsilon-import-sections' ).on( 'click keydown', function( e: Event ) {
+      let Ajax: EpsilonAjaxRequest,
+          data = {
+            action: [ 'Epsilon_Helper', 'get_template' ],
+            nonce: EpsilonWPUrls.ajax_nonce,
+            args: [],
+          };
+
+      self.control.rows.map( ( element ) => {
+        element.container.slideUp( 300, function() {
+          jQuery( this ).detach();
+        } );
+      } );
+
+      self.control.rows = [];
+      self.control.currentIndex = 0;
+
+      Ajax = new EpsilonAjaxRequest( data );
+      Ajax.request();
+      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+        self.setValue( Ajax.result );
+        self.importRows();
+      } );
+    } );
+  }
+
+  /**
+   * Create existing rows
+   * @public
+   */
+  public importRows(): void {
+    const control = this.control;
+    this.getValue().map( ( element ) => {
+      let row: EpsilonRepeaterSectionRow | boolean,
+          addons: EpsilonRepeaterAddons;
+
+      row = this.add( element );
+      if ( false !== row ) {
+        addons = new EpsilonRepeaterAddons( control, row );
+        addons.initPlugins();
+      }
+    } );
+
+    wp.customize.previewer.refresh();
+  }
+
+  /**
    * Add button
-   * @param instance
    */
   public addButton() {
     const self = this;
@@ -90,7 +144,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
         newSetting: any = {},
         templateData: any,
         value: {
-          [key: number]: any,
+          [ key: number ]: any,
         } = self.getValue(),
         i: number | string,
         rowContainer: JQuery,
@@ -107,7 +161,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
     /**
      * Extend template data with what we passed in PHP
      */
-    if ( 'undefined' === typeof ( this.control.control.params.sections[ data.type ] ) ) {
+    if ( 'undefined' === typeof (this.control.control.params.sections[ data.type ]) ) {
       return false;
     }
 
@@ -196,7 +250,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    * Override parent method
    */
   public updateLabel( section: EpsilonRepeaterSectionRow ) {
-    section.header.find( '.repeater-row-label' ).html( '<span class="repeater-index">#' + ( section.index + 1 ) + ' - </span>' + section.label );
+    section.header.find( '.repeater-row-label' ).html( '<span class="repeater-index">#' + (section.index + 1) + ' - </span>' + section.label );
   };
 
   /**
@@ -209,7 +263,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   public updateRepeater( instance: any, fieldId: string, element: JQuery ) {
     const self = this;
     let row: EpsilonRepeaterSectionRow | any = this.control.rows[ instance.index ],
-        value: { [key: number]: any } = this.getValue(),
+        value: { [ key: number ]: any } = this.getValue(),
         section: EpsilonRepeaterSectionRow,
         type: string,
         data: any;

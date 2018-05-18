@@ -55,18 +55,16 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    */
   public createExistingRows(): void {
     const control = this;
-    if ( this.control.params.value.length ) {
-      for ( let i = 0; i < this.control.params.value.length; i ++ ) {
-        let row: EpsilonRepeaterSectionRow | boolean,
-            addons: EpsilonRepeaterAddons;
+    this.control.params.value.map( ( element ) => {
+      let row: EpsilonRepeaterSectionRow | boolean,
+          addons: EpsilonRepeaterAddons;
 
-        row = control.utils.add( control.control.params.value[ i ] );
-        if ( false !== row ) {
-          addons = new EpsilonRepeaterAddons( control, row );
-          addons.initPlugins();
-        }
+      row = control.utils.add( element );
+      if ( false !== row ) {
+        addons = new EpsilonRepeaterAddons( control, row );
+        addons.initPlugins();
       }
-    }
+    } );
   }
 
   /**
@@ -76,7 +74,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
   public handleEvents(): void {
     const self = this;
     self.utils.addButton();
-
+    self.utils.importButton();
     /**
      * Addition of sections
      */
