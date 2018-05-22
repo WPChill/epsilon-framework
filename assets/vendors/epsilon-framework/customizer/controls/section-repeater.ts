@@ -118,6 +118,18 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
         jQuery( self.control.selector + ' .limit' ).removeClass( 'highlight' );
       }
     } );
+
+    /**
+     * Section importing
+     */
+    jQuery( '#importable-sections-' + this.control.params.id ).on( 'click', '.epsilon-sections-import', ( e: JQueryEventConstructor ) => {
+      let importer = jQuery( e.target ).attr( 'data-import' );
+      if ( this.control.params.importable.hasOwnProperty( importer ) ) {
+        this.utils.clearEverything();
+        this.utils.setValue( this.control.params.importable[ importer ].sections );
+        this.utils.importRows();
+      }
+    } );
   }
 
   /**
@@ -223,5 +235,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    */
   private _moveElements() {
     jQuery( '#sections-left-' + this.control.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
+
+    jQuery( '#importable-sections-' + this.control.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
   }
 }
