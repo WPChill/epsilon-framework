@@ -23,30 +23,37 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    */
   public importButton() {
     const self = this;
+    let isImportBtn,
+        sections = jQuery( '#importable-sections-' + self.control.control.params.id ).find( '.available-sections' ),
+        body = jQuery( 'body' );
+
     this.control.context.find( '.epsilon-import-sections' ).on( 'click keydown', function( e: Event ) {
-      let Ajax: EpsilonAjaxRequest,
-          data = {
-            action: [ 'Epsilon_Helper', 'get_template' ],
-            nonce: EpsilonWPUrls.ajax_nonce,
-            args: [],
-          };
+      if ( jQuery( 'body' ).hasClass( 'adding-doubled-section' ) ) {
+        return;
+      }
 
-      self.control.rows.map( ( element ) => {
-        element.container.slideUp( 300, function() {
-          jQuery( this ).detach();
-        } );
-      } );
+      isImportBtn = jQuery( e.target ).is( '.epsilon-import-sections' );
 
-      self.control.rows = [];
-      self.control.currentIndex = 0;
+      body.toggleClass( 'adding-section' );
+      sections.toggleClass( 'opened' );
+      if ( body.hasClass( 'adding-section' ) && ! isImportBtn ) {
+        self.control.control.close();
+      }
+    } );
+  }
 
-      Ajax = new EpsilonAjaxRequest( data );
-      Ajax.request();
-      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
-        self.setValue( Ajax.result );
-        self.importRows();
+  /**
+   * Clear everything
+   */
+  public clearEverything() {
+    this.control.rows.map( ( element ) => {
+      element.container.slideUp( 300, function() {
+        jQuery( this ).detach();
       } );
     } );
+
+    this.control.rows = [];
+    this.control.currentIndex = 0;
   }
 
   /**

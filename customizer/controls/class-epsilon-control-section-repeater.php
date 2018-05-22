@@ -107,8 +107,18 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		$json['sortable']           = $this->sortable;
 		$json['save_as_meta']       = $this->save_as_meta;
 		$json['selective_refresh']  = $this->selective_refresh;
+		$json['importable']         = $this->importable();
 
 		return $json;
+	}
+
+	/**
+	 * Returns sections available for import
+	 *
+	 * @return array
+	 */
+	public function importable() {
+		return Epsilon_Helper::get_importables();
 	}
 
 	/**
@@ -361,6 +371,20 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
             <button type="button" class="button epsilon-import-sections">
                 <?php esc_html_e('Import sections', 'epsilon-framework'); ?>
             </button>
+		</div>
+		<div id="importable-sections-{{ data.id }}">
+			<div class="available-sections importable">
+				<ul>
+					<# for (importSection in data.importable) { #>
+					<li>
+						{{ data.importable[importSection].thumb }}
+						<a href="#" class="epsilon-sections-import" data-import="{{ data.importable[importSection].id }}">
+							{{ data.importable[importSection].id }}
+						</a>
+					</li>
+					<# } #>
+				</ul>
+			</div>
 		</div>
 		<div id="sections-left-{{ data.id }}">
 			<div class="available-sections">
