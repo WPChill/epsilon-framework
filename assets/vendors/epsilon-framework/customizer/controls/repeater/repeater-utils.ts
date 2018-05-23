@@ -67,7 +67,7 @@ export class EpsilonRepeaterUtils {
   /**
    * Adds a row
    */
-  public add( data: { [key: number]: object } ): EpsilonRepeaterRow | boolean {
+  public add( data: { [key: number]: object }, forceSave: boolean ): EpsilonRepeaterRow | boolean {
     const self = this;
     let template: any = _.memoize( this.control.template ),
         newSetting: any = {},

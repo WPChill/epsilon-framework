@@ -125,9 +125,11 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
     jQuery( '#importable-sections-' + this.control.params.id ).on( 'click', '.epsilon-sections-import', ( e: JQueryEventConstructor ) => {
       let importer = jQuery( e.target ).attr( 'data-import' );
       if ( this.control.params.importable.hasOwnProperty( importer ) ) {
-        this.utils.clearEverything();
-        this.utils.setValue( this.control.params.importable[ importer ].sections );
-        this.utils.importRows();
+        this.utils.importRows( this.control.params.importable[ importer ].sections );
+
+        jQuery( 'body' ).removeClass( 'adding-section' );
+        jQuery( '#importable-sections-' + this.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
+
       }
     } );
   }
@@ -169,7 +171,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
       }
 
       if ( typeof data.sectionTab === 'string' ) {
-        self.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).click();
+        self.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).trigger( 'click' );
       }
     } );
   }

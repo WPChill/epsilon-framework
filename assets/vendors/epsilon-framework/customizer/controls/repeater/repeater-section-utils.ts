@@ -24,7 +24,8 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   public importButton() {
     const self = this;
     let isImportBtn,
-        sections = jQuery( '#importable-sections-' + self.control.control.params.id ).find( '.available-sections' ),
+        sections = jQuery( '#sections-left-' + this.control.control.params.id ).find( '.available-sections' ),
+        importableSections = jQuery( '#importable-sections-' + self.control.control.params.id ).find( '.available-sections' ),
         body = jQuery( 'body' );
 
     this.control.context.find( '.epsilon-import-sections' ).on( 'click keydown', function( e: Event ) {
@@ -33,10 +34,11 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
       }
 
       isImportBtn = jQuery( e.target ).is( '.epsilon-import-sections' );
-
-      body.toggleClass( 'adding-section' );
-      sections.toggleClass( 'opened' );
-      if ( body.hasClass( 'adding-section' ) && ! isImportBtn ) {
+      body.removeClass( 'adding-section' );
+      body.toggleClass( 'importing-section' );
+      sections.removeClass( 'opened' );
+      importableSections.toggleClass( 'opened' );
+      if ( body.hasClass( 'importing-section' ) && ! isImportBtn ) {
         self.control.control.close();
       }
     } );
@@ -60,13 +62,13 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    * Create existing rows
    * @public
    */
-  public importRows(): void {
+  public importRows( sections ): void {
     const control = this.control;
-    this.getValue().map( ( element ) => {
+    sections.map( ( element ) => {
       let row: EpsilonRepeaterSectionRow | boolean,
           addons: EpsilonRepeaterAddons;
 
-      row = this.add( element );
+      row = this.add( element, true );
       if ( false !== row ) {
         addons = new EpsilonRepeaterAddons( control, row );
         addons.initPlugins();
@@ -82,8 +84,9 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   public addButton() {
     const self = this;
     let isAddBtn,
-        sections = jQuery( '#sections-left-' + self.control.control.params.id ).find( '.available-sections' ),
-        body = jQuery( 'body' );
+        sections = jQuery( '#sections-left-' + this.control.control.params.id ).find( '.available-sections' ),
+        body = jQuery( 'body' ),
+        importableSections = jQuery( '#importable-sections-' + this.control.control.params.id ).find( '.available-sections' );
 
     /**
      * Get a reference for the parent section, if we close it. we must close the Section sidebar as well
@@ -104,8 +107,10 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
         } );
 
         body.removeClass( 'adding-section' );
+        body.removeClass( 'importing-section' );
         body.find( '.doubled-section-opened' ).removeClass( 'doubled-section-opened' );
         sections.removeClass( 'opened' );
+        importableSections.removeClass( 'opened' );
       } );
     } );
 
@@ -116,7 +121,9 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
 
       isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
 
+      body.removeClass( 'importing-section' );
       body.toggleClass( 'adding-section' );
+      importableSections.removeClass( 'opened' );
       sections.toggleClass( 'opened' );
       if ( body.hasClass( 'adding-section' ) && ! isAddBtn ) {
         self.control.control.close();
@@ -145,7 +152,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   /**
    * Overwrite base method
    */
-  public add( data: any ): EpsilonRepeaterSectionRow | boolean {
+  public add( data: any, forceSave: boolean ): EpsilonRepeaterSectionRow | boolean {
     const self = this;
     let template: any = _.memoize( this.control.template ),
         newSetting: any = {},
@@ -246,6 +253,10 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
      * Set it
      */
     if ( 1 === _.size( data ) && data.hasOwnProperty( 'type' ) ) {
+      self.setValue( value );
+    }
+
+    if ( forceSave ) {
       self.setValue( value );
     }
 
