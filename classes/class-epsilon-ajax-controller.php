@@ -38,7 +38,7 @@ class Epsilon_Ajax_Controller {
 		$args_action = array_map( 'sanitize_text_field', wp_unslash( $_POST['args']['action'] ) );
 		$this->_check_structure( $args_action );
 		$this->_check_class( $args_action[0] );
-		
+
 		$class  = $args_action[0];
 		$method = $args_action[1];
 
