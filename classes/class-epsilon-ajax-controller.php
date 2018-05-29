@@ -120,7 +120,7 @@ class Epsilon_Ajax_Controller {
 	public static function sanitize_class_name( $class ) {
 		$allowed_classes = array( 'Epsilon_Helper', 'Epsilon_Notify_System', 'Epsilon_Page_Generator', 'Epsilon_Typography', 'Epsilon_Color_Scheme', 'Epsilon_Notifications' );
 		if ( in_array( $class, $allowed_classes ) ) {
-			return $class
+			return $class;
 		}else{
 			return false;
 		}
