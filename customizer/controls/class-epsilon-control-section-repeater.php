@@ -118,7 +118,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @return array
 	 */
 	public function importable() {
-		return Epsilon_Helper::get_importables();
+		return apply_filters( 'epsilon_section_repeater_importable_sections', array() );
 	}
 
 	/**

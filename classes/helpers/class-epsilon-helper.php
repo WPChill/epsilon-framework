@@ -142,51 +142,6 @@ class Epsilon_Helper {
 	}
 
 	/**
-	 *
-	 */
-	public static function get_importables() {
-		return array(
-			/**
-			 * First importable section
-			 */
-			'first'  => array(
-				'id'       => 'first',
-				'thumb'    => 'image link',
-				'sections' => array(
-					array(
-						'cta_title'                => 'Cosmin',
-						'cta_description'          => 'Cosmin Description',
-						'cta_button_primary_label' => 'Label',
-						'type'                     => 'cta',
-					),
-					array(
-						'cta_title'                => 'Cristea',
-						'cta_description'          => 'Cristea Description',
-						'cta_button_primary_label' => 'Label',
-						'type'                     => 'cta',
-					),
-				)
-			),
-			'second' => array(
-				'id'       => 'second',
-				'thumb'    => 'image link',
-				'sections' => array(
-					array(
-						'cta_title'                => 'Cosmin',
-						'cta_description'          => 'Cosmin Description',
-						'cta_button_primary_label' => 'Label',
-						'type'                     => 'cta',
-					),
-					array(
-						'testimonials_title' => 'Cosmin testimonials',
-						'type'               => 'testimonials',
-					)
-				),
-			),
-		);
-	}
-
-	/**
 	 * Gets an image with custom dimensions
 	 */
 	public static function get_image_with_custom_dimensions( $control = '' ) {
