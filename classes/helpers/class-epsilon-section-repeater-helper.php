@@ -146,13 +146,21 @@ class Epsilon_Section_Repeater_Helper {
 	 */
 	public function set_column_spacing() {
 		$this->column_spacing = array(
-			'spaced' => array(
-				'value' => 'spaced',
-				'png'   => EPSILON_URI . '/assets/img/epsilon-section-colspaced.png',
+			'none' => array(
+				'value' => 'none',
+				'png'   => EPSILON_URI . '/assets/img/epsilon-section-spacing-none.png',
 			),
-			'colfit' => array(
-				'value' => 'colfit',
-				'png'   => EPSILON_URI . '/assets/img/epsilon-section-colfit.png',
+			'sm'   => array(
+				'value' => 'sm',
+				'png'   => EPSILON_URI . '/assets/img/epsilon-section-spacing-sm.png',
+			),
+			'md'   => array(
+				'value' => 'md',
+				'png'   => EPSILON_URI . '/assets/img/epsilon-section-spacing-md.png',
+			),
+			'lg'   => array(
+				'value' => 'lg',
+				'png'   => EPSILON_URI . '/assets/img/epsilon-section-spacing-lg.png',
 			),
 		);
 	}
