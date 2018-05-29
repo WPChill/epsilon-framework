@@ -19,9 +19,13 @@ class Epsilon_Ajax_Controller {
 			$this,
 			'epsilon_framework_ajax_action',
 		) );
+
+		/**
+		 * If user is not logged in, send a notice
+		 */
 		add_action( 'wp_ajax_nopriv_epsilon_framework_ajax_action', array(
 			$this,
-			'epsilon_framework_ajax_action',
+			'not_logged_notice',
 		) );
 	}
 
@@ -29,41 +33,12 @@ class Epsilon_Ajax_Controller {
 	 * Ajax handler
 	 */
 	public function epsilon_framework_ajax_action() {
-		if ( isset( $_POST['args'], $_POST['args']['nonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['args']['nonce'] ), 'epsilon_nonce' ) ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status' => false,
-						'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
-					)
-				)
-			);
-		}
-
+		$this->_check_nonce();
+		$this->_check_user_role();
 		$args_action = array_map( 'sanitize_text_field', wp_unslash( $_POST['args']['action'] ) );
-
-		if ( count( $args_action ) !== 2 ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status' => false,
-						'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
-					)
-				)
-			);
-		}
-
-		if ( ! class_exists( $args_action[0] ) ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status' => false,
-						'error'  => esc_html__( 'Class does not exist', 'epsilon-framework' ),
-					)
-				)
-			);
-		}
-
+		$this->_check_structure( $args_action );
+		$this->_check_class( $args_action[0] );
+		
 		$class  = $args_action[0];
 		$method = $args_action[1];
 
@@ -77,34 +52,41 @@ class Epsilon_Ajax_Controller {
 		$response = $class::$method( $args );
 
 		if ( is_array( $response ) ) {
-			wp_die( wp_json_encode( $response ) );
+			$this->send_response( $response );
 		}
 
 		if ( 'ok' === $response ) {
-			wp_die(
-				wp_json_encode(
-					array(
-						'status'  => true,
-						'message' => 'ok',
-					)
+			$this->send_response(
+				array(
+					'status'  => true,
+					'message' => 'ok',
 				)
 			);
 		}
 
-		wp_die(
-			wp_json_encode(
-				array(
-					'status'  => false,
-					'message' => 'nok',
-				)
+		$this->send_response(
+			array(
+				'status'  => false,
+				'message' => 'nok',
 			)
 		);
 	}
 
 	/**
-	 * Sanitize arguments
+	 * Send response
+	 *
+	 * @param array $args
+	 */
+	public function send_response( $args = array() ) {
+		wp_die( wp_json_encode( $args ) );
+	}
+
+	/**
+	 * Sanitizers
 	 *
 	 * @param $args
+	 *
+	 * @return array|string
 	 */
 	public static function sanitize_arguments( $args ) {
 		if ( is_array( $args ) ) {
@@ -115,9 +97,11 @@ class Epsilon_Ajax_Controller {
 	}
 
 	/**
-	 * Sanitize arguments for output
+	 * Output sanitizers
 	 *
 	 * @param $args
+	 *
+	 * @return array|string
 	 */
 	public static function sanitize_arguments_for_output( $args ) {
 		if ( is_array( $args ) ) {
@@ -125,5 +109,90 @@ class Epsilon_Ajax_Controller {
 		} else {
 			return wp_kses_post( $args );
 		}
+	}
+
+	/**
+	 * Not logged in
+	 *
+	 * @return string
+	 */
+	public static function not_logged_notice() {
+		return esc_html__( 'You must be logged in to do that!', 'epsilon-framework' );
+	}
+
+	/**
+	 * Checks nonce
+	 *
+	 * @return bool
+	 */
+	private function _check_nonce() {
+		if ( isset( $_POST['args'], $_POST['args']['nonce'] ) && ! wp_verify_nonce( sanitize_key( $_POST['args']['nonce'] ), 'epsilon_nonce' ) ) {
+
+			$this->send_response(
+				array(
+					'status' => false,
+					'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
+				)
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if class exists
+	 *
+	 * @param string $class
+	 *
+	 * @return bool
+	 */
+	private function _check_class( $class = '' ) {
+		if ( ! class_exists( $class ) ) {
+			$this->send_response(
+				array(
+					'status' => false,
+					'error'  => esc_html__( 'Class does not exist', 'epsilon-framework' ),
+				)
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check array structure
+	 *
+	 * @param $action
+	 *
+	 * @return bool
+	 */
+	private function _check_structure( $action ) {
+		if ( count( $action ) !== 2 ) {
+			$this->send_response(
+				array(
+					'status' => false,
+					'error'  => esc_html__( 'Not allowed', 'epsilon-framework' ),
+				)
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check user role
+	 */
+	private function _check_user_role() {
+		$super_admin = is_super_admin( get_current_user_id() );
+		if ( ! $super_admin ) {
+			$this->send_response(
+				array(
+					'status' => false,
+					'error'  => esc_html__( 'You must be a Super User!', 'epsilon-framework' ),
+				)
+			);
+		}
+
+		return true;
 	}
 }
