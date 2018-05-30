@@ -100,7 +100,7 @@ class Epsilon_Section_Attr_Helper {
 	 * @param array  $content
 	 */
 	private function generate_attribute( $wrap = '', $content = array() ) {
-		$css = $wrap . '="';
+		$css  = $wrap . '="';
 		$css .= esc_attr( implode( ' ', $content ) );
 		$css .= '"';
 
@@ -121,6 +121,11 @@ class Epsilon_Section_Attr_Helper {
 		$css = $wrap . '="';
 		foreach ( $content as $key ) {
 			$option = $this->key . '_' . str_replace( '-', '_', $key );
+
+			if ( 'background-position' === $key ) {
+				$this->options[ $option ] = str_replace( array( 'top', 'bottom' ), array( 'top ', 'bottom ' ), $this->options[ $option ] );
+			}
+
 			if ( empty( $this->options[ $option ] ) ) {
 				continue;
 			}
@@ -147,7 +152,7 @@ class Epsilon_Section_Attr_Helper {
 			$additional[] = $this->options[ $this->key . '_section_class' ];
 		}
 		if ( ! empty( $this->options[ $this->key . '_column_vertical_alignment' ] ) ) {
-			if ($this->options[ $this->key . '_column_vertical_alignment' ] != 'top'){
+			if ( 'top' !== $this->options[ $this->key . '_column_vertical_alignment' ] ) {
 				$additional[] = 'ewf-valign--' . $this->options[ $this->key . '_column_vertical_alignment' ];
 			}
 		}
@@ -162,9 +167,9 @@ class Epsilon_Section_Attr_Helper {
 		}
 		if ( ! empty( $this->options[ $this->key . '_background_parallax' ] ) ) {
 			$additional[] = 'ewf-section--parallax';
-		}		
+		}
 		if ( ! empty( $this->options[ $this->key . '_row_title_align' ] ) ) {
-			$additional[] = 'ewf-section--title-'. $this->options[ $this->key . '_row_title_align' ];
+			$additional[] = 'ewf-section--title-' . $this->options[ $this->key . '_row_title_align' ];
 		}
 
 		return $additional;
@@ -182,7 +187,7 @@ class Epsilon_Section_Attr_Helper {
 			if ( ! empty( $props['data-source'] ) ) {
 				$css .= "{$this->generate_attribute('data-source', $props['data-source'])}";
 			}
-			$css .= ">";
+			$css .= '>';
 			$css .= "</{$tag}>";
 		}
 
@@ -222,7 +227,7 @@ class Epsilon_Section_Attr_Helper {
 			'class' => array( 'ewf-section__overlay-color' ),
 			'style' => array(
 				'background-color',
-				'background-color-opacity'
+				'background-color-opacity',
 			),
 		);
 
