@@ -28,7 +28,7 @@ class Epsilon_Section_Styling {
 	/**
 	 * Section manager ( we'll need to get selectors and stuff from it )
 	 *
-	 * @var array
+	 * @var object
 	 */
 	public $manager;
 
