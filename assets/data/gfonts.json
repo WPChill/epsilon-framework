@@ -1,4 +1,187 @@
 {
+  "Cabin": {
+    "family": "Cabin",
+    "import": "Cabin:400,400i,500,500i,600,600i,700,700i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ]
+  },
+  "Old Standard TT": {
+    "family": "Old Standard TT",
+    "import": "Old+Standard+TT:400,400i,700&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular",
+      "italic",
+      "700"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "cyrillic",
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v9",
+    "lastModified": "2017-10-10"
+  },
+  "Quicksand": {
+    "family": "Quicksand",
+    "import": "Quicksand:300,400,500,700&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "700"
+    ],
+    "subsets": [
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v7",
+    "lastModified": "2017-10-10"
+  },
+  "Source Serif Pro": {
+    "family": "Source Serif Pro",
+    "import": "Source+Serif+Pro:400,600,700&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v5",
+    "lastModified": "2017-10-10"
+  },
+  "Domine": {
+    "family": "Domine",
+    "import": "Domine:400,700&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v5",
+    "lastModified": "2017-10-10"
+  },
+  "Libre Baskerville": {
+    "family": "Libre Baskerville",
+    "import": "Libre+Baskerville:400,400i,700&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular",
+      "italic",
+      "700"
+    ],
+    "subsets": [
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v5",
+    "lastModified": "2017-10-10"
+  },
+  "Alegreya": {
+    "family": "Alegreya",
+    "import": "Alegreya:400,400i,500,500i,700,700i,800,800i,900,900i&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "cyrillic",
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v10",
+    "lastModified": "2017-11-07"
+  },
+  "Alegreya Sans": {
+    "family": "Alegreya Sans",
+    "import": "Alegreya+Sans:100,100i,300,300i,400,400i,500,500i,700,700i,800,800i,900,900i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "100",
+      "100italic",
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "cyrillic",
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v8",
+    "lastModified": "2017-11-09"
+  },
+  "Hind": 	{
+    "family": "Hind",
+    "import": "Hind:300,400,500,600,700&subset=latin-ext",
+		"category": "sans-serif",
+		"variants": [
+			"300",
+			"regular",
+			"500",
+			"600",
+			"700"
+		],
+		"subsets": [
+			"latin-ext",
+			"devanagari",
+			"latin"
+		],
+		"version": "v8",
+		"lastModified": "2017-10-10"
+	},
   "Poppins": {
     "family": "Poppins",
     "import": "Poppins:300,400,500,600,700&subset=latin-ext",
@@ -79,6 +262,86 @@
       "latin-ext",
       "latin"
     ]
+  },
+  "EB Garamond": {
+    "family": "EB Garamond",
+    "import": "Noto+Sans:400,400i,500,500i,600,600i,700,700i,800,800i&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular",
+      "italic",
+      "500",
+      "500italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "cyrillic",
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v9",
+    "lastModified": "2017-11-07"
+  },
+  "Noto Sans": {
+    "family": "Noto Sans",
+    "import": "Noto+Sans:400,400i,700,700i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "greek",
+      "greek-ext",
+      "cyrillic",
+      "vietnamese",
+      "latin-ext",
+      "devanagari",
+      "latin"
+    ],
+    "version": "v7",
+    "lastModified": "2017-10-11"
+  },
+  "Sintony": {
+    "family": "Sintony",
+    "import": "Sintony:400,700&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v5",
+    "lastModified": "2017-10-10"
+  },
+  "Abril Fatface": {
+    "family": "Abril Fatface",
+    "import": "Abril+Fatface:400&subset=latin-ext",
+    "category": "display",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v9",
+    "lastModified": "2017-10-10"
   },
   "Oswald": {
     "family": "Oswald",
@@ -219,6 +482,97 @@
       "latin"
     ]
   },
+  "Istok Web": {
+    "family": "Istok Web",
+    "import": "Istok+Web:400,400i,700,700i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "cyrillic-ext",
+      "cyrillic",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v11",
+    "lastModified": "2017-10-10"
+  },
+  "Cantarell": {
+    "family": "Cantarell",
+    "import": "Cantarell:400,400i,700,700i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "latin"
+    ],
+    "version": "v7",
+    "lastModified": "2017-10-10"
+  },
+  "Nunito Sans": {
+    "family": "Nunito Sans",
+    "import": "Nunito+Sans:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "200",
+      "200italic",
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
+    ],
+    "subsets": [
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v3",
+    "lastModified": "2017-10-10"
+  },
+  "Muli": {
+    "family": "Muli",
+    "import": "Muli:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&subset=latin-ext",
+    "category": "sans-serif",
+    "variants": [
+      "200",
+      "200italic",
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic",
+      "800",
+      "800italic",
+      "900",
+      "900italic"
+    ],
+    "subsets": [
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v11",
+    "lastModified": "2017-10-11"
+  },
   "Merriweather": {
     "family": "Merriweather",
     "import": "Merriweather:300,400,700,900&subset=latin-ext",
@@ -248,6 +602,22 @@
       "latin"
     ]
   },
+  "Dancing Script": {
+    "family": "Dancing Script",
+    "import": "Dancing+Script:400,700&subset=latin-ext",
+    "category": "handwriting",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "vietnamese",
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v9",
+    "lastModified": "2017-10-10"
+  },
   "Ubuntu": {
     "family": "Ubuntu",
     "import": "Ubuntu:300,400,500,700&subset=latin-ext",
@@ -266,6 +636,55 @@
       "latin"
     ]
   },
+  "Josefin Slab": {
+    "family": "Josefin Slab",
+    "import": "Josefin+Slab:100,100i,300,300i,400,400i,600,600i,700,700i",
+    "category": "serif",
+    "variants": [
+      "100",
+      "100italic",
+      "300",
+      "300italic",
+      "regular",
+      "italic",
+      "600",
+      "600italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "latin"
+    ],
+    "version": "v8",
+    "lastModified": "2017-10-10"
+  },
+  "Lustria": {
+    "family": "Lustria",
+    "import": "Lustria",
+    "category": "serif",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ],
+    "version": "v5",
+    "lastModified": "2017-10-10"
+  },
+  "Cantata One": {
+    "family": "Cantata One",
+    "import": "Cantata+One&subset=latin-ext",
+    "category": "serif",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin-ext",
+      "latin"
+    ],
+    "version": "v7",
+    "lastModified": "2017-10-10"
+  },
   "Droid Serif": {
     "family": "Droid Serif",
     "import": "Droid+Serif:400,700",
@@ -277,54 +696,81 @@
       "latin"
     ]
   },
-  "Noto Sans": {
-    "family": "Noto Sans",
-    "import": "Noto+Sans:400,700&subset=latin-ext",
-    "variants": [
-      "400",
-      "700"
-    ],
-    "subsets": [
-      "cyrillic",
-      "devanagari",
-      "latin-ext",
-      "cyrillic-ext",
-      "greek-ext",
-      "greek",
-      "vietnamese",
-      "latin"
-    ]
-  },
-  "Playfair Display": {
-    "family": "Playfair Display",
-    "import": "Playfair+Display:400,700,900&subset=latin-ext",
-    "variants": [
-      "400",
-      "700",
-      "900"
-    ],
-    "subsets": [
-      "cyrillic",
-      "latin-ext",
-      "latin"
-    ]
-  },
-  "Arimo": {
-    "family": "Arimo",
-    "import": "Arimo:400,700&subset=latin-ext'",
-    "variants": [
-      "400",
-      "700"
-    ],
-    "subsets": [
-      "cyrillic",
-      "latin-ext",
-      "cyrillic-ext",
-      "greek-ext",
-      "greek",
-      "vietnamese",
-      "hebrew",
-      "latin"
-    ]
-  }
+"Quattrocento Sans": {
+  "family": "Quattrocento Sans",
+  "import": "Quattrocento+Sans:400,400i,700,700i&subset=latin-ext",
+  "category": "sans-serif",
+  "variants": [
+    "regular",
+    "italic",
+    "700",
+    "700italic"
+  ],
+  "subsets": [
+    "latin-ext",
+    "latin"
+  ],
+  "version": "v10",
+  "lastModified": "2017-10-10"
+},
+"Quattrocento": {
+  "family": "Quattrocento",
+  "import": "Quattrocento:400,700&subset=latin-ext",
+  "category": "serif",
+  "variants": [
+    "regular",
+    "700"
+  ],
+  "subsets": [
+    "latin-ext",
+    "latin"
+  ],
+  "version": "v9",
+  "lastModified": "2017-10-10"
+},
+"Ovo": {
+  "family": "Ovo",
+  "import": "Ovo",
+  "category": "serif",
+  "variants": [
+    "regular"
+  ],
+  "subsets": [
+    "latin"
+  ],
+  "version": "v8",
+  "lastModified": "2017-10-10"
+},
+"Playfair Display": {
+  "family": "Playfair Display",
+  "import": "Playfair+Display:400,700,900&subset=latin-ext",
+  "variants": [
+    "400",
+    "700",
+    "900"
+  ],
+  "subsets": [
+    "cyrillic",
+    "latin-ext",
+    "latin"
+  ]
+},
+"Arimo": {
+  "family": "Arimo",
+  "import": "Arimo:400,700&subset=latin-ext",
+  "variants": [
+    "400",
+    "700"
+  ],
+  "subsets": [
+    "cyrillic",
+    "latin-ext",
+    "cyrillic-ext",
+    "greek-ext",
+    "greek",
+    "vietnamese",
+    "hebrew",
+    "latin"
+  ]
+}
 }
