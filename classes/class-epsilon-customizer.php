@@ -456,6 +456,28 @@ class Epsilon_Customizer {
 	}
 
 	/**
+	 * @param $post_type
+	 * @param $post
+	 *
+	 * @return bool|void
+	 */
+	public static function add_action_link_to_page( $post ) {
+		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+			return;
+		}
+
+		if ( 'page' !== $post->post_type ) {
+			return;
+		};
+
+		if ( 'publish' !== $post->post_status ) {
+			return;
+		};
+
+		echo '<a class="button button-primary button-large" style="margin:15px 0" href="' . esc_url( get_admin_url() . 'customize.php?url=' . get_permalink( $post->ID ) ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
+	}
+
+	/**
 	 * Add quick action links to posts
 	 */
 	public static function add_action_links( $actions, $post ) {
