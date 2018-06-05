@@ -137,9 +137,9 @@ class Epsilon_Section_Navigation_Menu {
 			return $arr;
 		}
 
-		$fp = Epsilon_Page_Generator::get_instance( $this->option, $this->id );
+		$fp = new Epsilon_Page_Generator( $this->option, $this->id );
 
-		if ( ! $fp->sections ) {
+		if ( empty( $fp->sections ) ) {
 			return $arr;
 		}
 
@@ -150,7 +150,7 @@ class Epsilon_Section_Navigation_Menu {
 			$arr[ $values[ $values['type'] . '_section_unique_id' ] ] = array(
 				'index'  => $index,
 				'type'   => $values['type'],
-				'label'  => ucwords( $values['type'] ),
+				'label'  => ucwords( $values['type'] ) . ' #' . $values[ $values['type'] . '_section_unique_id' ],
 				'unique' => $values[ $values['type'] . '_section_unique_id' ],
 			);
 		}

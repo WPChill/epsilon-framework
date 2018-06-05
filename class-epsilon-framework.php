@@ -171,6 +171,10 @@ class Epsilon_Framework {
 	 */
 	public function add_action_links() {
 		add_filter( 'page_row_actions', array( 'Epsilon_Customizer', 'add_action_links' ), 99, 2 );
+		/**
+		 * Add a notice, inform user that this page is only for backup purposes
+		 */
+		add_action( 'edit_form_top', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99, 2 );
 	}
 
 	/**

@@ -40,7 +40,6 @@ export class EpsilonTextEditor {
                 wpautop: true,
                 browser_spellcheck: true,
                 mediaButtons: false,
-                wp_autoresize_on: true,
                 toolbar1: 'bold,italic,link,strikethrough',
                 setup: function (editor: any) {
                     editor.on('change', function (e: Event) {
