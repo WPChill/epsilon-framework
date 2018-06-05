@@ -253,6 +253,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 			</span>
 		</label>
 		<div class="customize-control-content">
+			<a href="#" class="button button-link set-default">clear</a>
 			<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_{{{ data.id }}}" <# if ( data.value ) { value="{{{ data.value }}}"  } #> {{{ data.link }}}/>
 		</div>
 
