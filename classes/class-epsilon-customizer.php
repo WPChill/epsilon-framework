@@ -471,10 +471,6 @@ class Epsilon_Customizer {
 			return;
 		};
 
-		if ( 'publish' !== $post->post_status ) {
-			return;
-		};
-
 		$query['autofocus[section]'] = 'portum_repeatable_section';
 		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
 
