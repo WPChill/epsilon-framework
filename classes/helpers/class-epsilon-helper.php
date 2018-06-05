@@ -147,7 +147,9 @@ class Epsilon_Helper {
 	public static function get_image_with_custom_dimensions( $control = '' ) {
 		$decoded = json_decode( get_theme_mod( $control, '{}' ), true );
 		if ( empty( $decoded ) ) {
-			return the_custom_logo();
+			the_custom_logo();
+
+			return;
 		}
 
 		$associated_image = get_theme_mod( $decoded['linked_control'], false );

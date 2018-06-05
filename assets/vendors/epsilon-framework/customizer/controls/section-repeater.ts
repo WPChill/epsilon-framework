@@ -55,18 +55,16 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    */
   public createExistingRows(): void {
     const control = this;
-    if ( this.control.params.value.length ) {
-      for ( let i = 0; i < this.control.params.value.length; i ++ ) {
-        let row: EpsilonRepeaterSectionRow | boolean,
-            addons: EpsilonRepeaterAddons;
+    this.control.params.value.map( ( element ) => {
+      let row: EpsilonRepeaterSectionRow | boolean,
+          addons: EpsilonRepeaterAddons;
 
-        row = control.utils.add( control.control.params.value[ i ] );
-        if ( false !== row ) {
-          addons = new EpsilonRepeaterAddons( control, row );
-          addons.initPlugins();
-        }
+      row = control.utils.add( element );
+      if ( false !== row ) {
+        addons = new EpsilonRepeaterAddons( control, row );
+        addons.initPlugins();
       }
-    }
+    } );
   }
 
   /**
@@ -76,7 +74,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
   public handleEvents(): void {
     const self = this;
     self.utils.addButton();
-
+    self.utils.importButton();
     /**
      * Addition of sections
      */
@@ -120,6 +118,20 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
         jQuery( self.control.selector + ' .limit' ).removeClass( 'highlight' );
       }
     } );
+
+    /**
+     * Section importing
+     */
+    jQuery( '#importable-sections-' + this.control.params.id ).on( 'click', '.epsilon-sections-import', ( e: JQueryEventConstructor ) => {
+      let importer = jQuery( e.target ).attr( 'data-import' );
+      if ( this.control.params.importable.hasOwnProperty( importer ) ) {
+        this.utils.importRows( this.control.params.importable[ importer ].sections );
+
+        jQuery( 'body' ).removeClass( 'adding-section' );
+        jQuery( '#importable-sections-' + this.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
+
+      }
+    } );
   }
 
   /**
@@ -159,7 +171,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
       }
 
       if ( typeof data.sectionTab === 'string' ) {
-        self.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).click();
+        self.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).trigger( 'click' );
       }
     } );
   }
@@ -225,5 +237,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    */
   private _moveElements() {
     jQuery( '#sections-left-' + this.control.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
+
+    jQuery( '#importable-sections-' + this.control.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
   }
 }

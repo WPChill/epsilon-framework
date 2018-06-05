@@ -108,29 +108,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 * Get custom repeater icons
 	 */
 	public function get_icons() {
-		global $wp_filesystem;
-		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			WP_Filesystem();
-		}
-
-		$path = $this->icons;
-		/**
-		 * In case we don`t have path to icons, we load our own library
-		 */
-		if ( empty( $this->icons ) || ! file_exists( $path ) ) {
-			$path = EPSILON_PATH . '/assets/data/icons.json';
-		}
-
-		$icons = $wp_filesystem->get_contents( $path );
-		$icons = json_decode( $icons );
-
-		/**
-		 * In case the json could not be decoded, we return a new stdClass
-		 */
-		if ( null === $icons ) {
-			return new stdClass();
-		}
+		$icons = Epsilon_Icons::icons();
 
 		return $icons;
 	}

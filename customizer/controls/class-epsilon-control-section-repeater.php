@@ -107,8 +107,18 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		$json['sortable']           = $this->sortable;
 		$json['save_as_meta']       = $this->save_as_meta;
 		$json['selective_refresh']  = $this->selective_refresh;
+		$json['importable']         = $this->importable();
 
 		return $json;
+	}
+
+	/**
+	 * Returns sections available for import
+	 *
+	 * @return array
+	 */
+	public function importable() {
+		return apply_filters( 'epsilon_section_repeater_importable_sections', array() );
 	}
 
 	/**
@@ -144,30 +154,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @since 1.0.0
 	 */
 	public function get_icons() {
-		global $wp_filesystem;
-		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			WP_Filesystem();
-		}
-
-		$path = $this->icons;
-		/**
-		 * In case we don`t have path to icons, we load our own library
-		 */
-		if ( empty( $this->icons ) || ! file_exists( $path ) ) {
-			$path = EPSILON_PATH . '/assets/data/icons.json';
-		}
-
-		$icons = $wp_filesystem->get_contents( $path );
-		$icons = json_decode( $icons );
-
-
-		/**
-		 * In case the json could not be decoded, we return a new stdClass
-		 */
-		if ( null === $icons ) {
-			return new stdClass();
-		}
+		$icons = Epsilon_Icons::icons();
 
 		return $icons;
 	}
@@ -188,7 +175,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			$this->repeatable_sections[ $key ]['fields'][ $key . '_section_class' ] = array(
 				'label'   => esc_html__( 'Section Class', 'epsilon-framework' ),
 				'type'    => 'epsilon-section-class',
-				'default' => 'section-' . $key . '-' . mt_rand( 1, mt_getrandmax()),
+				'default' => 'section-' . $key . '-' . mt_rand( 1, mt_getrandmax() ),
 			);
 
 			foreach ( $value['fields'] as $k => $v ) {
@@ -358,6 +345,23 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			<button type="button" class="button epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
 				<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
 			</button>
+            <button type="button" class="button epsilon-import-sections">
+                <?php esc_html_e('Import sections', 'epsilon-framework'); ?>
+            </button>
+		</div>
+		<div id="importable-sections-{{ data.id }}">
+			<div class="available-sections importable">
+				<ul>
+					<# for (importSection in data.importable) { #>
+					<li>
+						{{ data.importable[importSection].thumb }}
+						<a href="#" class="epsilon-sections-import" data-import="{{ data.importable[importSection].id }}">
+							{{ data.importable[importSection].id }}
+						</a>
+					</li>
+					<# } #>
+				</ul>
+			</div>
 		</div>
 		<div id="sections-left-{{ data.id }}">
 			<div class="available-sections">
