@@ -243,7 +243,17 @@
     }
   }
 }
+.epsilon-typography-default{
+  font-style: italic;
+  font-weight: 300;
+  color: #959696;
+  cursor: pointer;
 
+  &:hover,
+  &:focus {
+    color: #55AAD3;
+  }
+}
 .epsilon-typography-advanced-options {
   display: none;
   background: #f4f4f4;

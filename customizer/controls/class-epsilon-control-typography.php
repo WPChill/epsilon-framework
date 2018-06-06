@@ -250,10 +250,12 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						</span>
 					</i>
 				<# } #>
+				<# if( data.fontDefaults ){ #>
+				<a href="#" class="epsilon-typography-default set-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
+				<# } #>
 			</span>
 		</label>
 		<div class="customize-control-content">
-			<a href="#" class="button button-link set-default">clear</a>
 			<input disabled type="hidden" class="epsilon-typography-input" id="hidden_input_{{{ data.id }}}" <# if ( data.value ) { value="{{{ data.value }}}"  } #> {{{ data.link }}}/>
 		</div>
 

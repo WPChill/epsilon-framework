@@ -27,11 +27,23 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
     this.type = type;
     this.label = instance.control.params.sections[ type ].title;
 
+    this.handleOtherEvents();
     /**
      * Update labels
      */
     instance.utils.updateLabel( this );
     this.addTabs();
+  }
+
+  /**
+   * Handle hide event
+   */
+  public handleOtherEvents() {
+    this.header.on( 'click', '.repeater-row-hide', ( event ) => {
+      event.preventDefault();
+      console.log( this.container.find( '[data-field="' + this.type + '_section_visibility"]' ) );
+      this.container.find( '[data-field="' + this.type + '_section_visibility"]' ).val( 'hidden' ).trigger( 'change' );
+    } );
   }
 
   /**
