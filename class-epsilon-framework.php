@@ -174,7 +174,7 @@ class Epsilon_Framework {
 		/**
 		 * Add a notice, inform user that this page is only for backup purposes
 		 */
-		add_action( 'edit_form_top', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99, 2 );
+		add_action( 'edit_form_after_title', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99, 2 );
 	}
 
 	/**

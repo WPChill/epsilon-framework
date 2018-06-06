@@ -462,6 +462,7 @@ class Epsilon_Customizer {
 	 * @return bool|void
 	 */
 	public static function add_action_link_to_page( $post ) {
+
 		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
 			return;
 		}
@@ -474,7 +475,10 @@ class Epsilon_Customizer {
 			return;
 		};
 
-		echo '<a class="button button-primary button-large" style="margin:15px 0" href="' . esc_url( get_admin_url() . 'customize.php?url=' . get_permalink( $post->ID ) ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
+		$query['autofocus[section]'] = 'portum_repeatable_section';
+		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
+
+		echo '<a class="button button-primary button-hero" style="margin-top: 15px;" href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
 	}
 
 	/**
@@ -497,8 +501,10 @@ class Epsilon_Customizer {
 			}
 		}
 
+		$query['autofocus[section]'] = 'portum_repeatable_section';
+		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
 
-		$actions['customize'] = '<a href="' . esc_url( get_admin_url() . 'customize.php?url=' . get_permalink( $post->ID ) ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
+		$actions['customize'] = '<a href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
 
 		return $actions;
 	}
