@@ -74,7 +74,12 @@ class Epsilon_Repeater_Templates {
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 				<div class="repeater-row-header">
 					<span class="repeater-row-label"></span>
-					<i class="dashicons dashicons-arrow-down repeater-minimize"></i>
+					<i class="dashicons dashicons-arrow-down-alt2 repeater-minimize"></i>
+
+					<span class="epsilon-action-buttons">
+						<i class="dashicons dashicons-hidden repeater-row-hide"></i>
+						<i class="dashicons dashicons-trash repeater-row-remove"></i>
+					</span>
 				</div>
 				<div class="repeater-row-content">
 					<# if( data.customization.enabled ) { #>
@@ -146,8 +151,10 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function section_class() {
 		?>
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }} - {{{ field.default }}}</span><#
-			} #> <# if( field.description ){ #>
+		<label> <# if ( field.label ) { #> <span class="customize-control-title">{{ field.label }} - {{{ field.default }}}</span>
+			<# } #>
+
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 				<span class="mte-tooltip">
 					{{{ field.description }}}
@@ -162,14 +169,20 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function text_field() {
 		?>
-		<# var fieldExtras = ''; #>		<# if ( 'link' === field.type ) { #>			<# field.type = 'url' #>		<# } #>
+		<# var fieldExtras = ''; #>
+		<# if ( 'link' === field.type ) { #>
+		<# field.type = 'url' #>
+		<# } #>
 
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
+		<label>
+			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 				<span class="mte-tooltip">
 					{{{ field.description }}}
-				</span> </i> <# } #>
+				</span>
+			</i>
+			<# } #>
 			<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ fieldExtras }}>
 		</label>
 		<?php
@@ -178,22 +191,26 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Select field
 	 */
-	public static function select_field() {
+	public static function select_field(){
 		?>
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
+		<label>
+			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 						<span class="mte-tooltip">
 							{{{ field.description }}}
-						</span> </i> <# } #> <select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined(
-			field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple
-			}}"<# } #>> <# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
-			<option value="{{{ i }}}"
-			<# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
-			<# } else { #>
-			<option value="{{{ i }}}"
-			<# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>					<# }
-			#> <# }); #>			</select>
+						</span>
+			</i>
+			<# } #>
+			<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+			<# _.each( field.choices, function( choice, i ) { #>
+			<#  if( field.multiple ) { #>
+			<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
+			<#  } else { #>
+			<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+			<#  }  #>
+			<# }); #>
+			</select>
 		</label>
 		<?php
 	}
@@ -201,18 +218,21 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Radio field
 	 */
-	public static function radio_field() {
+	public static function radio_field(){
 		?>
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
+		<label>
+			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-						<span class="mte-tooltip">
-							{{{ field.description }}}
-						</span> </i> <# } #>
+				<span class="mte-tooltip">
+					{{{ field.description }}}
+				</span>
+			</i>
+			<# } #>
 
 			<# _.each( field.choices, function( choice, i ) { #>
-			<label><input type="radio" name="{{{ field.id }}}{{ index }}" data-field="{{{ field.id }}}" value="{{{ i }}}"
-				<# if ( field.default == i ) { #> checked="checked" <# } #>> {{ choice }} <br/></label> <# }); #>
+			<label><input type="radio" name="{{{ field.id }}}{{ index }}" data-field="{{{ field.id }}}" value="{{{ i }}}" <# if ( field.default == i ) { #> checked="checked" <# } #>> {{ choice }} <br/></label>
+			<# }); #>
 		</label>
 		<?php
 	}
@@ -223,11 +243,11 @@ class Epsilon_Repeater_Templates {
 	public static function textarea_field() {
 		?>
 		<# if ( field.label ) { #>
-		<span class="customize-control-title">{{ field.label }}</span><# } #>		<# if( field.description ){ #>
+		<span class="customize-control-title">{{ field.label }}</span><# } #>        <# if( field.description ){ #>
 		<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 						<span class="mte-tooltip">
 							{{{ field.description }}}
-						</span> </i>		<# } #>			<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
+						</span> </i>        <# } #>            <textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
 		<?php
 	}
 
@@ -287,7 +307,7 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Epsilon Image
 	 */
-	public static function epsilon_image() {
+	public static function epsilon_image(){
 		?>
 		<label>
 			<span class="customize-control-title">
@@ -299,25 +319,24 @@ class Epsilon_Repeater_Templates {
 						</span>
 					</i>
 				<# } #>
-			</span> </label>
+			</span>
+		</label>
 		<div class="epsilon-controller-image-container image-upload">
 			<input type="hidden" data-field="{{ field.id }}" data-size="{{ field.size }}" data-save-mode="{{ field.mode }}"/>
 			<# if ( field.default ) { #>
 			<div class="epsilon-image">
-				<img src="{{{ field.default }}}"/>
+				<img src="{{{ field.default }}}" />
 			</div>
 			<# } else { #>
 			<div class="placeholder">
 				<?php echo esc_html__( 'Upload image', 'epsilon-framework' ); ?>
 				<# if ( ! _.isUndefined( field.sizeArray[field.size] ) ) { #>
-				<span class="recommended-size"><?php echo esc_html__( 'Recommended resolution:', 'epsilon-framework' ); ?>
-					{{{ field.sizeArray[field.size].width }}} x {{{ field.sizeArray[field.size].height }}}</span> <# }
-				#>
+				<span class="recommended-size"><?php echo esc_html__('Recommended resolution:', 'epsilon-framework'); ?> {{{ field.sizeArray[field.size].width }}} x {{{ field.sizeArray[field.size].height }}}</span>
+				<# } #>
 			</div>
 			<# } #>
 			<div class="actions">
-				<button class="button image-upload-remove-button"
-				<# if( '' === field.default ) { #> style="display:none;" <# } #>>
+				<button class="button image-upload-remove-button" <# if( '' === field.default ) { #> style="display:none;" <# } #>>
 				<?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?>
 				</button>
 
@@ -367,7 +386,16 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function epsilon_slider() {
 		?>
-		<# var fieldExtras = ''; #>		<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.min ) ) { #>			<# fieldExtras += ' data-attr-min="' + field.choices.min + '"'; #>		<# } #>		<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.max ) ) { #>			<# fieldExtras += ' data-attr-max="' + field.choices.max + '"'; #>		<# } #>		<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.step ) ) { #>			<# fieldExtras += ' data-attr-step="' + field.choices.step + '"'; #>		<# } #>
+		<# var fieldExtras = ''; #>
+		<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.min ) ) { #>
+		<# fieldExtras += ' data-attr-min="' + field.choices.min + '"'; #>
+		<# } #>
+		<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.max ) ) { #>
+		<# fieldExtras += ' data-attr-max="' + field.choices.max + '"'; #>
+		<# } #>
+		<# if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.step ) ) { #>
+		<# fieldExtras += ' data-attr-step="' + field.choices.step + '"'; #>
+		<# } #>
 		<div class="epsilon-slider">
 			<span class="customize-control-title">
 				{{{ field.label }}}
@@ -380,7 +408,7 @@ class Epsilon_Repeater_Templates {
 				<# } #>
 			</span>
 			<div class="slider-container">
-				<input disabled type="text" class="rl-slider" id="input_{{ field.id }}-{{ index }}" data-field="{{{ field.id }}}" value="{{ field.default }}"/>
+				<input disabled type="text" class="rl-slider" id="input_{{ field.id }}-{{ index }}" data-field="{{{ field.id }}}" value="{{ field.default }}" />
 				<div id="slider_{{ field.id }}-{{ index }}" class="ss-slider" {{{ fieldExtras }}}></div>
 			</div>
 		</div>
@@ -448,7 +476,7 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Epsilon Text Editor
 	 */
-	public static function epsilon_text_editor() {
+	public static function epsilon_text_editor(){
 		?>
 		<label>
 			<span class="customize-control-title">
@@ -460,7 +488,7 @@ class Epsilon_Repeater_Templates {
 					<span class="description customize-control-description">{{ field.description }}</span>
 				<# } #>
 			</span>
-			<textarea id="{{{ field.id }}}-{{ index }}<# if( '' !== field.metaId ){ #>-{{ field.metaId }}<# } #>" data-field="{{{ field.id }}}" class="widefat text wp-editor-area">{{{ field.default }}}</textarea>
+			<textarea id="{{{ field.id }}}-{{ index }}<# if( '' !== field.metaId ){ #>-{{ field.metaId }}<# } #>" data-field="{{{ field.id }}}" class="widefat text wp-editor-area" >{{{ field.default }}}</textarea>
 		</label>
 		<?php
 	}
@@ -468,22 +496,26 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Selectize field
 	 */
-	public static function selectize_field() {
+	public static function selectize_field(){
 		?>
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
+		<label>
+			<# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #>
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-				<span class="mte-tooltip">
-					{{{ field.description }}}
-				</span> </i> <# } #> <select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( !
-			_.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{
-			field.multiple }}"<# } #>> <# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
-			<option value="{{{ i }}}"
-			<# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
-			<# } else { #>
-			<option value="{{{ i }}}"
-			<# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>					<# }
-			#> <# }); #>			</select>
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+			</i>
+			<# } #>
+			<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+			<# _.each( field.choices, function( choice, i ) { #>
+			<#  if( field.multiple ) { #>
+			<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
+			<#  } else { #>
+			<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+			<#  }  #>
+			<# }); #>
+			</select>
 		</label>
 		<?php
 	}
@@ -491,7 +523,7 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Button group
 	 */
-	public static function epsilon_button_group() {
+	public static function epsilon_button_group(){
 		?>
 		<div class="epsilon-control-container">
 			<label>
@@ -504,16 +536,22 @@ class Epsilon_Repeater_Templates {
 							</span>
 						</i>
 					<# } #>
-				</span> </label>
+				</span>
+			</label>
 			<div class="epsilon-control-set">
 				<div class="epsilon-control-group epsilon-group-{{ field.groupType }}">
-					<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}"> <# for( var i in
-					field.choices ) { #> <a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default ==
-					field.choices[i].value ) { #> class="active" <# } #> > <# if( ! _.isUndefined( field.choices[i].icon
-					) ) { #> <i class="dashicons {{ field.choices[i].icon }}"/> <# } #>
+					<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}">
+					<# for( var i in field.choices ) { #>
+					<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
+					<# if( ! _.isUndefined( field.choices[i].icon ) ) { #>
+					<i class="dashicons {{ field.choices[i].icon }}"/>
+					<# } #>
 
-					<# if( ! _.isUndefined( field.choices[i].png ) ) { #> <img src="{{ field.choices[i].png }}"/> <# }
-					#>						</a>					<# } #>
+					<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
+					<img src="{{ field.choices[i].png }}" />
+					<# } #>
+					</a>
+					<# } #>
 				</div>
 			</div>
 		</div>

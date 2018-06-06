@@ -56,11 +56,17 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
   public createExistingRows(): void {
     const control = this;
     this.control.params.value.map( ( element ) => {
-      let row: EpsilonRepeaterSectionRow | boolean,
-          addons: EpsilonRepeaterAddons;
+      let row: EpsilonRepeaterSectionRow | any,
+          addons: EpsilonRepeaterAddons,
+          visibility: string = 'visible';
+
+      if ( element.hasOwnProperty( `${element.type}_section_visibility` ) ) {
+        visibility = element[ element.type + '_section_visibility' ];
+      }
 
       row = control.utils.add( element );
       if ( false !== row ) {
+        row.header.addClass( `epsilon-section-${visibility}` );
         addons = new EpsilonRepeaterAddons( control, row );
         addons.initPlugins();
       }
