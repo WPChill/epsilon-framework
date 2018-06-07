@@ -501,7 +501,10 @@ class Epsilon_Customizer {
 			}
 		}
 
-		$actions['customize'] = '<a href="' . esc_url( get_admin_url() . 'customize.php?url=' . get_permalink( $post->ID ) ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
+		$query['autofocus[section]'] = 'portum_repeatable_section';
+		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
+
+		$actions['customize'] = '<a href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
 
 		return $actions;
 	}
