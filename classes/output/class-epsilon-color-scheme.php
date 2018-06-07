@@ -133,7 +133,7 @@ class Epsilon_Color_Scheme {
 
 			$wp_customize->add_setting( $control, array(
 				'default'           => $properties['default'],
-				'sanitize_callback' => 'sanitize_hex_color',
+				'sanitize_callback' => 'sanitize_text_field',
 				'transport'         => 'postMessage',
 			) );
 
@@ -147,6 +147,7 @@ class Epsilon_Color_Scheme {
 				'label'       => $properties['label'],
 				'description' => $properties['description'],
 				'section'     => $properties['section'],
+				'mode'        => 'rgba',
 				'settings'    => $control,
 				'priority'    => $i,
 				'lite'        => isset( $properties['lite'] ) ? $properties['lite'] : false,

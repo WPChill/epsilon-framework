@@ -74,7 +74,7 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 			</span>
 
 			<div class="epsilon-icon-container">
-				<div class="epsilon-icon-name"><i class="{{{ data.value }}}"></i> <div class="icon-label">{{{ data.icons[data.value] }}}</div></div>
+				<div class="epsilon-icon-name"><i class="{{{ data.value }}}"></i> <div class="icon-label">{{{ data.icons[data.value].label }}}</div></div>
 				<span class="dashicons dashicons-arrow-down epsilon-open-icon-picker"></span>
 			</div>
 		</label>
@@ -86,7 +86,7 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 			<div class="epsilon-icons-container">
 				<div class="epsilon-icons">
 					<# _.each(data.icons, function(k, v){ #>
-						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k }}}"></i>
+						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k.label }}}" data-group="{{{ k.group }}}"></i>
 					<# }) #>
 				</div>
 			</div>

@@ -66,6 +66,9 @@ export class EpsilonRepeaterRow {
       if ( jQuery( event.target ).is( '.repeater-row-hide' ) ) {
         return;
       }
+      if ( jQuery( event.target ).hasClass( 'epsilon-section-hidden' ) ) {
+        return;
+      }
       control.utils.toggleMinimize( self );
     } );
 

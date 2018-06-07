@@ -13,15 +13,21 @@ export class EpsilonColorPicker {
   /**
    * Settings array
    */
-  settings: {};
+  settings: {
+    changeDelay: any,
+    theme: string,
+    change: any,
+    format: string,
+    opacity: boolean
+  };
   /**
    * Color Picker instance
    */
   instance: JQuery | any;
 
   /**
-   * Class Constructor
-   * @param {{container: JQuery; setting: void; params: {value: number; id: string}}} control
+   *
+   * @param {} control
    */
   public constructor( control: { container: JQuery, setting: void, params: { value: number, id: string } } ) {
     const self = this;
@@ -32,6 +38,8 @@ export class EpsilonColorPicker {
       changeDelay: 500,
       theme: 'default',
       change: this.changePallete,
+      format: 'hex',
+      opacity: false,
     };
 
     if ( 'function' !== typeof jQuery.fn.minicolors ) {
@@ -42,9 +50,9 @@ export class EpsilonColorPicker {
       this.context.defaultValue = this.context.attr( 'placeholder' );
     }
 
-    if ( 'rgba' === this.context.attr( 'data-attr-mode' ) ) {
-      this.context.format = 'rgb';
-      this.context.opacity = true;
+    if ( this.control.hasOwnProperty( 'params' ) && this.control.params.hasOwnProperty( 'mode' ) && 'rgba' === this.control.params.mode ) {
+      this.settings.format = 'rgb';
+      this.settings.opacity = true;
     }
 
     this.context.minicolors( this.settings );
