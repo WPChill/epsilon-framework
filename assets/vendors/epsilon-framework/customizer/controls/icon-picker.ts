@@ -74,10 +74,22 @@ export class EpsilonIconPicker {
       }
     } );
 
+    this.context.on( 'click', '.icon-grouping-button', ( e: JQueryEventConstructor ) => {
+      let grouping = jQuery( e.target ).attr( 'data-grouping' );
+
+      jQuery.each( self.collection, function() {
+        temp = jQuery( this ).attr( 'data-group' );
+        if ( 'undefined' !== typeof temp ) {
+          temp = temp.toLowerCase();
+        }
+        jQuery( this )[ temp.indexOf( grouping ) !== - 1 ? 'show' : 'hide' ]();
+      } );
+    } );
+
     /**
      * Search functionality
      */
-    self.context.on( 'keyup change', '.search-container input', _.debounce( function( e: Event ) {
+    this.context.on( 'keyup change', '.search-container input', _.debounce( function( e: Event ) {
       filter = self.searchInput.val();
       if ( 'undefined' !== typeof filter ) {
         filter = filter.toLowerCase();

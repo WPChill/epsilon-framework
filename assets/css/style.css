@@ -1137,6 +1137,9 @@
   margin: -12px;
   width: 105%;
 }
+.customize-control-epsilon-section-repeater .epsilon-section-hidden {
+  opacity: .5;
+}
 .customize-control-epsilon-section-repeater .customize-control-title {
   padding: 12px;
   display: inline-block;

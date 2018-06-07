@@ -451,7 +451,7 @@ class Epsilon_Repeater_Templates {
 				</span>
 				<div class="epsilon-icon-container">
 					<div class="epsilon-icon-name"><i class="{{{ field.default }}}"></i>
-						<div class="icon-label">{{{ field.icons[field.default] }}}</div>
+						<div class="icon-label">{{{ field.icons[field.default].label }}}</div>
 					</div>
 					<span class="dashicons dashicons-arrow-down epsilon-open-icon-picker"></span>
 				</div>
@@ -461,10 +461,13 @@ class Epsilon_Repeater_Templates {
 				<div class="search-container">
 					<input type="text" class="widefat text"/>
 				</div>
+				<div class="">
+					<button class="button button-primary icon-grouping-button" data-grouping="medical">Medical</button>
+				</div>
 				<div class="epsilon-icons-container">
 					<div class="epsilon-icons">
 						<# _.each(field.icons, function(k, v){ #>
-						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k }}}"></i>
+						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k.label }}}" data-group="{{{ k.group }}}"></i>
 						<# }) #>
 					</div>
 				</div>

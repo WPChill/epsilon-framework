@@ -290,6 +290,11 @@ export class EpsilonRepeaterAddons {
           self._iconPickerSelection( this, temp );
         } );
 
+        self.row.container.on( 'click', '.icon-grouping-button', ( e: JQueryEventConstructor ) => {
+          temp = jQuery( e.target ).parents( '.epsilon-icon-picker-repeater-container' );
+          self._iconPickerGrouping( jQuery( e.target ).attr( 'data-grouping' ), temp );
+        } );
+
         /**
          * Filtering
          */
@@ -333,6 +338,24 @@ export class EpsilonRepeaterAddons {
      * Set value
      */
     container.find( '.epsilon-icon-picker' ).attr( 'value', icon ).trigger( 'change' );
+  }
+
+  /**
+   * Icon picker grouping
+   * @param {string} group
+   * @param {JQuery} container
+   * @private
+   */
+  private _iconPickerGrouping( group: string, container: JQuery ): void {
+    let collection = jQuery( container ).find( '.epsilon-icons > i' );
+    jQuery.each( collection, function() {
+      let temp = jQuery( this ).attr( 'data-group' );
+      if ( 'undefined' !== typeof temp ) {
+        temp = temp.toLowerCase();
+      }
+
+      jQuery( this )[ temp.indexOf( group ) !== - 1 ? 'show' : 'hide' ]();
+    } );
   }
 
   /**
