@@ -197,6 +197,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 				if ( 'epsilon-icon-picker' === $v['type'] ) {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['icons'] = $this->get_icons();
+
+					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['groups'] ) ) {
+						$this->repeatable_sections[ $key ]['fields'][ $k ]['groups'] = array();
+					}
 				}
 
 				if ( 'epsilon-customizer-navigation' === $v['type'] ) {
