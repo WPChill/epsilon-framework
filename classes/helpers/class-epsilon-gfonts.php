@@ -395,18 +395,6 @@ class Epsilon_GFonts {
 						'latin',
 					),
 				),
-				'Domine'              => array(
-					'family'   => 'Domine',
-					'import'   => 'Domine:400,700&subset=latin-ext',
-					'variants' => array(
-						'regular',
-						'700',
-					),
-					'subsets'  => array(
-						'latin-ext',
-						'latin',
-					),
-				),
 				'Lustria'             => array(
 					'family'   => 'Lustria',
 					'import'   => 'Lustria',
@@ -561,30 +549,25 @@ class Epsilon_GFonts {
 				),
 				'Istok Web'           => array(
 					'family'   => 'Istok Web',
-					'import'   => 'Domine:400,700&subset=latin-ext',
+					'import'   => 'Istok+Web:Istok+Web:400,400i,700,700i',
 					'variants' => array(
-						'regular',
+						'400',
+						'400i',
 						'700',
+						'700i',
 					),
 					'subsets'  => array(
+						'cyrillic',
+						'cyrillic-ext',
 						'latin-ext',
 						'latin',
 					),
 				),
 				'Abril Fatface'       => array(
 					'family'   => 'Abril Fatface',
-					'import'   => 'Istok+Web:400,400i,700,700i&subset=latin-ext',
+					'import'   => 'Abril+Fatface',
 					'variants' => array(
 						'regular',
-						'italic',
-						'700',
-						'700italic',
-					),
-					'subsets'  => array(
-						'cyrillic-ext',
-						'cyrillic',
-						'latin-ext',
-						'latin',
 					),
 				),
 				'Sintony'             => array(
@@ -624,7 +607,7 @@ class Epsilon_GFonts {
 						'latin',
 					),
 				),
-				'Hinds'               => array(
+				'Hind'                => array(
 					'family'   => 'Hind',
 					'import'   => 'Hind:300,400,500,600,700&subset=latin-ext',
 					'variants' => array(
