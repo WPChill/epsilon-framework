@@ -461,9 +461,16 @@ class Epsilon_Repeater_Templates {
 				<div class="search-container">
 					<input type="text" class="widefat text"/>
 				</div>
-				<div class="">
-					<button class="button button-primary icon-grouping-button" data-grouping="medical">Medical</button>
+				<# if ( field.groups ) { #>
+				<div class="epsilon-icon-sets">
+					<select>
+						<option value=""><?php echo esc_html__('All', 'epsilon-framework'); ?></option>
+						<# _.each(field.groups, function(k, v){ #>
+						<option value="{{{ k }}}">{{{ k }}}</option>
+						<# }) #>
+					</select>
 				</div>
+				<# } #>
 				<div class="epsilon-icons-container">
 					<div class="epsilon-icons">
 						<# _.each(field.icons, function(k, v){ #>

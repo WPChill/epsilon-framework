@@ -83,6 +83,16 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 			<div class="search-container">
 				<input type="text" class="widefat text" />
 			</div>
+			<# if ( data.groups ) { #>
+				<div class="epsilon-icon-sets">
+					<select>
+						<option value=""><?php echo esc_html__('All', 'epsilon-framework'); ?></option>
+						<# _.each(data.groups, function(k, v){ #>
+						<option value="{{{ k }}}">{{{ k }}}</option>
+						<# }) #>
+					</select>
+				</div>
+			<# } #>
 			<div class="epsilon-icons-container">
 				<div class="epsilon-icons">
 					<# _.each(data.icons, function(k, v){ #>

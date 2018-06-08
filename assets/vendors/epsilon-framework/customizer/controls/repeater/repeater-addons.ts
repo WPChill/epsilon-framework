@@ -290,9 +290,10 @@ export class EpsilonRepeaterAddons {
           self._iconPickerSelection( this, temp );
         } );
 
-        self.row.container.on( 'click', '.icon-grouping-button', ( e: JQueryEventConstructor ) => {
+        self.row.container.on( 'change', '.epsilon-icon-sets > select', ( e: JQueryEventConstructor ) => {
+          let grouping = jQuery( e.target ).val();
           temp = jQuery( e.target ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerGrouping( jQuery( e.target ).attr( 'data-grouping' ), temp );
+          self._iconPickerGrouping( grouping, temp );
         } );
 
         /**
@@ -341,12 +342,12 @@ export class EpsilonRepeaterAddons {
   }
 
   /**
-   * Icon picker grouping
-   * @param {string} group
+   *
+   * @param {string | any} group
    * @param {JQuery} container
    * @private
    */
-  private _iconPickerGrouping( group: string, container: JQuery ): void {
+  private _iconPickerGrouping( group: string | any, container: JQuery ): void {
     let collection = jQuery( container ).find( '.epsilon-icons > i' );
     jQuery.each( collection, function() {
       let temp = jQuery( this ).attr( 'data-group' );

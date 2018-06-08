@@ -74,8 +74,9 @@ export class EpsilonIconPicker {
       }
     } );
 
-    this.context.on( 'click', '.icon-grouping-button', ( e: JQueryEventConstructor ) => {
-      let grouping = jQuery( e.target ).attr( 'data-grouping' );
+    this.context.on( 'change', '.epsilon-icon-sets > select', ( e: JQueryEventConstructor ) => {
+      e.preventDefault();
+      let grouping = jQuery( e.target ).val();
 
       jQuery.each( self.collection, function() {
         temp = jQuery( this ).attr( 'data-group' );
