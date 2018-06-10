@@ -7,7 +7,6 @@ import { EpsilonAjaxRequest } from '../../../utils/epsilon-ajax-request';
 import { EpsilonButtonGroup } from '../button-group';
 import { EpsilonRangeSlider } from '../range-slider';
 import { EpsilonRepeaterRow } from './repeater-row';
-import { EpsilonIconPicker } from '../icon-picker';
 import { EpsilonTextEditor } from '../text-editor';
 import { EpsilonColorPicker } from '../color-picker';
 import { EpsilonCustomizerNavigation } from '../customizer-navigation';
@@ -290,6 +289,11 @@ export class EpsilonRepeaterAddons {
           self._iconPickerSelection( this, temp );
         } );
 
+        let sets = self.row.container.find( '.epsilon-icon-sets > select' );
+        if ( sets.length ) {
+          sets.selectize();
+        }
+
         self.row.container.on( 'change', '.epsilon-icon-sets > select', ( e: JQueryEventConstructor ) => {
           let grouping = jQuery( e.target ).val();
           temp = jQuery( e.target ).parents( '.epsilon-icon-picker-repeater-container' );
@@ -307,7 +311,7 @@ export class EpsilonRepeaterAddons {
           }
 
           temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerFilter( this, temp );
+          self._iconPickerFilter( this, temp, self );
 
         }, 1000 ) );
       }
@@ -363,8 +367,8 @@ export class EpsilonRepeaterAddons {
    * Icon picker filtering
    * @private
    */
-  private _iconPickerFilter( input: JQuery, container: JQuery ): void {
-    let filter: string | any, temp: string | any,
+  private _iconPickerFilter( input: JQuery, container: JQuery, instance: any ): void {
+    let filter: string | any, temp: string | any, group: string | any, grouping: string | any,
         collection = jQuery( container ).find( '.epsilon-icons > i' );
 
     filter = jQuery( input ).val();
@@ -372,7 +376,22 @@ export class EpsilonRepeaterAddons {
       filter = filter.toLowerCase();
     }
 
+    group = jQuery( input ).parent().parent().find( '.epsilon-icon-sets > select' );
+    if ( group.length ) {
+      group = group.val();
+      if ( '' === filter ) {
+        this._iconPickerGrouping( group, container );
+        return;
+      }
+    }
+
     jQuery.each( collection, function() {
+      grouping = jQuery( this ).attr( 'data-group' );
+      if ( grouping !== group ) {
+        jQuery( this )[ 'hide' ]();
+        return true;
+      }
+
       temp = jQuery( this ).attr( 'data-search' );
       if ( 'undefined' !== typeof temp ) {
         temp = temp.toLowerCase();
