@@ -105,11 +105,6 @@
     }
   }
 
-  .repeater-field-textarea textarea {
-    width: 100%;
-    resize: vertical;
-  }
-
   .repeater-row-header {
     background: white;
     border-bottom: 1px solid #dfdfdf;
@@ -173,6 +168,19 @@
   .remove-button,
   .upload-button {
     width: 48%;
+  }
+}
+
+.repeater-field.repeater-field-textarea {
+
+  .customize-control-title {
+    display: block;
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    resize: vertical;
   }
 }
 
