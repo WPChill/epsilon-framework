@@ -386,10 +386,12 @@ export class EpsilonRepeaterAddons {
     }
 
     jQuery.each( collection, function() {
-      grouping = jQuery( this ).attr( 'data-group' );
-      if ( grouping !== group ) {
-        jQuery( this )[ 'hide' ]();
-        return true;
+      if ( '' !== group ) {
+        grouping = jQuery( this ).attr( 'data-group' );
+        if ( grouping !== group ) {
+          jQuery( this )[ 'hide' ]();
+          return true;
+        }
       }
 
       temp = jQuery( this ).attr( 'data-search' );
