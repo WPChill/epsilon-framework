@@ -114,10 +114,12 @@ export class EpsilonIconPicker {
         }
       }
       jQuery.each( self.collection, function() {
-        let grouping = jQuery( this ).attr( 'data-group' );
-        if ( grouping !== group ) {
-          jQuery( this )[ 'hide' ]();
-          return true;
+        if ( '' !== group ) {
+          let grouping = jQuery( this ).attr( 'data-group' );
+          if ( grouping !== group ) {
+            jQuery( this )[ 'hide' ]();
+            return true;
+          }
         }
 
         temp = jQuery( this ).attr( 'data-search' );
