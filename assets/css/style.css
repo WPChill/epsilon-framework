@@ -1018,10 +1018,6 @@
   line-height: 28px;
   margin-right: 5px;
 }
-.customize-control-epsilon-repeater .repeater-field-textarea textarea {
-  width: 100%;
-  resize: vertical;
-}
 .customize-control-epsilon-repeater .repeater-row-header {
   background: white;
   border-bottom: 1px solid #dfdfdf;
@@ -1077,6 +1073,15 @@
 .customize-control-epsilon-repeater .remove-button,
 .customize-control-epsilon-repeater .upload-button {
   width: 48%;
+}
+
+.repeater-field.repeater-field-textarea .customize-control-title {
+  display: block;
+}
+.repeater-field.repeater-field-textarea textarea {
+  display: block;
+  width: 100%;
+  resize: vertical;
 }
 
 .limit {
