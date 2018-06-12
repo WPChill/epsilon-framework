@@ -168,7 +168,7 @@ class Epsilon_Framework {
 	 */
 	public function add_action_links() {
 
-		add_filter( 'display_post_states', array( 'Epsilon_Customizer', 'add_display_post_states'), 99, 2  );
+		add_filter( 'display_post_states', array( 'Epsilon_Customizer', 'add_display_post_states' ), 99, 2 );
 		add_filter( 'page_row_actions', array( 'Epsilon_Customizer', 'add_action_links' ), 99, 2 );
 		add_action( 'edit_form_after_title', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99 );
 
