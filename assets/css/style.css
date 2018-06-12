@@ -271,8 +271,12 @@
   padding: 0;
   line-height: 19px;
   transition: background-color 0.2s ease-in;
+  -webkit-border-radius: 11px;
+  -moz-border-radius: 11px;
   border-radius: 30px;
   background-color: #c4c4c4;
+  -webkit-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
+  -moz-box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
   box-shadow: inset 0 2px 1px rgba(0, 0, 0, 0.11);
 }
 .onoffswitch-label:before {
@@ -286,7 +290,11 @@
   bottom: 0;
   right: 32px;
   background-color: #fff;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
   border-radius: 10px;
   transition: all 0.2s ease-in 0s;
 }
@@ -1046,8 +1054,26 @@
   overflow: hidden;
   word-wrap: break-word;
 }
+.customize-control-epsilon-repeater .repeater-row-header .epsilon-action-buttons {
+  opacity: 0;
+  visibility: hidden;
+  transition: .15s all ease-in-out;
+  position: absolute;
+  top: 9px;
+  right: 20px;
+}
+.customize-control-epsilon-repeater .repeater-row-header .epsilon-action-buttons > i {
+  color: #555555;
+}
+.customize-control-epsilon-repeater .repeater-row-header .epsilon-action-buttons > i:hover {
+  color: #0073AA;
+}
 .customize-control-epsilon-repeater .repeater-row-header:hover {
   cursor: move;
+}
+.customize-control-epsilon-repeater .repeater-row-header:hover .epsilon-action-buttons {
+  opacity: 1;
+  visibility: visible;
 }
 .customize-control-epsilon-repeater .repeater-row-header .dashicons {
   font-size: 18px;
