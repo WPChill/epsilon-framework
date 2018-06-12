@@ -508,4 +508,50 @@ class Epsilon_Customizer {
 
 		return $actions;
 	}
+
+	/**
+	 * Add Epsilon Page Builder post state.
+	 *
+	 * Adds a new "Epsilon" post state to the post table.
+	 *
+	 * Fired by `display_post_states` filter.
+	 *
+	 * @since  1.8.0
+	 * @access public
+	 *
+	 * @param array    $post_states An array of post display states.
+	 * @param \WP_Post $post        The current post object.
+	 *
+	 * @return array A filtered array of post display states.
+	 */
+	public static function add_display_post_states( $post_states, $post ) {
+
+
+		if ( 'page' !== $post->post_type ) {
+			return;
+		}
+
+		/**
+		 *
+		 * Return values when no meta field is found
+		 * If a meta field with the given $key isn’t found for the given $post_id, the return value varies:
+		 *
+		 * If $single is true, an empty string is returned.
+		 * If $single is false, an empty array is returned.
+		 *
+		 * get_post_meta( int $post_id, string $key = '', bool $single = false )
+		 *
+		 * In the case 'portum_frontpage_sections_'.$post->ID isn't found, it returns an empty string
+		 *
+		 */
+		$was_built_with_epsilon = get_post_meta( $post->ID, 'portum_frontpage_sections_' . $post->ID, true );
+
+
+		if ( current_user_can( 'manage_options' ) && is_array( $was_built_with_epsilon ) && array_key_exists( 'portum_frontpage_sections_' . $post->ID, $was_built_with_epsilon ) ) {
+			$post_states['epsilon'] = __( 'Epsilon', 'epsilon-framework' );
+		}
+
+		return $post_states;
+	}
+
 }
