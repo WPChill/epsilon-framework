@@ -9,6 +9,7 @@ require_once dirname( __FILE__ ) . '/class-epsilon-autoloader.php';
  * Class Epsilon_Framework
  */
 class Epsilon_Framework {
+
 	/**
 	 * By default, it loads all controls
 	 *
@@ -85,20 +86,16 @@ class Epsilon_Framework {
 	public function __construct( $args = array() ) {
 		foreach ( $args as $k => $v ) {
 
-			if ( ! in_array(
-				$k,
-				array(
-					'controls',
-					'sections',
-					'panels',
-					'plugin',
-					'path',
-					'backup',
-					'plugin_uri',
-					'plugin_dir',
-				)
-			)
-			) {
+			if ( ! in_array( $k, array(
+				'controls',
+				'sections',
+				'panels',
+				'plugin',
+				'path',
+				'backup',
+				'plugin_uri',
+				'plugin_dir',
+			) ) ) {
 				continue;
 			}
 
@@ -170,11 +167,11 @@ class Epsilon_Framework {
 	 * Add quick links to point in customizer
 	 */
 	public function add_action_links() {
+
+		add_filter( 'display_post_states', array( 'Epsilon_Customizer', 'add_display_post_states'), 99, 2  );
 		add_filter( 'page_row_actions', array( 'Epsilon_Customizer', 'add_action_links' ), 99, 2 );
-		/**
-		 * Add a notice, inform user that this page is only for backup purposes
-		 */
-		add_action( 'edit_form_after_title', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99, 2 );
+		add_action( 'edit_form_after_title', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99 );
+
 	}
 
 	/**
