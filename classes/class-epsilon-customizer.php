@@ -11,6 +11,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Customizer
  */
 class Epsilon_Customizer {
+
 	/**
 	 * Holds the WP Customizer Object
 	 *
@@ -102,13 +103,7 @@ class Epsilon_Customizer {
 		/**
 		 * Register it
 		 */
-		self::$manager->add_setting(
-			new $class['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_setting( new $class['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -152,13 +147,7 @@ class Epsilon_Customizer {
 		/**
 		 * Register the control
 		 */
-		self::$manager->add_control(
-			new $field_type['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_control( new $field_type['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -173,13 +162,7 @@ class Epsilon_Customizer {
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'section';
 
 		$class = self::_get_section_type( $args['type'] );
-		self::$manager->add_section(
-			new $class['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_section( new $class['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -193,13 +176,7 @@ class Epsilon_Customizer {
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'panel';
 
 		$class = self::_get_panel_type( $args['type'] );
-		self::$manager->add_panel(
-			new $class['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_panel( new $class['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -390,16 +367,14 @@ class Epsilon_Customizer {
 	 * @since 1.2.0
 	 */
 	public static function add_page_builder( $id, $args ) {
-		$pages = new WP_Query(
-			array(
-				'post_type'        => 'page',
-				'nopaging'         => true,
-				'suppress_filters' => true,
-				'post__not_in'     => array(
-					Epsilon_Content_Backup::get_instance()->setting_page,
-				),
-			)
-		);
+		$pages = new WP_Query( array(
+			'post_type'        => 'page',
+			'nopaging'         => true,
+			'suppress_filters' => true,
+			'post__not_in'     => array(
+				Epsilon_Content_Backup::get_instance()->setting_page,
+			),
+		) );
 
 		$ids = array();
 
@@ -442,13 +417,7 @@ class Epsilon_Customizer {
 				/**
 				 * Register the control
 				 */
-				self::$manager->add_control(
-					new Epsilon_Control_Section_Repeater(
-						self::$manager,
-						$id . '_' . get_the_ID(),
-						$args
-					)
-				);
+				self::$manager->add_control( new Epsilon_Control_Section_Repeater( self::$manager, $id . '_' . get_the_ID(), $args ) );
 			}// End while().
 		}// End if().
 
@@ -469,11 +438,39 @@ class Epsilon_Customizer {
 
 		if ( 'page' !== $post->post_type ) {
 			return;
-		};
+		}
 
 		if ( 'publish' !== $post->post_status ) {
 			return;
-		};
+		}
+
+		// check if it's posts page
+		if ( get_option( 'page_for_posts' ) === $post->ID ) {
+			return;
+		}
+
+		// check if it's WooCommerce
+		if ( class_exists( 'WooCommerce' ) ) {
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) === $post->ID ) {
+				return;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'cart' ) === $post->ID ) {
+				return;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'checkout' ) === $post->ID ) {
+				return;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'myaccount' ) === $post->ID ) {
+				return;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'terms' ) === $post->ID ) {
+				return;
+			}
+		}
 
 		$query['autofocus[section]'] = 'portum_repeatable_section';
 		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
@@ -485,12 +482,43 @@ class Epsilon_Customizer {
 	 * Add quick action links to posts
 	 */
 	public static function add_action_links( $actions, $post ) {
+
+		// check if this is content backup page for Epsilon Builder
 		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
 			return $actions;
 		}
 
+		// check if post status is draft
 		if ( 'draft' === $post->post_status ) {
 			return $actions;
+		}
+
+		// check if it's posts page
+		if ( get_option( 'page_for_posts' ) == $post->ID ) {
+			return $actions;
+		}
+
+		// check if it's WooCommerce
+		if ( class_exists( 'WooCommerce' ) ) {
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) === $post->ID ) {
+				return $actions;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'cart' ) === $post->ID ) {
+				return $actions;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'checkout' ) === $post->ID ) {
+				return $actions;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'myaccount' ) === $post->ID ) {
+				return $actions;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'terms' ) === $post->ID ) {
+				return $actions;
+			}
 		}
 
 		if ( defined( 'POLYLANG_VERSION' ) ) {
@@ -528,7 +556,11 @@ class Epsilon_Customizer {
 
 
 		if ( 'page' !== $post->post_type ) {
-			return;
+			return $post_states;
+		}
+
+		if ( get_option( 'posts_for_page' ) === $post->ID ) {
+			return $post_states;
 		}
 
 		/**
