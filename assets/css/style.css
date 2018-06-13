@@ -1899,6 +1899,7 @@ body.adding-section .epsilon-add-new-section:before {
 #customize-theme-controls .accordion-section-title.epsilon-pro-section-title {
   background: #008ec2;
   color: #FFF;
+  border-left: 0 !important;
 }
 
 #customize-theme-controls .accordion-section-title.epsilon-pro-section-title:hover {
