@@ -99,16 +99,6 @@ class Epsilon_Color_Scheme {
 	public function update_colors( $args ) {
 		if ( null !== $args ) {
 			$array = array_merge( $this->options, $args );
-			foreach ( $this->customizer_controls as $control => $prop ) {
-				if ( ! $prop['hover-state'] ) {
-					continue;
-				}
-
-				if ( ! empty( $array[ $control ] ) ) {
-					$array[ $control . '_hover' ] = $this->adjust_brightness( $array[ $control ], 10 );
-				}
-			}
-
 			$this->options = $array;
 		}
 	}
@@ -133,7 +123,7 @@ class Epsilon_Color_Scheme {
 
 			$wp_customize->add_setting( $control, array(
 				'default'           => $properties['default'],
-				'sanitize_callback' => 'sanitize_hex_color',
+				'sanitize_callback' => 'sanitize_text_field',
 				'transport'         => 'postMessage',
 			) );
 
@@ -147,6 +137,7 @@ class Epsilon_Color_Scheme {
 				'label'       => $properties['label'],
 				'description' => $properties['description'],
 				'section'     => $properties['section'],
+				'mode'        => 'rgba',
 				'settings'    => $control,
 				'priority'    => $i,
 				'lite'        => isset( $properties['lite'] ) ? $properties['lite'] : false,
@@ -261,19 +252,6 @@ class Epsilon_Color_Scheme {
 			$this->terminate = true;
 		}
 
-		foreach ( $this->customizer_controls as $control => $prop ) {
-			if ( ! empty( $prop['separator'] ) ) {
-				continue;
-			}
-			if ( ! $prop['hover-state'] ) {
-				continue;
-			}
-
-			if ( ! empty( $colors[ $control ] ) ) {
-				$colors[ $control . '_hover' ] = $this->adjust_brightness( $colors[ $control ], 10 );
-			}
-		}
-
 		return $colors;
 	}
 
@@ -317,7 +295,7 @@ class Epsilon_Color_Scheme {
 		);
 
 		foreach ( $params as $k => $v ) {
-			$args[ $k ] = sanitize_hex_color( $v );
+			$args[ $k ] = sanitize_text_field( $v );
 		}
 
 		/**
