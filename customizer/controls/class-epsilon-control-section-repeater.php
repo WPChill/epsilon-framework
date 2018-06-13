@@ -350,7 +350,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		<# } #>
 		<div class="epsilon-add-section-buttons">
 			<input type="hidden" value="" {{{ data.link }}} />
-			<button type="button" class="button epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
+			<button type="button" class="button button-primary epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
 				<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
 			</button>
 			<!--
