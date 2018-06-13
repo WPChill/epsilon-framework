@@ -200,6 +200,7 @@
     bottom: 46px;
     z-index: 9999;
     max-width: 300px;
+	width: 100%;
     text-align: center;
     margin: 0;
     border-top: 1px solid #DDD;
@@ -476,11 +477,6 @@ body.adding-section {
     }
 }
 
-.epsilon-add-section-buttons {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    padding: 0 10px;
-}
 
 .epsilon-pencil-button-group {
     background: #0085ba;
