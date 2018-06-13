@@ -221,6 +221,9 @@
             -moz-osx-font-smoothing: grayscale;
         }
     }
+	.epsilon-import-sections {
+		min-width: 119px; /* make this button as wide as the add section one */
+	}
 }
 
 body.importing-section,
