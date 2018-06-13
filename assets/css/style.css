@@ -1368,6 +1368,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.epsilon-add-section-buttons .epsilon-import-sections {
+  min-width: 119px;
+  /* make this button as wide as the add section one */
+}
 
 body.importing-section .wp-full-overlay-main,
 body.adding-section .wp-full-overlay-main {
