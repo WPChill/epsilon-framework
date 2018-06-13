@@ -1161,7 +1161,9 @@
 
 .customize-control-epsilon-section-repeater {
   margin: -12px;
-  width: 105%;
+  width: calc( 100% + 24px);
+  padding-bottom: 49px;
+  /* this is for the sticky action buttons */
 }
 .customize-control-epsilon-section-repeater .customize-control-title {
   padding: 12px;
