@@ -178,6 +178,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				'default' => 'section-' . $key . '-' . mt_rand( 1, mt_getrandmax() ),
 			);
 
+			$this->repeatable_sections[ $key ]['fields'][ $key . '_section_visibility' ] = array(
+				'type'    => 'hidden',
+				'default' => 'visible',
+				'id'      => $key . '_section_visibility'
+			);
+
 			foreach ( $value['fields'] as $k => $v ) {
 				$this->repeatable_sections[ $key ]['fields'][ $k ]['metaId'] = ! empty( $this->save_as_meta ) ? $this->save_as_meta : '';
 
@@ -191,6 +197,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 				if ( 'epsilon-icon-picker' === $v['type'] ) {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['icons'] = $this->get_icons();
+
+					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['groups'] ) ) {
+						$this->repeatable_sections[ $key ]['fields'][ $k ]['groups'] = array();
+					}
 				}
 
 				if ( 'epsilon-customizer-navigation' === $v['type'] ) {

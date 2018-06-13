@@ -116,8 +116,28 @@
     overflow: hidden;
     word-wrap: break-word;
 
+    .epsilon-action-buttons {
+      opacity: 0;
+      visibility: hidden;
+      transition: .15s all ease-in-out;
+      position: absolute;
+      top: 9px;
+      right: 20px;
+      > i {
+        color: #555555;
+        &:hover {
+          color: #0073AA;
+        }
+      }
+    }
+
     &:hover {
       cursor: move;
+
+      .epsilon-action-buttons {
+        opacity: 1;
+        visibility: visible;
+      }
     }
 
     .dashicons {

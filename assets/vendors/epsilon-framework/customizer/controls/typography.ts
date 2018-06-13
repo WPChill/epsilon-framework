@@ -1,6 +1,6 @@
 import { EpsilonRangeSlider } from './range-slider';
 
-declare var wp: any;
+declare var wp: any, _: any;
 
 /**
  * Espilon Typography Module
@@ -45,8 +45,8 @@ export class EpsilonTypography {
   linkedFonts: Object;
 
   /**
-   * Class Constructor
-   * @param {{container: JQuery; params: {value: number; id: string}}} control
+   *
+   * @param {} control
    */
   public constructor( control: { container: JQuery, params: { value: number, id: string, default: string, stylesheet: string, selectors: string } } ) {
     this.control = control;
@@ -58,6 +58,38 @@ export class EpsilonTypography {
     this.id = control.params.id;
 
     this.init();
+    this.clearButton();
+  }
+
+  /**
+   * Clear choices
+   */
+  public clearButton() {
+    this.context.on( 'click', '.set-default', ( event: JQueryEventConstructor ) => {
+      this.setDefaults();
+    } );
+  }
+
+  /**
+   * Set control defaults
+   */
+  public setDefaults() {
+    _.each( this.control.params.fontDefaults[ this.id ], ( value: any, key: any ) => {
+      if ( _.contains( [ 'font-weight', 'font-style' ], key ) ) {
+        jQuery( `#${this.id}-${key}` ).prop( 'checked', value !== '' ).trigger( 'change' );
+      }
+
+      if ( _.contains( [ 'letter-spacing', 'line-height' ], key ) ) {
+        jQuery( `#${this.id}-${key}` ).val( value ).trigger( 'change' );
+      }
+
+      if ( _.contains( [ 'font-family' ], key ) ) {
+        let selectInput: any = jQuery( `#${this.id}-${key}` )[ 0 ];
+        selectInput = selectInput.selectize;
+        selectInput.setValue( value, false );
+      }
+
+    } );
   }
 
   /**
@@ -161,7 +193,7 @@ export class EpsilonTypography {
      * send it to the preview window
      */
     this.inputs.on( 'change', function() {
-      var val = self._parseJson();
+      let val = self._parseJson();
       jQuery( '#hidden_input_' + self.id ).val( val ).trigger( 'change' );
     } );
   }
@@ -169,13 +201,12 @@ export class EpsilonTypography {
   /**
    * Parse/create the json and send it to the preview window
    *
-   * @param inputs
-   * @param id
+   * @returns {string}
    * @private
    */
   private _parseJson() {
     const self = this;
-    var object: { action: string, class: string, id: string, data: { selectors: string, stylesheet: string, json: any, id: any } } = {
+    let object: { action: string, class: string, id: string, data: { selectors: string, stylesheet: string, json: any, id: any } } = {
           action: 'epsilon_generate_typography_css',
           class: 'Epsilon_Typography',
           id: this.control.id,
@@ -189,7 +220,7 @@ export class EpsilonTypography {
         api = wp.customize;
 
     jQuery.each( this.inputs, function( index, value ) {
-      var key: any = jQuery( value ).attr( 'id' ),
+      let key: any = jQuery( value ).attr( 'id' ),
           replace = self.id + '-',
           type = jQuery( this ).attr( 'type' );
 

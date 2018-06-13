@@ -355,7 +355,7 @@ export class EpsilonRepeaterUtils {
 
     row.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
       row.container.toggleClass( 'minimized' );
-      row.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+      row.header.find( '.dashicons:not(.repeater-row-remove):not(.repeater-row-hide)' ).toggleClass( 'dashicons-arrow-up-alt2' ).toggleClass( 'dashicons-arrow-down-alt2' );
 
       /**
        * In case we are in a section, we need to close others

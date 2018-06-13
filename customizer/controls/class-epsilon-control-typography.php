@@ -250,6 +250,9 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						</span>
 					</i>
 				<# } #>
+				<# if( data.fontDefaults ){ #>
+				<a href="#" class="epsilon-typography-default set-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
+				<# } #>
 			</span>
 		</label>
 		<div class="customize-control-content">

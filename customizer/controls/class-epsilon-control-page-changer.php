@@ -59,7 +59,19 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 	 * Gets the current page so we can "select" the value
 	 */
 	public function get_current_page() {
-		$id = absint( url_to_postid( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
+		$url = wp_parse_url( $_SERVER['REQUEST_URI'] );
+		$id  = 0;
+		if ( count( $url ) > 1 && ! empty( $url['query'] ) ) {
+			$url['query'] = rawurldecode( $url['query'] );
+			$editing      = str_replace( 'url=', '', $url['query'] );
+
+			if ( strpos( $editing, '&' ) > 0 ) {
+				$editing = substr( $editing, 0, strpos( $editing, '&' ) );
+			}
+
+			$id = absint( url_to_postid( esc_url_raw( wp_unslash( $editing ) ) ) );
+		}
+
 		if ( 0 === $id ) {
 			$id = absint( get_option( 'page_on_front', 0 ) );
 		}
