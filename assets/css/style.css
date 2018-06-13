@@ -1341,8 +1341,16 @@
 }
 
 .epsilon-add-section-buttons {
-  padding: 10px;
-  text-align: right;
+  padding: 10px 0;
+  background-color: #f5f5f5;
+  position: fixed;
+  bottom: 46px;
+  z-index: 9999;
+  max-width: 300px;
+  text-align: center;
+  margin: 0;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section:before {
   content: "\f132";
