@@ -283,11 +283,11 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			}
 
 			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args( $this->repeatable_sections[ $key ]['customization'], array(
-					'enabled' => false,
-					'styling' => array(),
-					'layout'  => array(),
-					'colors'  => array(),
-				) );
+				'enabled' => false,
+				'styling' => array(),
+				'layout'  => array(),
+				'colors'  => array(),
+			) );
 
 			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->repeater_helper->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
 			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->repeater_helper->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
@@ -351,13 +351,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		<div class="epsilon-add-section-buttons">
 			<input type="hidden" value="" {{{ data.link }}} />
 			<button type="button" class="button button-primary epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
-				<?php esc_html_e( 'Add a Section', 'epsilon-framework' ); ?>
+				<?php esc_html_e( 'Add Content Section', 'epsilon-framework' ); ?>
 			</button>
-			<!--
+
 			<button type="button" class="button epsilon-import-sections">
-				<?php //esc_html_e( 'Import sections', 'epsilon-framework' ); ?>
+				<?php esc_html_e( 'Import sections', 'epsilon-framework' ); ?>
 			</button>
-			-->
+
 		</div>
 		<div id="importable-sections-{{ data.id }}">
 			<div class="available-sections importable">
