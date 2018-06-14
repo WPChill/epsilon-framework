@@ -27,6 +27,11 @@
     transform: translateX(-100%);
 }
 
+#customize-theme-controls .customize-pane-child.accordion-section-content,
+#customize-theme-controls .customize-pane-child.accordion-sub-container {
+    overflow: hidden !important;
+}
+
 .epsilon-hidden {
     opacity: 0;
     visibility: hidden;

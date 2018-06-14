@@ -264,6 +264,8 @@ class Epsilon_Framework {
 
 		wp_enqueue_style( 'font-awesome', EPSILON_URI . '/assets/vendors/fontawesome/font-awesome.css' );
 		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
+
+
 	}
 
 	/**
