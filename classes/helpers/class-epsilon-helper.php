@@ -9,6 +9,15 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Helper {
 	/**
+	 * Add description closer button to the section
+	 *
+	 * @return string
+	 */
+	public static function add_description_button() {
+		return '<button type="button" class="epsilon-button-link-close-section">' . __( 'Close', 'epsilon-framework' ) . '</button>';
+	}
+
+	/**
 	 * Generate an edit shortcut for the frontend sections
 	 */
 	public static function generate_pencil( $class_name = '', $section_type = '' ) {
