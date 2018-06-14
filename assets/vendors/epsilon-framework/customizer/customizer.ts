@@ -32,3 +32,9 @@ import './extenders/panels/regular';
 import './extenders/sections/section-doubled';
 import './extenders/sections/section-pro';
 import './extenders/sections/recommended-actions';
+
+/**
+ * Import section description enhancer ( Adds toggle description functionality )
+ */
+import {EpsilonSectionDescriptionEnhancer} from "./sections/section-description-enhancer";
+new EpsilonSectionDescriptionEnhancer();
