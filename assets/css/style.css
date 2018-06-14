@@ -1354,7 +1354,7 @@
   text-align: center;
   margin: 0;
   border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
+  border-right: 1px solid #DDD;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section:before {
   content: "\f132";
