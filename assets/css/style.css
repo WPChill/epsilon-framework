@@ -280,11 +280,11 @@ ui-slider:hover {
 .onoffswitch-label:before {
   content: "";
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   margin: 0;
   position: absolute;
-  top: 2px;
+  top: 1px;
   bottom: 0;
   right: 32px;
   background-color: #fff;
@@ -318,7 +318,7 @@ ui-slider:hover {
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  right: 2px;
+  right: 1px;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:after {
