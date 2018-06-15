@@ -282,12 +282,14 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				$this->repeatable_sections[ $key ]['customization'] = array();
 			}
 
-			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args( $this->repeatable_sections[ $key ]['customization'], array(
-				'enabled' => false,
-				'styling' => array(),
-				'layout'  => array(),
-				'colors'  => array(),
-			) );
+			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args(
+				$this->repeatable_sections[ $key ]['customization'], array(
+					'enabled' => false,
+					'styling' => array(),
+					'layout'  => array(),
+					'colors'  => array(),
+				)
+			);
 
 			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->repeater_helper->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
 			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->repeater_helper->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
@@ -358,7 +360,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			-->
 
 			<button type="button" class="button button-primary epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
-				<?php esc_html_e( 'Add Section', 'epsilon-framework' ); ?>
+				<?php esc_html_e( 'Add More Sections', 'epsilon-framework' ); ?>
 			</button>
 
 		</div>
@@ -380,7 +382,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			<div class="available-sections">
 				<div class="available-sections-filter">
 					<label class="screen-reader-text" for="sections-search-{{ data.id }}"><?php esc_html_e( 'Search sections', 'epsilon-framework' ); ?></label>
-					<input type="text" class="sections-search-input" id="sections-search-{{ data.id }}" placeholder="<?php esc_attr_e( 'Search sections &hellip;', 'epsilon-framework' ) ?>" aria-describedby="sections-search-desc" />
+					<input type="text" class="sections-search-input" id="sections-search-{{ data.id }}" placeholder="<?php esc_attr_e( 'Search sections &hellip;', 'epsilon-framework' ); ?>" aria-describedby="sections-search-desc" />
 					<div class="search-icon" aria-hidden="true"></div>
 					<button type="button" class="clear-results">
 						<span class="screen-reader-text"><?php esc_html_e( 'Clear Results', 'epsilon-framework' ); ?></span>
@@ -442,6 +444,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				</div>
 			</div>
 		</div>
-		<?php //@formatter:on
+		<?php
+		//@formatter:on
 	}
 }
