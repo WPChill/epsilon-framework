@@ -3,6 +3,10 @@
     height: 22px !important;
 }
 
+.repeater-field-epsilon-toggle+.repeater-field-epsilon-toggle {
+    padding-top: 6px;
+}
+
 .customize-control-title.onoffswitch_label {
     display: block;
     float: left;

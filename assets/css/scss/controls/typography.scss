@@ -107,10 +107,10 @@
     .selectize-input {
         height: 34px;
         line-height: 14px;
-        border: solid 1px rgba(219, 219, 219, 0.9);
-        -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-        -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+        margin: 0;
+        display: block;
+        border: solid 1px $repeat_field_dropdown_border;
+        box-shadow: $repeat_field_dropdown_shadow;
     }
     .selectize-dropdown {
         z-index: 20;
