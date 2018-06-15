@@ -1049,7 +1049,8 @@ ui-slider:hover {
   line-height: 20px;
   margin-left: 5px;
   cursor: pointer;
-  color: inherit;
+  color: #555555;
+  transition: color .15s;
 }
 .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize:hover,
 .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove:hover {
@@ -1257,6 +1258,7 @@ ui-slider:hover {
   cursor: pointer;
   margin-left: 5px;
   visibility: hidden;
+  transition: color .15s;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-minimize:hover,
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide:hover,
@@ -1274,6 +1276,9 @@ ui-slider:hover {
   margin-top: -12px;
   padding: 12px;
   visibility: visible;
+}
+.customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide {
+  transition: opacity .25s;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header:hover .repeater-row-hide,
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header:hover .repeater-row-remove {

@@ -86,6 +86,7 @@
                 cursor: pointer;
                 margin-left: 5px;
                 visibility: hidden;
+                transition: color .15s;
                 &:hover {
                     color: #0073AA;
                 }
@@ -101,6 +102,9 @@
                 margin-top: -12px;
                 padding: 12px;
                 visibility: visible;
+            }
+            .repeater-row-hide {
+                transition: opacity .25s;
             }
             &:hover {
                 .repeater-row-hide,
