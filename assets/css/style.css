@@ -2115,8 +2115,8 @@ body.adding-section .epsilon-add-new-section:before {
   bottom: 0;
   position: absolute;
   right: 0;
-  left: -300px;
-  max-width: 300px;
+  left: -350px;
+  max-width: 350px;
   overflow-x: hidden;
   overflow-y: auto;
   background: #eee;
@@ -2163,7 +2163,7 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 body.adding-doubled-section .wp-full-overlay-main {
-  left: 300px;
+  left: 350px;
 }
 body.adding-doubled-section #customize-preview {
   opacity: 0.4;
@@ -2174,7 +2174,7 @@ body.adding-doubled-section .doubled-section-parent {
 
 .customize-pane-child.control-section-epsilon-section-doubled.doubled-section-opened {
   display: inline-block;
-  max-width: 300px;
+  max-width: 350px;
   width: 100%;
   box-sizing: border-box;
   background: #eee;
