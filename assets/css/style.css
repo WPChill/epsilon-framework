@@ -976,10 +976,11 @@ ui-slider:hover {
   margin-right: -20px;
 }
 .customize-control-epsilon-repeater .repeater-row {
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-  position: relative;
   margin-bottom: 6px;
   margin-top: 6px;
+  position: relative;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  transition: margin-top .15s, margin-bottom .15s;
 }
 .customize-control-epsilon-repeater .repeater-row:first-child {
   margin-top: 0;
@@ -1297,24 +1298,23 @@ ui-slider:hover {
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav {
   margin: 0 -20px 0 -20px;
-  background: #f3f3f5;
+  background: #F2F2F2;
   border-bottom: 1px solid #d3d3d4;
-  text-align: center;
+  text-align: left;
   box-sizing: border-box;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a {
   color: #60676f;
   box-sizing: border-box;
   padding: 8px 5px 8px 5px;
-  margin-top: 6px;
   display: inline-block;
   text-decoration: none;
   outline: none;
   display: inline-block;
   margin-right: 2px;
-  border: 1px solid #F3F3F5;
+  border-left: 1px solid #F3F3F5;
+  border-right: 1px solid #F3F3F5;
   border-bottom: 1px solid #D3D3D4;
-  border-top: 2px solid #F3F3F5;
   margin-bottom: -1px;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a .label {
@@ -1333,7 +1333,6 @@ ui-slider:hover {
   color: #0073AA;
   border-color: #D3D3D4;
   border-bottom-color: #fff;
-  border-top: 2px solid #2C96D6;
   padding: 8px 14px 8px 10px;
   background: #fff;
   position: relative;
@@ -2438,4 +2437,11 @@ $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 .epsilon-controller-image-container .actions {
     background: $debug-field-title-background !important;
 }
+
+.repeater-minimize,
+.repeater-row-remove,
+.repeater-row-hide {
+    background: orange;
+}
+
 */
