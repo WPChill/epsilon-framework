@@ -129,23 +129,23 @@
             background: #fff;
             nav {
                 margin: 0 -20px 0 -20px;
-                background: #f3f3f5;
+                background: #F2F2F2;
                 border-bottom: 1px solid #d3d3d4;
-                text-align: center;
+                text-align: left;
                 box-sizing: border-box;
                 a {
                     color: #60676f;
                     box-sizing: border-box;
                     padding: 8px 5px 8px 5px;
-                    margin-top: 6px;
                     display: inline-block;
                     text-decoration: none;
                     outline: none;
                     display: inline-block;
                     margin-right: 2px;
-                    border: 1px solid #F3F3F5;
+                    border-left: 1px solid #F3F3F5;
+                    border-right: 1px solid #F3F3F5;
                     border-bottom: 1px solid #D3D3D4;
-                    border-top: 2px solid #F3F3F5;
+                    // border-top: 2px solid #F3F3F5;
                     margin-bottom: -1px;
                     .label {
                         display: none;
@@ -164,7 +164,7 @@
                         color: #0073AA;
                         border-color: #D3D3D4;
                         border-bottom-color: #fff;
-                        border-top: 2px solid #2C96D6;
+                        // border-top: 2px solid #2C96D6;
                         padding: 8px 14px 8px 10px;
                         background: #fff;
                         position: relative;

@@ -5,10 +5,11 @@
         margin-right: -20px;
     }
     .repeater-row {
-        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-        position: relative;
         margin-bottom: 6px;
         margin-top: 6px;
+        position: relative;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+        transition: margin-top .15s, margin-bottom .15s;
         &:first-child {
             margin-top: 0;
         }
