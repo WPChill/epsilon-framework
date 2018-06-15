@@ -1381,6 +1381,18 @@ ui-slider:hover {
   border-top: 1px solid #DDD;
   border-right: 1px solid #DDD;
 }
+.epsilon-add-section-buttons .epsilon-add-new-section {
+  height: 32px;
+  line-height: 30px;
+  padding: 0 36px;
+  animation-name: epsilon_button_pulse;
+  animation-duration: 1s;
+  animation-timing-function: ease-in;
+  animation-delay: 5s;
+  animation-iteration-count: 2;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
 .epsilon-add-section-buttons .epsilon-add-new-section:before {
   content: "\f132";
   display: inline-block;
@@ -1399,6 +1411,32 @@ ui-slider:hover {
   /* make this button as wide as the add section one */
 }
 
+@keyframes epsilon_button_pulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 body.importing-section .wp-full-overlay-main,
 body.adding-section .wp-full-overlay-main {
   left: 285px;
