@@ -85,7 +85,8 @@
             line-height: 20px;
             margin-left: 5px;
             cursor: pointer;
-            color: inherit;
+            color: #555555;
+            transition: color .15s;
             &:hover {
                 color: #0073AA;
             }
