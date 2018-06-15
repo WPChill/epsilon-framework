@@ -1,7 +1,8 @@
 .customize-control-epsilon-section-repeater {
     margin: -12px;
     width: calc( 100% + 24px);
-	padding-bottom: 49px; /* this is for the sticky action buttons */
+    padding-bottom: 49px;
+    /* this is for the sticky action buttons */
     .customize-control-title {
         padding: 12px;
         display: inline-block;
@@ -10,16 +11,45 @@
         width: 100%;
         .repeater-row {
             margin-bottom: 6px;
+            margin-top: 6px;
             box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-            z-index: 10;
+            transition: margin-top .15s, margin-bottom .15s;
+            &:first-child {
+                margin-top: 0;
+            }
             &.minimized {
                 margin-bottom: 2px;
+                margin-top: 0;
                 .repeater-row-header {
                     background: #fff;
                     &:hover {
                         color: #0073AA;
                         background: #F3F3F5;
-                        border-bottom-color: #AACCDE;
+                    }
+                    &.epsilon-section-hidden {
+                        &:hover {
+                            i.repeater-row-hide,
+                            i.repeater-row-remove {
+                                color: #555555;
+                                &:hover {
+                                    color: #0073AA;
+                                }
+                            }
+                            .repeater-row-label {
+                                color: #0073AA;
+                            }
+                        }
+                        .repeater-row-label {
+                            color: #c5c8cc;
+                            &:hover {
+                                color: #0073AA;
+                            }
+                        }
+                        .repeater-row-hide {
+                            visibility: visible;
+                            opacity: 1;
+                            color: #c5c8cc;
+                        }
                     }
                 }
                 .repeater-row-content {
@@ -27,10 +57,74 @@
                 }
             }
         }
+        .repeater-row-header {
+            position: relative;
+            background: #fff;
+            font-size: 14px;
+            padding: 12px 0 12px 26px;
+            line-height: 20px;
+            font-weight: 600;
+            transition: .15s background-color ease-in-out;
+            cursor: all-scroll;
+            &:before {
+                content: "";
+                width: 10px;
+                height: 20px;
+                background: url('../img/epsilon-section-hover-indicator.png');
+                position: absolute;
+                top: 12px;
+                left: 8px;
+                opacity: 0;
+            }
+            .repeater-minimize,
+            .repeater-row-hide,
+            .repeater-row-remove {
+                vertical-align: middle;
+                color: #555555;
+                float: right;
+                font-size: 18px;
+                cursor: pointer;
+                margin-left: 5px;
+                visibility: hidden;
+                &:hover {
+                    color: #0073AA;
+                }
+            }
+            .repeater-minimize {
+                display: block;
+                height: 15px;
+                padding-top: 2px;
+                visibility: visible;
+            }
+            .repeater-row-remove {
+                border-left: 1px solid #DDDDDD;
+                margin-top: -12px;
+                padding: 12px;
+                visibility: visible;
+            }
+            &:hover {
+                .repeater-row-hide,
+                .repeater-row-remove {
+                    opacity: 1;
+                    visibility: visible;
+                }
+                &:before {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+            &.epsilon-section-hidden {
+                .repeater-row-hide {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+        }
         .repeater-index {
             display: none;
         }
         .repeater-row-content {
+            border-top: 1px solid #DDDDDD;
             padding: 0 20px 20px 20px;
             background: #fff;
             nav {
@@ -87,99 +181,10 @@
             }
         }
         .repeater-row-footer {
-            /* padding-top: 10px;*/
             line-height: 20px;
             height: 20px;
             border-top: 1px solid #efefef;
             margin-top: 18px;
-        }
-        .repeater-row-header {
-            -webkit-transition: .15s color ease-in-out, .15s background-color ease-in-out, .15s border-color ease-in-out;
-            transition: .15s color ease-in-out, .15s background-color ease-in-out, .15s border-color ease-in-out;
-            font-size: 14px;
-            padding: 12px 15px 12px 26px;
-            line-height: 20px;
-            background: #fff;
-            color: #555555;
-            border-bottom: 1px solid #DDDDDD;
-            font-weight: 600;
-            position: relative;
-            cursor: all-scroll;
-            &:before {
-                // font-family: 'Dashicons';
-                // vertical-align: middle;
-                // font-size: 15px;
-                // margin-right: 15px;
-                // visibility: hidden;
-                // transition: .15s all ease-in-out;
-                content: "";
-                width: 10px;
-                height: 20px;
-                background: url('../img/epsilon-section-hover-indicator.png');
-                position: absolute;
-                top: 12px;
-                left: 8px;
-                opacity: 0;
-            }
-            i {
-                // background: orange;
-                float: right;
-                cursor: pointer;
-                margin-left: 5px;
-                font-size: 18px;
-                vertical-align: middle;
-                &.dashicons-arrow-down-alt2:before {
-                    display: block;
-                    height: 15px;
-                    padding-top: 2px;
-                }
-            }
-            .epsilon-action-buttons {
-                // transition: .15s all ease-in-out;
-                i {
-                    // background: orange;
-                    color: #555555;
-                    margin-left: 5px;
-                    visibility: hidden;
-                    &:hover {
-                        color: #0073AA;
-                    }
-                }
-            }
-            &:hover {
-                .epsilon-action-buttons i {
-                    opacity: 1;
-                    visibility: visible;
-                }
-                &:before {
-                    opacity: 1;
-                    visibility: visible;
-                }
-            }
-        }
-        .repeater-row-header.epsilon-section-hidden {
-            border-bottom: 1px solid #EBEBEB;
-            &:hover {
-                i.repeater-row-hide,
-                i.repeater-row-remove,
-                .repeater-row-label {
-                    color: #555555;
-                    &:hover {
-                        color: #0073AA;
-                    }
-                }
-            }
-            .repeater-row-label {
-                color: #c5c8cc;
-                &:hover {
-                    color: #0073AA;
-                }
-            }
-            i.repeater-row-hide {
-                visibility: visible;
-                opacity: 1;
-                color: #c5c8cc;
-            }
         }
         .repeater-row-remove {
             color: #a00;
@@ -202,7 +207,7 @@
     z-index: 9999;
     max-width: 600px;
     min-width: 300px;
-	width: 18%;
+    width: 18%;
     text-align: center;
     margin: 0;
     border-top: 1px solid #DDD;
@@ -222,9 +227,10 @@
             -moz-osx-font-smoothing: grayscale;
         }
     }
-	.epsilon-import-sections {
-		min-width: 119px; /* make this button as wide as the add section one */
-	}
+    .epsilon-import-sections {
+        min-width: 119px;
+        /* make this button as wide as the add section one */
+    }
 }
 
 body.importing-section,
@@ -481,7 +487,6 @@ body.adding-section {
         }
     }
 }
-
 
 .epsilon-pencil-button-group {
     background: #0085ba;

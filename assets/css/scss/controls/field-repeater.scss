@@ -1,248 +1,231 @@
 .customize-control-epsilon-repeater {
-  position: relative;
-  .repeater-fields {
-    .repeater-row {
-      border: 1px solid #e5e5e5;
-      margin-top: 0.5rem;
-      background: #eee;
-      position: relative;
-
-      &.minimized {
-        border: 1px solid #dfdfdf;
-        padding: 0;
-
-        &:hover {
-          border: 1px solid #e5e5e5;
-        }
-
-        .repeater-row-content {
-          display: none;
-        }
-      }
-
-      label {
-        margin-bottom: 12px;
-        clear: both;
-      }
-
-      .repeater-field {
-        &.repeater-field- {
-          display: none;
-        }
-
-        &.repeater-field-radio-image {
-          input {
-            img {
-              border: 1px solid transparent;
-            }
-            display: none;
-
-            &:checked {
-              + label {
-                img {
-                  -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, .25);
-                  box-shadow: 0 0 5px 2px rgba(0, 0, 0, .25);
-                  border: 1px solid #3498DB;
-                }
-              }
-            }
-          }
-        }
-
-        &:last-child {
-          border-bottom: none;
-          padding-bottom: 0;
-        }
-      }
-    }
-  }
-
-  button.repeater-add {
-    margin-top: 1rem;
-  }
-
-  .repeater-row-content {
-    padding: 0 20px 20px 20px;
-    background: #fff;
-  }
-
-  .repeater-field {
-    margin: 0;
-    width: 100%;
-    clear: both;
-    padding: 18px 0 6px 0;
-
-    .customize-control-title {
-      font-size: 13px;
-      line-height: initial;
-      display: inline-block;
-    }
-
-    .customize-control-description {
-      font-size: 13px;
-      line-height: initial;
-    }
-
-    &.repeater-field-hidden {
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-  }
-
-  .repeater-field-select select {
-    margin-left: 0;
-  }
-
-  .repeater-field-checkbox {
-    label {
-      line-height: 28px;
-    }
-
-    input {
-      line-height: 28px;
-      margin-right: 5px;
-    }
-  }
-
-  .repeater-row-header {
-    background: white;
-    border-bottom: 1px solid #dfdfdf;
     position: relative;
-    padding: 10px 15px;
-    height: auto;
-    min-height: 20px;
-    line-height: 30px;
-    overflow: hidden;
-    word-wrap: break-word;
-
-    .epsilon-action-buttons {
-      opacity: 0;
-      visibility: hidden;
-      transition: .15s all ease-in-out;
-      position: absolute;
-      top: 9px;
-      right: 20px;
-      > i {
-        color: #555555;
-        &:hover {
-          color: #0073AA;
+    .repeater-fields {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    .repeater-row {
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+        position: relative;
+        margin-bottom: 6px;
+        margin-top: 6px;
+        &:first-child {
+            margin-top: 0;
         }
-      }
+        &.minimized {
+            margin-bottom: 2px;
+            margin-top: 0;
+            .repeater-row-header {
+                background: #fff;
+                &:hover {
+                    color: #0073AA;
+                    background: #F3F3F5;
+                }
+            }
+            .repeater-row-content {
+                display: none;
+            }
+        }
+        label {
+            padding: 0;
+            margin-bottom: 12px;
+        }
+        .repeater-field {
+            &.repeater-field- {
+                display: none;
+            }
+            &.repeater-field-radio-image {
+                input {
+                    img {
+                        border: 1px solid transparent;
+                    }
+                    display: none;
+                    &:checked {
+                        +label {
+                            img {
+                                -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, .25);
+                                box-shadow: 0 0 5px 2px rgba(0, 0, 0, .25);
+                                border: 1px solid #3498DB;
+                            }
+                        }
+                    }
+                }
+            }
+            &:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+        }
     }
-
-    &:hover {
-      cursor: move;
-
-      .epsilon-action-buttons {
-        opacity: 1;
-        visibility: visible;
-      }
+    .repeater-row-header {
+        position: relative;
+        background: #fff;
+        padding: 12px 0 12px 26px;
+        height: 20px;
+        line-height: 20px;
+        font-weight: 600;
+        transition: .15s background-color ease-in-out;
+        cursor: all-scroll;
+        &:before {
+            content: "";
+            width: 10px;
+            height: 20px;
+            background: url('../img/epsilon-section-hover-indicator.png');
+            position: absolute;
+            top: 12px;
+            left: 8px;
+            opacity: 0;
+        }
+        .repeater-minimize,
+        .repeater-row-remove {
+            float: right;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            margin-left: 5px;
+            cursor: pointer;
+            color: inherit;
+            &:hover {
+                color: #0073AA;
+            }
+        }
+        .repeater-minimize {}
+        .repeater-row-remove {
+            border-left: 1px solid #DDDDDD;
+            margin-top: -12px;
+            padding: 12px;
+        }
+        &:hover {
+            &:before {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
     }
-
-    .dashicons {
-      font-size: 18px;
-      position: absolute;
-      right: 12px;
-      top: 2px;
-      color: #a0a5aa;
+    .repeater-row-content {
+        border-top: 1px solid #DDDDDD;
+        padding: 0 20px 20px 20px;
+        background: #fff;
     }
-  }
-
-  .repeater-row-footer {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-top: 1px solid #efefef;
-    margin-top: 6px;
-  }
-
-  .repeater-row-label {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 20px;
-    display: block;
-    width: 90%;
-    overflow: hidden;
-    height: 18px;
-    &:before {
-      font-family: 'Dashicons';
-      content: "\f545";
-      vertical-align: middle;
-      font-size: 15px;
-      margin-right: 15px;
+    .repeater-field {
+        margin: 0;
+        width: 100%;
+        clear: both;
+        padding: 18px 0 6px 0;
+        .customize-control-title {
+            font-size: 13px;
+            line-height: initial;
+            display: inline-block;
+        }
+        .customize-control-description {
+            font-size: 13px;
+            line-height: initial;
+        }
+        &.repeater-field-hidden {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
     }
-  }
-
-  .repeater-row-remove {
-    color: #a00;
-
-    &:hover {
-      color: #f00;
+    .repeater-field-select select {
+        margin-left: 0;
     }
-  }
-
-  .repeater-minimize {
-    line-height: 36px;
-  }
-
-  .remove-button,
-  .upload-button {
-    width: 48%;
-  }
+    .repeater-field-checkbox {
+        label {
+            line-height: 28px;
+        }
+        input {
+            line-height: 28px;
+            margin-right: 5px;
+        }
+    }
+    .repeater-row-footer {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid #efefef;
+        margin-top: 6px;
+    }
+    .repeater-row-label {
+        font-weight: 600;
+        line-height: 20px;
+        // font-size: 13px;
+        // height: 20px;
+        // display: block;
+        // width: 90%;
+        // overflow: hidden;
+        // &:before {
+        //     font-family: 'Dashicons';
+        //     content: "\f545";
+        //     vertical-align: middle;
+        //     font-size: 15px;
+        //     margin-right: 15px;
+        // }
+    }
+    .repeater-row-remove {
+        color: #a00;
+        &:hover {
+            color: #f00;
+        }
+    }
+    .repeater-minimize {
+        line-height: 36px;
+    }
+    .remove-button,
+    .upload-button {
+        width: 48%;
+    }
 }
 
 .repeater-field.repeater-field-textarea {
-
-  .customize-control-title {
-    display: block;
-  }
-
-  textarea {
-    display: block;
-    width: 100%;
-    resize: vertical;
-  }
+    .customize-control-title {
+        display: block;
+    }
+    textarea {
+        display: block;
+        width: 100%;
+        resize: vertical;
+    }
 }
 
 .limit {
-  padding: 3px;
-  border-radius: 3px;
-
-  &.highlight {
-    background: #D32F2F;
-    color: #fff;
-  }
+    padding: 3px;
+    border-radius: 3px;
+    &.highlight {
+        background: #D32F2F;
+        color: #fff;
+    }
 }
 
 .button-holder {
-  text-align: center;
+    text-align: center;
+    padding-top: 20px;
 }
 
 .repeater-field-text {
-  input {
-    border: solid 1px rgba(219, 219, 219, 0.9);
-    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-    padding: 7px;
-    border-radius: 4px;
-  }
+    input {
+        border: solid 1px rgba(219, 219, 219, 0.9);
+        -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+        -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+        padding: 7px;
+        border-radius: 4px;
+    }
 }
 
 .customize-control-epsilon-text-editor,
 .repeater-field-epsilon-text-editor {
-  .customize-control-title {
-    display: inline-block;
-    float: left;
-    margin-bottom: 0;
-    padding-bottom: 0;
-    position: relative;
-    top: 5px;
-  }
+    .customize-control-title {
+        display: inline-block;
+        float: left;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        position: relative;
+        top: 5px;
+    }
 }
 
 .customize-control-epsilon-text-editor {
-  .customize-control-title {
-    top: 2px;
-  }
+    .customize-control-title {
+        top: 2px;
+    }
 }
