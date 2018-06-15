@@ -14,11 +14,8 @@ class Epsilon_Repeater_Templates {
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 				<div class="repeater-row-header">
 					<span class="repeater-row-label"></span>
-					<i class="dashicons dashicons-arrow-down repeater-minimize"></i>
-
-					<span class="epsilon-action-buttons">
-						<i class="dashicons dashicons-trash repeater-row-remove"></i>
-					</span>
+					<i class="dashicons dashicons-trash repeater-row-remove"></i>
+					<i class="dashicons dashicons-arrow-down-alt2 repeater-minimize"></i>
 				</div>
 				<div class="repeater-row-content">
 					<# _.each( data, function( field, i ) { #>
@@ -65,40 +62,39 @@ class Epsilon_Repeater_Templates {
 				</div>
 			</li>
 		</script>
-		<?php //@formatter:on
+		<?php
+		//@formatter:on
 	}
 
 	/**
 	 * Render JS Template
 	 */
 	public static function section_repeater_js_template() {
-		//@formatter:off ?>
+		//@formatter:off
+		?>
 		<script type="text/html" class="customize-control-epsilon-repeater-content-section">
 		<# var field; var index = data.index; #>
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 				<div class="repeater-row-header">
 					<span class="repeater-row-label"></span>
+					<i class="dashicons dashicons-trash repeater-row-remove"></i>
 					<i class="dashicons dashicons-arrow-down-alt2 repeater-minimize"></i>
-
-					<span class="epsilon-action-buttons">
-						<i class="dashicons dashicons-hidden repeater-row-hide"></i>
-						<i class="dashicons dashicons-trash repeater-row-remove"></i>
-					</span>
+					<i class="dashicons dashicons-hidden repeater-row-hide"></i>
 				</div>
 				<div class="repeater-row-content">
 					<# if( data.customization.enabled ) { #>
 					<nav>
 						<# if( data.customization.enabled ) { #>
-							<a href="#" class="active" data-item="regular"><span class="dashicons dashicons-welcome-write-blog"></span> <span class="label"><?php echo __('Content' ,'epsilon-framework'); ?></span></a>
+							<a href="#" class="active" data-item="regular"><span class="dashicons dashicons-welcome-write-blog"></span> <span class="label"><?php echo __( 'Content', 'epsilon-framework' ); ?></span></a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.styling) ) { #>
-							<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span> <span class="label"><?php echo __('Style' ,'epsilon-framework'); ?></span></a>
+							<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span> <span class="label"><?php echo __( 'Style', 'epsilon-framework' ); ?></span></a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.layout) ) { #>
-							<a href="#" data-item="layout"><span class="dashicons dashicons-layout"></span> <span class="label"><?php echo __('Layout' ,'epsilon-framework'); ?></span></a>
+							<a href="#" data-item="layout"><span class="dashicons dashicons-layout"></span> <span class="label"><?php echo __( 'Layout', 'epsilon-framework' ); ?></span></a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.colors) ) { #>
-							<a href="#" data-item="colors"><span class="dashicons dashicons-admin-appearance"></span> <span class="label"><?php echo __('Colors' ,'epsilon-framework'); ?></span></a>
+							<a href="#" data-item="colors"><span class="dashicons dashicons-admin-appearance"></span> <span class="label"><?php echo __( 'Colors', 'epsilon-framework' ); ?></span></a>
 						<# } #>
 					<# } #>
 					</nav>
@@ -147,7 +143,8 @@ class Epsilon_Repeater_Templates {
 				</div>
 			</li>
 		</script>
-		<?php //@formatter:on
+		<?php
+		//@formatter:on
 	}
 
 	/**
