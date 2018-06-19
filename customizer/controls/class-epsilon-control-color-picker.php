@@ -55,7 +55,7 @@ class Epsilon_Control_Color_Picker extends WP_Customize_Control {
 		$json['link']    = $this->get_link();
 		$json['value']   = $this->value();
 		$json['default'] = $this->setting->default;
-		$json['mode']    = '' !== $this->mode ? $this->mode : 'hex';
+		$json['mode']    = '' !== $this->mode ? $this->mode : 'rgba';
 		$json['lite']    = $this->lite;
 
 		return $json;
