@@ -38,7 +38,7 @@ export class EpsilonColorPicker {
       changeDelay: 500,
       theme: 'default',
       change: this.changePallete,
-      format: 'hex',
+      format: 'rgb',
       opacity: true,
     };
 
