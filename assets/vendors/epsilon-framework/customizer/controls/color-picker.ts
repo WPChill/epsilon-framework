@@ -39,7 +39,7 @@ export class EpsilonColorPicker {
       theme: 'default',
       change: this.changePallete,
       format: 'hex',
-      opacity: false,
+      opacity: true,
     };
 
     if ( 'function' !== typeof jQuery.fn.minicolors ) {
