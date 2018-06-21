@@ -1806,21 +1806,14 @@ body.adding-section .epsilon-add-new-section:before {
   min-width: 30%;
 }
 
-.repeater-field .epsilon-icon-container {
-  -webkit-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
-  -moz-box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
-}
-
 .epsilon-icon-container {
   display: inline-block;
   background: #fff;
   width: 100%;
   border-radius: 4px;
   border: solid 1px rgba(219, 219, 219, 0.9);
-  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .epsilon-icon-container .epsilon-icon-name {
   display: inline-block;
@@ -1839,11 +1832,7 @@ body.adding-section .epsilon-add-new-section:before {
   float: right;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  background-color: #fff;
-  border-left: 1px solid #dddddd;
-}
-.epsilon-icon-container.opened-icon-picker {
-  background-color: #f4f4f4;
+  border-left: 1px solid #ddd;
 }
 .epsilon-icon-container.opened-icon-picker .epsilon-open-icon-picker {
   background-color: #f4f4f4;
@@ -1852,22 +1841,27 @@ body.adding-section .epsilon-add-new-section:before {
 .epsilon-icon-picker-container {
   display: none;
   background-color: #f4f4f4;
-  border-radius: 5px;
+  border-radius: 0 0 3px 3px;
   border-top-right-radius: 0;
   overflow: hidden;
-  -webkit-box-shadow: 0 0px 9px rgba(0, 0, 0, 0.08);
-  -moz-box-shadow: 0 0px 9px rgba(0, 0, 0, 0.08);
-  box-shadow: 0 0px 9px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 .epsilon-icon-picker-container .search-container {
-  padding: 15px 20px;
+  padding: 5px;
   box-sizing: border-box;
   border-bottom: 1px solid #eaeaea;
+  border-radius: 4px;
+}
+.epsilon-icon-picker-container .search-container .text {
+  padding: 7px;
 }
 .epsilon-icon-picker-container .epsilon-icons-container {
-  padding: 15px 20px;
+  padding: 5px;
   box-sizing: border-box;
   border-top: 1px solid #fafafa;
+}
+.epsilon-icon-picker-container .selectize-control {
+  padding: 0 5px;
 }
 .epsilon-icon-picker-container.opened {
   display: block;
@@ -1901,8 +1895,8 @@ body.adding-section .epsilon-add-new-section:before {
   box-sizing: border-box;
   border: 1px solid #eaeaea;
   text-align: center;
-  margin-bottom: 7px;
-  margin-right: 7px;
+  margin-bottom: 5px;
+  margin-right: 2px;
   cursor: pointer;
 }
 
@@ -1923,6 +1917,15 @@ body.adding-section .epsilon-add-new-section:before {
 
 .repeater-field-selectize .selectize-input {
   display: block;
+}
+
+.repeater-field-selectize .selectize-input {
+  display: block;
+}
+
+.selectize-control.multi .selectize-input.has-options {
+  padding-top: 5px;
+  padding-bottom: 2px;
 }
 
 .epsilon-controller-image-dimensions-container {
@@ -2468,23 +2471,25 @@ body.adding-doubled-section .doubled-section-parent {
 
 /* Debug Colors */
 /*
-*/
+
 .repeater-field:nth-child(even) {
-  background: rgba(0, 135, 255, 0.3) !important;
+    background: $debug-field-background-even !important;
 }
 
 .repeater-field:nth-child(odd) {
-  background: rgba(0, 135, 255, 0.1) !important;
+    background: $debug-field-background-odd !important;
 }
 
 .customize-control-title,
 .repeater-field-epsilon-slider .slider-container,
 .epsilon-controller-image-container .actions {
-  background: rgba(255, 165, 0, 0.4) !important;
+    background: $debug-field-title-background !important;
 }
 
 .repeater-minimize,
 .repeater-row-remove,
 .repeater-row-hide {
-  background: rgba(255, 165, 0, 0.4);
+    background: $debug-field-title-background;
 }
+
+*/
