@@ -27,7 +27,7 @@
                 display: none;
             }
         }
-        label {
+        >label {
             padding: 0;
             margin-bottom: 12px;
         }
@@ -219,5 +219,27 @@
 .customize-control-epsilon-text-editor {
     .customize-control-title {
         top: 2px;
+    }
+}
+
+.repeater-field-epsilon-color-picker {
+    .epsilon-color-picker-title {
+        margin-left: 37px;
+    }
+    .minicolors-input {
+        top: 0;
+        left: 37px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 4px;
+        display: block;
+    }
+    .minicolors-panel {
+        top: 28px;
+        left: 37px;
+    }
+    .minicolors-swatch {
+        top: 0;
+        left: 0;
     }
 }
