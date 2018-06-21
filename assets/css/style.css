@@ -1070,7 +1070,7 @@ ui-slider:hover {
 }
 .customize-control-epsilon-repeater .repeater-row-content {
   border-top: 1px solid #DDD;
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 14px 20px;
 }
 .customize-control-epsilon-repeater .repeater-field {
   margin: 0;
@@ -1103,14 +1103,18 @@ ui-slider:hover {
   margin-right: 5px;
 }
 .customize-control-epsilon-repeater .repeater-row-footer {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-top: 1px solid #DDD;
-  margin-top: 6px;
+  display: none;
 }
 .customize-control-epsilon-repeater .repeater-row-label {
+  display: block;
+  width: calc(100% - 75px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 600;
   line-height: 20px;
+  height: 20px;
+  float: left;
 }
 .customize-control-epsilon-repeater .repeater-row-remove {
   color: #a00;
@@ -1348,10 +1352,7 @@ ui-slider:hover {
   padding: initial;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-footer {
-  line-height: 20px;
-  height: 20px;
-  border-top: 1px solid #DDD;
-  margin-top: 18px;
+  display: none;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-remove {
   color: #a00;
@@ -2464,24 +2465,23 @@ body.adding-doubled-section .doubled-section-parent {
 
 /* Debug Colors */
 /*
+*/
 .repeater-field:nth-child(even) {
-    background: $debug-field-background-even !important;
+  background: rgba(0, 135, 255, 0.3) !important;
 }
 
 .repeater-field:nth-child(odd) {
-    background: $debug-field-background-odd !important;
+  background: rgba(0, 135, 255, 0.1) !important;
 }
 
-.repeater-row-footer,
 .customize-control-title,
 .repeater-field-epsilon-slider .slider-container,
 .epsilon-controller-image-container .actions {
-    background: $debug-field-title-background !important;
+  background: rgba(255, 165, 0, 0.4) !important;
 }
 
 .repeater-minimize,
 .repeater-row-remove,
 .repeater-row-hide {
-    background: $debug-field-title-background;
+  background: rgba(255, 165, 0, 0.4);
 }
-*/
