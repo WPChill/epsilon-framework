@@ -1923,7 +1923,13 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
 }
 
-.selectize-control.multi .selectize-input.has-options {
+.selectize-control.multi .selectize-input {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  display: block;
+  min-height: 25px;
+}
+.selectize-control.multi .selectize-input.has-items {
   padding-top: 5px;
   padding-bottom: 2px;
 }
