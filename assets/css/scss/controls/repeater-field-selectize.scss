@@ -10,13 +10,11 @@
 
 .selectize-control.multi {
     .selectize-input {
-        padding-top: 7px;
-        padding-bottom: 7px;
+        padding: 7px 5px;
         display: block;
         min-height: 25px;
         &.has-items {
-            padding-top: 5px;
-            padding-bottom: 2px;
+            padding: 5px 5px 2px 5px;
         }
     }
 }

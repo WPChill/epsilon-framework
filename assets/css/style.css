@@ -1020,9 +1020,11 @@ ui-slider:hover {
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
   border: 1px solid #3498DB;
 }
+.customize-control-epsilon-repeater .repeater-row .repeater-field.repeater-field-epsilon-button-group label {
+  margin: 0;
+}
 .customize-control-epsilon-repeater .repeater-row .repeater-field:last-child {
   border-bottom: none;
-  padding-bottom: 0;
 }
 .customize-control-epsilon-repeater .repeater-row-header {
   position: relative;
@@ -1788,6 +1790,7 @@ body.adding-section .epsilon-add-new-section:before {
   border: 1px dashed #EEE;
   padding: 6px;
   margin-bottom: 6px;
+  min-height: 40px;
 }
 .epsilon-controller-image-container .epsilon-image img {
   width: 100%;
@@ -1924,14 +1927,12 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 .selectize-control.multi .selectize-input {
-  padding-top: 7px;
-  padding-bottom: 7px;
+  padding: 7px 5px;
   display: block;
   min-height: 25px;
 }
 .selectize-control.multi .selectize-input.has-items {
-  padding-top: 5px;
-  padding-bottom: 2px;
+  padding: 5px 5px 2px 5px;
 }
 
 .epsilon-controller-image-dimensions-container {
@@ -2433,9 +2434,6 @@ body.adding-doubled-section .doubled-section-parent {
 .repeater-field:first-child {
   padding-top: 6px;
 }
-.repeater-field:last-child {
-  padding-bottom: 0;
-}
 .repeater-field.repeater-field-epsilon-text-editor {
   padding-top: 12px;
 }
@@ -2477,25 +2475,23 @@ body.adding-doubled-section .doubled-section-parent {
 
 /* Debug Colors */
 /*
-
+*/
 .repeater-field:nth-child(even) {
-    background: $debug-field-background-even !important;
+  background: rgba(0, 135, 255, 0.3) !important;
 }
 
 .repeater-field:nth-child(odd) {
-    background: $debug-field-background-odd !important;
+  background: rgba(0, 135, 255, 0.1) !important;
 }
 
 .customize-control-title,
 .repeater-field-epsilon-slider .slider-container,
 .epsilon-controller-image-container .actions {
-    background: $debug-field-title-background !important;
+  background: rgba(255, 165, 0, 0.4) !important;
 }
 
 .repeater-minimize,
 .repeater-row-remove,
 .repeater-row-hide {
-    background: $debug-field-title-background;
+  background: rgba(255, 165, 0, 0.4);
 }
-
-*/

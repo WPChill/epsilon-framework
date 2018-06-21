@@ -52,9 +52,11 @@
                     }
                 }
             }
+            &.repeater-field-epsilon-button-group label {
+                margin: 0;
+            }
             &:last-child {
                 border-bottom: none;
-                padding-bottom: 0;
             }
         }
     }
