@@ -333,8 +333,6 @@ $debug-field-background-odd: rgba(0, 135, 255, 0.1) !default;
 $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 
 /*
-*/
-
 .customize-control:nth-child(even),
 .repeater-field:nth-child(even) {
     background: $debug-field-background-even !important;
@@ -356,3 +354,4 @@ $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 .repeater-row-hide {
     background: $debug-field-title-background;
 }
+*/

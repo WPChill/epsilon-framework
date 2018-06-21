@@ -2537,25 +2537,25 @@ body.adding-doubled-section .doubled-section-parent {
 
 /* Debug Colors */
 /*
-*/
 .customize-control:nth-child(even),
 .repeater-field:nth-child(even) {
-  background: rgba(0, 135, 255, 0.3) !important;
+    background: $debug-field-background-even !important;
 }
 
 .customize-control:nth-child(odd),
 .repeater-field:nth-child(odd) {
-  background: rgba(0, 135, 255, 0.1) !important;
+    background: $debug-field-background-odd !important;
 }
 
 .customize-control-title,
 .repeater-field-epsilon-slider .slider-container,
 .epsilon-controller-image-container .actions {
-  background: rgba(255, 165, 0, 0.4) !important;
+    background: $debug-field-title-background !important;
 }
 
 .repeater-minimize,
 .repeater-row-remove,
 .repeater-row-hide {
-  background: rgba(255, 165, 0, 0.4);
+    background: $debug-field-title-background;
 }
+*/
