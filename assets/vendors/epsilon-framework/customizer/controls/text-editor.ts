@@ -40,7 +40,7 @@ export class EpsilonTextEditor {
                 wpautop: true,
                 browser_spellcheck: true,
                 mediaButtons: false,
-                toolbar1: 'bold,italic,link,strikethrough',
+                toolbar1: 'bold italic underline link numlist bullist',
                 setup: function (editor: any) {
                     editor.on('change', function (e: Event) {
                         editor.save();
