@@ -105,7 +105,7 @@
     }
     .repeater-row-content {
         border-top: 1px solid $repeater_row_separator_color;
-        padding: 0 20px 20px 20px;
+        padding: 0 20px 14px 20px;
     }
     .repeater-field {
         margin: 0;
@@ -140,14 +140,18 @@
         }
     }
     .repeater-row-footer {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        border-top: 1px solid $repeater_row_separator_color;
-        margin-top: 6px;
+        display: none;
     }
     .repeater-row-label {
+        display: block;
+        width: calc(100% - 75px);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-weight: 600;
         line-height: 20px;
+        height: 20px;
+        float: left;
     }
     .repeater-row-remove {
         color: #a00;

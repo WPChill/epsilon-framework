@@ -180,10 +180,11 @@
             }
         }
         .repeater-row-footer {
-            line-height: 20px;
-            height: 20px;
-            border-top: 1px solid $repeater_row_separator_color;
-            margin-top: 18px;
+            display: none;
+            // line-height: 20px;
+            // height: 20px;
+            // border-top: 1px solid $repeater_row_separator_color;
+            // margin-top: 18px;
         }
         .repeater-row-remove {
             color: #a00;
