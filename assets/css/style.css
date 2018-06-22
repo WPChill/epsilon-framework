@@ -1,5 +1,71 @@
 /* Variables */
 /* Start Controls */
+.epsilon-quickie {
+  position: absolute;
+  left: 0;
+  width: 50px;
+  height: 100%;
+  background-color: #282b32;
+  z-index: 99999;
+  /* make sure we stay on top of everything else */
+}
+.epsilon-quickie .epsilon-quickie-logo {
+  height: 45px;
+  background-color: #212329;
+  border-bottom: 1px solid #1d1e1e;
+  background-image: url("../img/epsilon-logo.png");
+  background-position: center center;
+  background-size: initial;
+  background-repeat: no-repeat;
+}
+.epsilon-quickie .epsilon-quickie-shortcuts {
+  margin-top: 110px;
+}
+.epsilon-quickie .epsilon-quickie-shortcuts a {
+  display: block;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  color: #949599;
+  text-decoration: none;
+  border: 1px solid transparent;
+  outline: none;
+}
+.epsilon-quickie .epsilon-quickie-shortcuts a:hover {
+  background-color: #33353b;
+  color: #FFF;
+  border: 1px solid #27292d;
+}
+.epsilon-quickie .epsilon-quickie-shortcuts a i {
+  vertical-align: middle;
+}
+
+.epsilon-quickie-is-visible .wp-full-overlay-sidebar {
+  min-width: 350px;
+  max-width: 650px;
+  width: calc( 18 % + 50px);
+}
+.epsilon-quickie-is-visible .wp-full-overlay-sidebar .wp-full-overlay-header {
+  left: 50px;
+}
+.epsilon-quickie-is-visible .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
+  left: 50px;
+}
+.epsilon-quickie-is-visible .epsilon-add-section-buttons {
+  width: calc( 18% - 50px );
+}
+.epsilon-quickie-is-visible .expanded .wp-full-overlay-footer {
+  width: calc( 18% - 50px );
+  padding-left: 50px;
+}
+.epsilon-quickie-is-visible .wp-full-overlay .collapse-sidebar {
+  left: 50px !important;
+}
+.epsilon-quickie-is-visible #customize-controls #customize-notifications-area {
+  padding-left: 50px;
+  max-width: calc(100% - 50px);
+}
+
 .epsilon-upsell-container {
   background: #fff;
   padding: 20px;
@@ -1432,8 +1498,8 @@ ui-slider:hover {
   position: fixed;
   bottom: 46px;
   z-index: 9999;
-  max-width: 600px;
-  min-width: 300px;
+  max-width: 599px;
+  min-width: 299px;
   width: 18%;
   text-align: center;
   margin: 0;
@@ -1529,7 +1595,7 @@ body.adding-section .epsilon-add-new-section:before {
   padding-top: 60px;
 }
 .available-sections.opened {
-  left: 0;
+  left: 12px;
   visibility: visible;
 }
 .available-sections .customize-section-title {
@@ -2020,15 +2086,20 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 /* Start Sections */
-#customize-controls .control-section-epsilon-section-pro .accordion-section-title:hover,
-#customize-controls .control-section-epsilon-section-pro .accordion-section-title:focus {
+#customize-controls .control-section-epsilon-section-pro .accordion-section-title:hover, #customize-controls .control-section-epsilon-section-pro .accordion-section-title:focus {
   background-color: #fff;
 }
-
-.control-section-epsilon-section-pro .accordion-section-title .button {
-  margin-top: -4px;
+#customize-controls .control-section-epsilon-section-pro .accordion-section-title .button {
+  margin-top: -3px;
   font-weight: 400;
   margin-left: 8px;
+}
+#customize-controls .control-section-epsilon-section-pro .epsilon-pro-section-title {
+  background: #F8F8F9;
+}
+#customize-controls .control-section-epsilon-section-pro .epsilon-pro-section-title:hover {
+  background: #f5f5f5;
+  cursor: pointer;
 }
 
 .rtl .control-section-epsilon-section-pro .accordion-section-title .button {
@@ -2044,17 +2115,6 @@ body.adding-section .epsilon-add-new-section:before {
   left: 0;
   right: 0;
   bottom: 0;
-}
-
-#customize-theme-controls .accordion-section-title.epsilon-pro-section-title {
-  background: #008ec2;
-  color: #FFF;
-  border-left: 0 !important;
-}
-
-#customize-theme-controls .accordion-section-title.epsilon-pro-section-title:hover {
-  background: #DF4D21;
-  color: #FFF;
 }
 
 /**
@@ -2191,8 +2251,8 @@ body.adding-section .epsilon-add-new-section:before {
   bottom: 0;
   position: absolute;
   right: 0;
-  left: -300px;
-  max-width: 300px;
+  left: -350px;
+  max-width: 350px;
   overflow-x: hidden;
   overflow-y: auto;
   background: #eee;
@@ -2201,6 +2261,9 @@ body.adding-section .epsilon-add-new-section:before {
   border-top: 1px solid #ddd;
   border-right: 1px solid #ddd;
   padding-top: 35px;
+}
+.doubled-section-parent .accordion-section-content {
+  padding: 10px 20px 15px 32px;
 }
 .doubled-section-parent .epsilon-close-doubled-section {
   position: absolute;
@@ -2239,10 +2302,7 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 body.adding-doubled-section .wp-full-overlay-main {
-  left: 300px;
-}
-body.adding-doubled-section #customize-preview {
-  opacity: 0.4;
+  left: 350px;
 }
 body.adding-doubled-section .doubled-section-parent {
   left: 0;
@@ -2250,7 +2310,7 @@ body.adding-doubled-section .doubled-section-parent {
 
 .customize-pane-child.control-section-epsilon-section-doubled.doubled-section-opened {
   display: inline-block;
-  max-width: 300px;
+  max-width: 350px;
   width: 100%;
   box-sizing: border-box;
   background: #eee;
