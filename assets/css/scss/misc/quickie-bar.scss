@@ -1,0 +1,80 @@
+.epsilon-quickie {
+
+    position: absolute;
+    left: 0;
+    width: 50px;
+    height: 100%;
+    background-color: #282b32;
+    z-index: 99999; /* make sure we stay on top of everything else */;
+
+    .epsilon-quickie-logo {
+        height: 45px;
+        background-color: #212329;
+        border-bottom: 1px solid #1d1e1e;
+        background-image: url('../img/epsilon-logo.png');
+        background-position: center center;
+        background-size: initial;
+        background-repeat: no-repeat;
+    }
+
+    .epsilon-quickie-shortcuts {
+        margin-top: 110px;
+
+        a {
+            display: block;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            color: #949599;
+            text-decoration: none;
+            border: 1px solid transparent;
+
+            &:hover {
+                background-color: #33353b;
+                color: #FFF;
+                border: 1px solid #27292d;
+            }
+
+            i {
+                vertical-align: middle;
+            }
+        }
+    }
+
+
+}
+
+.epsilon-quickie-is-visible {
+
+    .wp-full-overlay-sidebar {
+        min-width: 350px;
+        max-width: 650px;
+        width: calc( 18 % + 50px);
+    }
+
+    .wp-full-overlay-sidebar .wp-full-overlay-header {
+        left: 50px;
+    }
+
+    .wp-full-overlay-sidebar .wp-full-overlay-sidebar-content {
+        left: 50px;
+    }
+
+    .epsilon-add-section-buttons {
+        width: calc( 18% - 50px );
+    }
+
+    .expanded .wp-full-overlay-footer {
+        width: calc( 18% - 50px );
+        padding-left: 50px;
+    }
+
+    .wp-full-overlay .collapse-sidebar {
+        left: 50px !important;
+    }
+
+    #customize-controls #customize-notifications-area {
+        padding-left: 50px;
+        max-width: calc(100% - 50px);
+    }
+}
