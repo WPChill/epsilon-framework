@@ -80,13 +80,30 @@ const EpsilonQuickie = {
                 $(context).removeClass('quickie-link-active');
 
                 // add 'quickie-link-active' on currently clicked link
-                $(` [data-customizer-link='${link_to}']`).addClass('quickie-link-active');
+                if ($(` [data-customizer-link='${link_to}']`)) {
+                    $(`[data-customizer-link='${link_to}'`).addClass('quickie-link-active');
+                }
             }
         });
 
         $('.customize-section-back, .customize-panel-back').on('click', function (event) {
             // remove all 'quickie-link-active' instances, if any
             $(context).removeClass('quickie-link-active');
+        });
+
+        $('.accordion-section').on('click', function () {
+            let section_id = $(this).prop('id');
+
+            if (section_id.indexOf('section') >= 0) {
+                section_id = section_id.replace('accordion-section-', '');
+            } else if (section_id.indexOf('panel') >= 0) {
+                section_id = section_id.replace('accordion-panel-', '');
+            }
+
+            if (`[data-customizer-link='${section_id}'`) {
+                $(`[data-customizer-link='${section_id}'`).addClass('quickie-link-active');
+            }
+
         });
     },
 
