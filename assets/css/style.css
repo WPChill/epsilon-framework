@@ -2,7 +2,7 @@
 /* Start Controls */
 .epsilon-quickie {
   position: absolute;
-  left: 0;
+  left: -50px;
   width: 50px;
   height: 100%;
   background-color: #282b32;
@@ -17,26 +17,44 @@
   bottom: 60px;
   text-align: center;
 }
+.epsilon-quickie .devices button {
+  cursor: pointer;
+  background: 0 0;
+  border: none;
+  height: 50px;
+  width: 50px;
+  color: #656a6f;
+  position: relative;
+}
+.epsilon-quickie .devices button:after {
+  position: absolute;
+  top: 0;
+  left: -5px;
+  width: 4px;
+  height: 50px;
+  background: #3B7AA8;
+  content: " ";
+  transition: left .15s;
+}
 .epsilon-quickie .devices button:before {
   display: inline-block;
   -webkit-font-smoothing: antialiased;
   font: 400 20px/30px dashicons;
   vertical-align: top;
-  margin: 3px 0;
   padding: 4px 8px;
-  color: #656a6f;
 }
-.epsilon-quickie .devices button {
-  cursor: pointer;
-  background: 0 0;
-  border: none;
-  height: 45px;
-  padding: 0 3px;
-  margin: 0 0 0 -4px;
-  box-shadow: none;
-  border-top: 1px solid transparent;
-  border-bottom: 4px solid transparent;
-  transition: .15s color ease-in-out,.15s background-color ease-in-out,.15s border-color ease-in-out;
+.epsilon-quickie .devices button:focus, .epsilon-quickie .devices button:active {
+  outline: none;
+}
+.epsilon-quickie .devices button.active:after, .epsilon-quickie .devices button:hover:after {
+  left: 0;
+}
+.epsilon-quickie .devices button:hover, .epsilon-quickie .devices button.active {
+  background-color: #33353b;
+  color: #FFF;
+}
+.epsilon-quickie .devices button.active {
+  box-shadow: inset 0px 0px 5px 0px rgba(35, 31, 32, 0.7);
 }
 .epsilon-quickie .devices .preview-tablet:before {
   content: "\f471";
@@ -47,17 +65,13 @@
 .epsilon-quickie .devices .preview-mobile:before {
   content: "\f470";
 }
-.epsilon-quickie .devices button:hover,
-.epsilon-quickie .devices button.active {
-  background-color: #33353b;
-  color: #FFF;
-  border-left: 4px solid #397AAA;
-}
 .epsilon-quickie .epsilon-quickie-logo {
-  height: 45px;
+  height: 25px;
+  padding: 10px 15px;
   background-color: #212329;
-  border-bottom: 1px solid #1d1e1e;
+  border-bottom: 1px solid #232323;
   color: #FFF;
+  opacity: 0;
 }
 .epsilon-quickie .epsilon-quickie-shortcuts {
   margin-top: 110px;
@@ -86,6 +100,30 @@
   vertical-align: middle;
 }
 
+.wp-full-overlay-sidebar .wp-full-overlay-sidebar-content,
+.wp-full-overlay-sidebar .wp-full-overlay-header,
+.epsilon-quickie {
+  transition: left 0.2s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+@keyframes epsilon_quickie_bar_logo_animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.epsilon-quickie-is-visible .epsilon-quickie-logo {
+  animation-name: epsilon_quickie_bar_logo_animation;
+  animation-duration: .5s;
+  animation-delay: .4s;
+  animation-fill-mode: forwards;
+}
+
+.epsilon-quickie-is-visible .epsilon-quickie {
+  left: 0;
+}
 .epsilon-quickie-is-visible .wp-full-overlay-sidebar {
   min-width: 350px;
   max-width: 650px;
@@ -98,11 +136,11 @@
   left: 50px;
 }
 .epsilon-quickie-is-visible .epsilon-add-section-buttons {
-  width: calc( 18% - 50px );
+  width: calc( 18% - 50px);
   bottom: 0;
 }
 .epsilon-quickie-is-visible .expanded .wp-full-overlay-footer {
-  width: calc( 18% - 50px );
+  width: calc( 18% - 50px);
   padding-left: 50px;
 }
 .epsilon-quickie-is-visible #customize-controls #customize-notifications-area {
