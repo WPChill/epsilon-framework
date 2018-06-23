@@ -10,49 +10,55 @@ let EpsilonQuickie = {
     init: function () {
         this.addBodyClass();
         this.prependHTML();
+        this.moveResponsiveControls();
         this.listenForClick();
+
     },
 
+    /**
+     * Add a custom body class to the Customizer's body class
+     */
     addBodyClass: function () {
         jQuery('body').addClass('epsilon-quickie-is-visible');
     },
 
+    /**
+     * Function that handles the HTML rendering for the Quickie Shortcuts Bar
+     */
     prependHTML: function () {
-        $('.wp-full-overlay-sidebar').prepend(`
-        <div class="epsilon-quickie">
 
-            <div class="epsilon-quickie-logo">
-            </div><!--/.epsilon-quickie-logo-->
+        let HTML = `<div class="epsilon-quickie">
 
-            <div class="epsilon-quickie-shortcuts">
-                <a href="#" class="epsilon-quickie-navigation" data-customizer-link="colors" data-customizer-type="section">
-                    <i class="dashicons dashicons-admin-appearance"></i>
-                </a>
-                <a href="#" class="epsilon-quickie-navigation" data-customizer-link="portum_typography_section" data-customizer-type="section">
-                    <i class="dashicons dashicons-editor-textcolor"></i>
-                </a>
+        <div class="epsilon-quickie-logo">
+            <img src="${EpsilonQuickieObj.logo.url}" alt="${EpsilonQuickieObj.logo.alt}">
+        </div><!--/.epsilon-quickie-logo-->
 
-                <a href="#" class="epsilon-quickie-navigation" data-customizer-link="" data-customizer-type="section">
-                    <i class="dashicons dashicons-editor-table"></i>
-                </a>
-                <a href="#" class="epsilon-quickie-navigation" data-customizer-link="portum_repeatable_section" data-customizer-type="section">
-                    <i class="dashicons dashicons-menu"></i>
-                </a>
-                <a href="#" class="epsilon-quickie-navigation" data-customizer-link="portum_panel_general" data-customizer-type="panel">
-                    <i class="dashicons dashicons-admin-settings"></i>
-                </a>
-                <a href="#" class="epsilon-quickie-navigation" data-customizer-link="custom_css" data-customizer-type="section">
-                    <i class="dashicons dashicons-carrot"></i>
-                </a>
-            </div><!--/.epsilon-quickie-shortcuts-->
+        <div class="epsilon-quickie-shortcuts">`;
 
-        </div>`
-        );
+        $(EpsilonQuickieObj.links).each(function (index, value) {
+            if ('' !== value) {
+                HTML += `<a href="#" class="epsilon-quickie-navigation" data-customizer-link="${value.link_to}" data-customizer-type="${value.link_type}">
+                        <i class="${value.icon}"></i>
+                    </a>`;
+            }
+        });
+
+        HTML += ` </div><!--/.epsilon-quickie-shortcuts--></div>`;
+
+        // prepend the built HTML
+        $('.wp-full-overlay-sidebar').prepend(HTML);
+
     },
 
+    /**
+     * Function that listens for clicks on epsilon-quickie-navigation links
+     * and redirects to the corresponding section/panel/control
+     */
     listenForClick: function () {
 
-        jQuery('.epsilon-quickie-navigation').on('click', function (e) {
+        let context = '.epsilon-quickie-navigation';
+
+        jQuery(context).on('click', function (e) {
 
             // since they're links, prevent default
             e.preventDefault();
@@ -81,6 +87,15 @@ let EpsilonQuickie = {
         });
     },
 
+    moveResponsiveControls: function () {
+        let context = $('#customize-footer-actions');
+
+        $(context).hide();
+        $(context).find('.collapse-sidebar-label').hide();
+
+        $(context).find('.collapse-sidebar').appendTo('.epsilon-quickie');
+        $(context).find('.devices-wrapper').appendTo('.epsilon-quickie');
+    }
 };
 
 jQuery(document).ready(function () {
