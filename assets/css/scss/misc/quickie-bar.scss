@@ -90,11 +90,13 @@
             text-decoration: none;
             border-left: 4px solid transparent;
             outline: none;
-            .quickie-link-active {
+
+            &.quickie-link-active {
                 background-color: #33353b;
                 color: #FFF;
                 border-left: 4px solid #397AAA;
             }
+
             &:hover {
                 background-color: #33353b;
                 color: #FFF;

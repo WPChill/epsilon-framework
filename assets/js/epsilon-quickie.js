@@ -4,33 +4,30 @@
  * @type {{}}
  */
 
+/**
+ * @todo: customize-panel-back' ).on( 'click keydown', function( event )
+ */
+
 
 let EpsilonQuickie = {
 
-    init: function() {
-        var self = this;
+    init: function () {
         this.prependHTML();
-
         this.moveResponsiveControls();
         this.listenForClick();
-
-        jQuery(window).load(function() {
-            self.addBodyClass();
-        });
-
     },
 
     /**
      * Add a custom body class to the Customizer's body class
      */
-    addBodyClass: function() {
+    addBodyClass: function () {
         jQuery('body').addClass('epsilon-quickie-is-visible');
     },
 
     /**
      * Function that handles the HTML rendering for the Quickie Shortcuts Bar
      */
-    prependHTML: function() {
+    prependHTML: function () {
 
         let HTML = `<div class="epsilon-quickie">
 
@@ -40,7 +37,7 @@ let EpsilonQuickie = {
 
         <div class="epsilon-quickie-shortcuts">`;
 
-        $(EpsilonQuickieObj.links).each(function(index, value) {
+        $(EpsilonQuickieObj.links).each(function (index, value) {
             if ('' !== value) {
                 HTML += `<a href="#" class="epsilon-quickie-navigation" data-customizer-link="${value.link_to}" data-customizer-type="${value.link_type}">
                         <i class="${value.icon}"></i>
@@ -59,17 +56,18 @@ let EpsilonQuickie = {
      * Function that listens for clicks on epsilon-quickie-navigation links
      * and redirects to the corresponding section/panel/control
      */
-    listenForClick: function() {
+    listenForClick: function () {
 
         let context = '.epsilon-quickie-navigation';
 
-        jQuery(context).on('click', function(e) {
+        jQuery(context).on('click', function (e) {
 
             // since they're links, prevent default
             e.preventDefault();
 
             let link_to = $(this).data('customizer-link'),
-                link_type = $(this).data('customizer-type');
+                link_type = $(this).data('customizer-type'),
+                active_class = 'quickie-link-active';
 
             /**
              * Switch the type of method invoked based on the value of link_type
@@ -77,22 +75,60 @@ let EpsilonQuickie = {
             switch (link_type) {
 
                 case 'section':
-                    wp.customize.section(link_to).focus();
+                    wp.customize.section(link_to).focus({
+                        completeCallback: function () {
+
+                            if (wp.customize.section(link_to).active()) {
+
+                                // remove all active_class instances, if any
+                                if ($(context).hasClass(active_class)) {
+                                    $(context).removeClass(active_class);
+                                }
+
+                                // add active_class on currently clicked link
+                                $(` [data-customizer-link='${link_to}']`).addClass(active_class);
+                            }
+                        }
+                    });
                     break;
 
                 case 'panel':
                     wp.customize.panel(link_to).focus();
+
+                    if (wp.customize.panel(link_to).active()) {
+
+                        // remove all active_class instances, if any
+                        if ($(context).hasClass(active_class)) {
+                            $(context).removeClass(active_class);
+                        }
+
+                        // add active_class on currently clicked link
+                        $(` [data-customizer-link='${link_to}']`).addClass(active_class);
+                    }
+
                     break;
 
                 case 'control':
                     wp.customize.control(link_to).focus();
+
+                    if (wp.customize.control(link_to).active()) {
+
+                        // remove all active_class instances, if any
+                        if ($(context).hasClass(active_class)) {
+                            $(context).removeClass(active_class);
+                        }
+
+                        // add active_class on currently clicked link
+                        $(` [data-customizer-link='${link_to}']`).addClass(active_class);
+                    }
+
                     break;
             }
 
         });
     },
 
-    moveResponsiveControls: function() {
+    moveResponsiveControls: function () {
         let context = $('#customize-footer-actions');
 
         $(context).hide();
@@ -103,6 +139,10 @@ let EpsilonQuickie = {
     }
 };
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     EpsilonQuickie.init();
+});
+
+jQuery(window).load(function () {
+    EpsilonQuickie.addBodyClass();
 });
