@@ -86,7 +86,7 @@
   border-left: 4px solid transparent;
   outline: none;
 }
-.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation .quickie-link-active {
+.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation.quickie-link-active {
   background-color: #33353b;
   color: #FFF;
   border-left: 4px solid #397AAA;
