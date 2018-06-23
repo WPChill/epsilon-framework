@@ -256,12 +256,12 @@ class Epsilon_Framework {
 							array(
 								'link_to'   => 'nav_menus',
 								'icon'      => 'dashicons dashicons-menu',
-								'link_type' => 'section',
+								'link_type' => 'panel',
 							),
 							array(
 								'link_to'   => 'portum_panel_general',
 								'icon'      => 'dashicons dashicons-admin-settings',
-								'link_type' => 'section',
+								'link_type' => 'panel',
 							),
 							array(
 								'link_to'   => 'custom_css',
