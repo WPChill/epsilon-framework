@@ -7,25 +7,30 @@
 
 let EpsilonQuickie = {
 
-    init: function () {
-        this.addBodyClass();
+    init: function() {
+        var self = this;
         this.prependHTML();
+
         this.moveResponsiveControls();
         this.listenForClick();
+
+        jQuery(window).load(function() {
+            self.addBodyClass();
+        });
 
     },
 
     /**
      * Add a custom body class to the Customizer's body class
      */
-    addBodyClass: function () {
+    addBodyClass: function() {
         jQuery('body').addClass('epsilon-quickie-is-visible');
     },
 
     /**
      * Function that handles the HTML rendering for the Quickie Shortcuts Bar
      */
-    prependHTML: function () {
+    prependHTML: function() {
 
         let HTML = `<div class="epsilon-quickie">
 
@@ -35,7 +40,7 @@ let EpsilonQuickie = {
 
         <div class="epsilon-quickie-shortcuts">`;
 
-        $(EpsilonQuickieObj.links).each(function (index, value) {
+        $(EpsilonQuickieObj.links).each(function(index, value) {
             if ('' !== value) {
                 HTML += `<a href="#" class="epsilon-quickie-navigation" data-customizer-link="${value.link_to}" data-customizer-type="${value.link_type}">
                         <i class="${value.icon}"></i>
@@ -54,11 +59,11 @@ let EpsilonQuickie = {
      * Function that listens for clicks on epsilon-quickie-navigation links
      * and redirects to the corresponding section/panel/control
      */
-    listenForClick: function () {
+    listenForClick: function() {
 
         let context = '.epsilon-quickie-navigation';
 
-        jQuery(context).on('click', function (e) {
+        jQuery(context).on('click', function(e) {
 
             // since they're links, prevent default
             e.preventDefault();
@@ -87,7 +92,7 @@ let EpsilonQuickie = {
         });
     },
 
-    moveResponsiveControls: function () {
+    moveResponsiveControls: function() {
         let context = $('#customize-footer-actions');
 
         $(context).hide();
@@ -98,6 +103,6 @@ let EpsilonQuickie = {
     }
 };
 
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
     EpsilonQuickie.init();
 });
