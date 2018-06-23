@@ -9,7 +9,7 @@
  */
 
 
-let EpsilonQuickie = {
+const EpsilonQuickie = {
 
     init: function () {
         this.prependHTML();
@@ -58,84 +58,50 @@ let EpsilonQuickie = {
      */
     listenForClick: function () {
 
-        let context = '.epsilon-quickie-navigation';
+        const context = '.epsilon-quickie-navigation';
 
-        jQuery(context).on('click', function (e) {
+        $(context).on('click', function (event) {
 
             // since they're links, prevent default
-            e.preventDefault();
+            event.preventDefault();
 
             let link_to = $(this).data('customizer-link'),
-                link_type = $(this).data('customizer-type'),
-                active_class = 'quickie-link-active';
+                link_type = $(this).data('customizer-type');
 
-            /**
-             * Switch the type of method invoked based on the value of link_type
-             */
-            switch (link_type) {
+            if ('' !== link_to && '' !== link_type) {
 
-                case 'section':
-                    wp.customize.section(link_to).focus({
-                        completeCallback: function () {
+                /**
+                 * navigate to panel
+                 * link_type must only take values: section, control or panel
+                 */
+                wp.customize[link_type](link_to).focus();
 
-                            if (wp.customize.section(link_to).active()) {
+                // remove all 'quickie-link-active' CSS classes, if any
+                $(context).removeClass('quickie-link-active');
 
-                                // remove all active_class instances, if any
-                                if ($(context).hasClass(active_class)) {
-                                    $(context).removeClass(active_class);
-                                }
-
-                                // add active_class on currently clicked link
-                                $(` [data-customizer-link='${link_to}']`).addClass(active_class);
-                            }
-                        }
-                    });
-                    break;
-
-                case 'panel':
-                    wp.customize.panel(link_to).focus();
-
-                    if (wp.customize.panel(link_to).active()) {
-
-                        // remove all active_class instances, if any
-                        if ($(context).hasClass(active_class)) {
-                            $(context).removeClass(active_class);
-                        }
-
-                        // add active_class on currently clicked link
-                        $(` [data-customizer-link='${link_to}']`).addClass(active_class);
-                    }
-
-                    break;
-
-                case 'control':
-                    wp.customize.control(link_to).focus();
-
-                    if (wp.customize.control(link_to).active()) {
-
-                        // remove all active_class instances, if any
-                        if ($(context).hasClass(active_class)) {
-                            $(context).removeClass(active_class);
-                        }
-
-                        // add active_class on currently clicked link
-                        $(` [data-customizer-link='${link_to}']`).addClass(active_class);
-                    }
-
-                    break;
+                // add 'quickie-link-active' on currently clicked link
+                $(` [data-customizer-link='${link_to}']`).addClass('quickie-link-active');
             }
+        });
 
+        $('.customize-section-back, .customize-panel-back').on('click', function (event) {
+            // remove all 'quickie-link-active' instances, if any
+            $(context).removeClass('quickie-link-active');
         });
     },
 
     moveResponsiveControls: function () {
-        let context = $('#customize-footer-actions');
+        const context = $('#customize-footer-actions');
 
+        // hide the whole footer actions section
         $(context).hide();
+
+        // hide the "collapse settings" label
         $(context).find('.collapse-sidebar-label').hide();
 
-        $(context).find('.collapse-sidebar').appendTo('.epsilon-quickie');
-        $(context).find('.devices-wrapper').appendTo('.epsilon-quickie');
+        // move the responsive controls onto the epsilon-quickie sidebar
+        $(context).find('.collapse-sidebar, .devices-wrapper').appendTo('.epsilon-quickie');
+
     }
 };
 
