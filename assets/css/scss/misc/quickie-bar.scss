@@ -45,7 +45,8 @@
             &:active {
                 outline: none;
             }
-            &.active:after {
+            &.active:after,
+            &:hover:after {
                 left: 0;
             }
             &:hover,
@@ -56,6 +57,9 @@
             &.active {
                 box-shadow: inset 0px 0px 5px 0px rgba(35, 31, 32, 0.7);
             }
+            // border-top: 1px solid transparent;
+            // border-bottom: 4px solid transparent;
+            // transition: .15s color ease-in-out,.15s background-color ease-in-out,.15s border-color ease-in-out;
         }
         .preview-tablet:before {
             content: "\f471";
@@ -82,31 +86,21 @@
             height: 50px;
             text-align: center;
             line-height: 50px;
-            color: #656a6f;
+            color: #949599;
             text-decoration: none;
-            position: relative;
-            &:focus,
-            &:active {
-                outline: none;
-            }
-            &:hover,
+            border-left: 4px solid transparent;
+            outline: none;
+
             &.quickie-link-active {
                 background-color: #33353b;
                 color: #FFF;
-                box-shadow: none;
+                border-left: 4px solid #397AAA;
             }
-            &:after {
-                transition: left .2s cubic-bezier(0.860, 0.000, 0.070, 1.000);
-                position: absolute;
-                top: 0;
-                left: -5px;
-                width: 4px;
-                height: 50px;
-                background: #3B7AA8;
-                content: " ";
-            }
-            &.quickie-link-active:after {
-                left: 0;
+
+            &:hover {
+                background-color: #33353b;
+                color: #FFF;
+                border-left: 4px solid #397AAA;
             }
             i {
                 vertical-align: middle;
@@ -163,5 +157,15 @@
     #customize-controls #customize-notifications-area {
         padding-left: 50px;
         max-width: calc(100% - 50px);
+    }
+
+    .available-sections.opened {
+        left: 12px;
+    }
+}
+
+@media screen and (min-width: 1667px) {
+   .epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
+        margin-left: calc( 18% - 50px);
     }
 }

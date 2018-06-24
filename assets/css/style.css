@@ -46,7 +46,7 @@
 .epsilon-quickie .devices button:focus, .epsilon-quickie .devices button:active {
   outline: none;
 }
-.epsilon-quickie .devices button.active:after {
+.epsilon-quickie .devices button.active:after, .epsilon-quickie .devices button:hover:after {
   left: 0;
 }
 .epsilon-quickie .devices button:hover, .epsilon-quickie .devices button.active {
@@ -81,30 +81,20 @@
   height: 50px;
   text-align: center;
   line-height: 50px;
-  color: #656a6f;
+  color: #949599;
   text-decoration: none;
-  position: relative;
-}
-.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation:focus, .epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation:active {
+  border-left: 4px solid transparent;
   outline: none;
 }
-.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation:hover, .epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation.quickie-link-active {
+.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation.quickie-link-active {
   background-color: #33353b;
   color: #FFF;
-  box-shadow: none;
+  border-left: 4px solid #397AAA;
 }
-.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation:after {
-  transition: left 0.2s cubic-bezier(0.86, 0, 0.07, 1);
-  position: absolute;
-  top: 0;
-  left: -5px;
-  width: 4px;
-  height: 50px;
-  background: #3B7AA8;
-  content: " ";
-}
-.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation.quickie-link-active:after {
-  left: 0;
+.epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation:hover {
+  background-color: #33353b;
+  color: #FFF;
+  border-left: 4px solid #397AAA;
 }
 .epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation i {
   vertical-align: middle;
@@ -157,7 +147,15 @@
   padding-left: 50px;
   max-width: calc(100% - 50px);
 }
+.epsilon-quickie-is-visible .available-sections.opened {
+  left: 12px;
+}
 
+@media screen and (min-width: 1667px) {
+  .epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
+    margin-left: calc( 18% - 50px);
+  }
+}
 .epsilon-upsell-container {
   background: #fff;
   padding: 20px;
