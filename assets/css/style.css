@@ -149,9 +149,6 @@
 .epsilon-quickie-is-visible .available-sections.opened {
   left: 12px;
 }
-.epsilon-quickie-is-visible #customize-preview > iframe {
-  left: 12px;
-}
 
 @media screen and (min-width: 1667px) {
   .epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
