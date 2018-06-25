@@ -332,6 +332,7 @@ $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
     }
 }
 
+
 /* Debug Colors */
 
 $debug-field-background-even: rgba(0, 135, 255, 0.3) !default;
@@ -339,6 +340,7 @@ $debug-field-background-odd: rgba(0, 135, 255, 0.1) !default;
 $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 
 /*
+
 .customize-control:nth-child(even),
 .repeater-field:nth-child(even) {
     background: $debug-field-background-even !important;
