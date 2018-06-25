@@ -138,7 +138,6 @@
     .wp-full-overlay-sidebar {
         min-width: 350px;
         max-width: 650px;
-        width: calc( 18 % + 50px);
     }
     .wp-full-overlay-sidebar .wp-full-overlay-header {
         left: 50px;
@@ -160,6 +159,10 @@
     }
 
     .available-sections.opened {
+        left: 12px;
+    }
+
+    #customize-preview > iframe {
         left: 12px;
     }
 }
