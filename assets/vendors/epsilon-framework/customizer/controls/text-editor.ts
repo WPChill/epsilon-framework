@@ -47,7 +47,7 @@ export class EpsilonTextEditor {
                         editor.save();
                         jQuery(editor.getElement()).trigger('change');
                     });
-                }
+                },
             },
             quicktags: true
         });
