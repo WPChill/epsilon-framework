@@ -11,7 +11,7 @@
 
 const EpsilonQuickie = {
 
-    init: function () {
+    init: function() {
         this.prependHTML();
         this.moveResponsiveControls();
         this.listenForClick();
@@ -20,14 +20,14 @@ const EpsilonQuickie = {
     /**
      * Add a custom body class to the Customizer's body class
      */
-    addBodyClass: function () {
+    addBodyClass: function() {
         jQuery('body').addClass('epsilon-quickie-is-visible');
     },
 
     /**
      * Function that handles the HTML rendering for the Quickie Shortcuts Bar
      */
-    prependHTML: function () {
+    prependHTML: function() {
 
         let HTML = `<div class="epsilon-quickie">
 
@@ -37,7 +37,7 @@ const EpsilonQuickie = {
 
         <div class="epsilon-quickie-shortcuts">`;
 
-        $(EpsilonQuickieObj.links).each(function (index, value) {
+        jQuery(EpsilonQuickieObj.links).each(function(index, value) {
             if ('' !== value) {
                 HTML += `<a href="#" class="epsilon-quickie-navigation" data-customizer-link="${value.link_to}" data-customizer-type="${value.link_type}">
                         <i class="${value.icon}"></i>
@@ -48,7 +48,7 @@ const EpsilonQuickie = {
         HTML += ` </div><!--/.epsilon-quickie-shortcuts--></div>`;
 
         // prepend the built HTML
-        $('.wp-full-overlay-sidebar').prepend(HTML);
+        jQuery('.wp-full-overlay-sidebar').prepend(HTML);
 
     },
 
@@ -56,17 +56,17 @@ const EpsilonQuickie = {
      * Function that listens for clicks on epsilon-quickie-navigation links
      * and redirects to the corresponding section/panel/control
      */
-    listenForClick: function () {
+    listenForClick: function() {
 
         const context = '.epsilon-quickie-navigation';
 
-        $(context).on('click', function (event) {
+        jQuery(context).on('click', function(event) {
 
             // since they're links, prevent default
             event.preventDefault();
 
-            let link_to = $(this).data('customizer-link'),
-                link_type = $(this).data('customizer-type');
+            let link_to = jQuery(this).data('customizer-link'),
+                link_type = jQuery(this).data('customizer-type');
 
             if ('' !== link_to && '' !== link_type) {
 
@@ -77,22 +77,22 @@ const EpsilonQuickie = {
                 wp.customize[link_type](link_to).focus();
 
                 // remove all 'quickie-link-active' CSS classes, if any
-                $(context).removeClass('quickie-link-active');
+                jQuery(context).removeClass('quickie-link-active');
 
                 // add 'quickie-link-active' on currently clicked link
-                if ($(` [data-customizer-link='${link_to}']`)) {
-                    $(`[data-customizer-link='${link_to}'`).addClass('quickie-link-active');
+                if (jQuery(` [data-customizer-link='${link_to}']`)) {
+                    jQuery(`[data-customizer-link='${link_to}'`).addClass('quickie-link-active');
                 }
             }
         });
 
-        $('.customize-section-back, .customize-panel-back').on('click', function (event) {
+        jQuery('.customize-section-back, .customize-panel-back').on('click', function(event) {
             // remove all 'quickie-link-active' instances, if any
-            $(context).removeClass('quickie-link-active');
+            jQuery(context).removeClass('quickie-link-active');
         });
 
-        $('.accordion-section').on('click', function () {
-            let section_id = $(this).prop('id');
+        jQuery('.accordion-section').on('click', function() {
+            let section_id = jQuery(this).prop('id');
 
             if (section_id.indexOf('section') >= 0) {
                 section_id = section_id.replace('accordion-section-', '');
@@ -101,31 +101,31 @@ const EpsilonQuickie = {
             }
 
             if (`[data-customizer-link='${section_id}'`) {
-                $(`[data-customizer-link='${section_id}'`).addClass('quickie-link-active');
+                jQuery(`[data-customizer-link='${section_id}'`).addClass('quickie-link-active');
             }
 
         });
     },
 
-    moveResponsiveControls: function () {
-        const context = $('#customize-footer-actions');
+    moveResponsiveControls: function() {
+        const context = jQuery('#customize-footer-actions');
 
         // hide the whole footer actions section
-        $(context).hide();
+        jQuery(context).hide();
 
         // hide the "collapse settings" label
-        $(context).find('.collapse-sidebar-label').hide();
+        jQuery(context).find('.collapse-sidebar-label').hide();
 
         // move the responsive controls onto the epsilon-quickie sidebar
-        $(context).find('.collapse-sidebar, .devices-wrapper').appendTo('.epsilon-quickie');
+        jQuery(context).find('.collapse-sidebar, .devices-wrapper').appendTo('.epsilon-quickie');
 
     }
 };
 
-jQuery(document).ready(function () {
+jQuery(document).ready(function() {
     EpsilonQuickie.init();
 });
 
-jQuery(window).load(function () {
+jQuery(window).load(function() {
     EpsilonQuickie.addBodyClass();
 });
