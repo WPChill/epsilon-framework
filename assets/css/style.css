@@ -32,7 +32,7 @@
   left: -5px;
   width: 4px;
   height: 50px;
-  background: #3B7AA8;
+  background: #3b7aa8;
   content: " ";
   transition: left .15s;
 }
@@ -51,7 +51,7 @@
 }
 .epsilon-quickie .devices button:hover, .epsilon-quickie .devices button.active {
   background-color: #33353b;
-  color: #FFF;
+  color: #fff;
 }
 .epsilon-quickie .devices button.active {
   box-shadow: inset 0px 0px 5px 0px rgba(35, 31, 32, 0.7);
@@ -70,7 +70,7 @@
   padding: 10px 15px;
   background-color: #212329;
   border-bottom: 1px solid #232323;
-  color: #FFF;
+  color: #fff;
   opacity: 0;
 }
 .epsilon-quickie .epsilon-quickie-shortcuts {
@@ -88,13 +88,13 @@
 }
 .epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation.quickie-link-active {
   background-color: #33353b;
-  color: #FFF;
-  border-left: 4px solid #397AAA;
+  color: #fff;
+  border-left: 4px solid #397aaa;
 }
 .epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation:hover {
   background-color: #33353b;
-  color: #FFF;
-  border-left: 4px solid #397AAA;
+  color: #fff;
+  border-left: 4px solid #397aaa;
 }
 .epsilon-quickie .epsilon-quickie-shortcuts .epsilon-quickie-navigation i {
   vertical-align: middle;
@@ -135,11 +135,11 @@
   left: 50px;
 }
 .epsilon-quickie-is-visible .epsilon-add-section-buttons {
-  width: calc( 18% - 50px);
+  width: calc(18% - 50px);
   bottom: 0;
 }
 .epsilon-quickie-is-visible .expanded .wp-full-overlay-footer {
-  width: calc( 18% - 50px);
+  width: calc(18% - 50px);
   padding-left: 50px;
 }
 .epsilon-quickie-is-visible #customize-controls #customize-notifications-area {
@@ -149,10 +149,13 @@
 .epsilon-quickie-is-visible .available-sections.opened {
   left: 12px;
 }
+.epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
+  margin-left: -350px;
+}
 
-@media screen and (min-width: 1667px) {
-  .epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
-    margin-left: calc( -18% - 50px);
+@media screen and (max-width: 1290px) {
+  .epsilon-quickie-is-visible #customize-preview iframe {
+    left: 50px;
   }
 }
 .epsilon-upsell-container {
