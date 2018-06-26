@@ -165,7 +165,7 @@ class Epsilon_Section_Attr_Helper {
 		if ( ! empty( $this->options[ $this->key . '_row_spacing_bottom' ] ) ) {
 			$additional[] = 'ewf-section--spacing-' . $this->options[ $this->key . '_row_spacing_bottom' ] . '-bottom';
 		}
-		if ( ! empty( $this->options[ $this->key . '_background_parallax' ] ) ) {
+		if ( ! empty( $this->options[ $this->key . '_background_parallax' ] ) && 'false' !== $this->options[ $this->key . '_background_parallax' ] ) {
 			$additional[] = 'ewf-section--parallax';
 		}
 		if ( ! empty( $this->options[ $this->key . '_row_title_align' ] ) ) {
