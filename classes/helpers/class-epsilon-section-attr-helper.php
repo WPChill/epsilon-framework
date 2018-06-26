@@ -102,7 +102,7 @@ class Epsilon_Section_Attr_Helper {
 	private function generate_attribute( $wrap = '', $content = array() ) {
 		$css  = $wrap . '="';
 		$css .= esc_attr( implode( ' ', $content ) );
-		$css .= '"';
+		$css .= '" ';
 
 		return $css;
 	}
@@ -134,7 +134,7 @@ class Epsilon_Section_Attr_Helper {
 
 			$css .= 'background-image' === $key ? $key . ':url(' . esc_url( $this->options[ $option ] ) . ');' : $key . ':' . esc_attr( $this->options[ $option ] ) . ';';
 		}
-		$css .= '"';
+		$css .= '" ';
 
 		return $css;
 	}
