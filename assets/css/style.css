@@ -198,13 +198,13 @@
 .epsilon-upsell-container .epsilon-button-group .button-separator {
   text-align: center;
   display: inline-block;
-  width: 20px;
+  width: 40px;
   height: 20px;
   line-height: 19px;
   position: absolute;
   border-radius: 50px;
   color: #fff;
-  background: #333333;
+  background: #333;
   left: 50%;
   top: 50%;
   font-size: 12px;
@@ -241,6 +241,8 @@
   cursor: pointer;
   -webkit-transition: all .2s;
   transition: all .2s;
+  width: calc(100% - 20px);
+  margin-top: -20px;
 }
 .customize-control-epsilon-upsell .epsilon-upsell-label:hover, .customize-control-epsilon-upsell .epsilon-upsell-label.opened {
   -webkit-transition: all .2s;
@@ -249,11 +251,27 @@
 }
 .customize-control-epsilon-upsell .epsilon-upsell-label i {
   float: right;
+  margin-right: 20px;
 }
 .customize-control-epsilon-upsell .mte-tooltip {
   left: 0;
 }
 
+@media only screen and (max-width: 1680px) {
+  .epsilon-upsell-container .epsilon-button-group .button-separator {
+    margin: 5px auto;
+    text-align: center;
+    position: static;
+    -webkit-transform: none;
+    transform: none;
+    display: block;
+  }
+  .epsilon-upsell-container .epsilon-button-group .button {
+    display: block;
+    width: 100%;
+    float: none;
+  }
+}
 .slider-container {
   position: relative;
   height: 2px;

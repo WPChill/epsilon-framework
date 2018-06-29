@@ -1,3 +1,5 @@
-/node_modules/
-/.idea
+.git/
+/.idea/
 /.sass-cache/
+/node_modules/
+.DS_Store
