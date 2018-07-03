@@ -85,6 +85,10 @@ export class EpsilonFieldRepeater {
      * Make rows sortable
      */
     this.initSortable();
+    /**
+     * Handles field delete from previewer
+     */
+    this.handleFieldDelete();
   }
 
   /**
@@ -195,5 +199,18 @@ export class EpsilonFieldRepeater {
      * Update index;
      */
     this.currentIndex --;
+  }
+
+  /**
+   * Handles deletion of field from the previewer
+   */
+  public handleFieldDelete() {
+    wp.customize.previewer.bind( 'epsilon-field-repeater-delete', ( data: any ) => {
+      if ( this.control.id !== data.control ) {
+        return;
+      }
+
+      this.utils.removeRow( this.rows[ data.field ] );
+    } );
   }
 }

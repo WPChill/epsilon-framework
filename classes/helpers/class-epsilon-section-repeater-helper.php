@@ -52,6 +52,11 @@ class Epsilon_Section_Repeater_Helper {
 	public $title_align = array();
 
 	/**
+	 * @var array
+	 */
+	public $template_selector = array();
+
+	/**
 	 * Epsilon_Section_Repeater_Helper constructor.
 	 */
 	public function __construct( $args = array() ) {
@@ -255,6 +260,10 @@ class Epsilon_Section_Repeater_Helper {
 				'png'   => EPSILON_URI . '/assets/img/epsilon-section-titleright.jpg',
 			),
 		);
+	}
+
+	public function set_template_selector(){
+
 	}
 
 	/**
@@ -613,6 +622,18 @@ class Epsilon_Section_Repeater_Helper {
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_row_title_align' ] = $temp;
+					break;
+				case 'template-selector':
+					$temp              = array(
+						'id'      => $key . '_template_selector',
+						'type'    => 'epsilon-template-select',
+						'label'   => __( 'Template selector', 'epsilon-framework' ),
+						'group'   => 'layout',
+						'choices' => $values['choices'],
+						'default' => isset( $values['default'] ) ? esc_attr( $values['default'] ) : 'normal',
+					);
+
+					$arr[ $key . '_template_selector' ] = $temp;
 					break;
 				default:
 					break;
