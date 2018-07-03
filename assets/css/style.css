@@ -2736,3 +2736,54 @@ body.adding-doubled-section .doubled-section-parent {
     background: $debug-field-title-background;
 }
 */
+
+.epsilon-button-control-group {
+    display: inline-block;
+    border-radius: 15px;
+    line-height: 20px;
+    box-shadow: 0px 2px 0px 0px rgba(35, 31, 32, 0.1);
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -50%);
+}
+
+.epsilon-control-button {
+    background-color: rgb(14, 133, 184);
+    color: #fff;
+    padding: 0 3px;
+    border: 1px solid #fff;
+}
+
+.epsilon-control-button-edit {
+    background: #1885B6;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-right: none;
+}
+
+.epsilon-control-button-edit:hover {
+    background: #0A6797;
+    color:#fff;
+}
+
+.epsilon-control-button-delete {
+    background: #F86046;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-left: none;
+}
+
+.epsilon-control-button-delete:hover {
+    background: #F83921;
+    color:#fff;
+}
+
+.epsilon-control-highlight {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(14, 133, 184);
+    background-color: rgba(14, 133, 184, 0.02);
+    opacity: 0.3;
+    box-shadow: 0px 0px 30px 0px rgba(35, 31, 32, 0.1);
+}

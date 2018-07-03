@@ -23,6 +23,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
      * so we can focus our panel and repeatable section
      */
     this._handleNavigation();
+    this._handleFieldNavigation();
     /**
      * Initiate Search on sections
      */
@@ -137,6 +138,60 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
         jQuery( '#importable-sections-' + this.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
 
       }
+    } );
+  }
+
+  /**
+   *
+   * @private
+   */
+  private _handleFieldNavigation(): void {
+    wp.customize.previewer.bind( 'epsilon-field-repeater-edit', ( data: any ) => {
+      /**
+       * In case the section does not exist, we can terminate
+       */
+      if ( 'undefined' === typeof(wp.customize.section( data.customizerSection )) ) {
+        return;
+      }
+
+      if ( 'undefined' === typeof(wp.customize.section( data.doubledSection )) ) {
+        return;
+      }
+
+      if ( 'undefined' === typeof(wp.customize.control( data.control )) ) {
+
+      }
+      let control = wp.customize.control( data.control ),
+          section = wp.customize.section( data.doubledSection );
+      /**
+       * Iterate over the controls, minimize everything
+       */
+      _.each( this.rows, ( sect: EpsilonRepeaterSectionRow, index: number ) => {
+        if ( ! sect.container.hasClass( 'minimized' ) && sect.index != data.section ) {
+          this.utils.toggleMinimize( sect );
+        }
+      } );
+
+      wp.customize.section( data.customizerSection ).focus();
+
+      /**
+       * Focus repeatable section
+       */
+      if ( ! _.isUndefined( this.rows[ data.section ] ) && this.rows[ data.section ].container.hasClass( 'minimized' ) ) {
+        this.utils.toggleMinimize( this.rows[ data.section ] );
+      }
+
+      if ( ! jQuery( 'body' ).hasClass( 'adding-doubled-section' ) ) {
+        /**
+         * Used a timeout here because toggleMinimize "closes" everything that's not related to it ( even the doubled section )
+         */
+        setTimeout( _ => {
+          section.headContainer.trigger( 'click' );
+        }, 400 );
+      }
+
+      control.container.find( '.repeater-row:not(".minimized")' ).find( '.repeater-row-header' ).trigger( 'click' );
+      control.container.find( `.repeater-row[data-row='${parseFloat( data.field )}']` ).find( '.repeater-row-header' ).trigger( 'click' );
     } );
   }
 

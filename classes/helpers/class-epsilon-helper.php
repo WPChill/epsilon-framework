@@ -60,6 +60,49 @@ class Epsilon_Helper {
 	}
 
 	/**
+	 * Generates an edit shortcut for a single repeater field
+	 * in order for this to work, we need to send over the previewer
+	 * the following info:
+	 *
+	 * 1. Repeater field id
+	 * 2. Doubled section id
+	 * 3. Repeater field index
+	 *
+	 * @param null   $index
+	 * @param string $doubled_section
+	 * @param string $control
+	 *
+	 * @return string
+	 */
+	public static function generate_field_repeater_pencil( $index = null, $doubled_section = '', $control = '' ) {
+		if ( ! is_customize_preview() ) {
+			return '';
+		}
+
+		if ( null === $index ) {
+			return '';
+		}
+
+		if ( empty( $doubled_section ) ) {
+			return '';
+		}
+
+		if ( empty( $control ) ) {
+			return '';
+		}
+
+
+		$html = "<div class='epsilon-button-control-group'>";
+		$html .= "<a href='#' class='epsilon-control-button epsilon-control-button-edit epsilon-field-repeater-editor' data-index='{$index}' data-control='{$control}' data-doubled-section='{$doubled_section}'>";
+		$html .= "<span class='dashicons dashicons-edit'></span>";
+		$html .= "</a>";
+		$html .= "<a href='#' class='epsilon-control-button epsilon-control-button-delete epsilon-field-repeater-delete-item' data-index='{$index}' data-control='{$control}'><span class='dashicons dashicons-trash'></span></a>";
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
 	 * Allowed kses
 	 *
 	 * @return array
@@ -70,9 +113,12 @@ class Epsilon_Helper {
 				'class' => true,
 			),
 			'a'    => array(
-				'class'      => true,
-				'data-focus' => true,
-				'href'       => true,
+				'class'                => true,
+				'data-focus'           => true,
+				'href'                 => true,
+				'data-control'         => true,
+				'data-doubled-section' => true,
+				'data-index'           => true,
 			),
 			'span' => array(
 				'class' => true,

@@ -1,3 +1,5 @@
+import { EpsilonTemplateSelector } from '../template-selector';
+
 declare var EpsilonTranslations: any;
 declare var EpsilonWPUrls: any;
 declare var wp: any;
@@ -60,11 +62,21 @@ export class EpsilonRepeaterAddons {
     this.initColorPickers();
     this.initButtonGroup();
     this.initCustomization();
+    this.initTemplateSelector();
 
     if ( this.row.hasOwnProperty( 'type' ) ) {
       this.initCustomizerNavigation();
       this.initSelectize();
     }
+  }
+
+  public initTemplateSelector(): void {
+    let settings: any = {
+      container: this.row.container,
+      repeater: true,
+    };
+
+    new EpsilonTemplateSelector( settings );
   }
 
   /**

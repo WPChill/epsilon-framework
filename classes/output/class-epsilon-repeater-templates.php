@@ -132,6 +132,8 @@ class Epsilon_Repeater_Templates {
 							<?php self::epsilon_navigation(); ?>
 						<# } else if ( 'epsilon-upsell' === field.type ) { #>
 							<?php self::epsilon_upsell(); ?>
+						<# } else if ( 'epsilon-template-select' === field.type ) { #>
+							<?php self::epsilon_template_selector(); ?>
 						<# } #>
 						</div>
 					<# } ); #>
@@ -521,17 +523,54 @@ class Epsilon_Repeater_Templates {
 							</span>
 						</i>
 					<# } #>
-				</span> </label>
+				</span>
+			</label>
 			<div class="epsilon-control-set">
 				<div class="epsilon-control-group epsilon-group-{{ field.groupType }}">
-					<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}"> <# for( var i in
-					field.choices ) { #> <a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default ==
-					field.choices[i].value ) { #> class="active" <# } #> > <# if( ! _.isUndefined( field.choices[i].icon
-					) ) { #> <i class="dashicons {{ field.choices[i].icon }}"/> <# } #>
-
-					<# if( ! _.isUndefined( field.choices[i].png ) ) { #> <img src="{{ field.choices[i].png }}"/> <# }
-					#>					</a>					<# } #>
+					<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}">
+					<# for( var i in field.choices ) { #>
+						<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
+						<# if( ! _.isUndefined( field.choices[i].icon) ) { #>
+							<i class="dashicons {{ field.choices[i].icon }}"/>
+						<# } #>
+						<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
+							<img src="{{ field.choices[i].png }}"/>
+						<# } #>
+						</a>
+					<# } #>
 				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Layout selector
+	 */
+	public static function epsilon_template_selector(){
+		?>
+		<div class="epsilon-control-container">
+			<label>
+				<span class="customize-control-title">
+					{{{ field.label }}}
+					<# if( field.description ){ #>
+						<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+							<span class="mte-tooltip">
+								{{{ field.description }}}
+							</span>
+						</i>
+					<# } #>
+				</span>
+			</label>
+			<div class="epsilon-layout-select-set">
+				<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}">
+				<# for( var i in field.choices ) { #>
+				<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
+					<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
+					<img src="{{ field.choices[i].png }}"/>
+					<# } #>
+				</a>
+				<# } #>
 			</div>
 		</div>
 		<?php

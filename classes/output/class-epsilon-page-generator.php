@@ -114,6 +114,27 @@ class Epsilon_Page_Generator {
 	 * @return array|string
 	 */
 	public function get_repeater_field( $key = '', $default = array(), $grouping = array() ) {
+		$data = $this->_get_repeater_field( $key, $default );
+		if ( ! empty( $grouping ) ) {
+			if ( 'all' !== $grouping['values'][0] ) {
+				foreach ( $data as $k => $v ) {
+					if ( is_array( $grouping['values'] ) && ! in_array( $v[ $grouping['group_by'] ], $grouping['values'] ) ) {
+						unset( $data[ $k ] );
+					}
+				}
+			}
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @param string $key
+	 * @param array  $default
+	 *
+	 * @return array|string
+	 */
+	private function _get_repeater_field( $key = '', $default = array() ) {
 		$data = get_theme_mod( $key, $default );
 
 		/**
@@ -130,16 +151,6 @@ class Epsilon_Page_Generator {
 		if ( empty( $data ) ) {
 			$data = get_post_meta( Epsilon_Content_Backup::get_instance()->setting_page, $key, true );
 			$data = isset( $data[ $key ] ) ? $data[ $key ] : $default;
-		}
-
-		if ( ! empty( $grouping ) ) {
-			if ( 'all' !== $grouping['values'][0] ) {
-				foreach ( $data as $k => $v ) {
-					if ( is_array( $grouping['values'] ) && ! in_array( $v[ $grouping['group_by'] ], $grouping['values'] ) ) {
-						unset( $data[ $k ] );
-					}
-				}
-			}
 		}
 
 		return $data;
@@ -175,11 +186,11 @@ class Epsilon_Page_Generator {
 	 * @param string  $section_id Id of the section we need to render in the frontend.
 	 */
 	public function section_template( $template = '', $args = array(), $section_id = '' ) {
-		$template_part = $args['type'] . '-section';
-		$has_id        = isset( $this->sections[ $section_id ][ $args['type'] . '_section_unique_id' ] ) ? $this->sections[ $section_id ][ $args['type'] . '_section_unique_id' ] : null;
+		$template_part    = $args['type'] . '-section';
+		$template_variant = isset( $this->sections[ $section_id ][ $args['type'] . '_template_selector' ] ) ? $this->sections[ $section_id ][ $args['type'] . '_template_selector' ] : null;
 
 		set_query_var( 'section_id', $section_id );
-		get_template_part( 'template-parts/frontpage/' . $template_part, $has_id );
+		get_template_part( 'template-parts/frontpage/' . $template_part, $template_variant );
 	}
 
 	/**
