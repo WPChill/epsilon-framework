@@ -3,7 +3,7 @@
 	left: -50px;
 	width: 50px;
 	height: 100%;
-	background-color: #282b32;
+	background-color: #6F5499;
 	z-index: 99999;
 	/* make sure we stay on top of everything else */
 ;
@@ -22,7 +22,7 @@
 			border: none;
 			height: 50px;
 			width: 50px;
-			color: #656a6f;
+			color: #EEE;
 			position: relative;
 			&:after {
 				position: absolute;
@@ -30,7 +30,7 @@
 				left: -5px;
 				width: 4px;
 				height: 50px;
-				background: #3b7aa8;
+				background: #090033;
 				content: " ";
 				transition: left .15s;
 			}
@@ -51,15 +51,13 @@
 			}
 			&:hover,
 			&.active {
-				background-color: #33353b;
+				background-color: #3C2166;
 				color: #fff;
 			}
 			&.active {
-				box-shadow: inset 0px 0px 5px 0px rgba(35, 31, 32, 0.7);
+				box-shadow: inset 0px 0px 5px 0px rgba(9, 0, 51, 0.7);
 			}
-			// border-top: 1px solid transparent;
-			// border-bottom: 4px solid transparent;
-			// transition: .15s color ease-in-out,.15s background-color ease-in-out,.15s border-color ease-in-out;
+
 		}
 		.preview-tablet:before {
 			content: "\f471";
@@ -74,8 +72,8 @@
 	.epsilon-quickie-logo {
 		height: 25px;
 		padding: 10px 15px;
-		background-color: #212329;
-		border-bottom: 1px solid #232323;
+		background-color: #3C2166;
+		border-bottom: 1px solid #090033;
 		color: #fff;
 		opacity: 0;
 	}
@@ -86,21 +84,21 @@
 			height: 50px;
 			text-align: center;
 			line-height: 50px;
-			color: #949599;
+			color: #EEE;
 			text-decoration: none;
 			border-left: 4px solid transparent;
 			outline: none;
 
 			&.quickie-link-active {
-				background-color: #33353b;
+				background-color: #3C2166;
 				color: #fff;
-				border-left: 4px solid #397aaa;
+				border-left: 4px solid #090033;
 			}
 
 			&:hover {
-				background-color: #33353b;
+				background-color: #3C2166;
 				color: #fff;
-				border-left: 4px solid #397aaa;
+				border-left: 4px solid #090033;
 			}
 			i {
 				vertical-align: middle;
