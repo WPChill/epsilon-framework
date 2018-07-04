@@ -65,6 +65,7 @@ export class EpsilonSectionEditorPreviewer {
       let object = {
         section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),
         customizerSection: jQuery( this ).parents( '[data-section]' ).attr( 'data-customizer-section-id' ),
+        sectionTab: jQuery( this ).attr( 'data-focus' ),
       };
 
       wp.customize.preview.send( 'epsilon-section-edit', object );
