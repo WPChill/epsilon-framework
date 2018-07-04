@@ -8,6 +8,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Helper
  */
 class Epsilon_Helper {
+
 	/**
 	 * Add description closer button to the section
 	 *
@@ -122,7 +123,7 @@ class Epsilon_Helper {
 			),
 			'span' => array(
 				'class' => true,
-			)
+			),
 		);
 	}
 
@@ -229,11 +230,7 @@ class Epsilon_Helper {
 
 			$image = wp_get_attachment_image_src( $associated_image, 'full' );
 
-			$html = sprintf(
-				'<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url"><img src="%2$s" alt="' . $attr['alt'] . '" itemprop="logo" width="' . $decoded['width'] . '" height="' . $decoded['height'] . ' "/></a>',
-				esc_url( home_url( '/' ) ),
-				$image[0]
-			);
+			$html = sprintf( '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url"><img src="%2$s" alt="' . $attr['alt'] . '" itemprop="logo" width="' . $decoded['width'] . '" height="' . $decoded['height'] . ' "/></a>', esc_url( home_url( '/' ) ), $image[0] );
 		}
 
 		echo $html;

@@ -14,8 +14,8 @@ class Epsilon_Repeater_Templates {
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 				<div class="repeater-row-header">
 					<span class="repeater-row-label"></span>
-					<i class="dashicons dashicons-trash repeater-row-remove"></i>
 					<i class="dashicons dashicons-arrow-down-alt2 repeater-minimize"></i>
+					<i class="dashicons dashicons-trash repeater-row-remove"></i>
 				</div>
 				<div class="repeater-row-content">
 					<# _.each( data, function( field, i ) { #>
@@ -77,8 +77,8 @@ class Epsilon_Repeater_Templates {
 			<li class="repeater-row minimized" data-row="{{{ index }}}">
 				<div class="repeater-row-header">
 					<span class="repeater-row-label"></span>
-					<i class="dashicons dashicons-trash repeater-row-remove"></i>
 					<i class="dashicons dashicons-arrow-down-alt2 repeater-minimize"></i>
+					<i class="dashicons dashicons-trash repeater-row-remove"></i>
 					<i class="dashicons dashicons-hidden repeater-row-hide"></i>
 				</div>
 				<div class="repeater-row-content">

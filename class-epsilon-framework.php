@@ -271,7 +271,7 @@ class Epsilon_Framework {
 
 						),
 						'logo'  => array(
-							'url' => EPSILON_URI . '/assets/img/epsilon-logo.svg',
+							'url' => EPSILON_URI . '/assets/img/epsilon-logo.png',
 							'alt' => 'Epsilon Builder Logo',
 						),
 					)
