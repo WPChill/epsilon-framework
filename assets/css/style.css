@@ -2756,7 +2756,6 @@ body.adding-doubled-section .doubled-section-parent {
 
 /* Debug Colors */
 /*
-
 .customize-control:nth-child(even),
 .repeater-field:nth-child(even) {
     background: $debug-field-background-even !important;
@@ -2779,6 +2778,18 @@ body.adding-doubled-section .doubled-section-parent {
     background: $debug-field-title-background;
 }
 */
+body .customize-panel-back:focus,
+body .customize-panel-back:hover,
+body .customize-section-back:hover,
+body .customize-section-back:focus,
+body #customize-controls .control-section .accordion-section-title:focus,
+body #customize-controls .control-section .accordion-section-title:hover,
+body #customize-controls .control-section.open .accordion-section-title,
+body #customize-controls .control-section:hover > .accordion-section-title {
+  border-left-color: #090033;
+  color: #090033;
+}
+
 .ewf-section-hidden {
   display: none !important;
 }
