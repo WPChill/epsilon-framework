@@ -367,3 +367,19 @@ $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
     background: $debug-field-title-background;
 }
 */
+
+
+.ewf-section-hidden {
+	display: none !important;
+}
+
+.efw-section-visible {
+	display: block !important;
+}
+
+
+
+/* fix for sections vhen viewed in the Customizer */
+.customize-partial-edit-shortcuts-shown section {
+	padding: 0 12px;
+}

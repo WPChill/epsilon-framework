@@ -59,7 +59,6 @@
         }
         .repeater-row-header {
             position: relative;
-            font-size: 14px;
             padding: 12px 0 12px 12px;
             line-height: 20px;
             font-weight: 600;
@@ -191,7 +190,7 @@
 
 .epsilon-add-section-buttons {
     padding: 10px 0;
-    background-color: #f5f5f5;
+    background-color: #FFF;
     position: fixed;
     bottom: 46px;
     z-index: 9999;
@@ -200,8 +199,7 @@
     width: 18%;
     text-align: center;
     margin: 0;
-    border-top: 1px solid $repeater_row_separator_color;
-    border-right: 1px solid $repeater_row_separator_color;
+    border-top: 1px solid #CCC;
     .epsilon-add-new-section {
         height: 32px;
         line-height: 30px;
@@ -213,6 +211,11 @@
         animation-iteration-count: 2;
         animation-fill-mode: none;
         animation-play-state: running;
+        background: #3C2166;
+        color: #FFF;
+        text-shadow: none;
+        box-shadow: none;
+        border: 1px solid #FFF;
         &:before {
             content: "\f132";
             display: inline-block;
@@ -225,6 +228,12 @@
             transition: all .2s;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        &:hover,
+        &:active,
+        &:focus {
+            background: #23084D;
+            color: #FFF;
         }
     }
     .epsilon-import-sections {
@@ -412,6 +421,24 @@ body.adding-section {
             &:first-of-type {
                 margin-right: 0;
             }
+            &.button-epsilon {
+                background: $repeater_row_text_hover_color;
+                color: #FFF;
+                border: none;
+                text-shadow: none;
+                box-shadow: none;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    background: $repeater_row_nav_tab_hover;
+                    color: #FFF;
+                    border: none;
+                    text-shadow: none;
+                    box-shadow: none;
+
+                }
+            }
         }
         img {
             display: block;
@@ -422,7 +449,6 @@ body.adding-section {
         }
         .epsilon-section-title {
             display: inline-block;
-            font-size: 13px;
             margin-left: 2px;
             color: #656c74;
             margin-top: 2px;
@@ -433,12 +459,13 @@ body.adding-section {
         }
         &:hover {
             .epsilon-section-image-description {
-                border-color: #57a7c9;
+                border-color: $repeater_row_nav_tab_hover;
                 background: #FAFEFF;
                 -webkit-transition: .15s all ease-in-out;
                 transition: .15s all ease-in-out;
             }
         }
+
     }
     .available-sections-tab-nav {
         display: block;

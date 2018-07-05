@@ -332,7 +332,7 @@
   display: block;
   border: 0;
   background-position: 0 0;
-  background: #E04D43;
+  background: #3C2166;
   top: 0;
   bottom: 0;
 }
@@ -490,12 +490,12 @@ ui-slider:hover {
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label {
-  background-color: #3caf0e;
+  background-color: #6F5499;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label,
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  border-color: #3caf0e;
+  border-color: #6F5499;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
@@ -582,7 +582,7 @@ ui-slider:hover {
   line-height: 24px;
 }
 .customize-control-epsilon-color-picker .minicolors-panel {
-  top: 28px;
+  top: 23px;
   left: 37px;
 }
 
@@ -615,8 +615,8 @@ ui-slider:hover {
 .minicolors-theme-default .epsilon-color-picker {
   z-index: 100;
   position: absolute;
-  top: -20px;
-  left: 50px;
+  top: 0;
+  left: 40px;
   opacity: 0;
   visibility: hidden;
   width: 153px !important;
@@ -642,7 +642,7 @@ ui-slider:hover {
 }
 
 .minicolors-position-left .minicolors-panel {
-  left: 50px;
+  left: 40px;
 }
 
 .epsilon-color-scheme-option {
@@ -1290,12 +1290,10 @@ ui-slider:hover {
   padding: 18px 0 6px 0;
 }
 .customize-control-epsilon-repeater .repeater-field .customize-control-title {
-  font-size: 13px;
   line-height: initial;
   display: inline-block;
 }
 .customize-control-epsilon-repeater .repeater-field .customize-control-description {
-  font-size: 13px;
   line-height: initial;
 }
 .customize-control-epsilon-repeater .repeater-field.repeater-field-hidden {
@@ -1377,9 +1375,8 @@ ui-slider:hover {
 .repeater-field-epsilon-text-editor .customize-control-title {
   display: inline-block;
   float: left;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   padding-bottom: 0;
-  position: relative;
 }
 
 .repeater-field-epsilon-color-picker .epsilon-color-picker-title {
@@ -1460,7 +1457,6 @@ ui-slider:hover {
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header {
   position: relative;
-  font-size: 14px;
   padding: 12px 0 12px 12px;
   line-height: 20px;
   font-weight: 600;
@@ -1583,7 +1579,7 @@ ui-slider:hover {
 
 .epsilon-add-section-buttons {
   padding: 10px 0;
-  background-color: #f5f5f5;
+  background-color: #FFF;
   position: fixed;
   bottom: 46px;
   z-index: 9999;
@@ -1592,8 +1588,7 @@ ui-slider:hover {
   width: 18%;
   text-align: center;
   margin: 0;
-  border-top: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-top: 1px solid #CCC;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section {
   height: 32px;
@@ -1606,6 +1601,11 @@ ui-slider:hover {
   animation-iteration-count: 2;
   animation-fill-mode: none;
   animation-play-state: running;
+  background: #3C2166;
+  color: #FFF;
+  text-shadow: none;
+  box-shadow: none;
+  border: 1px solid #FFF;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section:before {
   content: "\f132";
@@ -1619,6 +1619,10 @@ ui-slider:hover {
   transition: all .2s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.epsilon-add-section-buttons .epsilon-add-new-section:hover, .epsilon-add-section-buttons .epsilon-add-new-section:active, .epsilon-add-section-buttons .epsilon-add-new-section:focus {
+  background: #23084D;
+  color: #FFF;
 }
 .epsilon-add-section-buttons .epsilon-import-sections {
   min-width: 119px;
@@ -1802,6 +1806,20 @@ body.adding-section .epsilon-add-new-section:before {
 .available-sections-list .epsilon-section .button:first-of-type {
   margin-right: 0;
 }
+.available-sections-list .epsilon-section .button.button-epsilon {
+  background: #3C2166;
+  color: #FFF;
+  border: none;
+  text-shadow: none;
+  box-shadow: none;
+}
+.available-sections-list .epsilon-section .button.button-epsilon:hover, .available-sections-list .epsilon-section .button.button-epsilon:focus, .available-sections-list .epsilon-section .button.button-epsilon:active {
+  background: #6F5499;
+  color: #FFF;
+  border: none;
+  text-shadow: none;
+  box-shadow: none;
+}
 .available-sections-list .epsilon-section img {
   display: block;
   width: 175px;
@@ -1811,7 +1829,6 @@ body.adding-section .epsilon-add-new-section:before {
 }
 .available-sections-list .epsilon-section .epsilon-section-title {
   display: inline-block;
-  font-size: 13px;
   margin-left: 2px;
   color: #656c74;
   margin-top: 2px;
@@ -1821,7 +1838,7 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
 }
 .available-sections-list .epsilon-section:hover .epsilon-section-image-description {
-  border-color: #57a7c9;
+  border-color: #6F5499;
   background: #FAFEFF;
   -webkit-transition: .15s all ease-in-out;
   transition: .15s all ease-in-out;
@@ -2762,3 +2779,15 @@ body.adding-doubled-section .doubled-section-parent {
     background: $debug-field-title-background;
 }
 */
+.ewf-section-hidden {
+  display: none !important;
+}
+
+.efw-section-visible {
+  display: block !important;
+}
+
+/* fix for sections vhen viewed in the Customizer */
+.customize-partial-edit-shortcuts-shown section {
+  padding: 0 12px;
+}
