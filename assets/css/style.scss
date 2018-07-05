@@ -344,7 +344,6 @@ $debug-field-background-odd: rgba(0, 135, 255, 0.1) !default;
 $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 
 /*
-
 .customize-control:nth-child(even),
 .repeater-field:nth-child(even) {
     background: $debug-field-background-even !important;
@@ -367,6 +366,19 @@ $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
     background: $debug-field-title-background;
 }
 */
+
+
+body .customize-panel-back:focus,
+body .customize-panel-back:hover,
+body .customize-section-back:hover,
+body .customize-section-back:focus,
+body #customize-controls .control-section .accordion-section-title:focus,
+body #customize-controls .control-section .accordion-section-title:hover,
+body #customize-controls .control-section.open .accordion-section-title,
+body #customize-controls .control-section:hover > .accordion-section-title {
+	border-left-color: #090033;
+	color: #090033;
+}
 
 
 .ewf-section-hidden {
