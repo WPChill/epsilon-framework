@@ -111,12 +111,10 @@
         clear: both;
         padding: 18px 0 6px 0;
         .customize-control-title {
-            font-size: 13px;
             line-height: initial;
             display: inline-block;
         }
         .customize-control-description {
-            font-size: 13px;
             line-height: initial;
         }
         &.repeater-field-hidden {
@@ -205,9 +203,8 @@
     .customize-control-title {
         display: inline-block;
         float: left;
-        margin-bottom: 0;
+        margin-bottom: 10px;
         padding-bottom: 0;
-        position: relative;
 
     }
 }
