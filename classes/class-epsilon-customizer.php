@@ -432,50 +432,25 @@ class Epsilon_Customizer {
 	 */
 	public static function add_action_link_to_page( $post ) {
 
-		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+		if ( self::page_is_epsilon_main_backup( $post ) ) {
 			return;
 		}
 
-		if ( 'page' !== $post->post_type ) {
+		if ( ! self::is_page_or_frontpage( $post ) ) {
 			return;
 		}
 
-		if ( 'publish' !== $post->post_status ) {
+		if ( self::page_is_set_for_woo( $post ) ) {
 			return;
 		}
 
-		// check if it's posts page
-		if ( get_option( 'page_for_posts' ) === $post->ID ) {
-			return;
+		if ( ! self::page_is_built_with_epsilon( $post ) ) {
+
+			$query['autofocus[section]'] = self::_get_theme_name() . '_repeatable_section';
+			$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
+
+			echo '<a class="button button-primary button-hero" style="margin-top: 15px;" href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
 		}
-
-		// check if it's WooCommerce
-		if ( class_exists( 'WooCommerce' ) ) {
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) === $post->ID ) {
-				return;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'cart' ) === $post->ID ) {
-				return;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'checkout' ) === $post->ID ) {
-				return;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'myaccount' ) === $post->ID ) {
-				return;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'terms' ) === $post->ID ) {
-				return;
-			}
-		}
-
-		$query['autofocus[section]'] = 'portum_repeatable_section';
-		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
-
-		echo '<a class="button button-primary button-hero" style="margin-top: 15px;" href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
 	}
 
 	/**
@@ -483,13 +458,11 @@ class Epsilon_Customizer {
 	 */
 	public static function add_action_links( $actions, $post ) {
 
-		// check if this is content backup page for Epsilon Builder
-		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+		if ( self::page_is_epsilon_main_backup( $post ) ) {
 			return $actions;
 		}
 
-		// check if post status is draft
-		if ( 'draft' === $post->post_status ) {
+		if ( !self::is_page_or_frontpage( $post ) ) {
 			return $actions;
 		}
 
@@ -498,27 +471,8 @@ class Epsilon_Customizer {
 			return $actions;
 		}
 
-		// check if it's WooCommerce
-		if ( class_exists( 'WooCommerce' ) ) {
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) === $post->ID ) {
-				return $actions;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'cart' ) === $post->ID ) {
-				return $actions;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'checkout' ) === $post->ID ) {
-				return $actions;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'myaccount' ) === $post->ID ) {
-				return $actions;
-			}
-
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'terms' ) === $post->ID ) {
-				return $actions;
-			}
+		if ( self::page_is_set_for_woo( $post ) ) {
+			return $actions;
 		}
 
 		if ( defined( 'POLYLANG_VERSION' ) ) {
@@ -529,10 +483,7 @@ class Epsilon_Customizer {
 			}
 		}
 
-		$query['autofocus[section]'] = 'portum_repeatable_section';
-		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
-
-		$actions['customize'] = '<a href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
+		$actions['epsilon_builder_link'] = '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" />' . esc_html__( 'Edit with Epsilon Page Builder', 'epsilon-framework' ) . '</a>';
 
 		return $actions;
 	}
@@ -555,13 +506,123 @@ class Epsilon_Customizer {
 	public static function add_display_post_states( $post_states, $post ) {
 
 
-		if ( 'page' !== $post->post_type ) {
+		// check if it's a page type or if it's the front-page
+		if ( !self::is_page_or_frontpage( $post ) ) {
 			return $post_states;
 		}
 
-		if ( get_option( 'posts_for_page' ) === $post->ID ) {
-			return $post_states;
+		// append our new post state
+		if ( self::page_is_built_with_epsilon( $post ) ) {
+			$post_states['epsilon_builder_link'] = __( 'Epsilon', 'epsilon-framework' );
 		}
+
+		return $post_states;
+	}
+
+	public static function replace_rich_editor( $post ) {
+
+		if ( self::page_is_built_with_epsilon( $post ) ) {
+
+			// remove TinyMCE / Rich Text Editor
+			remove_post_type_support( $post->post_type, 'editor' );
+
+			// output our placeholder
+			echo '<div class="epsilon-builder">';
+			echo '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" target="_blank" class="button button-primary button-hero epsilon-go-to-link">' . __( 'Edit with Epsilon Page Builder', 'epsilon-framework' ) . '</a>';
+			echo '</div>';
+		}
+	}
+
+	/**
+	 * Function used to check that the currently viewed $post is actually a page, is not a draft and is not the static
+	 * frontpage set under Reading options
+	 *
+	 * @param $post
+	 *
+	 * @return bool
+	 */
+	public static function is_page_or_frontpage( $post ) {
+
+		if ( ( 'page' === $post->post_type && $post->post_status === 'publish' ) || get_option( 'page_for_posts' ) === $post->ID ) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Under Reading -> Your homepage displays -> A static page
+	 *
+	 * This function checks that the current post ID isn't the actual front - page *
+	 * We disable Edit with Epsilon button / link on these pages *
+	 *
+	 * @param $post *
+	 *
+	 * @return bool
+	 */
+	public static function page_is_epsilon_main_backup( $post ) {
+
+		// check if this is content backup page for Epsilon Builder
+		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Function that checks if WooCommerce exists and if it does,
+	 * it compares the current page ID with what users set in the back-end.
+	 *
+	 * This basically disables Epsilon Page Builder on the following Woo (user set) pages:
+	 *
+	 * shop, cart, checkout, my account, terms
+	 *
+	 * @param $post
+	 *
+	 * @return bool
+	 *
+	 * @todo: find a way to allow Epsilon PB on Woo pages
+	 */
+	public static function page_is_set_for_woo( $post ) {
+
+		// check if it's WooCommerce
+		if ( class_exists( 'WooCommerce' ) ) {
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'cart' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'checkout' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'myaccount' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'terms' ) === $post->ID ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
+	 *
+	 * Function that checks if any post_meta entries exist with the key of {$theme_name}_frontpage_sections_{$post->ID}
+	 *
+	 * @param $post
+	 *
+	 * @return bool
+	 */
+	public static function page_is_built_with_epsilon( $post ) {
 
 		/**
 		 *
@@ -573,17 +634,41 @@ class Epsilon_Customizer {
 		 *
 		 * get_post_meta( int $post_id, string $key = '', bool $single = false )
 		 *
-		 * In the case 'portum_frontpage_sections_'.$post->ID isn't found, it returns an empty string
+		 * In the case '{$theme_name}_frontpage_sections_{$post->ID} isn't found, it returns an empty string
 		 *
 		 */
-		$was_built_with_epsilon = get_post_meta( $post->ID, 'portum_frontpage_sections_' . $post->ID, true );
+		$was_built_with_epsilon = get_post_meta( $post->ID, self::_get_theme_name() . '_frontpage_sections_' . $post->ID, true );
 
-
-		if ( current_user_can( 'manage_options' ) && is_array( $was_built_with_epsilon ) && array_key_exists( 'portum_frontpage_sections_' . $post->ID, $was_built_with_epsilon ) ) {
-			$post_states['epsilon'] = __( 'Epsilon', 'epsilon-framework' );
+		if ( is_array( $was_built_with_epsilon ) && array_key_exists( self::_get_theme_name() . '_frontpage_sections_' . $post->ID, $was_built_with_epsilon ) ) {
+			return true;
 		}
 
-		return $post_states;
+		return false;
 	}
 
+	/**
+	 * Gets, beautifies & returns the currently active theme name
+	 *
+	 * @return string
+	 */
+	public static function _get_theme_name() {
+
+		// get current active theme
+		$current_theme = wp_get_theme();
+		$my_theme      = $current_theme->get( 'Name' );
+
+		// beautify the theme name; remove spaces, and replace with _; make name lowercase
+		$my_theme = strtolower( str_replace( ' ', '_', $my_theme ) );
+
+		return esc_html( $my_theme );
+	}
+
+	public static function _get_focus_panel( $post ) {
+
+		$query['autofocus[section]'] = self::_get_theme_name() . '_repeatable_section';
+		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
+
+		return esc_url( $section_link );
+
+	}
 }
