@@ -70,7 +70,7 @@ class Epsilon_Notify_System {
 	 */
 	public static function check_plugin_is_installed( $slug ) {
 		$plugin_path = self::_get_plugin_basename_from_slug( $slug );
-		if ( file_exists( ABSPATH . 'wp-content/plugins/' . $plugin_path ) ) {
+		if ( file_exists( trailingslashit( WP_PLUGIN_DIR ) . $plugin_path ) ) {
 			return true;
 		}
 
@@ -84,7 +84,7 @@ class Epsilon_Notify_System {
 	 */
 	public static function check_plugin_is_active( $slug ) {
 		$plugin_path = self::_get_plugin_basename_from_slug( $slug );
-		if ( file_exists( ABSPATH . 'wp-content/plugins/' . $plugin_path ) ) {
+		if ( file_exists( trailingslashit( WP_PLUGIN_DIR ) . $plugin_path ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 			return is_plugin_active( $plugin_path );
