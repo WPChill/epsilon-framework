@@ -1380,7 +1380,7 @@ ui-slider:hover {
 }
 
 .repeater-field-epsilon-color-picker .epsilon-color-picker-title {
-  margin-left: 37px;
+  margin-left: 42px;
 }
 .repeater-field-epsilon-color-picker .minicolors-input {
   top: 0;
@@ -1968,7 +1968,7 @@ body.adding-section .epsilon-add-new-section:before {
   font-style: italic;
 }
 .epsilon-controller-image-container .epsilon-image {
-  border: 1px dashed #EEE;
+  border: 1px dashed #eee;
   padding: 6px;
   margin-bottom: 6px;
   min-height: 40px;
@@ -1982,12 +1982,15 @@ body.adding-section .epsilon-add-new-section:before {
   text-align: center;
   padding-bottom: 1px;
 }
-.epsilon-controller-image-container .actions .image-upload-remove-button,
 .epsilon-controller-image-container .actions .image-upload-button,
 .epsilon-controller-image-container .actions .image-default-button {
   margin: 0;
   display: inline-block;
   min-width: 30%;
+}
+.epsilon-controller-image-container .actions .image-upload-remove-button {
+  margin: 0;
+  display: inline-block;
 }
 
 .epsilon-icon-container {
