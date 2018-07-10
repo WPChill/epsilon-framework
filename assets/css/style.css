@@ -159,6 +159,9 @@
   .epsilon-quickie-is-visible .available-sections.opened {
     left: 48px;
   }
+  .epsilon-quickie-is-visible.adding-doubled-section .doubled-section-parent {
+    left: 43px;
+  }
 }
 .epsilon-upsell-container {
   background: #fff;
@@ -2324,7 +2327,7 @@ body.adding-section .epsilon-add-new-section:before {
   padding-top: 35px;
 }
 .doubled-section-parent .accordion-section-content {
-  padding: 10px 20px 15px 32px;
+  padding: 10px 20px 15px 20px;
 }
 .doubled-section-parent .epsilon-close-doubled-section {
   position: absolute;
@@ -2754,9 +2757,6 @@ body.adding-doubled-section .doubled-section-parent {
 
 .repeater-field .tmce-active iframe {
   min-height: 150px;
-}
-.repeater-field .tmce-active .wp-editor-tabs {
-  display: none;
 }
 
 /* Debug Colors */
