@@ -156,6 +156,7 @@
 		max-width: calc(100% - 50px);
 	}
 
+
 }
 
 @media screen and (max-width: 1290px) {
@@ -174,6 +175,10 @@
 		}
 		&.adding-doubled-section .doubled-section-parent {
 			left: 43px;
+		}
+
+		.wp-full-overlay.collapsed .wp-full-overlay-sidebar {
+			margin-left: -350px;
 		}
 	}
 }
