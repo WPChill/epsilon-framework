@@ -175,5 +175,8 @@
 		.available-sections.opened {
 			left: 48px;
 		}
+		&.adding-doubled-section .doubled-section-parent {
+			left: 43px;
+		}
 	}
 }
