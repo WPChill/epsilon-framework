@@ -388,10 +388,3 @@ body #customize-controls .control-section:hover > .accordion-section-title {
 .efw-section-visible {
 	display: block !important;
 }
-
-
-
-/* fix for sections vhen viewed in the Customizer */
-.customize-partial-edit-shortcuts-shown section {
-	padding: 0 12px;
-}
