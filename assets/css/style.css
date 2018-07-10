@@ -159,6 +159,9 @@
   .epsilon-quickie-is-visible.adding-doubled-section .doubled-section-parent {
     left: 43px;
   }
+  .epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
+    margin-left: -350px;
+  }
 }
 .epsilon-upsell-container {
   background: #fff;
