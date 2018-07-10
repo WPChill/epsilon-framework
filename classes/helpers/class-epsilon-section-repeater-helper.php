@@ -634,6 +634,7 @@ class Epsilon_Section_Repeater_Helper {
 
 					$arr[ $key . '_row_title_align' ] = $temp;
 					break;
+					/*
 				case 'template-selector':
 					$temp = array(
 						'id'      => $key . '_template_selector',
@@ -646,6 +647,7 @@ class Epsilon_Section_Repeater_Helper {
 
 					$arr[ $key . '_template_selector' ] = $temp;
 					break;
+					*/
 				default:
 					break;
 			}// End switch().
