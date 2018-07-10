@@ -156,10 +156,6 @@
 		max-width: calc(100% - 50px);
 	}
 
-	.available-sections.opened {
-		left: 12px;
-	}
-
 	.wp-full-overlay.collapsed .wp-full-overlay-sidebar {
 		margin-left: -350px;
 	}
@@ -171,7 +167,13 @@
 		#customize-preview iframe {
 			left: 50px;
 		}
-
 	}
+}
 
+@media screen and (max-width: 1680px) {
+	.epsilon-quickie-is-visible {
+		.available-sections.opened {
+			left: 48px;
+		}
+	}
 }

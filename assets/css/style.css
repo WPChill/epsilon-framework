@@ -146,9 +146,6 @@
   padding-left: 50px;
   max-width: calc(100% - 50px);
 }
-.epsilon-quickie-is-visible .available-sections.opened {
-  left: 12px;
-}
 .epsilon-quickie-is-visible .wp-full-overlay.collapsed .wp-full-overlay-sidebar {
   margin-left: -350px;
 }
@@ -156,6 +153,11 @@
 @media screen and (max-width: 1290px) {
   .epsilon-quickie-is-visible #customize-preview iframe {
     left: 50px;
+  }
+}
+@media screen and (max-width: 1680px) {
+  .epsilon-quickie-is-visible .available-sections.opened {
+    left: 48px;
   }
 }
 .epsilon-upsell-container {
