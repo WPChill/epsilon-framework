@@ -597,7 +597,8 @@ class Epsilon_Section_Repeater_Helper {
 					$temp              = array(
 						'id'      => $key . '_row_spacing_top',
 						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Padding Top', 'epsilon-framework' ),
+						'label'   => esc_html__( 'Padding Top', 'epsilon-framework' ),
+						'description' => esc_html( 'Adds padding top. ', 'epsilon-framework' ),
 						'group'   => 'layout',
 						'choices' => $this->create_choices_array( 'row_spacing', $values['choices'] ),
 						'default' => isset( $values['default'] ) ? $values['default'] : 'none',
@@ -611,7 +612,7 @@ class Epsilon_Section_Repeater_Helper {
 						'id'          => $key . '_row_spacing_bottom',
 						'type'        => 'epsilon-button-group',
 						'label'       => __( 'Padding Bottom', 'epsilon-framework' ),
-						'description' => esc_html( 'Add padding bottom. Options, from left to right modify the padding by: 90px, 70px,', 'epsilon-framework' ),
+						'description' => esc_html( 'Adds padding bottom.', 'epsilon-framework' ),
 						'group'       => 'layout',
 						'choices'     => $this->create_choices_array( 'row_spacing_bottom', $values['choices'] ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
