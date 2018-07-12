@@ -7,7 +7,6 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Section_Repeater_Helper
  */
 class Epsilon_Section_Repeater_Helper {
-
 	/**
 	 * @var null
 	 */
@@ -286,6 +285,9 @@ class Epsilon_Section_Repeater_Helper {
 	 * Create from a field of keys, "usable" fields
 	 *
 	 * @param array $styling
+	 * @param       $key
+	 *
+	 * @return array
 	 */
 	public function create_color_fields( $colors = array(), $key ) {
 		$arr = array();
@@ -340,6 +342,9 @@ class Epsilon_Section_Repeater_Helper {
 	 * Create from a field of keys, "usable" fields
 	 *
 	 * @param array $styling
+	 * @param       $key
+	 *
+	 * @return array
 	 */
 	public function create_styling_fields( $styling = array(), $key ) {
 		$sizes = Epsilon_Helper::get_image_sizes();
@@ -507,7 +512,6 @@ class Epsilon_Section_Repeater_Helper {
 
 	/**
 	 *  Create from a field of keys, "usable" fields
-	 *
 	 *
 	 * @param array $layout
 	 * @param       $key

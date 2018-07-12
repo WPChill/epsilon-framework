@@ -235,4 +235,28 @@ class Epsilon_Helper {
 
 		echo $html;
 	}
+
+	/**
+	 * Check if we have a static page
+	 */
+	public static function get_static_frontpage_permalink() {
+		$front = get_option( 'show_on_front' );
+		if ( 'posts' === $front ) {
+			return false;
+		}
+
+		return get_permalink( get_option( 'page_on_front' ) );
+	}
+
+	/**
+	 * Check if we have a blog page, if not add it
+	 */
+	public static function get_blogpage_permalink() {
+		$front = get_option( 'show_on_front' );
+		if ( 'posts' === $front ) {
+			return false;
+		}
+
+		return get_permalink( get_option( 'page_for_posts' ) );
+	}
 }
