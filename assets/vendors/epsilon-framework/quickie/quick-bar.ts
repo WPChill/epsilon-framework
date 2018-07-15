@@ -79,8 +79,8 @@ export class EpsilonQuickieBar {
                 jQuery(context).removeClass('quickie-link-active');
 
                 // add 'quickie-link-active' on currently clicked link
-                if (jQuery(` [data-customizer-link='jQuery{link_to}']`)) {
-                    jQuery(`[data-customizer-link='jQuery{link_to}']`).addClass('quickie-link-active');
+                if (jQuery(` [data-customizer-link='${link_to}']`)) {
+                    jQuery(`[data-customizer-link='${link_to}']`).addClass('quickie-link-active');
                 }
             }
         });
