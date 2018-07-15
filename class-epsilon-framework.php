@@ -236,7 +236,7 @@ class Epsilon_Framework {
 			 *
 			 * @return void
 			 */
-			wp_enqueue_script( 'epsilon-quickie-bar', EPSILON_URI . '/assets/js/epsilon-quickie.js', array( 'jquery' ) );
+			wp_enqueue_script( 'epsilon-quickie-bar', EPSILON_URI . '/assets/js/epsilon-framework-quickie.js', array( 'jquery' ) );
 
 			wp_localize_script( 'epsilon-quickie-bar', 'EpsilonQuickieObj',
 				apply_filters( 'epsilon_quickie_bar_shortcuts',
