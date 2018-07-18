@@ -2408,26 +2408,34 @@ body.adding-doubled-section .doubled-section-parent {
   top: 4px;
   height: 100%;
   opacity: .15;
+  border-radius: 15px;
 }
 .epsilon-button-control-group:hover {
   opacity: 1;
 }
 .epsilon-button-control-group .epsilon-control-button {
-  background-color: #3C2166;
+  background-color: #0085ba;
   color: #fff;
   padding: 0 3px;
+  border: 1px solid #fff;
+  -webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
+  box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
 }
 .epsilon-button-control-group .epsilon-control-button.epsilon-control-button-edit {
-  background: #3C2166;
+  background: #0085ba;
   border-right: none;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 .epsilon-button-control-group .epsilon-control-button.epsilon-control-button-edit:hover {
-  background: #6F5499;
+  background: #00a6d0;
   color: #fff;
 }
 .epsilon-button-control-group .epsilon-control-button.epsilon-control-button-delete {
   background: #F86046;
   border-left: none;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 .epsilon-button-control-group .epsilon-control-button.epsilon-control-button-delete:hover {
   background: #F83921;
@@ -2440,11 +2448,13 @@ body.adding-doubled-section .doubled-section-parent {
   border-color: #0e85b8;
   background-color: rgba(14, 133, 184, 0.02);
   opacity: 0.3;
+  box-shadow: 0px 0px 30px 0px rgba(35, 31, 32, 0.1);
 }
 
 .epsilon-pencil-button-group {
-  background: #3C2166;
+  background: #0085ba;
   color: #fff;
+  border-radius: 15px;
   display: table;
   position: absolute;
   left: 0;
@@ -2453,6 +2463,8 @@ body.adding-doubled-section .doubled-section-parent {
   max-width: 120px;
   z-index: 100;
   border: 1px solid #fff;
+  -webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
+  box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
 }
 .epsilon-pencil-button-group .dashicons {
   line-height: 26px;
@@ -2465,14 +2477,20 @@ body.adding-doubled-section .doubled-section-parent {
 .epsilon-pencil-button-group a:last-of-type {
   margin-right: 0;
   border-right: none;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.epsilon-pencil-button-group a:first-of-type {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 .epsilon-pencil-button-group a:hover, .epsilon-pencil-button-group a:focus {
-  background: #6F5499;
+  background: #00a6d0;
   color: #fff;
 }
 
 .epsilon-section-editor {
-  background: #3C2166 !important;
+  background: #0085ba !important;
   color: #fff;
   width: 30px;
   height: 30px;
@@ -2481,6 +2499,7 @@ body.adding-doubled-section .doubled-section-parent {
   -webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
   box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
   line-height: 30px;
+  border-radius: 50px;
   text-align: center;
   position: absolute;
   z-index: 100;
@@ -2490,7 +2509,7 @@ body.adding-doubled-section .doubled-section-parent {
   line-height: 30px;
 }
 .epsilon-section-editor:hover, .epsilon-section-editor:focus {
-  background: #6F5499;
+  background: #0085ba;
   color: #fff;
 }
 
