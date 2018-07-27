@@ -2813,11 +2813,3 @@ body #customize-controls .control-section:hover > .accordion-section-title {
   border-left-color: #090033;
   color: #090033;
 }
-
-.ewf-section-hidden {
-  display: none !important;
-}
-
-.efw-section-visible {
-  display: block !important;
-}
