@@ -27,11 +27,35 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
     this.type = type;
     this.label = instance.control.params.sections[ type ].title;
 
+    this.handleOtherEvents();
     /**
      * Update labels
      */
     instance.utils.updateLabel( this );
     this.addTabs();
+  }
+
+  /**
+   * Handle hide event
+   */
+  public handleOtherEvents() {
+    this.header.on( 'click', '.repeater-row-hide', ( event ) => {
+      event.preventDefault();
+
+      let field: JQuery = this.container.find( '[data-field="' + this.type + '_section_visibility"]' );
+      let value: any = field.val();
+
+      let vals = {
+        hidden: 'visible',
+        visible: 'hidden'
+      };
+
+      if ( vals.hasOwnProperty( value ) ) {
+        this.header.removeClass( 'epsilon-section-visible epsilon-section-hidden' ).addClass( `epsilon-section-${vals[ value ]}` );
+        field.val( vals[ value ] ).trigger( 'change' );
+      }
+
+    } );
   }
 
   /**
@@ -41,6 +65,8 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
     jQuery( this.container ).find( '[data-group="regular"]' ).wrapAll( '<div data-tab-id="regular" class="tab-panel regular active"></div>' );
     jQuery( this.container ).find( '[data-group="styling"]' ).wrapAll( '<div data-tab-id="styling" class="tab-panel styling"></div>' );
     jQuery( this.container ).find( '[data-group="layout"]' ).wrapAll( '<div data-tab-id="layout" class="tab-panel layout"></div>' );
+    jQuery( this.container ).find( '[data-group="colors"]' ).wrapAll( '<div data-tab-id="colors" class="tab-panel colors"></div>' );
+    jQuery( this.container ).find( '[data-group="outofit"]' ).insertBefore( this.container.find( '.repeater-row-footer' ) );
     this._handleTabs();
   }
 

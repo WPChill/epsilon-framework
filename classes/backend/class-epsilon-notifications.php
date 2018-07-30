@@ -9,6 +9,19 @@ if ( ! defined( 'WPINC' ) ) {
  */
 class Epsilon_Notifications {
 	/**
+	 * Denied metas
+	 *
+	 * @var array
+	 */
+	private static $denied = array(
+		'wp_capabilities',
+		'wp_user_level',
+		'nickname',
+		'first_name',
+		'last_name',
+		'description',
+	);
+	/**
 	 * @since 1.0.0
 	 * @var null
 	 */
@@ -20,7 +33,7 @@ class Epsilon_Notifications {
 	public $notices = array();
 	/**
 	 * @since 1.0.0
-	 * @var array
+	 * @var string
 	 */
 	public $html = '<div class="epsilon-framework-notice is-dismissible %1$s" data-unique-id="%2$s">%3$s</div>';
 
@@ -51,6 +64,31 @@ class Epsilon_Notifications {
 	 */
 	public function add_notice( $notice = array() ) {
 		$this->notices[] = $notice;
+
+		$this->_build_options();
+	}
+
+	/**
+	 * Build options
+	 */
+	private function _build_options() {
+		$notices = get_option( 'epsilon_framework_notices', array() );
+		$option  = array();
+		foreach ( $this->notices as $k => $v ) {
+			$option[] = $v['id'];
+		}
+
+		$equal_arrays = serialize( $notices ) === serialize( $option );
+		if ( $equal_arrays ) {
+			return;
+		}
+
+
+		$option = $equal_arrays
+			? array_unique( array_merge( $option, $notices ) )
+			: array_unique( array_merge( $option, array() ) );
+
+		update_option( 'epsilon_framework_notices', $option );
 	}
 
 	/**
@@ -69,13 +107,26 @@ class Epsilon_Notifications {
 	}
 
 	/**
-	 * Dismiss notice AJAX
-	 *
-	 * @since 1.0.0
+	 * Dismiss a notice
 	 *
 	 * @param $args
+	 *
+	 * @return string
 	 */
 	public static function dismiss_notice( $args ) {
+		$options = get_option( 'epsilon_framework_notices', array() );
+		if ( empty( $options ) ) {
+			return 'nok';
+		}
+
+		if ( in_array( $args['notice_id'], self::$denied ) ) {
+			return 'nok';
+		}
+
+		if ( ! in_array( $args['notice_id'], $options ) ) {
+			return 'nok';
+		}
+
 		add_user_meta( $args['user_id'], $args['notice_id'], 'true', true );
 
 		return 'ok';

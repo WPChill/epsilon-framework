@@ -8,6 +8,125 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Helper
  */
 class Epsilon_Helper {
+
+	/**
+	 * Add description closer button to the section
+	 *
+	 * @return string
+	 */
+	public static function add_description_button() {
+		return '<button type="button" class="epsilon-button-link-close-section">' . __( 'Close', 'epsilon-framework' ) . '</button>';
+	}
+
+	/**
+	 * Generate an edit shortcut for the frontend sections
+	 */
+	public static function generate_pencil( $class_name = '', $section_type = '' ) {
+		$sections = $class_name::get_instance();
+		if ( ! isset( $sections->sections[ $section_type ] ) ) {
+			return '';
+		}
+
+		if ( ! is_customize_preview() ) {
+			return '';
+		}
+
+		if ( isset( $sections->sections[ $section_type ]['customization'] ) && ! $sections->sections[ $section_type ]['customization']['enabled'] ) {
+			return '<a href="#" class="epsilon-section-editor"><span class="dashicons dashicons-edit"></span></a>';
+		}
+
+		$customization = array(
+			'regular' => true,
+			'styling' => ! empty( $sections->sections[ $section_type ]['customization']['styling'] ),
+			'layout'  => ! empty( $sections->sections[ $section_type ]['customization']['layout'] ),
+			'colors'  => ! empty( $sections->sections[ $section_type ]['customization']['colors'] ),
+		);
+
+		$icons = array(
+			'regular' => 'edit',
+			'layout'  => 'layout',
+			'colors'  => 'admin-appearance',
+			'styling' => 'admin-customizer',
+		);
+
+		$customization = array_filter( $customization );
+
+		$html = '<div class="epsilon-pencil-button-group">';
+		foreach ( $customization as $k => $v ) {
+			$html .= '<a href="#" data-focus="' . $k . '"><span class="dashicons dashicons-' . $icons[ $k ] . '"></span></a>';
+		}
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * Generates an edit shortcut for a single repeater field
+	 * in order for this to work, we need to send over the previewer
+	 * the following info:
+	 *
+	 * 1. Repeater field id
+	 * 2. Doubled section id
+	 * 3. Repeater field index
+	 *
+	 * @param null   $index
+	 * @param string $doubled_section
+	 * @param string $control
+	 *
+	 * @return string
+	 */
+	public static function generate_field_repeater_pencil( $index = null, $doubled_section = '', $control = '' ) {
+		if ( ! is_customize_preview() ) {
+			return '';
+		}
+
+		if ( null === $index ) {
+			return '';
+		}
+
+		if ( empty( $doubled_section ) ) {
+			return '';
+		}
+
+		if ( empty( $control ) ) {
+			return '';
+		}
+
+
+		$html = "<div class='epsilon-button-control-group'>";
+		$html .= "<a href='#' class='epsilon-control-button epsilon-control-button-edit epsilon-field-repeater-editor' data-index='{$index}' data-control='{$control}' data-doubled-section='{$doubled_section}'>";
+		$html .= "<span class='dashicons dashicons-edit'></span>";
+		$html .= "</a>";
+		$html .= "<a href='#' class='epsilon-control-button epsilon-control-button-delete epsilon-field-repeater-delete-item' data-index='{$index}' data-control='{$control}'><span class='dashicons dashicons-trash'></span></a>";
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	/**
+	 * Allowed kses
+	 *
+	 * @return array
+	 */
+	public static function allowed_kses_pencil() {
+		return array(
+			'div'  => array(
+				'class' => true,
+			),
+			'a'    => array(
+				'class'                => true,
+				'data-focus'           => true,
+				'href'                 => true,
+				'data-control'         => true,
+				'data-doubled-section' => true,
+				'data-index'           => true,
+			),
+			'span' => array(
+				'class' => true,
+			),
+		);
+	}
+
 	/**
 	 * Function that retrieves image sizes defined in theme
 	 *
@@ -76,5 +195,68 @@ class Epsilon_Helper {
 		}
 
 		return $css;
+	}
+
+	/**
+	 * Gets an image with custom dimensions
+	 */
+	public static function get_image_with_custom_dimensions( $control = '' ) {
+		$decoded = json_decode( get_theme_mod( $control, '{}' ), true );
+		if ( empty( $decoded ) ) {
+			the_custom_logo();
+
+			return;
+		}
+
+		$associated_image = get_theme_mod( $decoded['linked_control'], false );
+
+		if ( ! $associated_image ) {
+			return;
+		}
+
+		$image_alt = get_post_meta( $associated_image, '_wp_attachment_image_alt', true );
+		$attr      = array(
+			'class'    => '',
+			'itemprop' => '',
+		);
+
+		if ( empty( $image_alt ) ) {
+			$attr['alt'] = get_bloginfo( 'name', 'display' );
+		}
+
+		if ( 'custom_logo' === $decoded['linked_control'] ) {
+			$attr['class']    = 'custom-logo logo';
+			$attr['itemprop'] = 'logo';
+
+			$image = wp_get_attachment_image_src( $associated_image, 'full' );
+
+			$html = sprintf( '<a href="%1$s" class="custom-logo-link" rel="home" itemprop="url"><img src="%2$s" alt="' . $attr['alt'] . '" itemprop="logo" width="' . $decoded['width'] . '" height="' . $decoded['height'] . ' "/></a>', esc_url( home_url( '/' ) ), $image[0] );
+		}
+
+		echo $html;
+	}
+
+	/**
+	 * Check if we have a static page
+	 */
+	public static function get_static_frontpage_permalink() {
+		$front = get_option( 'show_on_front' );
+		if ( 'posts' === $front ) {
+			return false;
+		}
+
+		return get_permalink( get_option( 'page_on_front' ) );
+	}
+
+	/**
+	 * Check if we have a blog page, if not add it
+	 */
+	public static function get_blogpage_permalink() {
+		$front = get_option( 'show_on_front' );
+		if ( 'posts' === $front ) {
+			return false;
+		}
+
+		return get_permalink( get_option( 'page_for_posts' ) );
 	}
 }

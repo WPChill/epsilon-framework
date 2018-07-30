@@ -23,6 +23,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
      * so we can focus our panel and repeatable section
      */
     this._handleNavigation();
+    this._handleFieldNavigation();
     /**
      * Initiate Search on sections
      */
@@ -55,18 +56,22 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    */
   public createExistingRows(): void {
     const control = this;
-    if ( this.control.params.value.length ) {
-      for ( let i = 0; i < this.control.params.value.length; i ++ ) {
-        let row: EpsilonRepeaterSectionRow | boolean,
-            addons: EpsilonRepeaterAddons;
+    this.control.params.value.map( ( element ) => {
+      let row: EpsilonRepeaterSectionRow | any,
+          addons: EpsilonRepeaterAddons,
+          visibility: string = 'visible';
 
-        row = control.utils.add( control.control.params.value[ i ] );
-        if ( false !== row ) {
-          addons = new EpsilonRepeaterAddons( control, row );
-          addons.initPlugins();
-        }
+      if ( element.hasOwnProperty( `${element.type}_section_visibility` ) ) {
+        visibility = element[ element.type + '_section_visibility' ];
       }
-    }
+
+      row = control.utils.add( element );
+      if ( false !== row ) {
+        row.header.addClass( `epsilon-section-${visibility}` );
+        addons = new EpsilonRepeaterAddons( control, row );
+        addons.initPlugins();
+      }
+    } );
   }
 
   /**
@@ -76,7 +81,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
   public handleEvents(): void {
     const self = this;
     self.utils.addButton();
-
+    self.utils.importButton();
     /**
      * Addition of sections
      */
@@ -120,6 +125,74 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
         jQuery( self.control.selector + ' .limit' ).removeClass( 'highlight' );
       }
     } );
+
+    /**
+     * Section importing
+     */
+    jQuery( '#importable-sections-' + this.control.params.id ).on( 'click', '.epsilon-sections-import', ( e: JQueryEventConstructor ) => {
+      let importer = jQuery( e.target ).attr( 'data-import' );
+      if ( this.control.params.importable.hasOwnProperty( importer ) ) {
+        this.utils.importRows( this.control.params.importable[ importer ].sections );
+
+        jQuery( 'body' ).removeClass( 'adding-section' );
+        jQuery( '#importable-sections-' + this.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
+
+      }
+    } );
+  }
+
+  /**
+   *
+   * @private
+   */
+  private _handleFieldNavigation(): void {
+    wp.customize.previewer.bind( 'epsilon-field-repeater-edit', ( data: any ) => {
+      /**
+       * In case the section does not exist, we can terminate
+       */
+      if ( 'undefined' === typeof(wp.customize.section( data.customizerSection )) ) {
+        return;
+      }
+
+      if ( 'undefined' === typeof(wp.customize.section( data.doubledSection )) ) {
+        return;
+      }
+
+      if ( 'undefined' === typeof(wp.customize.control( data.control )) ) {
+
+      }
+      let control = wp.customize.control( data.control ),
+          section = wp.customize.section( data.doubledSection );
+      /**
+       * Iterate over the controls, minimize everything
+       */
+      _.each( this.rows, ( sect: EpsilonRepeaterSectionRow, index: number ) => {
+        if ( ! sect.container.hasClass( 'minimized' ) && sect.index != data.section ) {
+          this.utils.toggleMinimize( sect );
+        }
+      } );
+
+      wp.customize.section( data.customizerSection ).focus();
+
+      /**
+       * Focus repeatable section
+       */
+      if ( ! _.isUndefined( this.rows[ data.section ] ) && this.rows[ data.section ].container.hasClass( 'minimized' ) ) {
+        this.utils.toggleMinimize( this.rows[ data.section ] );
+      }
+
+      if ( ! jQuery( 'body' ).hasClass( 'adding-doubled-section' ) ) {
+        /**
+         * Used a timeout here because toggleMinimize "closes" everything that's not related to it ( even the doubled section )
+         */
+        setTimeout( _ => {
+          section.headContainer.trigger( 'click' );
+        }, 400 );
+      }
+
+      control.container.find( '.repeater-row:not(".minimized")' ).find( '.repeater-row-header' ).trigger( 'click' );
+      control.container.find( `.repeater-row[data-row='${parseFloat( data.field )}']` ).find( '.repeater-row-header' ).trigger( 'click' );
+    } );
   }
 
   /**
@@ -136,7 +209,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
       /**
        * In case the section does not exist, we can terminate
        */
-      if ( 'undefined' === typeof( wp.customize.section( data.customizerSection ) ) ) {
+      if ( 'undefined' === typeof(wp.customize.section( data.customizerSection )) ) {
         return;
       }
 
@@ -144,7 +217,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
        * Iterate over the controls, minimize everything
        */
       _.each( self.rows, function( sect: EpsilonRepeaterSectionRow, index: number ) {
-        if ( ! sect.container.hasClass( 'minimized' ) && index !== data.section ) {
+        if ( ! sect.container.hasClass( 'minimized' ) && sect.index != data.section ) {
           self.utils.toggleMinimize( sect );
         }
       } );
@@ -156,6 +229,10 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
        */
       if ( ! _.isUndefined( self.rows[ data.section ] ) && self.rows[ data.section ].container.hasClass( 'minimized' ) ) {
         self.utils.toggleMinimize( self.rows[ data.section ] );
+      }
+
+      if ( typeof data.sectionTab === 'string' ) {
+        self.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).trigger( 'click' );
       }
     } );
   }
@@ -221,5 +298,7 @@ export class EpsilonSectionRepeater extends EpsilonFieldRepeater {
    */
   private _moveElements() {
     jQuery( '#sections-left-' + this.control.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
+
+    jQuery( '#importable-sections-' + this.control.params.id ).appendTo( jQuery( '.wp-full-overlay' ) );
   }
 }

@@ -67,7 +67,7 @@ export class EpsilonRepeaterUtils {
   /**
    * Adds a row
    */
-  public add( data: { [key: number]: object } ): EpsilonRepeaterRow | boolean {
+  public add( data: { [key: number]: object }, forceSave: boolean ): EpsilonRepeaterRow | boolean {
     const self = this;
     let template: any = _.memoize( this.control.template ),
         newSetting: any = {},
@@ -341,7 +341,7 @@ export class EpsilonRepeaterUtils {
       }
     }
 
-    row.header.find( '.repeater-row-label' ).text( row.label.value + ' ' + ( row.index + 1 ) );
+    row.header.find( '.repeater-row-label' ).text( row.label.value + ' ' + (row.index + 1) );
   }
 
   /**
@@ -355,7 +355,7 @@ export class EpsilonRepeaterUtils {
 
     row.container.find( '.repeater-row-content' ).slideToggle( 300, function() {
       row.container.toggleClass( 'minimized' );
-      row.header.find( '.dashicons' ).toggleClass( 'dashicons-arrow-up' ).toggleClass( 'dashicons-arrow-down' );
+      row.header.find( '.dashicons:not(.repeater-row-remove):not(.repeater-row-hide)' ).toggleClass( 'dashicons-arrow-up-alt2' ).toggleClass( 'dashicons-arrow-down-alt2' );
 
       /**
        * In case we are in a section, we need to close others
@@ -364,6 +364,8 @@ export class EpsilonRepeaterUtils {
         jQuery( 'body' ).removeClass( 'adding-section' );
         jQuery( 'body' ).removeClass( 'adding-doubled-section' );
         jQuery( '#sections-left-' + self.control.control.params.id ).find( '.available-sections' ).removeClass( 'opened' );
+
+        wp.customize.previewer.send( 'epsilon-section-focused', { index: row.index, closed: row.container.hasClass( 'minimized' ) } );
 
         jQuery.each( row.container.siblings(), function( index: number, element: any ) {
           if ( ! jQuery( element ).hasClass( 'minimized' ) ) {

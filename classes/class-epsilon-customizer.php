@@ -11,6 +11,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Customizer
  */
 class Epsilon_Customizer {
+
 	/**
 	 * Holds the WP Customizer Object
 	 *
@@ -102,13 +103,7 @@ class Epsilon_Customizer {
 		/**
 		 * Register it
 		 */
-		self::$manager->add_setting(
-			new $class['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_setting( new $class['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -152,13 +147,7 @@ class Epsilon_Customizer {
 		/**
 		 * Register the control
 		 */
-		self::$manager->add_control(
-			new $field_type['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_control( new $field_type['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -173,13 +162,7 @@ class Epsilon_Customizer {
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'section';
 
 		$class = self::_get_section_type( $args['type'] );
-		self::$manager->add_section(
-			new $class['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_section( new $class['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -193,13 +176,7 @@ class Epsilon_Customizer {
 		$args['type'] = isset( $args['type'] ) ? $args['type'] : 'panel';
 
 		$class = self::_get_panel_type( $args['type'] );
-		self::$manager->add_panel(
-			new $class['class'](
-				self::$manager,
-				$id,
-				$args
-			)
-		);
+		self::$manager->add_panel( new $class['class']( self::$manager, $id, $args ) );
 	}
 
 	/**
@@ -390,16 +367,14 @@ class Epsilon_Customizer {
 	 * @since 1.2.0
 	 */
 	public static function add_page_builder( $id, $args ) {
-		$pages = new WP_Query(
-			array(
-				'post_type'        => 'page',
-				'nopaging'         => true,
-				'suppress_filters' => true,
-				'post__not_in'     => array(
-					Epsilon_Content_Backup::get_instance()->setting_page,
-				),
-			)
-		);
+		$pages = new WP_Query( array(
+			'post_type'        => 'page',
+			'nopaging'         => true,
+			'suppress_filters' => true,
+			'post__not_in'     => array(
+				Epsilon_Content_Backup::get_instance()->setting_page,
+			),
+		) );
 
 		$ids = array();
 
@@ -442,13 +417,7 @@ class Epsilon_Customizer {
 				/**
 				 * Register the control
 				 */
-				self::$manager->add_control(
-					new Epsilon_Control_Section_Repeater(
-						self::$manager,
-						$id . '_' . get_the_ID(),
-						$args
-					)
-				);
+				self::$manager->add_control( new Epsilon_Control_Section_Repeater( self::$manager, $id . '_' . get_the_ID(), $args ) );
 			}// End while().
 		}// End if().
 
@@ -456,14 +425,53 @@ class Epsilon_Customizer {
 	}
 
 	/**
+	 * @param $post_type
+	 * @param $post
+	 *
+	 * @return bool|void
+	 */
+	public static function add_action_link_to_page( $post ) {
+
+		if ( self::page_is_epsilon_main_backup( $post ) ) {
+			return;
+		}
+
+		if ( ! self::is_page_or_frontpage( $post ) ) {
+			return;
+		}
+
+		if ( self::page_is_set_for_woo( $post ) ) {
+			return;
+		}
+
+		if ( ! self::page_is_built_with_epsilon( $post ) ) {
+
+			$query['autofocus[section]'] = self::_get_theme_name() . '_repeatable_section';
+			$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
+
+			echo '<a class="button button-primary button-hero" style="margin-top: 15px;" href="' . esc_url( $section_link ) . '" />' . esc_html__( 'Live edit with Epsilon', 'epsilon-framework' ) . '</a>';
+		}
+	}
+
+	/**
 	 * Add quick action links to posts
 	 */
 	public static function add_action_links( $actions, $post ) {
-		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+
+		if ( self::page_is_epsilon_main_backup( $post ) ) {
 			return $actions;
 		}
 
-		if ( 'draft' === $post->post_status ) {
+		if ( !self::is_page_or_frontpage( $post ) ) {
+			return $actions;
+		}
+
+		// check if it's posts page
+		if ( get_option( 'page_for_posts' ) == $post->ID ) {
+			return $actions;
+		}
+
+		if ( self::page_is_set_for_woo( $post ) ) {
 			return $actions;
 		}
 
@@ -475,9 +483,192 @@ class Epsilon_Customizer {
 			}
 		}
 
-
-		$actions['customize'] = '<a href="' . esc_url( get_admin_url() . 'customize.php?url=' . get_permalink( $post->ID ) ) . '" />' . esc_html__( 'Customize', 'epsilon-framework' ) . '</a>';
+		$actions['epsilon_builder_link'] = '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" />' . esc_html__( 'Edit with Epsilon Page Builder', 'epsilon-framework' ) . '</a>';
 
 		return $actions;
+	}
+
+	/**
+	 * Add Epsilon Page Builder post state.
+	 *
+	 * Adds a new "Epsilon" post state to the post table.
+	 *
+	 * Fired by `display_post_states` filter.
+	 *
+	 * @since  1.8.0
+	 * @access public
+	 *
+	 * @param array    $post_states An array of post display states.
+	 * @param \WP_Post $post        The current post object.
+	 *
+	 * @return array A filtered array of post display states.
+	 */
+	public static function add_display_post_states( $post_states, $post ) {
+
+
+		// check if it's a page type or if it's the front-page
+		if ( !self::is_page_or_frontpage( $post ) ) {
+			return $post_states;
+		}
+
+		// append our new post state
+		if ( self::page_is_built_with_epsilon( $post ) ) {
+			$post_states['epsilon_builder_link'] = __( 'Epsilon', 'epsilon-framework' );
+		}
+
+		return $post_states;
+	}
+
+	public static function replace_rich_editor( $post ) {
+
+		if ( self::page_is_built_with_epsilon( $post ) ) {
+
+			// remove TinyMCE / Rich Text Editor
+			remove_post_type_support( $post->post_type, 'editor' );
+
+			// output our placeholder
+			echo '<div class="epsilon-builder">';
+			echo '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" target="_blank" class="button button-primary button-hero epsilon-go-to-link">' . __( 'Edit with Epsilon Page Builder', 'epsilon-framework' ) . '</a>';
+			echo '</div>';
+		}
+	}
+
+	/**
+	 * Function used to check that the currently viewed $post is actually a page, is not a draft and is not the static
+	 * frontpage set under Reading options
+	 *
+	 * @param $post
+	 *
+	 * @return bool
+	 */
+	public static function is_page_or_frontpage( $post ) {
+
+		if ( ( 'page' === $post->post_type && $post->post_status === 'publish' ) || get_option( 'page_for_posts' ) === $post->ID ) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Under Reading -> Your homepage displays -> A static page
+	 *
+	 * This function checks that the current post ID isn't the actual front - page *
+	 * We disable Edit with Epsilon button / link on these pages *
+	 *
+	 * @param $post *
+	 *
+	 * @return bool
+	 */
+	public static function page_is_epsilon_main_backup( $post ) {
+
+		// check if this is content backup page for Epsilon Builder
+		if ( absint( Epsilon_Content_Backup::get_instance()->setting_page ) === $post->ID ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Function that checks if WooCommerce exists and if it does,
+	 * it compares the current page ID with what users set in the back-end.
+	 *
+	 * This basically disables Epsilon Page Builder on the following Woo (user set) pages:
+	 *
+	 * shop, cart, checkout, my account, terms
+	 *
+	 * @param $post
+	 *
+	 * @return bool
+	 *
+	 * @todo: find a way to allow Epsilon PB on Woo pages
+	 */
+	public static function page_is_set_for_woo( $post ) {
+
+		// check if it's WooCommerce
+		if ( class_exists( 'WooCommerce' ) ) {
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'cart' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'checkout' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'myaccount' ) === $post->ID ) {
+				return true;
+			}
+
+			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'terms' ) === $post->ID ) {
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
+	 *
+	 * Function that checks if any post_meta entries exist with the key of {$theme_name}_frontpage_sections_{$post->ID}
+	 *
+	 * @param $post
+	 *
+	 * @return bool
+	 */
+	public static function page_is_built_with_epsilon( $post ) {
+
+		/**
+		 *
+		 * Return values when no meta field is found
+		 * If a meta field with the given $key isn’t found for the given $post_id, the return value varies:
+		 *
+		 * If $single is true, an empty string is returned.
+		 * If $single is false, an empty array is returned.
+		 *
+		 * get_post_meta( int $post_id, string $key = '', bool $single = false )
+		 *
+		 * In the case '{$theme_name}_frontpage_sections_{$post->ID} isn't found, it returns an empty string
+		 *
+		 */
+		$was_built_with_epsilon = get_post_meta( $post->ID, self::_get_theme_name() . '_frontpage_sections_' . $post->ID, true );
+
+		if ( is_array( $was_built_with_epsilon ) && array_key_exists( self::_get_theme_name() . '_frontpage_sections_' . $post->ID, $was_built_with_epsilon ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Gets, beautifies & returns the currently active theme name
+	 *
+	 * @return string
+	 */
+	public static function _get_theme_name() {
+
+		// get current active theme
+		$current_theme = wp_get_theme();
+		$my_theme      = $current_theme->get( 'Name' );
+
+		// beautify the theme name; remove spaces, and replace with _; make name lowercase
+		$my_theme = strtolower( str_replace( ' ', '_', $my_theme ) );
+
+		return esc_html( $my_theme );
+	}
+
+	public static function _get_focus_panel( $post ) {
+
+		$query['autofocus[section]'] = self::_get_theme_name() . '_repeatable_section';
+		$section_link                = add_query_arg( $query, admin_url( 'customize.php?url=' . get_permalink( $post->ID ) ) );
+
+		return esc_url( $section_link );
+
 	}
 }

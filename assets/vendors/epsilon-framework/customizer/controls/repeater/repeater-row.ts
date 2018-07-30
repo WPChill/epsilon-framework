@@ -62,7 +62,13 @@ export class EpsilonRepeaterRow {
     /**
      * Click event on header to toggle minimize
      */
-    this.header.on( 'click', function() {
+    this.header.on( 'click', function( event ) {
+      if ( jQuery( event.target ).is( '.repeater-row-hide' ) ) {
+        return;
+      }
+      if ( jQuery( event.target ).hasClass( 'epsilon-section-hidden' ) ) {
+        return;
+      }
       control.utils.toggleMinimize( self );
     } );
 

@@ -1,0 +1,64 @@
+.epsilon-pencil-button-group {
+	background: #0085ba;
+	color: #fff;
+	border-radius: 15px;
+	display: table;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	max-width: 120px;
+	z-index: 100;
+	border: 1px solid #fff;
+	-webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+	box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+	.dashicons {
+		line-height: 26px;
+	}
+	a {
+		color: #fff;
+		padding: 0 4px;
+		border-right: 1px solid rgba(255, 255, 255, .4);
+		&:last-of-type {
+			margin-right: 0;
+			border-right: none;
+			border-top-right-radius: 15px;
+			border-bottom-right-radius: 15px;
+		}
+		&:first-of-type {
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+		}
+		&:hover,
+		&:focus {
+			background: #00a6d0;
+			color: #fff;
+
+		}
+	}
+}
+
+.epsilon-section-editor {
+	background:  #0085ba !important;
+	color: #fff;
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	border: 1px solid #fff;
+	-webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+	box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+	line-height: 30px;
+	border-radius: 50px;
+	text-align: center;
+	position: absolute;
+	z-index: 100;
+	left: -35px;
+	.dashicons {
+		line-height: 30px;
+	}
+	&:hover,
+	&:focus {
+		background:  #0085ba;
+		color: #fff;
+	}
+}

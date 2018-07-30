@@ -1,3 +1,6 @@
-# Epsilon Framework v1.2.2
+# Epsilon Framework v1.2.3
 
-MachoThemes' theme framework.
+Built by Macho Themes.
+
+Special credits: @c0sm1n87
+

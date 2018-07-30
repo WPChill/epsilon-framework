@@ -130,28 +130,20 @@ class Epsilon_Typography {
 	 * @return array|mixed|object
 	 */
 	public function google_fonts( $font = null ) {
-		global $wp_filesystem;
-		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			WP_Filesystem();
-		}
-
-		$path   = EPSILON_PATH . '/assets/data/gfonts.json';
-		$gfonts = $wp_filesystem->get_contents( $path );
-		$gfonts = json_decode( $gfonts );
+		$gfonts = Epsilon_GFonts::gfonts();
 
 		/**
 		 * If it's not a valid json ( json_decode returns null if invalid ), we terminate here.
 		 */
 		if ( null === $gfonts ) {
-			return new stdClass();
+			return array();
 		}
 
 		if ( empty( $font ) ) {
 			return $gfonts;
 		}
 
-		return $gfonts->$font;
+		return $gfonts[ $font ];
 	}
 
 	/**
@@ -175,7 +167,7 @@ class Epsilon_Typography {
 			$this->font_imports = false;
 		}
 
-		$this->font_imports[] = $font->import;
+		$this->font_imports[] = $font['import'];
 
 		return true;
 	}

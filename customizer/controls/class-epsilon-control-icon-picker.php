@@ -51,29 +51,7 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 	 * @return mixed
 	 */
 	public function get_icons() {
-		global $wp_filesystem;
-		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			WP_Filesystem();
-		}
-
-		$path = $this->icons;
-		/**
-		 * In case we don`t have path to icons, we load our own library
-		 */
-		if ( empty( $this->icons ) || ! file_exists( $path ) ) {
-			$path = EPSILON_PATH . '/assets/data/icons.json';
-		}
-
-		$icons = $wp_filesystem->get_contents( $path );
-		$icons = json_decode( $icons );
-
-		/**
-		 * In case the json could not be decoded, we return a new stdClass
-		 */
-		if ( null === $icons ) {
-			return new stdClass();
-		}
+		$icons = Epsilon_Icons::icons();
 
 		return $icons;
 	}
@@ -96,7 +74,7 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 			</span>
 
 			<div class="epsilon-icon-container">
-				<div class="epsilon-icon-name"><i class="{{{ data.value }}}"></i> <div class="icon-label">{{{ data.icons[data.value] }}}</div></div>
+				<div class="epsilon-icon-name"><i class="{{{ data.value }}}"></i> <div class="icon-label">{{{ data.icons[data.value].label }}}</div></div>
 				<span class="dashicons dashicons-arrow-down epsilon-open-icon-picker"></span>
 			</div>
 		</label>
@@ -105,10 +83,20 @@ class Epsilon_Control_Icon_Picker extends WP_Customize_Control {
 			<div class="search-container">
 				<input type="text" class="widefat text" />
 			</div>
+			<# if ( data.groups ) { #>
+				<div class="epsilon-icon-sets">
+					<select>
+						<option value=""><?php echo esc_html__('All', 'epsilon-framework'); ?></option>
+						<# _.each(data.groups, function(k, v){ #>
+						<option value="{{{ k }}}">{{{ k }}}</option>
+						<# }) #>
+					</select>
+				</div>
+			<# } #>
 			<div class="epsilon-icons-container">
 				<div class="epsilon-icons">
 					<# _.each(data.icons, function(k, v){ #>
-						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k }}}"></i>
+						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k.label }}}" data-group="{{{ k.group }}}"></i>
 					<# }) #>
 				</div>
 			</div>

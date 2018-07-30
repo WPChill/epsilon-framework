@@ -1,11 +1,12 @@
-var path = require( 'path' );
-var webpack = require( 'webpack' );
+const path = require( 'path' );
+const webpack = require( 'webpack' );
 
 module.exports = {
   entry: {
     customizer: './assets/vendors/epsilon-framework/customizer/customizer.ts',
     admin: './assets/vendors/epsilon-framework/admin/admin.ts',
-    previewer: './assets/vendors/epsilon-framework/previewer/previewer.ts'
+    previewer: './assets/vendors/epsilon-framework/previewer/previewer.ts',
+    quickie: './assets/vendors/epsilon-framework/quickie/quickie.ts'
   },
   output: {
     path: path.resolve( __dirname, './assets/js/' ),
@@ -33,7 +34,7 @@ module.exports = {
         loader: 'ts-loader',
         exclude: /node_modules/,
         options: {
-          appendTsSuffixTo: [ /\.vue$/ ],
+          appendTsSuffixTo: [ /\.vue$/ ]
         }
       },
       {

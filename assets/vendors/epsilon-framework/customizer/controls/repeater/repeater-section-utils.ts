@@ -1,9 +1,13 @@
+import { EpsilonRepeaterAddons } from './repeater-addons';
+
+declare var EpsilonWPUrls: any;
 declare var wp: any;
 declare var _: any;
 import { EpsilonRepeaterUtils } from './repeater-utils';
 import { EpsilonRepeaterSectionRow } from './repeater-section-row';
 import { EpsilonFieldRepeater } from '../repeater';
 import { EpsilonSectionRepeater } from '../section-repeater';
+import { EpsilonAjaxRequest } from '../../../utils/epsilon-ajax-request';
 
 export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   /**
@@ -15,14 +19,74 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   }
 
   /**
+   * Import button
+   */
+  public importButton() {
+    const self = this;
+    let isImportBtn,
+        sections = jQuery( '#sections-left-' + this.control.control.params.id ).find( '.available-sections' ),
+        importableSections = jQuery( '#importable-sections-' + self.control.control.params.id ).find( '.available-sections' ),
+        body = jQuery( 'body' );
+
+    this.control.context.find( '.epsilon-import-sections' ).on( 'click keydown', function( e: Event ) {
+      if ( jQuery( 'body' ).hasClass( 'adding-doubled-section' ) ) {
+        return;
+      }
+
+      isImportBtn = jQuery( e.target ).is( '.epsilon-import-sections' );
+      body.removeClass( 'adding-section' );
+      body.toggleClass( 'importing-section' );
+      sections.removeClass( 'opened' );
+      importableSections.toggleClass( 'opened' );
+      if ( body.hasClass( 'importing-section' ) && ! isImportBtn ) {
+        self.control.control.close();
+      }
+    } );
+  }
+
+  /**
+   * Clear everything
+   */
+  public clearEverything() {
+    this.control.rows.map( ( element ) => {
+      element.container.slideUp( 300, function() {
+        jQuery( this ).detach();
+      } );
+    } );
+
+    this.control.rows = [];
+    this.control.currentIndex = 0;
+  }
+
+  /**
+   * Create existing rows
+   * @public
+   */
+  public importRows( sections ): void {
+    const control = this.control;
+    sections.map( ( element ) => {
+      let row: EpsilonRepeaterSectionRow | boolean,
+          addons: EpsilonRepeaterAddons;
+
+      row = this.add( element, true );
+      if ( false !== row ) {
+        addons = new EpsilonRepeaterAddons( control, row );
+        addons.initPlugins();
+      }
+    } );
+
+    wp.customize.previewer.refresh();
+  }
+
+  /**
    * Add button
-   * @param instance
    */
   public addButton() {
     const self = this;
     let isAddBtn,
-        sections = jQuery( '#sections-left-' + self.control.control.params.id ).find( '.available-sections' ),
-        body = jQuery( 'body' );
+        sections = jQuery( '#sections-left-' + this.control.control.params.id ).find( '.available-sections' ),
+        body = jQuery( 'body' ),
+        importableSections = jQuery( '#importable-sections-' + this.control.control.params.id ).find( '.available-sections' );
 
     /**
      * Get a reference for the parent section, if we close it. we must close the Section sidebar as well
@@ -43,8 +107,10 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
         } );
 
         body.removeClass( 'adding-section' );
+        body.removeClass( 'importing-section' );
         body.find( '.doubled-section-opened' ).removeClass( 'doubled-section-opened' );
         sections.removeClass( 'opened' );
+        importableSections.removeClass( 'opened' );
       } );
     } );
 
@@ -55,7 +121,9 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
 
       isAddBtn = jQuery( e.target ).is( '.epsilon-add-new-section' );
 
+      body.removeClass( 'importing-section' );
       body.toggleClass( 'adding-section' );
+      importableSections.removeClass( 'opened' );
       sections.toggleClass( 'opened' );
       if ( body.hasClass( 'adding-section' ) && ! isAddBtn ) {
         self.control.control.close();
@@ -84,13 +152,13 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   /**
    * Overwrite base method
    */
-  public add( data: any ): EpsilonRepeaterSectionRow | boolean {
+  public add( data: any, forceSave: boolean ): EpsilonRepeaterSectionRow | boolean {
     const self = this;
     let template: any = _.memoize( this.control.template ),
         newSetting: any = {},
         templateData: any,
         value: {
-          [key: number]: any,
+          [ key: number ]: any,
         } = self.getValue(),
         i: number | string,
         rowContainer: JQuery,
@@ -107,7 +175,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
     /**
      * Extend template data with what we passed in PHP
      */
-    if ( 'undefined' === typeof ( this.control.control.params.sections[ data.type ] ) ) {
+    if ( 'undefined' === typeof (this.control.control.params.sections[ data.type ]) ) {
       return false;
     }
 
@@ -115,7 +183,8 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
      * Form the new fields with the static ones
      */
     fields = jQuery.extend( true, {}, this.control.control.params.sections[ data.type ].fields, this.control.control.params.sections[ data.type ].customization.styling,
-        this.control.control.params.sections[ data.type ].customization.layout );
+        this.control.control.params.sections[ data.type ].customization.layout,
+        this.control.control.params.sections[ data.type ].customization.colors );
 
     /**
      * Extend template data with what we passed in PHP
@@ -187,6 +256,10 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
       self.setValue( value );
     }
 
+    if ( forceSave ) {
+      self.setValue( value );
+    }
+
     this.control.handleRowIncrementor();
     return row;
   }
@@ -195,7 +268,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    * Override parent method
    */
   public updateLabel( section: EpsilonRepeaterSectionRow ) {
-    section.header.find( '.repeater-row-label' ).html( '<span class="repeater-index">#' + ( section.index + 1 ) + ' - </span>' + section.label );
+    section.header.find( '.repeater-row-label' ).html( '<span class="repeater-index">#' + (section.index + 1) + ' - </span>' + section.label );
   };
 
   /**
@@ -208,7 +281,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
   public updateRepeater( instance: any, fieldId: string, element: JQuery ) {
     const self = this;
     let row: EpsilonRepeaterSectionRow | any = this.control.rows[ instance.index ],
-        value: { [key: number]: any } = this.getValue(),
+        value: { [ key: number ]: any } = this.getValue(),
         section: EpsilonRepeaterSectionRow,
         type: string,
         data: any;

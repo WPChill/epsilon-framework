@@ -1,3 +1,5 @@
+import { EpsilonTemplateSelector } from '../template-selector';
+
 declare var EpsilonTranslations: any;
 declare var EpsilonWPUrls: any;
 declare var wp: any;
@@ -7,7 +9,6 @@ import { EpsilonAjaxRequest } from '../../../utils/epsilon-ajax-request';
 import { EpsilonButtonGroup } from '../button-group';
 import { EpsilonRangeSlider } from '../range-slider';
 import { EpsilonRepeaterRow } from './repeater-row';
-import { EpsilonIconPicker } from '../icon-picker';
 import { EpsilonTextEditor } from '../text-editor';
 import { EpsilonColorPicker } from '../color-picker';
 import { EpsilonCustomizerNavigation } from '../customizer-navigation';
@@ -49,16 +50,33 @@ export class EpsilonRepeaterAddons {
    * Init all plugins
    */
   public initPlugins() {
-    this.initRangeSliders();
+    if ( 'epsilon-section-repeater' === this.control.control.params.type ) {
+      this.initRangeSlidersSectionRepeater();
+    } else {
+      this.initRangeSliders();
+    }
+
     this.initImageUploads();
     this.initIconPicker();
     this.initTextEditor();
     this.initColorPickers();
     this.initButtonGroup();
+    this.initCustomization();
+    this.initTemplateSelector();
+
     if ( this.row.hasOwnProperty( 'type' ) ) {
       this.initCustomizerNavigation();
       this.initSelectize();
     }
+  }
+
+  public initTemplateSelector(): void {
+    let settings: any = {
+      container: this.row.container,
+      repeater: true,
+    };
+
+    new EpsilonTemplateSelector( settings );
   }
 
   /**
@@ -283,6 +301,17 @@ export class EpsilonRepeaterAddons {
           self._iconPickerSelection( this, temp );
         } );
 
+        let sets = self.row.container.find( '.epsilon-icon-sets > select' );
+        if ( sets.length ) {
+          sets.selectize();
+        }
+
+        self.row.container.on( 'change', '.epsilon-icon-sets > select', ( e: JQueryEventConstructor ) => {
+          let grouping = jQuery( e.target ).val();
+          temp = jQuery( e.target ).parents( '.epsilon-icon-picker-repeater-container' );
+          self._iconPickerGrouping( grouping, temp );
+        } );
+
         /**
          * Filtering
          */
@@ -294,7 +323,7 @@ export class EpsilonRepeaterAddons {
           }
 
           temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerFilter( this, temp );
+          self._iconPickerFilter( this, temp, self );
 
         }, 1000 ) );
       }
@@ -329,11 +358,29 @@ export class EpsilonRepeaterAddons {
   }
 
   /**
+   *
+   * @param {string | any} group
+   * @param {JQuery} container
+   * @private
+   */
+  private _iconPickerGrouping( group: string | any, container: JQuery ): void {
+    let collection = jQuery( container ).find( '.epsilon-icons > i' );
+    jQuery.each( collection, function() {
+      let temp = jQuery( this ).attr( 'data-group' );
+      if ( 'undefined' !== typeof temp ) {
+        temp = temp.toLowerCase();
+      }
+
+      jQuery( this )[ temp.indexOf( group ) !== - 1 ? 'show' : 'hide' ]();
+    } );
+  }
+
+  /**
    * Icon picker filtering
    * @private
    */
-  private _iconPickerFilter( input: JQuery, container: JQuery ): void {
-    let filter: string | any, temp: string | any,
+  private _iconPickerFilter( input: JQuery, container: JQuery, instance: any ): void {
+    let filter: string | any, temp: string | any, group: string | any, grouping: string | any,
         collection = jQuery( container ).find( '.epsilon-icons > i' );
 
     filter = jQuery( input ).val();
@@ -341,7 +388,24 @@ export class EpsilonRepeaterAddons {
       filter = filter.toLowerCase();
     }
 
+    group = jQuery( input ).parent().parent().find( '.epsilon-icon-sets > select' );
+    if ( group.length ) {
+      group = group.val();
+      if ( '' === filter ) {
+        this._iconPickerGrouping( group, container );
+        return;
+      }
+    }
+
     jQuery.each( collection, function() {
+      if ( '' !== group ) {
+        grouping = jQuery( this ).attr( 'data-group' );
+        if ( grouping !== group ) {
+          jQuery( this )[ 'hide' ]();
+          return true;
+        }
+      }
+
       temp = jQuery( this ).attr( 'data-search' );
       if ( 'undefined' !== typeof temp ) {
         temp = temp.toLowerCase();
@@ -371,6 +435,38 @@ export class EpsilonRepeaterAddons {
       }, 100 * i );
 
     }
+  }
+
+  /**
+   * Initiate range sliders in the section repeater
+   */
+  private initRangeSlidersSectionRepeater() {
+    let sliders = _.filter( this.proxy.fields, ( element: any ) => { return element.type === 'epsilon-slider'; } );
+
+    sliders.map( ( element: any ) => {
+      let sliderSettings: any = {
+        container: this.row.container.find( 'input[data-field="' + element.id + '"]' ).parent(),
+        params: {
+          id: element.id,
+          sliderControls: {
+            min: element.choices.min,
+            max: element.choices.max,
+            step: element.choices.step,
+          },
+        }
+      };
+
+      if ( this.row.hasOwnProperty( 'type' ) ) {
+        sliderSettings.params.value = parseFloat( element.default );
+
+        if ( 'undefined' !== typeof this.control.control.params.value[ this.row.index ] ) {
+          sliderSettings.params.value = parseFloat( this.control.control.params.value[ this.row.index ][ element.id ] );
+        }
+      }
+
+      new EpsilonRangeSlider( sliderSettings );
+    } );
+
   }
 
   /**
@@ -416,5 +512,47 @@ export class EpsilonRepeaterAddons {
         new EpsilonRangeSlider( sliderSettings );
       }
     }
+  }
+
+  public initCustomization() {
+    const self = this;
+    let init = false,
+        sliderSettings: any,
+        val: any;
+
+    if ( ! this.proxy.customization ) {
+      return;
+    }
+
+    if ( ! this.proxy.customization.enabled ) {
+      return;
+    }
+
+    if ( typeof this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ] === 'undefined' ) {
+      return;
+    }
+
+    init = true;
+    sliderSettings = {
+      container: this.row.container.find( '.tab-panel.styling .epsilon-slider' ),
+      params: {
+        id: this.proxy.id + '_background_color_opacity',
+        sliderControls: {
+          min: this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].choices.min,
+          max: this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].choices.max,
+          step: this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].choices.step,
+        }
+      }
+    };
+
+    if ( this.row.hasOwnProperty( 'type' ) ) {
+      sliderSettings.params.value = parseFloat( this.proxy.customization.styling[ this.proxy.id + '_background_color_opacity' ].default );
+      if ( 'undefined' !== typeof this.control.control.params.value[ this.row.index ] &&
+          'undefined' !== typeof this.control.control.params.value[ this.row.index ][ this.proxy.id + '_background_color_opacity' ] ) {
+        sliderSettings.params.value = parseFloat( this.control.control.params.value[ this.row.index ][ this.proxy.id + '_background_color_opacity' ] );
+      }
+    }
+
+    return new EpsilonRangeSlider( sliderSettings );
   }
 }

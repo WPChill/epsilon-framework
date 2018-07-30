@@ -19,6 +19,8 @@ import './extenders/controls/layouts';
 import './extenders/controls/repeater';
 import './extenders/controls/section-repeater';
 import './extenders/controls/button-group';
+import './extenders/controls/page-changer';
+import './extenders/controls/image-dimensions';
 /**
  * Panels
  */
@@ -30,3 +32,14 @@ import './extenders/panels/regular';
 import './extenders/sections/section-doubled';
 import './extenders/sections/section-pro';
 import './extenders/sections/recommended-actions';
+
+/**
+ * Import section description enhancer ( Adds toggle description functionality )
+ */
+import { EpsilonSectionDescriptionEnhancer } from './sections/section-description-enhancer';
+
+new EpsilonSectionDescriptionEnhancer();
+
+import { EpsilonZoneFocus } from './sections/zone-focus';
+
+new EpsilonZoneFocus();

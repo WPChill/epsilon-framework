@@ -35,7 +35,24 @@ export class EpsilonIconPicker {
     this.collection = this.context.find( '.epsilon-icons > i' );
     this.searchInput = this.context.find( '.search-container input' );
     this.inRepeater = repeater;
+
+    let sets = this.context.find( '.epsilon-icon-sets > select' );
+    if ( sets.length ) {
+      sets.selectize();
+    }
+
     this.handleEvents();
+  }
+
+  private _iconPickerGrouping( group: string | any ): void {
+    jQuery.each( this.collection, function() {
+      let temp = jQuery( this ).attr( 'data-group' );
+      if ( 'undefined' !== typeof temp ) {
+        temp = temp.toLowerCase();
+      }
+
+      jQuery( this )[ temp.indexOf( group ) !== - 1 ? 'show' : 'hide' ]();
+    } );
   }
 
   /**
@@ -74,16 +91,37 @@ export class EpsilonIconPicker {
       }
     } );
 
+    this.context.on( 'change', '.epsilon-icon-sets > select', ( e: JQueryEventConstructor ) => {
+      e.preventDefault();
+      let grouping = jQuery( e.target ).val();
+      this._iconPickerGrouping( grouping );
+    } );
+
     /**
      * Search functionality
      */
-    self.context.on( 'keyup change', '.search-container input', _.debounce( function( e: Event ) {
+    this.context.on( 'keyup change', '.search-container input', _.debounce( function( e: Event ) {
       filter = self.searchInput.val();
       if ( 'undefined' !== typeof filter ) {
         filter = filter.toLowerCase();
       }
-
+      let group = self.context.find( '.epsilon-icon-sets > select' );
+      if ( group.length ) {
+        group = group.val();
+        if ( '' === filter ) {
+          self._iconPickerGrouping( group );
+          return;
+        }
+      }
       jQuery.each( self.collection, function() {
+        if ( '' !== group ) {
+          let grouping = jQuery( this ).attr( 'data-group' );
+          if ( grouping !== group ) {
+            jQuery( this )[ 'hide' ]();
+            return true;
+          }
+        }
+
         temp = jQuery( this ).attr( 'data-search' );
         if ( 'undefined' !== typeof temp ) {
           temp = temp.toLowerCase();
