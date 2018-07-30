@@ -11,70 +11,6 @@ module.exports = function( grunt ) {
       css: 'assets/css',
       js: 'assets/js'
     },
-    concat: {
-      epsilonFramework: {
-        src: [
-          'assets/vendors/epsilon-framework/customizer/components/epsilon-object.js',
-          'assets/vendors/epsilon-framework/customizer/components/controls/repeater/repeater-object.js',
-          'assets/vendors/epsilon-framework/customizer/components/controls/section-repeater/section-repeater-object.js',
-          'assets/vendors/epsilon-framework/customizer/components/controls/**/*.js',
-          'assets/vendors/epsilon-framework/customizer/components/sections/**/*.js',
-          'assets/vendors/epsilon-framework/customizer/components/panels/**/*.js',
-          'assets/vendors/epsilon-framework/customizer/components/wp-customize-extenders/**/*.js',
-          'assets/vendors/epsilon-framework/customizer/epsilon.js',
-          '!assets/vendors/epsilon-framework/customizer/epsilon.min.js',
-          '!assets/vendors/epsilon-framework/customizer/epsilon-concat.js'
-        ],
-        dest: 'assets/js/epsilon.js'
-      },
-      epsilonAdmin: {
-        src: [
-          'assets/vendors/epsilon-framework/admin/components/epsilon-admin-object.js',
-          'assets/vendors/epsilon-framework/admin/**/*.js',
-          'assets/vendors/epsilon-framework/admin/epsilon-admin.js',
-          '!assets/vendors/epsilon-framework/admin/epsilon-admin.min.js',
-          '!assets/vendors/epsilon-framework/admin/epsilon-admin-concat.js'
-        ],
-        dest: 'assets/js/epsilon-admin.js'
-      },
-      epsilonPreviewer: {
-        src: [
-          'assets/vendors/epsilon-framework/previewer/components/epsilon-previewer-object.js',
-          'assets/vendors/epsilon-framework/previewer/**/*.js',
-          'assets/vendors/epsilon-framework/previewer/epsilon-previewer.js',
-          '!assets/vendors/epsilon-framework/previewer/epsilon-previewer.min.js',
-          '!assets/vendors/epsilon-framework/previewer/epsilon-previewer-concat.js'
-        ],
-        dest: 'assets/js/epsilon-previewer.js'
-      },
-    },
-    uglify: {
-      epsilon: {
-        options: {
-          sourceMap: false,
-          sourceMapName: 'sourceMap.map'
-        },
-        src: [ 'assets/js/epsilon.js', '!assets/js/epsilon.min.js' ],
-        dest: 'assets/js/epsilon.min.js'
-      },
-      epsilonAdmin: {
-        options: {
-          sourceMap: false,
-          sourceMapName: 'sourceMap.map'
-        },
-        src: [ 'assets/js/epsilon-admin.js', '!assets/js/epsilon-admin.min.js' ],
-        dest: 'assets/js/epsilon-admin.min.js'
-      },
-      epsilonPreviewer: {
-        options: {
-          sourceMap: false,
-          sourceMapName: 'sourceMap.map'
-        },
-        src: [ 'assets/js/epsilon-previewer.js', '!assets/js/epsilon-previewer.min.js' ],
-        dest: 'assets/js/epsilon-previewer.min.js'
-      }
-    },
-
     sass: {
       dist: {
         options: {
@@ -128,15 +64,5 @@ module.exports = function( grunt ) {
 
   grunt.registerTask( 'startSass', [
     'sass'
-  ] );
-
-  // Concatenate Epsilon
-  grunt.registerTask( 'concat-epsilon', [
-    'concat:epsilonFramework',
-    'concat:epsilonAdmin',
-    'concat:epsilonPreviewer',
-    'uglify:epsilon',
-    'uglify:epsilonAdmin',
-    'uglify:epsilonPreviewer'
   ] );
 };

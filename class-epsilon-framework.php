@@ -173,6 +173,8 @@ class Epsilon_Framework {
 		add_filter( 'display_post_states', array( 'Epsilon_Customizer', 'add_display_post_states' ), 99, 2 );
 		add_filter( 'page_row_actions', array( 'Epsilon_Customizer', 'add_action_links' ), 99, 2 );
 		add_action( 'edit_form_after_title', array( 'Epsilon_Customizer', 'add_action_link_to_page' ), 99 );
+		add_action( 'edit_form_after_title', array( 'Epsilon_Customizer', 'replace_rich_editor' ), 99 );
+
 
 	}
 
@@ -199,15 +201,15 @@ class Epsilon_Framework {
 		 */
 		add_action(
 			'customize_controls_print_footer_scripts', array(
-				'Epsilon_Repeater_Templates',
-				'field_repeater_js_template',
-			), 0
+			'Epsilon_Repeater_Templates',
+			'field_repeater_js_template',
+		), 0
 		);
 		add_action(
 			'customize_controls_print_footer_scripts', array(
-				'Epsilon_Repeater_Templates',
-				'section_repeater_js_template',
-			), 0
+			'Epsilon_Repeater_Templates',
+			'section_repeater_js_template',
+		), 0
 		);
 	}
 
@@ -218,65 +220,65 @@ class Epsilon_Framework {
 		wp_enqueue_script( 'epsilon-admin', EPSILON_URI . '/assets/js/epsilon-framework-admin.js', array( 'jquery' ) );
 		wp_localize_script(
 			'epsilon-admin', 'EpsilonWPUrls', array(
-				'siteurl'    => get_option( 'siteurl' ),
-				'theme'      => get_template_directory_uri(),
-				'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-				'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
-			)
+				               'siteurl'    => get_option( 'siteurl' ),
+				               'theme'      => get_template_directory_uri(),
+				               'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+				               'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
+				               'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
+				               'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+			               )
 		);
 		wp_enqueue_style( 'epsilon-admin', EPSILON_URI . '/assets/css/style-admin.css' );
 
 		if ( apply_filters( 'show_epsilon_quickie_bar', true ) ) {
 			/**
-		 * Enqueue Quickie bar for Epsilon FW
-		 *
-		 * @return void
-		 */
-			wp_enqueue_script( 'epsilon-quickie-bar', EPSILON_URI . '/assets/js/epsilon-quickie.js', array( 'jquery' ) );
+			 * Enqueue Quickie bar for Epsilon FW
+			 *
+			 * @return void
+			 */
+			wp_enqueue_script( 'epsilon-quickie-bar', EPSILON_URI . '/assets/js/epsilon-framework-quickie.js', array( 'jquery' ) );
 
-			wp_localize_script(
-				'epsilon-quickie-bar', 'EpsilonQuickieObj', apply_filters(
-					'epsilon_quickie_bar_shortcuts', array(
-						'links' => array(
-							array(
-								'link_to'   => 'colors',
-								'icon'      => 'dashicons dashicons-admin-appearance',
-								'link_type' => 'section',
-							),
-							array(
-								'link_to'   => 'portum_typography_section',
-								'icon'      => 'dashicons dashicons-editor-textcolor',
-								'link_type' => 'section',
-							),
-							array(
-								'link_to'   => 'portum_repeatable_section',
-								'icon'      => 'dashicons dashicons-editor-table',
-								'link_type' => 'section',
-							),
-							array(
-								'link_to'   => 'nav_menus',
-								'icon'      => 'dashicons dashicons-menu',
-								'link_type' => 'panel',
-							),
-							array(
-								'link_to'   => 'portum_panel_general',
-								'icon'      => 'dashicons dashicons-admin-settings',
-								'link_type' => 'panel',
-							),
-							array(
-								'link_to'   => 'custom_css',
-								'icon'      => 'dashicons dashicons-editor-code',
-								'link_type' => 'section',
-							),
+			wp_localize_script( 'epsilon-quickie-bar', 'EpsilonQuickieObj',
+				apply_filters( 'epsilon_quickie_bar_shortcuts',
+					array(
+				'links' => array(
+					array(
+						'link_to'   => 'colors',
+						'icon'      => 'dashicons dashicons-admin-appearance',
+						'link_type' => 'section',
+					),
+					array(
+						'link_to'   => 'portum_typography_section',
+						'icon'      => 'dashicons dashicons-editor-textcolor',
+						'link_type' => 'section',
+					),
+					array(
+						'link_to'   => 'portum_repeatable_section',
+						'icon'      => 'dashicons dashicons-editor-table',
+						'link_type' => 'section',
+					),
+					array(
+						'link_to'   => 'nav_menus',
+						'icon'      => 'dashicons dashicons-menu',
+						'link_type' => 'panel',
+					),
+					array(
+						'link_to'   => 'portum_panel_general',
+						'icon'      => 'dashicons dashicons-admin-settings',
+						'link_type' => 'panel',
+					),
+					array(
+						'link_to'   => 'custom_css',
+						'icon'      => 'dashicons dashicons-editor-code',
+						'link_type' => 'section',
+					),
 
-						),
-						'logo'  => array(
-							'url' => EPSILON_URI . '/assets/img/epsilon-logo.svg',
-							'alt' => 'Epsilon Builder Logo',
-						),
-					)
-				)
-			);
+				),
+				'logo'  => array(
+					'url' => EPSILON_URI . '/assets/img/epsilon-logo.png',
+					'alt' => 'Epsilon Builder Logo',
+				),
+			) ) );
 		}
 
 	}
@@ -286,21 +288,20 @@ class Epsilon_Framework {
 	 */
 	public function customize_preview_styles() {
 		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
-		wp_enqueue_script(
-			'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-framework-previewer.js', array(
-				'jquery',
-				'customize-preview',
-			), 2, true
-		);
+		wp_enqueue_script( 'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-framework-previewer.js', array(
+			'jquery',
+			'customize-preview',
+		), 2, true );
 
-		wp_localize_script(
-			'epsilon-previewer', 'EpsilonWPUrls', array(
-				'siteurl'    => get_option( 'siteurl' ),
-				'theme'      => get_template_directory_uri(),
-				'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-				'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
-			)
-		);
+		wp_localize_script( 'epsilon-previewer',
+			'EpsilonWPUrls', array(
+			'siteurl'    => get_option( 'siteurl' ),
+			'theme'      => get_template_directory_uri(),
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
+				'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
+				'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+		) );
 	}
 
 	/*
@@ -309,30 +310,28 @@ class Epsilon_Framework {
 	 * Dependencies: Customizer Controls script (core)
 	 */
 	public function customizer_enqueue_scripts() {
-		wp_enqueue_script(
-			'epsilon-object', EPSILON_URI . '/assets/js/epsilon-framework-customizer.js', array(
-				'jquery',
-				'customize-controls',
-			), false, true
-		);
+		wp_enqueue_script( 'epsilon-object', EPSILON_URI . '/assets/js/epsilon-framework-customizer.js', array(
+			'jquery',
+			'customize-controls',
+		), false, true );
 
-		wp_localize_script(
-			'epsilon-object', 'EpsilonWPUrls', array(
-				'siteurl'    => get_option( 'siteurl' ),
-				'theme'      => get_template_directory_uri(),
-				'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-				'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
-			)
-		);
+		wp_localize_script( 'epsilon-object',
+			'EpsilonWPUrls', array(
+			'siteurl'    => get_option( 'siteurl' ),
+			'theme'      => get_template_directory_uri(),
+			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
+				'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
+				'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+		) );
 
-		wp_localize_script(
-			'epsilon-object', 'EpsilonTranslations', array(
-				'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
-				'add'        => esc_html__( 'Add', 'epsilon-framework' ),
-				'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
-				'row'        => esc_html__( 'Row', 'epsilon-framework' ),
-			)
-		);
+		wp_localize_script( 'epsilon-object',
+			'EpsilonTranslations', array(
+			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
+			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
+			'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
+			'row'        => esc_html__( 'Row', 'epsilon-framework' ),
+		) );
 
 		wp_enqueue_style( 'font-awesome', EPSILON_URI . '/assets/vendors/fontawesome/font-awesome.css' );
 		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );

@@ -1,0 +1,63 @@
+.epsilon-button-control-group {
+	display: inline-block;
+	line-height: 20px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 100;
+	top: 4px;
+	height: 100%;
+	opacity: .15;
+	border-radius: 15px;
+
+
+	&:hover {
+		opacity: 1;
+	}
+
+
+	.epsilon-control-button {
+		background-color: #0085ba;
+		color: #fff;
+		padding: 0 3px;
+		border: 1px solid #fff;
+		-webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+		box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+
+		&.epsilon-control-button-edit {
+			background: #0085ba;
+			border-right: none;
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+
+			&:hover {
+				background: #00a6d0;
+				color:#fff;
+			}
+		}
+
+		&.epsilon-control-button-delete {
+			background: #F86046;
+			border-left: none;
+			border-top-right-radius: 15px;
+			border-bottom-right-radius: 15px;
+
+			&:hover {
+				background: #F83921;
+				color:#fff;
+			}
+		}
+	}
+}
+
+
+.epsilon-control-highlight {
+	border-style: solid;
+	border-width: 1px;
+	border-color: rgb(14, 133, 184);
+	background-color: rgba(14, 133, 184, 0.02);
+	opacity: 0.3;
+	box-shadow: 0px 0px 30px 0px rgba(35, 31, 32, 0.1);
+}

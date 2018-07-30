@@ -52,6 +52,11 @@ class Epsilon_Section_Repeater_Helper {
 	public $title_align = array();
 
 	/**
+	 * @var array
+	 */
+	public $template_selector = array();
+
+	/**
 	 * Epsilon_Section_Repeater_Helper constructor.
 	 */
 	public function __construct( $args = array() ) {
@@ -257,6 +262,10 @@ class Epsilon_Section_Repeater_Helper {
 		);
 	}
 
+	public function set_template_selector() {
+
+	}
+
 	/**
 	 * Set group type
 	 */
@@ -276,6 +285,9 @@ class Epsilon_Section_Repeater_Helper {
 	 * Create from a field of keys, "usable" fields
 	 *
 	 * @param array $styling
+	 * @param       $key
+	 *
+	 * @return array
 	 */
 	public function create_color_fields( $colors = array(), $key ) {
 		$arr = array();
@@ -330,6 +342,9 @@ class Epsilon_Section_Repeater_Helper {
 	 * Create from a field of keys, "usable" fields
 	 *
 	 * @param array $styling
+	 * @param       $key
+	 *
+	 * @return array
 	 */
 	public function create_styling_fields( $styling = array(), $key ) {
 		$sizes = Epsilon_Helper::get_image_sizes();
@@ -339,8 +354,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-color':
 					$temp = array(
 						'id'          => $key . '_background_color',
-						'label'       => __( 'Background color', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Color', 'epsilon-framework' ),
+						'description' => esc_html__( 'Setting a value for this field will create a color overlay on top of background image/videos.', 'epsilon-framework' ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'epsilon-color-picker',
 						'mode'        => 'hex',
@@ -370,8 +385,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-image':
 					$temp = array(
 						'id'          => $key . '_background_image',
-						'label'       => __( 'Background image', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Image', 'epsilon-framework' ),
+						'description' => esc_html__( 'Use this field to set a background image. Content will overlay on top of the image.', 'epsilon-framework' ),
 						'type'        => 'epsilon-image',
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'group'       => 'styling',
@@ -385,8 +400,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-position':
 					$temp = array(
 						'id'          => $key . '_background_position',
-						'label'       => __( 'Background position', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Position', 'epsilon-framework' ),
+						'description' => esc_html__( 'We recommend using Center. Experiment with the options to see what works best for you.', 'epsilon-framwework' ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'select',
 						'group'       => 'styling',
@@ -408,8 +423,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-repeat':
 					$temp = array(
 						'id'          => $key . '_background_repeat',
-						'label'       => __( 'Background repeat', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Repeat', 'epsilon-framework' ),
+						'description' => esc_html__( 'Set to background-repeat if you are using patterns. For parallax, we recommend setting to no-repeat.', 'epsilon-framework' ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'select',
 						'group'       => 'styling',
@@ -426,8 +441,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-size':
 					$temp = array(
 						'id'          => $key . '_background_size',
-						'label'       => __( 'Background size', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Stretch', 'epsilon-framework' ),
+						'description' => esc_html__( 'We usually recommend using cover as a default option.', 'epsilon-framework' ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'select',
 						'group'       => 'styling',
@@ -443,8 +458,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-parallax':
 					$temp = array(
 						'id'          => $key . '_background_parallax',
-						'label'       => __( 'Background parallax', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Parallax', 'epsilon-framework' ),
+						'description' => esc_html__( 'Toggling this to ON will enable the parallax effect. Make sure you have a  background image set before enabling it.', 'epsilon-framework' ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : false,
 						'type'        => 'epsilon-toggle',
 						'group'       => 'styling',
@@ -455,8 +470,8 @@ class Epsilon_Section_Repeater_Helper {
 				case 'background-video':
 					$temp = array(
 						'id'          => $key . '_background_video',
-						'label'       => __( 'Background video', 'epsilon-framework' ),
-						'description' => '',
+						'label'       => esc_html__( 'Background Video ', 'epsilon-framework' ),
+						'description' => esc_html__( 'Works only with YouTube. Paste your video URL here. Make sure video is embeddable.', 'epsilon-framework' ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'text',
 						'group'       => 'styling',
@@ -496,9 +511,12 @@ class Epsilon_Section_Repeater_Helper {
 	}
 
 	/**
-	 * Create from a field of keys, "usable" fields
+	 *  Create from a field of keys, "usable" fields
 	 *
-	 * @param array $styling
+	 * @param array $layout
+	 * @param       $key
+	 *
+	 * @return array
 	 */
 	public function create_layout_fields( $layout = array(), $key ) {
 		$arr = array();
@@ -506,12 +524,13 @@ class Epsilon_Section_Repeater_Helper {
 			switch ( $prop ) {
 				case 'column-alignment':
 					$temp = array(
-						'id'      => $key . '_column_alignment',
-						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Horizontal alignment', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'column_alignment', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? $values['default'] : 'center',
+						'id'          => $key . '_column_alignment',
+						'type'        => 'epsilon-button-group',
+						'label'       => esc_html__( 'Horizontal Alignment', 'epsilon-framework' ),
+						'description' => esc_html__( 'Center/Left/Right align all of a sections content.', 'epsilon-framework' ),
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'column_alignment', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? $values['default'] : 'center',
 					);
 
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
@@ -521,12 +540,13 @@ class Epsilon_Section_Repeater_Helper {
 
 				case 'column-vertical-alignment':
 					$temp              = array(
-						'id'      => $key . '_column_vertical_alignment',
-						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Vertical alignment', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'column_vertical_alignment', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? $values['default'] : 'middle',
+						'id'          => $key . '_column_vertical_alignment',
+						'type'        => 'epsilon-button-group',
+						'label'       => esc_html__( 'Vertical Alignment', 'epsilon-framework' ),
+						'description' => esc_html__( 'We recommend leaving this to center, but feel free to experiment with the options. Top/Bottom align can be useful when you have a layout of text + image on the same line.', 'epsilon-framework' ),
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'column_vertical_alignment', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? $values['default'] : 'middle',
 					);
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
@@ -535,12 +555,13 @@ class Epsilon_Section_Repeater_Helper {
 
 				case 'column-stretch':
 					$temp              = array(
-						'id'      => $key . '_column_stretch',
-						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Stretch', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'column_stretch', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? $values['default'] : 'boxedin',
+						'id'          => $key . '_column_stretch',
+						'type'        => 'epsilon-button-group',
+						'label'       => esc_html__( 'Content Stretch', 'epsilon-framework' ),
+						'description' => esc_html__( 'Make the section stretch to full-width. Contained is default. There\'s also the option of boxed center. ', 'epsilon-framework' ),
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'column_stretch', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? $values['default'] : 'boxedin',
 					);
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
@@ -551,7 +572,7 @@ class Epsilon_Section_Repeater_Helper {
 					$temp              = array(
 						'id'      => $key . '_column_spacing',
 						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Items spacing', 'epsilon-framework' ),
+						'label'   => esc_html__( 'Item Spacing', 'epsilon-framework' ),
 						'group'   => 'layout',
 						'choices' => $this->create_choices_array( 'column_spacing', $values['choices'] ),
 						'default' => isset( $values['default'] ) ? $values['default'] : 'spaced',
@@ -563,12 +584,13 @@ class Epsilon_Section_Repeater_Helper {
 
 				case 'column-group':
 					$temp              = array(
-						'id'      => $key . '_column_group',
-						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Items group', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'column_group', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? absint( $values['default'] ) : 4,
+						'id'          => $key . '_column_group',
+						'type'        => 'epsilon-button-group',
+						'label'       => __( 'Item Group', 'epsilon-framework' ),
+						'description' => esc_html__( 'Number of items to display at once. Example: 2, 3 or 4 pricing tables. The width of the content will be equally split among the number of elements you select.', 'epsilon-framework' ),
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'column_group', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? absint( $values['default'] ) : 4,
 					);
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
@@ -579,7 +601,8 @@ class Epsilon_Section_Repeater_Helper {
 					$temp              = array(
 						'id'      => $key . '_row_spacing_top',
 						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Spacing top', 'epsilon-framework' ),
+						'label'   => esc_html__( 'Padding Top', 'epsilon-framework' ),
+						'description' => esc_html( 'Adds padding top. ', 'epsilon-framework' ),
 						'group'   => 'layout',
 						'choices' => $this->create_choices_array( 'row_spacing', $values['choices'] ),
 						'default' => isset( $values['default'] ) ? $values['default'] : 'none',
@@ -590,12 +613,13 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 				case 'row-spacing-bottom':
 					$temp              = array(
-						'id'      => $key . '_row_spacing_bottom',
-						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Spacing bottom', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'row_spacing_bottom', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? $values['default'] : 'none',
+						'id'          => $key . '_row_spacing_bottom',
+						'type'        => 'epsilon-button-group',
+						'label'       => __( 'Padding Bottom', 'epsilon-framework' ),
+						'description' => esc_html( 'Adds padding bottom.', 'epsilon-framework' ),
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'row_spacing_bottom', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
@@ -603,17 +627,32 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 				case 'row-title-align':
 					$temp              = array(
-						'id'      => $key . '_row_title_align',
-						'type'    => 'epsilon-button-group',
-						'label'   => __( 'Title & description alignment', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'title_align', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? $values['default'] : 'none',
+						'id'          => $key . '_row_title_align',
+						'type'        => 'epsilon-button-group',
+						'label'       => esc_html__( 'Content Alignment', 'epsilon-framework' ),
+						'description' => esc_html__( 'All sections support an alternating layout. The layout changes based on a section\'s title position. Currently available options are: title left / content right -- title center / content center -- title right / content left ', 'epsilon-framework' ),
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'title_align', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_row_title_align' ] = $temp;
 					break;
+					/*
+				case 'template-selector':
+					$temp = array(
+						'id'      => $key . '_template_selector',
+						'type'    => 'epsilon-template-select',
+						'label'   => __( 'Template selector', 'epsilon-framework' ),
+						'group'   => 'layout',
+						'choices' => $values['choices'],
+						'default' => isset( $values['default'] ) ? esc_attr( $values['default'] ) : 'normal',
+					);
+
+					$arr[ $key . '_template_selector' ] = $temp;
+					break;
+					*/
 				default:
 					break;
 			}// End switch().

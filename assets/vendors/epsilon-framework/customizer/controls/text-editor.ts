@@ -41,7 +41,7 @@ export class EpsilonTextEditor {
                 browser_spellcheck: true,
                 mediaButtons: false,
                 wp_autoresize_on: true,
-                toolbar1: 'bold italic underline link numlist bullist',
+                toolbar1: 'link numlist bullist forecolor backcolor bold italic underline',
                 setup: function (editor: any) {
                     editor.on('change', function (e: Event) {
                         editor.save();

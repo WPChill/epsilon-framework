@@ -10,6 +10,7 @@ export class EpsilonSectionEditorPreviewer {
   public constructor() {
     this.normalSectionFocus();
     this.advancedSectionFocus();
+    this.repeaterFieldFocus();
   }
 
   /**
@@ -24,6 +25,34 @@ export class EpsilonSectionEditorPreviewer {
       };
 
       wp.customize.preview.send( 'epsilon-section-edit', object );
+    } );
+  }
+
+  /**
+   * Repeater field focus
+   */
+  repeaterFieldFocus() {
+    jQuery( document ).on( 'click', '.epsilon-field-repeater-editor', function( this: any, event: JQueryEventConstructor ) {
+      event.preventDefault();
+      let object = {
+        section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),
+        doubledSection: jQuery( this ).attr( 'data-doubled-section' ),
+        control: jQuery( this ).attr( 'data-control' ),
+        field: jQuery( this ).attr( 'data-index' ),
+        customizerSection: jQuery( this ).parents( '[data-section]' ).attr( 'data-customizer-section-id' )
+      };
+
+      wp.customize.preview.send( 'epsilon-field-repeater-edit', object );
+    } );
+
+    jQuery( document ).on( 'click', '.epsilon-field-repeater-delete-item', function( this: any, event: JQueryEventConstructor ) {
+      event.preventDefault();
+      let object = {
+        control: jQuery( this ).attr( 'data-control' ),
+        field: jQuery( this ).attr( 'data-index' )
+      };
+
+      wp.customize.preview.send( 'epsilon-field-repeater-delete', object );
     } );
   }
 
