@@ -115,7 +115,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 			<# } #>
 			<div class="actions">
 				<button class="button image-upload-remove-button" <# if( '' === data.stringifiedVal ) { #> style="display:none;" <# } #>>
-					<?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?>
+					<i class="dashicons dashicons-trash"></i>
 				</button>
 
 				<button type="button" class="button-secondary image-default-button" <# if ( _.isEmpty( data.default ) ) { #> style="display:none;" <# } #>>

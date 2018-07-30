@@ -36,5 +36,10 @@ import './extenders/sections/recommended-actions';
 /**
  * Import section description enhancer ( Adds toggle description functionality )
  */
-import {EpsilonSectionDescriptionEnhancer} from "./sections/section-description-enhancer";
+import { EpsilonSectionDescriptionEnhancer } from './sections/section-description-enhancer';
+
 new EpsilonSectionDescriptionEnhancer();
+
+import { EpsilonZoneFocus } from './sections/zone-focus';
+
+new EpsilonZoneFocus();

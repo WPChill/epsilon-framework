@@ -16,7 +16,7 @@
   padding-top: 35px;
 
   .accordion-section-content {
-    padding: 10px 20px 15px 32px;
+    padding: 10px 20px 15px 20px;
   }
 
   .epsilon-close-doubled-section {
@@ -61,11 +61,11 @@ body.adding-doubled-section {
     left: 350px;
   }
 
-
   .doubled-section-parent {
     left: 0;
   }
 }
+
 
 .customize-pane-child.control-section-epsilon-section-doubled {
   &.doubled-section-opened {

@@ -224,6 +224,36 @@ class Epsilon_Content_Backup {
 	}
 
 	/**
+	 * Updates a post with the new content,
+	 * we'll create a new draft post if it has content so user doesn't lose it
+	 *
+	 * @param $settings
+	 */
+	public function update_post( $settings ) {
+		$post = get_post( $settings['ID'] );
+		if ( $post instanceof WP_Post && '' !== $post->post_content && $this->setting_page !== $post->ID && 'draft' !== $post->post_status && 'homepage' !== $post->post_name ) {
+			$meta = get_post_meta( $post->ID, 'epsilon_post_backed_up', true );
+			if ( ! $meta ) {
+				$id = wp_insert_post(
+					array(
+						'post_title'   => $post->post_title . ' Backup',
+						'post_content' => $post->post_content,
+						'post_status'  => 'draft',
+						'post_type'    => 'page',
+						'post_author'  => $post->post_author,
+					)
+				);
+
+				if ( is_int( $id ) ) {
+					update_post_meta( $post->ID, 'epsilon_post_backed_up', true );
+				}
+			}
+		}
+
+		wp_update_post( $settings );
+	}
+
+	/**
 	 * @since 1.0.0
 	 *
 	 * @param $manager WordPress Customizer Manager
@@ -241,7 +271,7 @@ class Epsilon_Content_Backup {
 			'post_content' => $this->parse_content(),
 		);
 
-		wp_update_post( $settings );
+		$this->update_post( $settings );
 	}
 
 	/**
@@ -269,7 +299,7 @@ class Epsilon_Content_Backup {
 				'post_content' => $this->parse_content_advanced( $page ),
 			);
 
-			wp_update_post( $settings );
+			$this->update_post( $settings );
 		};
 	}
 
@@ -554,8 +584,10 @@ class Epsilon_Content_Backup {
 	 * @since 1.3.4
 	 *
 	 * @param $control
-	 * @param $val
+	 * @param $value
 	 * @param $id
+	 *
+	 * @return mixed
 	 */
 	private function format_block( $control, $value, $id ) {
 		$parser = $this->slug . '_post_parser';

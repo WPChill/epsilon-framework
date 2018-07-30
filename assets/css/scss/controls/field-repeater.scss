@@ -62,22 +62,13 @@
     }
     .repeater-row-header {
         position: relative;
-        padding: 12px 0 12px 26px;
+        padding: 12px 0 12px 12px;
         height: 20px;
         line-height: 20px;
         font-weight: 600;
         transition: .15s background-color ease-in-out;
         cursor: all-scroll;
-        &:before {
-            content: "";
-            width: 10px;
-            height: 20px;
-            background: url('../img/epsilon-section-hover-indicator.png');
-            position: absolute;
-            top: 12px;
-            left: 8px;
-            opacity: 0;
-        }
+
         .repeater-minimize,
         .repeater-row-remove {
             float: right;
@@ -94,10 +85,15 @@
             }
         }
         .repeater-row-remove {
-            border-left: 1px solid $repeater_row_separator_color;
+            border-right: 1px solid $repeater_row_separator_color;
             margin-top: -12px;
             padding: 12px;
         }
+	    .repeater-minimize {
+		    margin-top: -12px;
+		    padding: 12px;
+	    }
+
         &:hover {
             &:before {
                 opacity: 1;
@@ -115,12 +111,10 @@
         clear: both;
         padding: 18px 0 6px 0;
         .customize-control-title {
-            font-size: 13px;
             line-height: initial;
             display: inline-block;
         }
         .customize-control-description {
-            font-size: 13px;
             line-height: initial;
         }
         &.repeater-field-hidden {
@@ -146,7 +140,7 @@
     }
     .repeater-row-label {
         display: block;
-        width: calc(100% - 75px);
+        width: calc(100% - 100px);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -209,22 +203,15 @@
     .customize-control-title {
         display: inline-block;
         float: left;
-        margin-bottom: 0;
+        margin-bottom: 10px;
         padding-bottom: 0;
-        position: relative;
-        top: 5px;
-    }
-}
 
-.customize-control-epsilon-text-editor {
-    .customize-control-title {
-        top: 2px;
     }
 }
 
 .repeater-field-epsilon-color-picker {
     .epsilon-color-picker-title {
-        margin-left: 37px;
+        margin-left: 42px;
     }
     .minicolors-input {
         top: 0;

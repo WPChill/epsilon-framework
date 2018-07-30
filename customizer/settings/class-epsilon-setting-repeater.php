@@ -29,7 +29,7 @@ class Epsilon_Setting_Repeater extends WP_Customize_Setting {
 			$this->save_as_meta = $args['save_as_meta'];
 		}
 
-		// Will onvert the setting from JSON to array. Must be triggered very soon.
+		// Will convert the setting from JSON to array. Must be triggered very soon.
 		add_filter( "customize_sanitize_{$this->id}", array( $this, 'sanitize_repeater_setting' ), 10, 1 );
 	}
 
