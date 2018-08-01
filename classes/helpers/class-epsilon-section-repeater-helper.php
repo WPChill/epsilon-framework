@@ -331,6 +331,11 @@ class Epsilon_Section_Repeater_Helper {
 					$arr[ $key . '_heading_color' ] = $temp;
 					break;
 				default:
+					$temp = $values;
+					$name = $key . '_' . str_replace( '-', '_', $prop );
+					$temp['id'] = $name;
+					$temp['group'] = 'colors';
+					$arr[ $name ] = $temp;
 					break;
 			}// End switch().
 		}// End foreach().
@@ -480,6 +485,11 @@ class Epsilon_Section_Repeater_Helper {
 					$arr[ $key . '_background_video' ] = $temp;
 					break;
 				default:
+					$temp = $values;
+					$name = $key . '_' . str_replace( '-', '_', $prop );
+					$temp['id'] = $name;
+					$temp['group'] = 'styling';
+					$arr[ $name ] = $temp;
 					break;
 			}// End switch().
 		}// End foreach().
@@ -654,6 +664,11 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 					*/
 				default:
+					$temp = $values;
+					$name = $key . '_' . str_replace( '-', '_', $prop );
+					$temp['id'] = $name;
+					$temp['group'] = 'layout';
+					$arr[ $name ] = $temp;
 					break;
 			}// End switch().
 		}// End foreach().
