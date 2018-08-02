@@ -1931,9 +1931,6 @@ body.adding-section .epsilon-add-new-section:before {
   right: 35px;
 }
 
-.customize-control-epsilon-section-repeater .repeater-field-epsilon-customizer-navigation {
-  padding: 0;
-}
 .customize-control-epsilon-section-repeater .repeater-field-epsilon-customizer-navigation .epsilon-customizer-navigation {
   width: 100%;
   text-align: center;
@@ -2107,6 +2104,11 @@ body.adding-section .epsilon-add-new-section:before {
   display: inline-block;
 }
 
+.repeater-field-selectize {
+  background-color: #eff5f8;
+  padding: 10px !important;
+  margin: 10px auto;
+}
 .repeater-field-selectize .selectize-input {
   display: block;
 }
@@ -2732,14 +2734,14 @@ body.adding-doubled-section .doubled-section-parent {
 	Controls Spacing Debug
 */
 .repeater-field {
-  padding: 18px 0 6px 0;
+  padding: 10px 0 10px 0;
   margin: 0;
 }
 .repeater-field:first-child {
-  padding-top: 12px;
+  padding-top: 10px;
 }
 .repeater-field.repeater-field-epsilon-text-editor {
-  padding-top: 12px;
+  padding-top: 10px;
 }
 .repeater-field select {
   display: block;
