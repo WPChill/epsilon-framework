@@ -199,29 +199,6 @@ class Epsilon_Section_Attr_Helper {
 	/**
 	 * @return string
 	 */
-	public function generate_video_overlay() {
-		if ( empty( $this->options[ $this->key . '_background_video' ] ) ) {
-			return '';
-		}
-
-		$arr = array(
-			'class' => array( 'ewf-section__video-background-yt' ),
-			'style' => array(),
-		);
-
-		$children = array(
-			'a' => array(
-				'data-source' => array( $this->options[ $this->key . '_background_video' ] ),
-				'class'       => array( 'ewf-section__video-background-yt-source' ),
-			),
-		);
-
-		echo $this->generate_html_tag( 'div', $arr, $children );
-	}
-
-	/**
-	 * @return string
-	 */
 	public function generate_color_overlay() {
 		$arr = array(
 			'class' => array( 'ewf-section__overlay-color' ),
