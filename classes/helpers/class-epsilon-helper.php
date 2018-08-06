@@ -259,4 +259,45 @@ class Epsilon_Helper {
 
 		return get_permalink( get_option( 'page_for_posts' ) );
 	}
+
+	/**
+	 * Create a new page for Page Changer
+	 */
+
+	public static function create_page( $params ) {
+
+		$page_name = $params['epsilon_page_name'];
+
+		if ( '' != $page_name ) {
+			$args = array(
+			  	'post_title'    => wp_strip_all_tags( $page_name ),
+			  	'post_content'  => '',
+			  	'post_status'   => 'publish',
+			  	'post_type'     => 'page',
+			);
+
+			$page = wp_insert_post( $args );
+
+			if ( $page ) {
+
+				$args = array(
+					'type'                => 'epsilon-section-repeater',
+					'label'               => esc_html__( 'Sections', 'portum' ),
+					'section'             => esc_html( $params['epsilon_customizer_section'] ),
+					'page_builder'        => true,
+					'repeatable_sections' => Portum_Repeatable_Sections::get_instance()->sections,
+				);
+
+				$instance = Epsilon_Content_Backup::get_instance();
+				$instance->add_pages( $page, $params['epsilon_control_id'] . '_' . $page, $args );
+				
+				$url = get_permalink( $page );
+				return array( 'status' => true, 'url' => $url, 'id' => $page );
+
+			}
+		}
+
+		return 'nok';
+
+	} 
 }

@@ -3,6 +3,11 @@ declare var wp: any;
 import * as $ from 'jquery';
 
 /**
+ * Settings
+ */
+import './extenders/settings/section-repeater';
+
+/**
  * Controls
  */
 import './extenders/controls/range-slider';

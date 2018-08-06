@@ -2151,6 +2151,20 @@ body.adding-section .epsilon-add-new-section:before {
   width: 100%;
 }
 
+.customize-control-epsilon-page-changer .add-content {
+  margin: 2px 0 2px 6px;
+  -webkit-box-flex: 10;
+  flex-grow: 1;
+}
+
+.customize-control-epsilon-page-changer .new-content-item {
+  width: 100%;
+  padding: 5px 0 5px 1px;
+  position: relative;
+  display: -webkit-box;
+  display: flex;
+}
+
 /* Start Sections */
 #customize-controls .control-section-epsilon-section-pro .accordion-section-title:hover, #customize-controls .control-section-epsilon-section-pro .accordion-section-title:focus {
   background-color: #fff;
