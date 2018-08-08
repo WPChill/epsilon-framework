@@ -21,7 +21,13 @@ export class EpsilonColorSchemes {
    * Loading flag
    */
   loading: boolean = false;
+  /**
+   * Counts how many requests we need to wait untill we set loading to false
+   */
   requests: number = 0;
+  /**
+   * Current request index
+   */
   requestsIndex: number = 0;
 
   /**
@@ -32,21 +38,27 @@ export class EpsilonColorSchemes {
     state ? this.startLoading() : this.stopLoading();
   }
 
+  /**
+   * Start loading function
+   */
   public startLoading() {
     if ( this.loading ) {
       return;
     }
     this.loading = true;
-    this.panel.addClass( 'epsilon-loading loading' );
+    this.panel.addClass( 'epsilon-loading' );
   }
 
+  /**
+   * Stop loading function
+   */
   public stopLoading() {
     this.requestsIndex += 1;
 
     if ( this.requests === this.requestsIndex ) {
       setTimeout( () => {
         this.loading = false;
-        this.panel.removeClass( 'epsilon-loading loading' );
+        this.panel.removeClass( 'epsilon-loading' );
 
         this.requests = 0;
         this.requestsIndex = 0;
@@ -62,6 +74,7 @@ export class EpsilonColorSchemes {
     this.control = control;
     this.context = this.control.container.find( '.epsilon-color-scheme' );
     this.panel = this.control.container.parent();
+    this.panel.addClass( 'epsilon-is-loadable' );
 
     if ( ! this.context.length ) {
       return;
