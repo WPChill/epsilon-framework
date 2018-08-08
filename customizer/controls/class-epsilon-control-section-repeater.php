@@ -392,7 +392,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				<div class="available-sections-list">
 					<# if ( data.integrations ) { #>
 					<nav class="available-sections-tab-nav">
-						<a href="#" data-tab="normal" class="available-sections-tab-toggler active"><span class="dashicons dashicons-menu"></span> <?php esc_html_e( 'Sections', 'epsilon-framework' ); ?>
+						<a href="#" data-tab="normal" class="available-sections-tab-toggler active"><span class="dashicons dashicons-editor-table"></span> <?php esc_html_e( 'Sections', 'epsilon-framework' ); ?>
 						</a>
 						<a href="#" data-tab="integrations" class="available-sections-tab-toggler"><span class="dashicons dashicons-admin-plugins"></span> <?php esc_html_e( 'Integrations', 'epsilon-framework' ); ?>
 							<span class="badge">{{ data.integrations_count }}</span></a>
