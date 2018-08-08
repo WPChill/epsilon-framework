@@ -1286,7 +1286,7 @@ ui-slider:hover {
 }
 .customize-control-epsilon-repeater .repeater-row-content {
   border-top: 1px solid #ddd;
-  padding: 0 20px 14px 20px;
+  padding: 0 10px 10px 10px;
 }
 .customize-control-epsilon-repeater .repeater-field {
   margin: 0;
@@ -1518,10 +1518,10 @@ ui-slider:hover {
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content {
   border-top: 1px solid #ddd;
-  padding: 0 20px 14px 20px;
+  padding: 0 10px 12px 10px;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav {
-  margin: 0 -20px 0 -20px;
+  margin: 0 -10px 0 -10px;
   background: #F2F2F2;
   border-bottom: 1px solid #ddd;
   text-align: left;
@@ -1748,7 +1748,6 @@ body.adding-section .epsilon-add-new-section:before {
 
 .available-sections-list .epsilon-section {
   padding: 10px;
-  margin-left: 5px;
   position: relative;
   background: #eee;
 }
