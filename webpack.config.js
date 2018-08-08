@@ -1,6 +1,12 @@
 const path = require( 'path' );
 const webpack = require( 'webpack' );
-
+const ExtractTextPlugin = require( 'extract-text-webpack-plugin' );
+const extractSass = new ExtractTextPlugin( {
+  filename: '../css/style-[name].css'
+} );
+function resolve( dir ) {
+  return path.join( __dirname, '', dir );
+}
 module.exports = {
   entry: {
     customizer: './assets/vendors/epsilon-framework/customizer/customizer.ts',
@@ -43,13 +49,32 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]'
         }
+      },
+      {
+        test: /\.scss$/,
+        use: extractSass.extract( {
+          use: [
+            {
+              loader: 'css-loader'
+            }, {
+              loader: 'sass-loader'
+            } ],
+          // use style-loader in development
+          fallback: 'style-loader'
+        } )
       }
     ]
   },
+  plugins: [
+    extractSass
+  ],
   resolve: {
     extensions: [ '.ts', '.js', '.vue', '.json' ],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve( 'assets/js' ),
+      '@scss': resolve( 'assets/scss' ),
+      '@img': resolve( 'assets/img' )
     }
   },
   devServer: {
