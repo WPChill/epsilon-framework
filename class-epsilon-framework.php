@@ -287,7 +287,7 @@ class Epsilon_Framework {
 	 * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
 	 */
 	public function customize_preview_styles() {
-		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
+		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style-customizer.css' );
 		wp_enqueue_script( 'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-framework-previewer.js', array(
 			'jquery',
 			'customize-preview',
@@ -334,7 +334,7 @@ class Epsilon_Framework {
 		) );
 
 		wp_enqueue_style( 'font-awesome', EPSILON_URI . '/assets/vendors/fontawesome/font-awesome.css' );
-		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
+		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style-customizer.css' );
 
 	}
 

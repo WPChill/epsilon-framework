@@ -2,6 +2,8 @@ declare var require: any;
 declare var wp: any;
 import * as $ from 'jquery';
 
+import './../../../css/style.scss'
+
 /**
  * Settings
  */
