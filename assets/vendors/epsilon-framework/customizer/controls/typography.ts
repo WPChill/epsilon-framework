@@ -19,6 +19,45 @@ export class EpsilonTypography {
    */
   container: JQuery;
   /**
+   * Main panel
+   */
+  panel: any;
+  /**
+   * Loading flag
+   */
+  loading: boolean = false;
+
+  /**
+   * Sets loading state
+   * @param state
+   */
+  public stateChanger( state: boolean ) {
+    state ? this.startLoading() : this.stopLoading();
+  }
+
+  /**
+   * Start loading function
+   */
+  public startLoading() {
+    if ( this.loading ) {
+      return;
+    }
+    this.loading = true;
+    this.panel.addClass( 'epsilon-loading' );
+  }
+
+  /**
+   * Stop loading function
+   */
+  public stopLoading() {
+    setTimeout( () => {
+      this.loading = false;
+      this.panel.removeClass( 'epsilon-loading' );
+
+    }, 250 );
+  }
+
+  /**
    * Unique ID of the control
    */
   id: string;
@@ -52,6 +91,8 @@ export class EpsilonTypography {
     this.control = control;
     this.context = jQuery( control.container );
     this.container = this.context.find( '.epsilon-typography-container' );
+    this.panel = this.control.container.parent();
+    this.panel.addClass( 'epsilon-is-loadable' );
     this.selects = this.container.find( 'select' );
     this.inputs = this.container.find( '.epsilon-typography-input' );
     this.sliders = this.container.find( '.slider-container' );
@@ -59,6 +100,14 @@ export class EpsilonTypography {
 
     this.init();
     this.clearButton();
+
+    /**
+     * Event that fires from the main page
+     */
+    wp.customize.previewer.bind( 'epsilon-set-typography-loading', ( state: boolean ) => {
+      console.log( state );
+      this.stateChanger( false );
+    } );
   }
 
   /**
@@ -192,10 +241,11 @@ export class EpsilonTypography {
      * On triggering the change event, create a json with the values and
      * send it to the preview window
      */
-    this.inputs.on( 'change', function() {
+    this.inputs.on( 'change', _.debounce( function() {
+      self.stateChanger( true );
       let val = self._parseJson();
       jQuery( '#hidden_input_' + self.id ).val( val ).trigger( 'change' );
-    } );
+    }, 300 ) );
   }
 
   /**

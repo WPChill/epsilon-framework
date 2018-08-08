@@ -378,8 +378,29 @@ body #customize-controls .control-section:hover > .accordion-section-title {
   color: #090033;
 }
 
+.epsilon-is-loadable {
+  -webkit-transition: all .3s;
+  transition: all .3s;
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    content: '';
+    z-index: 10000;
+    background: #fff;
+    visibility: hidden;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+  }
+}
+
 .epsilon-loading {
   position: relative;
+  -webkit-transition: all .3s;
+  transition: all .3s;
   &:before {
     position: absolute;
     z-index: 10001;
@@ -392,26 +413,9 @@ body #customize-controls .control-section:hover > .accordion-section-title {
     content: ''
   }
   &:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    content: '';
-    z-index: 10000;
-    background: #fff;
-    opacity: 0;
-    visibility: hidden;
-    -webkit-transition: all .6s;
-    transition: all .6s;
-  }
-
-  &.loading {
-    &:after {
-      opacity: .7;
-      visibility: visible;
-      -webkit-transition: all .7s;
-      transition: all .7s;
-    }
+    opacity: .7;
+    visibility: visible;
+    -webkit-transition: all .3s;
+    transition: all .3s;
   }
 }
