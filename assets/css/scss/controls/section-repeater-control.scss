@@ -117,9 +117,9 @@
         }
         .repeater-row-content {
             border-top: 1px solid $repeater_row_separator_color;
-            padding: 0 20px 14px 20px;
+            padding: 0 10px 12px 10px;
             nav {
-                margin: 0 -20px 0 -20px;
+                margin: 0 -10px 0 -10px;
                 background: #F2F2F2;
                 border-bottom: 1px solid $repeater_row_nav_tab_border;
                 text-align: left;
@@ -360,7 +360,6 @@ body.adding-section {
 .available-sections-list {
     .epsilon-section {
         padding: 10px;
-        margin-left: 5px;
         position: relative;
         background: #eee;
         &:first-of-type {
