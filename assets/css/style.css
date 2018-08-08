@@ -1747,7 +1747,8 @@ body.adding-section .epsilon-add-new-section:before {
 }
 
 .available-sections-list .epsilon-section {
-  padding: 10px 10px 6px;
+  padding: 10px;
+  margin-left: 5px;
   position: relative;
   background: #eee;
 }
