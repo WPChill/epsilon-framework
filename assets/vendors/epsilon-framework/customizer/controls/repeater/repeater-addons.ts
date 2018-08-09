@@ -13,18 +13,16 @@ import { EpsilonTextEditor } from '../text-editor';
 import { EpsilonColorPicker } from '../color-picker';
 import { EpsilonCustomizerNavigation } from '../customizer-navigation';
 import { EpsilonFieldRepeater } from '../repeater';
-import { EpsilonSectionRepeater } from '../section-repeater';
-import { EpsilonRepeaterSectionRow } from './repeater-section-row';
 
 export class EpsilonRepeaterAddons {
   /**
    * Control reference
    */
-  protected control: EpsilonFieldRepeater | EpsilonSectionRepeater;
+  protected control: EpsilonFieldRepeater;
   /**
    * Row
    */
-  public row: EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any;
+  public row:  EpsilonRepeaterRow | any;
 
   /**
    * Proxy to retrieve fields
@@ -33,10 +31,10 @@ export class EpsilonRepeaterAddons {
 
   /**
    *
-   * @param {EpsilonFieldRepeater | EpsilonSectionRepeater} control
-   * @param {EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any} row
+   * @param {EpsilonFieldRepeater } control
+   * @param {EpsilonRepeaterSectionRow | any} row
    */
-  public constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater, row: EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any ) {
+  public constructor( control: EpsilonFieldRepeater, row: EpsilonRepeaterRow | any ) {
     this.control = control;
     this.row = row;
     this.proxy = this.control.control.params;
