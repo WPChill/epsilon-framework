@@ -3,7 +3,6 @@ declare var _: any;
 
 import { EpsilonRepeaterUtils } from './repeater-utils';
 import { EpsilonFieldRepeater } from '../repeater';
-import { EpsilonSectionRepeater } from '../section-repeater';
 
 export class EpsilonRepeaterRow {
   /**
@@ -32,7 +31,7 @@ export class EpsilonRepeaterRow {
    * @param {{container: JQuery; setting: void; params: {value: number; id: string}}} instance
    * @param {JQuery} rowContainer
    */
-  public constructor( instance: EpsilonFieldRepeater | EpsilonSectionRepeater, rowContainer: JQuery ) {
+  public constructor( instance: EpsilonFieldRepeater, rowContainer: JQuery ) {
     const self = this;
     this.index = instance.currentIndex;
     this.container = rowContainer;

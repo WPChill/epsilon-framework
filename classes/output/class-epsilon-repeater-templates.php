@@ -498,20 +498,29 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function selectize_field() {
 		?>
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
+		<label>
+			<# if ( field.label ) { #>
+				<span class="customize-control-title">{{ field.label }}</span>
+			<# } #>
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-						<span class="mte-tooltip">
-							{{{ field.description }}}
-						</span> </i> <# } #> <select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( !
-			_.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{
-			field.multiple }}"<# } #>> <# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
-			<option value="{{{ i }}}"
-			<# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
-			<# } else { #>
-			<option value="{{{ i }}}"
-			<# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>            <# } #> <#
-			}); #>            </select>
+				<span class="mte-tooltip">
+					{{{ field.description }}}
+				</span>
+			</i>
+			<# } #>
+			<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+				<# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
+				<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>
+					{{ choice }}
+				</option>
+				<# } else { #>
+				<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>
+					{{ choice }}
+				</option>
+				<# } #> <#
+				}); #>
+			</select>
 		</label>
 		<?php
 	}
