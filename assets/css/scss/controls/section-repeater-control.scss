@@ -72,38 +72,24 @@
                 float: right;
                 font-size: 18px;
                 cursor: pointer;
-                margin-left: 5px;
-                visibility: hidden;
                 transition: color .15s;
                 &:hover {
                     color: $repeater_row_text_hover_color;
                 }
             }
             .repeater-minimize {
-                display: block;
                 margin-top: -12px;
                 padding: 12px;
-                visibility: visible;
             }
             .repeater-row-remove {
                 border-right: 1px solid $repeater_row_separator_color;
+                border-left: 1px solid $repeater_row_separator_color;
                 margin-top: -12px;
                 padding: 12px;
-                visibility: visible;
             }
             .repeater-row-hide {
-                transition: opacity .25s;
-            }
-            &:hover {
-                .repeater-row-hide,
-                .repeater-row-remove {
-                    opacity: 1;
-                    visibility: visible;
-                }
-                &:before {
-                    opacity: 1;
-                    visibility: visible;
-                }
+                margin-top: -12px;
+                padding: 12px;
             }
             &.epsilon-section-hidden {
                 .repeater-row-hide {
@@ -201,9 +187,6 @@
     margin: 0;
     border-top: 1px solid #CCC;
     .epsilon-add-new-section {
-        height: 32px;
-        line-height: 30px;
-        padding: 0 36px;
         animation-name: epsilon_button_pulse;
         animation-duration: 1s;
         animation-timing-function: ease-in;
@@ -211,11 +194,6 @@
         animation-iteration-count: 2;
         animation-fill-mode: none;
         animation-play-state: running;
-        background: #3C2166;
-        color: #FFF;
-        text-shadow: none;
-        box-shadow: none;
-        border: 1px solid #FFF;
         &:before {
             content: "\f132";
             display: inline-block;
@@ -232,7 +210,6 @@
         &:hover,
         &:active,
         &:focus {
-            background: #23084D;
             color: #FFF;
         }
     }
