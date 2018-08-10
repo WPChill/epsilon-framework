@@ -68,14 +68,69 @@ export class EpsilonSectionRepeater {
     addingSection: boolean,
     importingSection: boolean,
     currentIndex: number,
+    sorting: boolean,
     rows: Array<any>,
   } = {
     loading: true,
     addingSection: false,
     importingSection: false,
     currentIndex: 0,
+    sorting: false,
     rows: [],
   };
+
+  /**
+   * Get loading state
+   */
+  get loading() {
+    return this.state.loading;
+  }
+
+  /**
+   * Set loading state
+   * @param state
+   */
+  set loading( state: boolean ) {
+    this.state.loading = state;
+
+    switch ( this.state.loading ) {
+      case true:
+        this.repeaterContainer.addClass( 'epsilon-section-repeater-is-loading' );
+        break;
+      default:
+        this.repeaterContainer.removeClass( 'epsilon-section-repeater-is-loading' );
+        break;
+    }
+  }
+
+  /**
+   * Get sorting
+   */
+  get sorting() {
+    return this.state.sorting;
+  }
+
+  /**
+   * Sorting setter
+   * @param state
+   */
+  set sorting( state: boolean ) {
+    this.state.sorting = state;
+
+    switch ( this.state.sorting ) {
+      case true:
+        this.state.rows.map( e => {
+          e.forceMinimize();
+          e.sorting = true;
+        } );
+        this.repeaterContainer.addClass( 'epsilon-section-repeater-is-sorting' );
+        break;
+      default:
+        this.state.rows.map( e => e.sorting = false );
+        this.repeaterContainer.removeClass( 'epsilon-section-repeater-is-sorting' );
+        break;
+    }
+  }
 
   /**
    * Object constructor
@@ -86,7 +141,8 @@ export class EpsilonSectionRepeater {
     this.$ID = this.$_instance.params.id;
     this.repeaterContainer = this.$_instance.container.find( '.repeater-sections' );
     this.template = this.$utils.repeaterTemplate();
-    this.state.loading = false;
+
+    this.loading = false;
 
     this._bindFunctions();
 
@@ -97,6 +153,10 @@ export class EpsilonSectionRepeater {
      * Initiate Search on sections
      */
     this._initSearch();
+    /**
+     * Init sorting functionality
+     */
+    this._initSorting();
   }
 
   /**
@@ -110,6 +170,7 @@ export class EpsilonSectionRepeater {
 
     this.$actions.addSection = this.$actions.addSection.bind( this );
     this.$actions.removeSection = this.$actions.removeSection.bind( this );
+    this.$actions.sortSections = this.$actions.sortSections.bind( this );
   }
 
   /**
@@ -117,13 +178,13 @@ export class EpsilonSectionRepeater {
    * @private
    */
   private _createExistingSections() {
-    this.state.loading = true;
+    this.loading = true;
 
     this.$_instance.params.value.map( e => {
       this.$actions.addSection( e );
     } );
 
-    this.state.loading = false;
+    this.loading = false;
   }
 
   /**
@@ -189,4 +250,27 @@ export class EpsilonSectionRepeater {
         }, 500 ) );
   }
 
+  /**
+   * Init sorting
+   * @private
+   */
+  private _initSorting() {
+    this.repeaterContainer.parent().on( 'click', '.epsilon-sort-sections', () => {
+      this.sorting = ! this.sorting;
+
+      switch ( this.sorting ) {
+        case true:
+          this.repeaterContainer.sortable( {
+            handle: '.repeater-row-header',
+            axis: 'y',
+            distance: 15,
+            stop: ( e, data ) => this.$actions.sortSections( e, data )
+          } );
+          break;
+        default:
+          this.repeaterContainer.sortable( 'destroy' );
+          break;
+      }
+    } );
+  }
 }

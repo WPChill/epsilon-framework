@@ -6,6 +6,7 @@ import {
   SectionRepeaterNavigation,
   SectionRepeaterSlider,
   SectionRepeaterButtonGroup,
+  SectionRepeaterIconPicker,
 } from './external/index';
 
 export class EpsilonSectionRepeaterRow {
@@ -46,14 +47,22 @@ export class EpsilonSectionRepeaterRow {
    */
   public $ID: string;
   /**
+   * Initiated array
+   */
+  public initiated: Array<any> = [];
+  /**
    * Row state
    */
   private _state: {
     loading: boolean,
     updatingValues: boolean,
+    toggled: boolean,
+    sorting: boolean,
   } = {
     loading: false,
-    updatingValues: false
+    updatingValues: false,
+    toggled: false,
+    sorting: false,
   };
   /**
    * External libraries
@@ -70,6 +79,7 @@ export class EpsilonSectionRepeaterRow {
     epsilon_customizer_navigation: 'SectionRepeaterNavigation',
     epsilon_slider: 'SectionRepeaterSlider',
     epsilon_button_group: 'SectionRepeaterButtonGroup',
+    epsilon_icon_picker: 'SectionRepeaterIconPicker'
   };
 
   /**
@@ -94,6 +104,22 @@ export class EpsilonSectionRepeaterRow {
         this.container.removeClass( 'epsilon-section-is-loading' );
         break;
     }
+  }
+
+  get toggled() {
+    return this._state.toggled;
+  }
+
+  set toggled( state ) {
+    this._state.toggled = state;
+  }
+
+  get sorting() {
+    return this._state.sorting;
+  }
+
+  set sorting( state ) {
+    this._state.sorting = state;
   }
 
   /**
@@ -123,8 +149,6 @@ export class EpsilonSectionRepeaterRow {
 
     this.addTabs();
     this.handleEvents( that );
-
-    this.loading = false;
   }
 
   /**
@@ -151,7 +175,7 @@ export class EpsilonSectionRepeaterRow {
       arr.push( {
         id: e.id,
         type: prop,
-        init: libraries.hasOwnProperty( prop ) ? libraries[ prop ] : 'unknown'
+        init: libraries.hasOwnProperty( prop ) ? libraries[ prop ] : 'unknown',
       } );
     } );
 
@@ -163,6 +187,12 @@ export class EpsilonSectionRepeaterRow {
    */
   public initiateExternalLibraries() {
     this._configureInits();
+  }
+
+  /**
+   * Construct external stuff
+   */
+  public constructExternal() {
     this.externalLibs.map( e => {
       let constructor = this.externalInits[ e.type ];
 
@@ -170,6 +200,8 @@ export class EpsilonSectionRepeaterRow {
           ? this._constructExternal( e, constructor )
           : '';
     } );
+
+    this.toggled = true;
   }
 
   /**
@@ -179,37 +211,40 @@ export class EpsilonSectionRepeaterRow {
    * @param constructor
    */
   private _constructExternal( e, constructor ) {
-    let initiated = [];
-    e.elements.map( element => {
+    e.elements.map( ( element, idx ) => {
       let obj = { ...element, ...{ mainId: this.$ID, container: this.container } };
+      if ( this.data[ obj.id ].hasOwnProperty( 'linking' ) ) {
+        obj = { ...obj, ...{ linking: this.data[ obj.id ].linking } };
+      }
+
       switch ( constructor ) {
         case 'SectionRepeaterEditor':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterEditor( obj )
           );
           break;
         case 'SectionRepeaterSelectize':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterSelectize( obj )
           );
           break;
         case 'SectionRepeaterColorPicker':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterColorPicker( obj )
           );
           break;
         case 'SectionRepeaterImage':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterImage( obj )
           );
           break;
         case 'SectionRepeaterNavigation':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterNavigation( obj )
           );
           break;
         case 'SectionRepeaterSlider':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterSlider(
                   {
                     ...obj,
@@ -220,12 +255,21 @@ export class EpsilonSectionRepeaterRow {
           );
           break;
         case 'SectionRepeaterButtonGroup':
-          initiated.push(
+          this.initiated.push(
               new SectionRepeaterButtonGroup( obj )
+          );
+          break;
+        case 'SectionRepeaterIconPicker':
+          this.initiated.push(
+              new SectionRepeaterIconPicker( { ...obj, ...{ icons: this.data[ obj.id ].icons } } )
           );
           break;
         default:
           break;
+      }
+
+      if ( e.elements.length === idx + 1 ) {
+        setTimeout( () => this.loading = false, 300 );
       }
     } );
   }
@@ -358,6 +402,14 @@ export class EpsilonSectionRepeaterRow {
    * Minimize toggle
    */
   public minimizeToggle() {
+    if ( this.sorting ) {
+      return;
+    }
+
+    if ( ! this.toggled ) {
+      this.constructExternal();
+    }
+
     this.content.slideToggle( 300, () => {
       const body = jQuery( 'body' );
       body.removeClass( 'adding-section adding-doubled-section' );
@@ -375,14 +427,32 @@ export class EpsilonSectionRepeaterRow {
         jQuery( e ).addClass( 'minimized' );
         jQuery( e ).find( '.repeater-row-content' ).slideToggle( 300, () => {
           jQuery( e ).
-              find( 'repeater-row-header' ).
-              addClass( 'minimized' ).
-              find( '.dashicons' ).
-              toggleClass( 'dashicons-arrow-up' ).
-              toggleClass( 'dashicons-arrow-down' );
+              find( '.repeater-row-header' ).
+              find( '.dashicons:not(.repeater-row-remove):not(.repeater-row-hide)' ).
+              toggleClass( 'dashicons-arrow-up-alt2' ).
+              toggleClass( 'dashicons-arrow-down-alt2' );
         } );
       } );
     } );
+  }
+
+  /**
+   * Force minimize the row
+   */
+  public forceMinimize() {
+    this.content.slideUp( 300, () => {
+      const body = jQuery( 'body' );
+      body.removeClass( 'adding-section adding-doubled-section' );
+      this.container.addClass( 'minimized' );
+      this.header.find( '.dashicons:not(.repeater-row-remove):not(.repeater-row-hide)' ).addClass( 'dashicons-arrow-down-alt2' ).removeClass( 'dashicons-arrow-up-alt2' );
+    } );
+  }
+
+  /**
+   * Reset index from DOM
+   */
+  public forceResetIndex() {
+    this.index = parseFloat( this.container.attr( 'data-row' ) );
   }
 
   /**

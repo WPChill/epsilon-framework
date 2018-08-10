@@ -130,6 +130,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @return void
 	 */
 	public function enqueue() {
+		wp_enqueue_script( 'iconpicker', EPSILON_URI . '/assets/vendors/jquery-fonticonpicker/jquery.fonticonpicker.min.js', array( 'jquery' ), '1.2.0', true );
+		wp_enqueue_style( 'iconpicker', EPSILON_URI . '/assets/vendors/jquery-fonticonpicker/jquery.fonticonpicker.min.css' );
+		wp_enqueue_style( 'iconpicker-grey', EPSILON_URI . '/assets/vendors/jquery-fonticonpicker/jquery.fonticonpicker.grey.min.css', array( 'iconpicker' ) );
+		wp_localize_script( 'iconpicker', 'EpsilonIconPack', $this->get_icons() );
 		wp_enqueue_style( 'minicolors', EPSILON_URI . '/assets/vendors/minicolors/jquery.minicolors.css' );
 		wp_enqueue_script( 'minicolors', EPSILON_URI . '/assets/vendors/minicolors/jquery.minicolors.min.js', array( 'jquery' ), '1.2.0', true );
 		wp_enqueue_style( 'selectize', EPSILON_URI . '/assets/vendors/selectize/selectize.css' );
@@ -144,7 +148,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		foreach ( $this->repeatable_sections as $section ) {
 			if ( isset( $section['integration'] ) && $section['integration']['status'] && $section['integration']['check'] ) {
 				$integration = true;
-				$this->integration_count++;
+				$this->integration_count ++;
 			}
 		}
 
@@ -155,7 +159,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @since 1.0.0
 	 */
 	public function get_icons() {
-		$icons = Epsilon_Icons::icons();
+		$icons = Epsilon_Icons::new_icons();
 
 		return $icons;
 	}
@@ -196,17 +200,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['label'] = '';
 				}
 
-				if ( 'epsilon-icon-picker' === $v['type'] ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['icons'] = $this->get_icons();
-
-					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['groups'] ) ) {
-						$this->repeatable_sections[ $key ]['fields'][ $k ]['groups'] = array();
-					}
-				}
-
 				if ( 'epsilon-customizer-navigation' === $v['type'] ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['group'] = 'outofit';
-
 					$this->repeatable_sections[ $key ]['fields'][ $k ]['opensDouble'] = false;
 				}
 				/**
@@ -283,7 +277,8 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			}
 
 			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args(
-				$this->repeatable_sections[ $key ]['customization'], array(
+				$this->repeatable_sections[ $key ]['customization'],
+				array(
 					'enabled' => false,
 					'styling' => array(),
 					'layout'  => array(),
@@ -351,7 +346,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			{{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
 		<# } #>
 		<div class="epsilon-add-section-buttons">
-			<input type="hidden" value="" {{{ data.link }}} />
+			<input type="hidden" {{{ data.link }}} />
 
 			<!--
 			<button type="button" class="button epsilon-import-sections">
@@ -361,6 +356,9 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 			<button type="button" class="button button-primary epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
 				<?php esc_html_e( 'Add More Sections', 'epsilon-framework' ); ?>
+			</button>
+			<button type="button" class="button button-primary epsilon-sort-sections" aria-expanded="false" aria-controls="available-sections">
+				<?php esc_html_e( 'Sort', 'epsilon-framework' ); ?>
 			</button>
 
 		</div>

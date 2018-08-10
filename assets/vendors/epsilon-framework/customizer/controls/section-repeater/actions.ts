@@ -23,7 +23,6 @@ export default {
     this.state.currentIndex += 1;
 
     template = template( fields );
-
     this.state.rows.push(
         new EpsilonSectionRepeaterRow( this, jQuery( template ).appendTo( this.repeaterContainer ), fields, obj.type )
     );
@@ -40,19 +39,44 @@ export default {
    * @param obj
    */
   removeSection( obj ) {
-    this.state.loading = true;
+    this.loading = true;
     this.state.rows.splice( obj.index, 1 );
     let value = this.$connectors.getValue();
     value = value.filter( e => obj.index !== e.index );
     value = this.$utils.resetIndexes.call( this, value );
     this.$connectors.setValue( value );
 
-    this.state.loading = false;
+    this.loading = false;
     return obj.index;
   },
 
-  sortSections() {
+  /**
+   * Sorts sections
+   * @param e
+   * @param data
+   */
+  sortSections( e, data ) {
+    /**
+     * small hack, wp editor needs to be destroyed/initiated when dom changes
+     */
+    data.item.trigger( 'epsilon-changed-position' );
 
+    let i = 0;
+    this.repeaterContainer.find( '.repeater-row' ).map( ( index, el ) => {
+      jQuery( el ).attr( 'data-row', i );
+      i ++;
+    } );
+
+    this.state.rows.map( e => e.forceResetIndex() );
+    let value = this.$connectors.getValue();
+    value.map( ( e, index ) => {
+      value[ index ].index = this.state.rows[ index ].index;
+    } );
+
+    this.state.rows = _.sortBy( this.state.rows, ( e ) => e.index );
+    value = _.sortBy( value, ( e ) => e.index );
+
+    this.$connectors.setValue( value );
   },
 
 };
