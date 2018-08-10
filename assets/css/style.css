@@ -174,7 +174,7 @@
   display: block;
   border: 0;
   background-position: 0 0;
-  background: #3C2166;
+  background: #E04D43;
   top: 0;
   bottom: 0;
 }
@@ -332,12 +332,12 @@ ui-slider:hover {
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label {
-  background-color: #6F5499;
+  background-color: #3caf0e;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label,
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  border-color: #6F5499;
+  border-color: #3caf0e;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
@@ -368,7 +368,7 @@ ui-slider:hover {
 .mte-tooltip {
   width: 150px;
   position: absolute;
-  background: #3C2166;
+  background: #55AAD3;
   color: #EEE;
   font-size: 12px;
   min-height: 50px;
@@ -390,7 +390,7 @@ ui-slider:hover {
 
 .dashicons.dashicons-editor-help {
   cursor: pointer;
-  color: #3C2166;
+  color: #55AAD3;
 }
 
 .dashicons.dashicons-editor-help:hover > .mte-tooltip {
@@ -1053,8 +1053,8 @@ ui-slider:hover {
   margin-top: 0;
 }
 .customize-control-epsilon-repeater .repeater-row.minimized .repeater-row-header:hover {
-  color: #3C2166;
-  background: #f3f3f5;
+  color: #0073AA;
+  background: #F3F3F5;
 }
 .customize-control-epsilon-repeater .repeater-row.minimized .repeater-row-content {
   display: none;
@@ -1106,10 +1106,10 @@ ui-slider:hover {
 }
 .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize:hover,
 .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove:hover {
-  color: #3C2166;
+  color: #0073AA;
 }
 .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #DDD;
   margin-top: -12px;
   padding: 12px;
 }
@@ -1122,7 +1122,7 @@ ui-slider:hover {
   visibility: visible;
 }
 .customize-control-epsilon-repeater .repeater-row-content {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #DDD;
   padding: 0 10px 10px 10px;
 }
 .customize-control-epsilon-repeater .repeater-field {
@@ -1269,8 +1269,8 @@ ui-slider:hover {
   margin-top: 0;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header:hover {
-  color: #3C2166;
-  background: #f3f3f5;
+  color: #0073AA;
+  background: #F3F3F5;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden:hover i.repeater-row-hide,
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden:hover i.repeater-row-remove {
@@ -1278,16 +1278,16 @@ ui-slider:hover {
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden:hover i.repeater-row-hide:hover,
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden:hover i.repeater-row-remove:hover {
-  color: #3C2166;
+  color: #0073AA;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden:hover .repeater-row-label {
-  color: #3C2166;
+  color: #0073AA;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden .repeater-row-label {
   color: #c5c8cc;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden .repeater-row-label:hover {
-  color: #3C2166;
+  color: #0073AA;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header.epsilon-section-hidden .repeater-row-hide {
   visibility: visible;
@@ -1313,38 +1313,26 @@ ui-slider:hover {
   float: right;
   font-size: 18px;
   cursor: pointer;
-  margin-left: 5px;
-  visibility: hidden;
   transition: color .15s;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-minimize:hover,
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide:hover,
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-remove:hover {
-  color: #3C2166;
+  color: #0073AA;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-minimize {
-  display: block;
   margin-top: -12px;
   padding: 12px;
-  visibility: visible;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-remove {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #DDD;
+  border-left: 1px solid #DDD;
   margin-top: -12px;
   padding: 12px;
-  visibility: visible;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide {
-  transition: opacity .25s;
-}
-.customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header:hover .repeater-row-hide,
-.customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header:hover .repeater-row-remove {
-  opacity: 1;
-  visibility: visible;
-}
-.customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header:hover:before {
-  opacity: 1;
-  visibility: visible;
+  margin-top: -12px;
+  padding: 12px;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header.epsilon-section-hidden .repeater-row-hide {
   visibility: visible;
@@ -1354,13 +1342,13 @@ ui-slider:hover {
   display: none;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #DDD;
   padding: 0 10px 12px 10px;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav {
   margin: 0 -10px 0 -10px;
   background: #F2F2F2;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #DDD;
   text-align: left;
   box-sizing: border-box;
 }
@@ -1374,7 +1362,7 @@ ui-slider:hover {
   margin-right: 2px;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #DDD;
   margin-bottom: -1px;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a .label {
@@ -1384,14 +1372,14 @@ ui-slider:hover {
   margin-right: 0;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a:hover, .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a:focus {
-  color: #6F5499;
+  color: #0073AA;
   outline: 0 !important;
   box-shadow: none;
 }
 .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a.active {
   outline: 0 !important;
-  color: #6F5499;
-  border-color: #ddd;
+  color: #0073AA;
+  border-color: #DDD;
   border-bottom-color: #fff;
   background: #fff;
   padding: 8px 14px 8px 10px;
@@ -1433,9 +1421,6 @@ ui-slider:hover {
   border-top: 1px solid #CCC;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section {
-  height: 32px;
-  line-height: 30px;
-  padding: 0 36px;
   animation-name: epsilon_button_pulse;
   animation-duration: 1s;
   animation-timing-function: ease-in;
@@ -1443,11 +1428,6 @@ ui-slider:hover {
   animation-iteration-count: 2;
   animation-fill-mode: none;
   animation-play-state: running;
-  background: #3C2166;
-  color: #FFF;
-  text-shadow: none;
-  box-shadow: none;
-  border: 1px solid #FFF;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section:before {
   content: "\f132";
@@ -1463,7 +1443,6 @@ ui-slider:hover {
   -moz-osx-font-smoothing: grayscale;
 }
 .epsilon-add-section-buttons .epsilon-add-new-section:hover, .epsilon-add-section-buttons .epsilon-add-new-section:active, .epsilon-add-section-buttons .epsilon-add-new-section:focus {
-  background: #23084D;
   color: #FFF;
 }
 .epsilon-add-section-buttons .epsilon-import-sections {
@@ -1649,14 +1628,14 @@ body.adding-section .epsilon-add-new-section:before {
   margin-right: 0;
 }
 .available-sections-list .epsilon-section .button.button-epsilon {
-  background: #3C2166;
+  background: #0073AA;
   color: #FFF;
   border: none;
   text-shadow: none;
   box-shadow: none;
 }
 .available-sections-list .epsilon-section .button.button-epsilon:hover, .available-sections-list .epsilon-section .button.button-epsilon:focus, .available-sections-list .epsilon-section .button.button-epsilon:active {
-  background: #6F5499;
+  background: #0073AA;
   color: #FFF;
   border: none;
   text-shadow: none;
@@ -1680,7 +1659,7 @@ body.adding-section .epsilon-add-new-section:before {
   display: block;
 }
 .available-sections-list .epsilon-section:hover .epsilon-section-image-description {
-  border-color: #6F5499;
+  border-color: #0073AA;
   background: #FAFEFF;
   -webkit-transition: .15s all ease-in-out;
   transition: .15s all ease-in-out;
