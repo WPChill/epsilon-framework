@@ -1993,13 +1993,15 @@ body.adding-section .epsilon-add-new-section:before {
   -webkit-box-flex: 10;
   flex-grow: 1;
 }
-
 .customize-control-epsilon-page-changer .new-content-item {
   width: 100%;
   padding: 5px 0 5px 1px;
   position: relative;
   display: -webkit-box;
   display: flex;
+}
+.customize-control-epsilon-page-changer .add-new-toggle {
+  float: right;
 }
 
 /* Start Sections */
@@ -2655,14 +2657,3 @@ body.adding-doubled-section .doubled-section-parent {
     background: $debug-field-title-background;
 }
 */
-body .customize-panel-back:focus,
-body .customize-panel-back:hover,
-body .customize-section-back:hover,
-body .customize-section-back:focus,
-body #customize-controls .control-section .accordion-section-title:focus,
-body #customize-controls .control-section .accordion-section-title:hover,
-body #customize-controls .control-section.open .accordion-section-title,
-body #customize-controls .control-section:hover > .accordion-section-title {
-  border-left-color: #090033;
-  color: #090033;
-}
