@@ -5,6 +5,7 @@ import SectionRepeaterImage from './image';
 import SectionRepeaterNavigation from './navigation';
 import SectionRepeaterSlider from './slider';
 import SectionRepeaterButtonGroup from './button-group';
+import SectionRepeaterIconPicker from './iconpicker';
 
 export {
   SectionRepeaterEditor,
@@ -14,4 +15,5 @@ export {
   SectionRepeaterNavigation,
   SectionRepeaterSlider,
   SectionRepeaterButtonGroup,
+  SectionRepeaterIconPicker,
 };

@@ -79,6 +79,10 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 * @since 1.0.0
 	 */
 	public function enqueue() {
+		wp_enqueue_script( 'iconpicker', EPSILON_URI . '/assets/vendors/jquery-fonticonpicker/jquery.fonticonpicker.min.js', array( 'jquery' ), '1.2.0', true );
+		wp_enqueue_style( 'iconpicker', EPSILON_URI . '/assets/vendors/jquery-fonticonpicker/jquery.fonticonpicker.min.css' );
+		wp_enqueue_style( 'iconpicker-grey', EPSILON_URI . '/assets/vendors/jquery-fonticonpicker/jquery.fonticonpicker.grey.min.css', array( 'iconpicker' ) );
+		wp_localize_script( 'iconpicker', 'EpsilonIconPack', $this->get_icons() );
 		wp_enqueue_script( 'jquery-ui-sortable' );
 	}
 
@@ -108,7 +112,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	 * Get custom repeater icons
 	 */
 	public function get_icons() {
-		$icons = Epsilon_Icons::icons();
+		$icons = Epsilon_Icons::new_icons();
 
 		return $icons;
 	}
@@ -133,10 +137,6 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 
 			if ( ! isset( $value['label'] ) ) {
 				$this->fields[ $key ]['label'] = '';
-			}
-
-			if ( 'epsilon-icon-picker' === $value['type'] ) {
-				$this->fields[ $key ]['icons'] = $this->get_icons();
 			}
 
 			/**

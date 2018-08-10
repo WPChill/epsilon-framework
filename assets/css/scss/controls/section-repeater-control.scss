@@ -84,8 +84,19 @@
       padding: 12px 0 12px 12px;
       line-height: 20px;
       font-weight: 600;
-      transition: .15s background-color ease-in-out;
-      cursor: all-scroll;
+      transition: .20s all ease-in-out;
+      cursor: pointer;
+      &:before {
+        content: "\f333";
+        font-family: "Dashicons";
+        display: inline-block;
+        position: absolute;
+        left: -15px;
+        top: 13px;
+        font-size: 15px;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+      }
       .repeater-minimize,
       .repeater-row-hide,
       .repeater-row-remove {
@@ -225,6 +236,22 @@
       padding: 15px;
     }
   }
+
+  .epsilon-section-repeater-is-sorting {
+    .repeater-row {
+      .repeater-row-header {
+        padding-left: 40px;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+        cursor: all-scroll;
+        &:before {
+          left: 10px;
+          -webkit-transition: all .2s;
+          transition: all .2s;
+        }
+      }
+    }
+  }
 }
 
 .epsilon-add-section-buttons {
@@ -239,7 +266,7 @@
   text-align: center;
   margin: 0;
   border-top: 1px solid #CCC;
-  .epsilon-add-new-section {
+  .epsilon-add-new-section, .epsilon-sort-sections {
     height: 32px;
     line-height: 30px;
     padding: 0 36px;
@@ -273,6 +300,11 @@
     &:focus {
       background: #23084D;
       color: #FFF;
+    }
+  }
+  .epsilon-sort-sections {
+    &:before {
+      content: none;
     }
   }
   .epsilon-import-sections {
@@ -457,6 +489,9 @@ body.adding-section {
       text-align: center;
       line-height: 20px;
       padding: initial;
+      i {
+        pointer-events: none;
+      }
       &:first-of-type {
         margin-right: 0;
       }
@@ -511,6 +546,9 @@ body.adding-section {
     border-bottom: 1px solid #d3d3d4;
     text-align: center;
     box-sizing: border-box;
+    span{
+      pointer-events: none;
+    }
     .available-sections-tab-toggler {
       color: #60676f;
       box-sizing: border-box;
