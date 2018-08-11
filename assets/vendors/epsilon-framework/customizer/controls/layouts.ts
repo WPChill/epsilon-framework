@@ -164,6 +164,9 @@ export class EpsilonLayouts {
         let temp = self.context.find( '.epsilon-control-set-advanced' );
         temp.removeClass( 'epsilon-control-set-advanced' ).addClass( 'epsilon-control-set' );
         temp.find( '.epsilon-control-advanced' ).fadeOut();
+        self.context.find( '.epsilon-control-advanced' ).removeClass( 'active' );
+        let id = self.context.find( '.epsilon-control-advanced' ).attr( 'data-unique-id' );
+        self.context.find( '#' + id ).slideUp().removeClass( 'active' );
       } else {
         let temp = self.context.find( '.epsilon-control-set' );
         temp.removeClass( 'epsilon-control-set' ).addClass( 'epsilon-control-set-advanced' );
