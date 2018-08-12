@@ -6,10 +6,10 @@ wp.customize.controlConstructor[ 'epsilon-icon-picker' ] = wp.customize.Control.
   ready() {
     var control = this;
 
-    new EpsilonIconPicker( control, false );
+    new EpsilonIconPicker( control );
 
     control.container.on( 'change', 'input.epsilon-icon-picker',
-        function( event: Event ) {
+        ( event: Event ) => {
           control.setting.set( jQuery( event.target ).val() );
         }
     );

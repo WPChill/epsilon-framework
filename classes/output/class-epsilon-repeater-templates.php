@@ -419,7 +419,8 @@ class Epsilon_Repeater_Templates {
 				<# if( field.description ){ #>
 					<span class="epsilon-color-picker-description">{{{ field.description }}}</span>
 				<# } #>
-			</span> </label>
+			</span>
+		</label>
 		<?php
 	}
 
