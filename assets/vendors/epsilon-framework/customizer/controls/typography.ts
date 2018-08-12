@@ -54,7 +54,7 @@ export class EpsilonTypography {
       this.loading = false;
       this.panel.removeClass( 'epsilon-loading' );
 
-    }, 250 );
+    }, 150 );
   }
 
   /**
@@ -105,7 +105,6 @@ export class EpsilonTypography {
      * Event that fires from the main page
      */
     wp.customize.previewer.bind( 'epsilon-set-typography-loading', ( state: boolean ) => {
-      console.log( state );
       this.stateChanger( false );
     } );
   }
