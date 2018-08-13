@@ -4,6 +4,8 @@ export default class SectionRepeaterSlider {
    */
   public props: any;
 
+  public id: any;
+
   /**
    * Main constructor
    * @param obj
@@ -14,8 +16,16 @@ export default class SectionRepeaterSlider {
   }
 
   public init() {
-    let slider = this.props.container.parent().find( '.ss-slider' ),
-        input = this.props.container.parent().find( '.rl-slider' ),
+    /**
+     * Lets define context
+     */
+    let input = this.props.container.find( `[data-field="${this.props.id}"]` );
+    /**
+     * Our container is its direct parent
+     */
+    this.props.container = input.parent();
+
+    let slider = this.props.container.find( '.ss-slider' ),
         inputId = input.attr( 'id' ),
         id = slider.attr( 'id' ),
         instance = jQuery( '#' + id );
