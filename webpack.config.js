@@ -14,7 +14,6 @@ module.exports = {
     customizer: './assets/vendors/epsilon-framework/customizer/customizer.ts',
     admin: './assets/vendors/epsilon-framework/admin/admin.ts',
     previewer: './assets/vendors/epsilon-framework/previewer/previewer.ts',
-    quickie: './assets/vendors/epsilon-framework/quickie/quickie.ts'
   },
   output: {
     path: path.resolve( __dirname, './assets/js/' ),
