@@ -354,11 +354,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 			</button>
 			-->
 
+
+			<button type="button" class="button button-secondary epsilon-sort-sections" aria-expanded="false" aria-controls="available-sections">
+				<?php esc_html_e( 'Reorder', 'epsilon-framework' ); ?>
+			</button>
+
 			<button type="button" class="button button-primary epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
 				<?php esc_html_e( 'Add More Sections', 'epsilon-framework' ); ?>
-			</button>
-			<button type="button" class="button button-primary epsilon-sort-sections" aria-expanded="false" aria-controls="available-sections">
-				<?php esc_html_e( 'Sort', 'epsilon-framework' ); ?>
 			</button>
 
 		</div>
