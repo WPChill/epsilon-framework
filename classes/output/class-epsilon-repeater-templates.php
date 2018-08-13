@@ -419,7 +419,8 @@ class Epsilon_Repeater_Templates {
 				<# if( field.description ){ #>
 					<span class="epsilon-color-picker-description">{{{ field.description }}}</span>
 				<# } #>
-			</span> </label>
+			</span>
+		</label>
 		<?php
 	}
 
@@ -428,48 +429,19 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function epsilon_icon_picker() {
 		?>
-		<div class="epsilon-icon-picker-repeater-container" id="{{{ field.id }}}">
-			<label class="epsilon-icon-picker-label">
-				<span class="customize-control-title epsilon-button-label">
-					{{{ field.label }}}
-					<# if( field.description ){ #>
-						<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-							<span class="mte-tooltip">
-								{{{ field.description }}}
-							</span>
-						</i>
-					<# } #>
+		<label>
+			<# if ( field.label ) { #>
+			<span class="customize-control-title">{{ field.label }}</span>
+			<# } #>
+			<# if( field.description ){ #>
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+				<span class="mte-tooltip">
+					{{{ field.description }}}
 				</span>
-				<div class="epsilon-icon-container">
-					<div class="epsilon-icon-name"><i class="{{{ field.default }}}"></i>
-						<div class="icon-label">{{{ field.icons[field.default].label }}}</div>
-					</div>
-					<span class="dashicons dashicons-arrow-down epsilon-open-icon-picker"></span>
-				</div>
-			</label>
-			<input type="hidden" class="epsilon-icon-picker" data-field={{{ field.id }}} value="{{{ field.default }}}">
-			<div class="epsilon-icon-picker-container">
-				<div class="search-container">
-					<input type="text" class="widefat text" />
-				</div>
-				<# if ( field.groups ) { #>
-				<div class="epsilon-icon-sets">
-					<select>
-						<option value=""><?php echo esc_html__( 'All', 'epsilon-framework' ); ?></option>
-						<# _.each(field.groups, function(k, v){ #>
-						<option value="{{{ k }}}">{{{ k }}}</option>
-						<# }) #> </select>
-				</div>
-				<# } #>
-				<div class="epsilon-icons-container">
-					<div class="epsilon-icons">
-						<# _.each(field.icons, function(k, v){ #>
-						<i class="{{{ v }}} <# if( data.value === v ) { #> selected <# } #>" data-icon="{{{ v }}}" data-search="{{{ k.label }}}" data-group="{{{ k.group }}}"></i>
-						<# }) #>
-					</div>
-				</div>
-			</div>
-		</div>
+			</i>
+			<# } #>
+			<input type="text" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}">
+		</label>
 		<?php
 	}
 
@@ -498,20 +470,29 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function selectize_field() {
 		?>
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
+		<label>
+			<# if ( field.label ) { #>
+				<span class="customize-control-title">{{ field.label }}</span>
+			<# } #>
+			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-						<span class="mte-tooltip">
-							{{{ field.description }}}
-						</span> </i> <# } #> <select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( !
-			_.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{
-			field.multiple }}"<# } #>> <# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
-			<option value="{{{ i }}}"
-			<# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
-			<# } else { #>
-			<option value="{{{ i }}}"
-			<# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>            <# } #> <#
-			}); #>            </select>
+				<span class="mte-tooltip">
+					{{{ field.description }}}
+				</span>
+			</i>
+			<# } #>
+			<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
+				<# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
+				<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>
+					{{ choice }}
+				</option>
+				<# } else { #>
+				<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>
+					{{ choice }}
+				</option>
+				<# } #> <#
+				}); #>
+			</select>
 		</label>
 		<?php
 	}

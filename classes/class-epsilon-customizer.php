@@ -351,7 +351,7 @@ class Epsilon_Customizer {
 				$sanitizer = array( 'Epsilon_Sanitizers', 'radio_buttons' );
 				break;
 			case 'epsilon-selectize':
-				$sanitize = array( 'Epsilon_Sanitizers', 'selectize' );
+				$sanitizer = array( 'Epsilon_Sanitizers', 'selectize' );
 				break;
 			default:
 				$sanitizer = 'sanitize_text_field';

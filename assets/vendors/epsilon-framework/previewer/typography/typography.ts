@@ -36,6 +36,7 @@ export class EpsilonTypographyPreviewer {
             }
 
             style.html( Ajax.result.css );
+            wp.customize.preview.send( 'epsilon-set-typography-loading', false );
           } );
         } );
   }

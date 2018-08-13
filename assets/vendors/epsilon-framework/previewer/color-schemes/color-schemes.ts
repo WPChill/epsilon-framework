@@ -5,6 +5,7 @@ declare var _: any;
 import { EpsilonAjaxRequest } from '../../utils/epsilon-ajax-request';
 
 export class EpsilonColorSchemesPreviewer {
+  index = 0;
   /**
    * Constructor
    */
@@ -34,6 +35,8 @@ export class EpsilonColorSchemesPreviewer {
         if ( style.html() !== Ajax.result.css ) {
           style.html( Ajax.result.css );
         }
+
+        wp.customize.preview.send( 'epsilon-set-color-schemes-loading', false );
       } );
     } );
   }
