@@ -318,11 +318,7 @@ $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 }
 
 .customize-control-title {
-  min-height: 20px;
-  line-height: 20px;
-  display: block;
-  margin-bottom: 6px;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .selectize-input {
@@ -373,17 +369,6 @@ $debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
 }
 */
 
-body .customize-panel-back:focus,
-body .customize-panel-back:hover,
-body .customize-section-back:hover,
-body .customize-section-back:focus,
-body #customize-controls .control-section .accordion-section-title:focus,
-body #customize-controls .control-section .accordion-section-title:hover,
-body #customize-controls .control-section.open .accordion-section-title,
-body #customize-controls .control-section:hover > .accordion-section-title {
-  border-left-color: #090033;
-  color: #090033;
-}
 
 .epsilon-is-loadable {
   -webkit-transition: all .3s;

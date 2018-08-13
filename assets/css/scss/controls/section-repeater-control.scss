@@ -87,7 +87,7 @@
       transition: .20s all ease-in-out;
       cursor: pointer;
       &:before {
-        content: "\f333";
+        content: "\f545";
         font-family: "Dashicons";
         display: inline-block;
         position: absolute;
@@ -105,23 +105,23 @@
         float: right;
         font-size: 18px;
         cursor: pointer;
-        margin-left: 5px;
-        visibility: hidden;
         transition: color .15s;
         &:hover {
           color: $repeater_row_text_hover_color;
         }
       }
-      .repeater-minimize {
+      .repeater-minimize,
+      .repeater-row-hide {
         display: block;
         margin-top: -12px;
-        padding: 12px;
+        padding: 12px 6px;
         visibility: visible;
       }
       .repeater-row-remove {
         border-right: 1px solid $repeater_row_separator_color;
+        border-left: 1px solid $repeater_row_separator_color;
         margin-top: -12px;
-        padding: 12px;
+        padding: 12px 6px;
         visibility: visible;
       }
       .repeater-row-hide {
@@ -150,7 +150,7 @@
     }
     .repeater-row-content {
       border-top: 1px solid $repeater_row_separator_color;
-      padding: 0 20px 14px 20px;
+      padding: 0 10px 10px 10px;
       position: relative;
       &:after {
         background: #fff;
@@ -166,7 +166,7 @@
         content: '';
       }
       nav {
-        margin: 0 -20px 0 -20px;
+        margin: 0 -10px 0 -10px;
         background: #F2F2F2;
         border-bottom: 1px solid $repeater_row_nav_tab_border;
         text-align: left;
@@ -266,10 +266,8 @@
   text-align: center;
   margin: 0;
   border-top: 1px solid #CCC;
-  .epsilon-add-new-section, .epsilon-sort-sections {
-    height: 32px;
-    line-height: 30px;
-    padding: 0 36px;
+  .epsilon-add-new-section,
+  .epsilon-sort-sections {
     animation-name: epsilon_button_pulse;
     animation-duration: 1s;
     animation-timing-function: ease-in;
@@ -277,11 +275,6 @@
     animation-iteration-count: 2;
     animation-fill-mode: none;
     animation-play-state: running;
-    background: #3C2166;
-    color: #FFF;
-    text-shadow: none;
-    box-shadow: none;
-    border: 1px solid #FFF;
     &:before {
       content: "\f132";
       display: inline-block;
@@ -294,12 +287,6 @@
       transition: all .2s;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-    }
-    &:hover,
-    &:active,
-    &:focus {
-      background: #23084D;
-      color: #FFF;
     }
   }
   .epsilon-sort-sections {
