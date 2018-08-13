@@ -319,7 +319,8 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 		<label>
 			<span class="customize-control-title">
 				<# if( data.label ){ #>
-					<span class="customize-control-title">{{{ data.label }}}</span>
+					<span>{{{ data.label }}}</span>
+					<a href="#" class="button-link add-new-toggle">{{{ data.add_new_page_label }}}</a>
 				<# } #>
 
 				<# if( data.description ){ #>
@@ -332,7 +333,7 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 				<# }) #>
 			</select>
 		</label>
-		<button type="button" class="button-link add-new-toggle">{{{ data.add_new_page_label }}}</button>
+
 		<div class="new-content-item" style="display: none;">
 			<input type="text" class="create-item-input" placeholder="{{{ data.add_new_page_input_placeholder }}}">
 			<button type="button" class="button add-content">{{{ data.add_new_page_button_label }}}</button>
