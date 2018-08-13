@@ -13,7 +13,7 @@ export class EpsilonLayouts {
   /**
    * Buttons
    */
-  html: { [key: string]: string } = {
+  html: { [ key: string ]: string } = {
     buttonLeft: '<a href="#" data-action="left"><span class="dashicons dashicons-arrow-left"></span> </a>',
     buttonRight: '<a href="#" data-action="right"><span class="dashicons dashicons-arrow-right"></span> </a>',
   };
@@ -157,6 +157,23 @@ export class EpsilonLayouts {
       }
 
       /**
+       * Hide or show the advanced toggler as needed
+       * .this is awful.
+       */
+      if ( 1 === self.activeColumns ) {
+        let temp = self.context.find( '.epsilon-control-set-advanced' );
+        temp.removeClass( 'epsilon-control-set-advanced' ).addClass( 'epsilon-control-set' );
+        temp.find( '.epsilon-control-advanced' ).fadeOut();
+        self.context.find( '.epsilon-control-advanced' ).removeClass( 'active' );
+        let id = self.context.find( '.epsilon-control-advanced' ).attr( 'data-unique-id' );
+        self.context.find( '#' + id ).slideUp().removeClass( 'active' );
+      } else {
+        let temp = self.context.find( '.epsilon-control-set' );
+        temp.removeClass( 'epsilon-control-set' ).addClass( 'epsilon-control-set-advanced' );
+        temp.find( '.epsilon-control-advanced' ).fadeIn();
+      }
+
+      /**
        * Are we adding or subtrating?
        */
       operation = self.lastColumnsState < self.activeColumns ? 'adding' : 'subtracting';
@@ -164,7 +181,7 @@ export class EpsilonLayouts {
 
       if ( 'subtracting' === operation ) {
         self.context.find( '.epsilon-layouts-setup > .epsilon-column' ).
-            slice( - ( self.lastColumnsState - self.activeColumns ) ).
+            slice( - (self.lastColumnsState - self.activeColumns) ).
             remove();
       } else {
         for ( j = 0; j < i; j ++ ) {
@@ -228,8 +245,8 @@ export class EpsilonLayouts {
       switch ( self.activeColumns ) {
         case 2:
           self.context.find( '.epsilon-column' ).removeClass( self.colClasses );
-          self.context.find( '.epsilon-column' ).first().addClass( 'col8' ).attr( 'data-columns', ( 8 ) );
-          self.context.find( '.epsilon-column' ).last().addClass( 'col4' ).attr( 'data-columns', ( 4 ) );
+          self.context.find( '.epsilon-column' ).first().addClass( 'col8' ).attr( 'data-columns', (8) );
+          self.context.find( '.epsilon-column' ).last().addClass( 'col4' ).attr( 'data-columns', (4) );
           break;
         default:
           if ( null === self.activeColumns ) {
@@ -238,8 +255,8 @@ export class EpsilonLayouts {
 
           self.context.find( '.epsilon-column' ).
               removeClass( self.colClasses ).
-              addClass( 'col' + ( 12 / self.activeColumns ) ).
-              attr( 'data-columns', ( 12 / self.activeColumns ) );
+              addClass( 'col' + (12 / self.activeColumns) ).
+              attr( 'data-columns', (12 / self.activeColumns) );
           break;
       }
     } );
@@ -293,7 +310,7 @@ export class EpsilonLayouts {
     }
 
     interface Columns {
-      [key: number]: Column
+      [ key: number ]: Column
     }
 
     interface columnsInterface {

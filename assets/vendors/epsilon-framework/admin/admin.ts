@@ -3,6 +3,8 @@ declare var wpNavMenu: any;
 declare var wp: any;
 import * as $ from 'jquery';
 
+import './../../../css/style-admin.scss'
+
 import { EpsilonNotices } from './notices/notices';
 import { EpsilonNavMenus } from './nav-menus/nav-menus';
 

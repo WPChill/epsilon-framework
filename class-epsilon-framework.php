@@ -88,15 +88,15 @@ class Epsilon_Framework {
 
 			if ( ! in_array(
 				$k, array(
-					'controls',
-					'sections',
-					'panels',
-					'plugin',
-					'path',
-					'backup',
-					'plugin_uri',
-					'plugin_dir',
-				)
+					  'controls',
+					  'sections',
+					  'panels',
+					  'plugin',
+					  'path',
+					  'backup',
+					  'plugin_uri',
+					  'plugin_dir',
+				  )
 			) ) {
 				continue;
 			}
@@ -200,16 +200,18 @@ class Epsilon_Framework {
 		 * Repeater fields templates
 		 */
 		add_action(
-			'customize_controls_print_footer_scripts', array(
-			'Epsilon_Repeater_Templates',
-			'field_repeater_js_template',
-		), 0
+			'customize_controls_print_footer_scripts',
+			array(
+				'Epsilon_Repeater_Templates',
+				'field_repeater_js_template',
+			), 0
 		);
 		add_action(
-			'customize_controls_print_footer_scripts', array(
-			'Epsilon_Repeater_Templates',
-			'section_repeater_js_template',
-		), 0
+			'customize_controls_print_footer_scripts',
+			array(
+				'Epsilon_Repeater_Templates',
+				'section_repeater_js_template',
+			), 0
 		);
 	}
 
@@ -235,21 +237,21 @@ class Epsilon_Framework {
 	 * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
 	 */
 	public function customize_preview_styles() {
-		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
+		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style-customizer.css' );
 		wp_enqueue_script( 'epsilon-previewer', EPSILON_URI . '/assets/js/epsilon-framework-previewer.js', array(
 			'jquery',
 			'customize-preview',
 		), 2, true );
 
 		wp_localize_script( 'epsilon-previewer',
-			'EpsilonWPUrls', array(
-			'siteurl'    => get_option( 'siteurl' ),
-			'theme'      => get_template_directory_uri(),
-			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-			'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
-				'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
-				'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
-		) );
+		                    'EpsilonWPUrls', array(
+			                    'siteurl'    => get_option( 'siteurl' ),
+			                    'theme'      => get_template_directory_uri(),
+			                    'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			                    'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
+			                    'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
+			                    'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+		                    ) );
 	}
 
 	/*
@@ -264,25 +266,25 @@ class Epsilon_Framework {
 		), false, true );
 
 		wp_localize_script( 'epsilon-object',
-			'EpsilonWPUrls', array(
-			'siteurl'    => get_option( 'siteurl' ),
-			'theme'      => get_template_directory_uri(),
-			'ajaxurl'    => admin_url( 'admin-ajax.php' ),
-			'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
-				'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
-				'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
-		) );
+		                    'EpsilonWPUrls', array(
+			                    'siteurl'    => get_option( 'siteurl' ),
+			                    'theme'      => get_template_directory_uri(),
+			                    'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+			                    'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
+			                    'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
+			                    'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+		                    ) );
 
 		wp_localize_script( 'epsilon-object',
-			'EpsilonTranslations', array(
-			'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
-			'add'        => esc_html__( 'Add', 'epsilon-framework' ),
-			'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
-			'row'        => esc_html__( 'Row', 'epsilon-framework' ),
-		) );
+		                    'EpsilonTranslations', array(
+			                    'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
+			                    'add'        => esc_html__( 'Add', 'epsilon-framework' ),
+			                    'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
+			                    'row'        => esc_html__( 'Row', 'epsilon-framework' ),
+		                    ) );
 
 		wp_enqueue_style( 'font-awesome', EPSILON_URI . '/assets/vendors/fontawesome/font-awesome.css' );
-		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style.css' );
+		wp_enqueue_style( 'epsilon-styles', EPSILON_URI . '/assets/css/style-customizer.css' );
 
 	}
 

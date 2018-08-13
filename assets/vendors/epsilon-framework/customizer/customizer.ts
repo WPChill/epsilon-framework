@@ -1,6 +1,7 @@
 declare var require: any;
 declare var wp: any;
-import * as $ from 'jquery';
+
+import '../../../css/style-customizer.scss'
 
 /**
  * Settings

@@ -1,23 +1,20 @@
 declare var wp: any;
 declare var _: any;
 import { EpsilonFieldRepeater } from '../repeater';
-import { EpsilonRepeaterAddons } from './repeater-addons';
 import { EpsilonTextEditor } from '../text-editor';
 import { EpsilonRepeaterRow } from './repeater-row';
-import { EpsilonRepeaterSectionRow } from './repeater-section-row';
-import { EpsilonSectionRepeater } from '../section-repeater';
 
 export class EpsilonRepeaterUtils {
   /**
    * PRotected variable
    */
-  protected control: EpsilonFieldRepeater | EpsilonSectionRepeater;
+  protected control: EpsilonFieldRepeater;
 
   /**
    * Constructor
    * @param {EpsilonFieldRepeater | EpsilonSectionRepeater} control
    */
-  public constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater ) {
+  public constructor( control: EpsilonFieldRepeater ) {
     this.control = control;
   }
 
@@ -67,16 +64,16 @@ export class EpsilonRepeaterUtils {
   /**
    * Adds a row
    */
-  public add( data: { [key: number]: object }, forceSave: boolean ): EpsilonRepeaterRow | boolean {
+  public add( data: { [ key: number ]: object }, forceSave: boolean ): EpsilonRepeaterRow | boolean {
     const self = this;
     let template: any = _.memoize( this.control.template ),
         newSetting: any = {},
         templateData: {
-          [key: number]: any,
+          [ key: number ]: any,
           index: number
         },
         value: {
-          [key: number]: any,
+          [ key: number ]: any,
         } = this.getValue(),
         i: number | string,
         rowContainer: JQuery,
@@ -118,6 +115,8 @@ export class EpsilonRepeaterUtils {
     template = template( templateData );
     rowContainer = jQuery( template ).appendTo( this.control.repeaterContainer );
     row = new EpsilonRepeaterRow( this.control, rowContainer );
+
+    rowContainer.trigger( 'row:add', [ this.control.currentIndex, templateData ] );
 
     /**
      * Bind events to the new row
@@ -169,7 +168,7 @@ export class EpsilonRepeaterUtils {
     let rows = this.control.repeaterContainer.find( '.repeater-row' ),
         settings = this.getValue(),
         newOrder: Array<object> = [],
-        newRows: Array<EpsilonRepeaterRow | EpsilonRepeaterSectionRow> = [],
+        newRows: Array<EpsilonRepeaterRow> = [],
         newSettings: Array<object> = [],
         textEditorSettings: any;
 
@@ -201,7 +200,7 @@ export class EpsilonRepeaterUtils {
 
     this.control.rows = newRows;
     this.setValue( newSettings );
-
+    this.control.repeaterContainer.trigger( 'row:stopped-dragging', [ newOrder ] );
     if ( self.control.control.params[ 'selective_refresh' ] ) {
       wp.customize.previewer.refresh();
     }
@@ -210,7 +209,7 @@ export class EpsilonRepeaterUtils {
   /**
    * Saves value
    */
-  public setValue( value: { [key: number]: any } ) {
+  public setValue( value: { [ key: number ]: any } ) {
     this.control.control.setting.set( [] );
     this.control.control.setting.set( value );
   }
@@ -227,8 +226,8 @@ export class EpsilonRepeaterUtils {
    * Triggered when a field has changed
    */
   public updateField( instance: any, fieldId: string, element: JQuery ) {
-    let row: EpsilonRepeaterRow | EpsilonRepeaterSectionRow = this.control.rows[ instance.index ],
-        value: { [key: number]: any } = this.control.utils.getValue();
+    let row: EpsilonRepeaterRow = this.control.rows[ instance.index ],
+        value: { [ key: number ]: any } = this.control.utils.getValue();
 
     this.updateRepeater( instance, fieldId, element );
   }
@@ -243,7 +242,7 @@ export class EpsilonRepeaterUtils {
    */
   public updateRepeater( instance: any, fieldId: string, element: JQuery ) {
     let row: EpsilonRepeaterRow = this.control.rows[ instance.index ],
-        value: { [key: number]: any } = this.control.utils.getValue();
+        value: { [ key: number ]: any } = this.control.utils.getValue();
 
     if ( ! row ) {
       return;
@@ -347,7 +346,7 @@ export class EpsilonRepeaterUtils {
   /**
    * Toggles the row vizibility
    */
-  public toggleMinimize( row: EpsilonRepeaterRow | EpsilonRepeaterSectionRow, section: boolean = false ): void {
+  public toggleMinimize( row: EpsilonRepeaterRow, section: boolean = false ): void {
     const self = this;
     if ( row.hasOwnProperty( 'type' ) ) {
       section = true;
@@ -388,8 +387,8 @@ export class EpsilonRepeaterUtils {
   /**
    * Cleans an arrow of undefined values
    */
-  public cleanArray( obj: Array<EpsilonRepeaterSectionRow | EpsilonRepeaterRow> ): Array<EpsilonRepeaterSectionRow | EpsilonRepeaterRow> {
-    let arr: Array<EpsilonRepeaterSectionRow | EpsilonRepeaterRow> = [];
+  public cleanArray( obj: Array<EpsilonRepeaterRow> ): Array<EpsilonRepeaterRow> {
+    let arr: Array<EpsilonRepeaterRow> = [];
     for ( let i = 0; i < obj.length; i ++ ) {
       if ( obj[ i ] ) {
         arr.push( obj[ i ] );
