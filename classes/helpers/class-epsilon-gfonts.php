@@ -45,6 +45,26 @@ class Epsilon_GFonts {
 						'latin',
 					),
 				),
+				'Work Sans'           => array(
+					'family'   => 'Work Sans',
+					'import'   => 'Work+Sans:400,600&subset=latin',
+					'variants' => array(
+						'100',
+						'200',
+						'300',
+						'400',
+						'500',
+						'600',
+						'700',
+						'800',
+						'900',
+					),
+					'subsets'  => array(
+						'latin-ext',
+						'latin',
+					),
+				),
+
 				'Open Sans'           => array(
 					'family'   => 'Open Sans',
 					'import'   => 'Open+Sans:300,400,600,700,800&subset=latin-ext',

@@ -231,59 +231,6 @@ class Epsilon_Framework {
 			               )
 		);
 		wp_enqueue_style( 'epsilon-admin', EPSILON_URI . '/assets/css/style-admin.css' );
-
-		if ( apply_filters( 'show_epsilon_quickie_bar', true ) ) {
-			/**
-			 * Enqueue Quickie bar for Epsilon FW
-			 *
-			 * @return void
-			 */
-			wp_enqueue_script( 'epsilon-quickie-bar', EPSILON_URI . '/assets/js/epsilon-framework-quickie.js', array( 'jquery' ) );
-
-			wp_localize_script( 'epsilon-quickie-bar', 'EpsilonQuickieObj',
-			                    apply_filters(
-				                    'epsilon_quickie_bar_shortcuts',
-				                    array(
-					                    'links' => array(
-						                    array(
-							                    'link_to'   => 'colors',
-							                    'icon'      => 'dashicons dashicons-admin-appearance',
-							                    'link_type' => 'section',
-						                    ),
-						                    array(
-							                    'link_to'   => 'portum_typography_section',
-							                    'icon'      => 'dashicons dashicons-editor-textcolor',
-							                    'link_type' => 'section',
-						                    ),
-						                    array(
-							                    'link_to'   => 'portum_repeatable_section',
-							                    'icon'      => 'dashicons dashicons-editor-table',
-							                    'link_type' => 'section',
-						                    ),
-						                    array(
-							                    'link_to'   => 'nav_menus',
-							                    'icon'      => 'dashicons dashicons-menu',
-							                    'link_type' => 'panel',
-						                    ),
-						                    array(
-							                    'link_to'   => 'portum_panel_general',
-							                    'icon'      => 'dashicons dashicons-admin-settings',
-							                    'link_type' => 'panel',
-						                    ),
-						                    array(
-							                    'link_to'   => 'custom_css',
-							                    'icon'      => 'dashicons dashicons-editor-code',
-							                    'link_type' => 'section',
-						                    ),
-
-					                    ),
-					                    'logo'  => array(
-						                    'url' => EPSILON_URI . '/assets/img/epsilon-logo.png',
-						                    'alt' => 'Epsilon Builder Logo',
-					                    ),
-				                    ) ) );
-		}
-
 	}
 
 	/**
