@@ -62,7 +62,7 @@
     }
     .repeater-row-header {
         position: relative;
-        padding: 12px 0 12px 12px;
+        padding: 12px 0 12px 5px;
         height: 20px;
         line-height: 20px;
         font-weight: 600;
@@ -198,16 +198,7 @@
     border-radius: $repeat_field_text_border_radius;
 }
 
-.customize-control-epsilon-text-editor,
-.repeater-field-epsilon-text-editor {
-    .customize-control-title {
-        display: inline-block;
-        float: left;
-        margin-bottom: 10px;
-        padding-bottom: 0;
 
-    }
-}
 
 .repeater-field-epsilon-color-picker {
     .epsilon-color-picker-title {
