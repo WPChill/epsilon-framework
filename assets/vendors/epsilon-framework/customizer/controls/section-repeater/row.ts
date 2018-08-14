@@ -7,6 +7,7 @@ import {
   SectionRepeaterSlider,
   SectionRepeaterButtonGroup,
   SectionRepeaterIconPicker,
+  ConditionalFields
 } from './external/index';
 
 export class EpsilonSectionRepeaterRow {
@@ -46,6 +47,7 @@ export class EpsilonSectionRepeaterRow {
    * ID
    */
   public $ID: string;
+
   /**
    * Initiated array
    */
@@ -149,6 +151,7 @@ export class EpsilonSectionRepeaterRow {
 
     this.addTabs();
     this.handleEvents( that );
+    this.handleConditionalFields();
   }
 
   /**
@@ -378,12 +381,12 @@ export class EpsilonSectionRepeaterRow {
             case 'multiple-select':
               let instance: any = jQuery( e.target )[ 0 ];
               value[ this.index ][ jQuery( e.target ).data( 'field' ) ] = instance.selectize.getValue();
-
               break;
             default:
               value[ this.index ][ jQuery( e.target ).data( 'field' ) ] = e.target.value;
               break;
           }
+
           if ( control.$_instance.params[ 'selective_refresh' ] ) {
             wp.customize.previewer.send( 'updated-section-repeater', {
               control: this.$ID,
@@ -485,5 +488,12 @@ export class EpsilonSectionRepeaterRow {
         tab.addClass( 'active' );
       }
     } );
+  }
+
+  /**
+   * Init conditional fields
+   */
+  public handleConditionalFields() {
+    new ConditionalFields( this.data, this.container );
   }
 }

@@ -45,8 +45,8 @@ export default {
     value = value.filter( e => obj.index !== e.index );
     value = this.$utils.resetIndexes.call( this, value );
     this.$connectors.setValue( value );
-
     this.loading = false;
+    this.state.currentIndex = this.state.rows.length;
     return obj.index;
   },
 
