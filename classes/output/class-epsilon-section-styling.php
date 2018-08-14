@@ -7,6 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Section_Styling
  */
 class Epsilon_Section_Styling {
+
 	/**
 	 * Output CSS string
 	 *
@@ -66,13 +67,13 @@ class Epsilon_Section_Styling {
 			if ( ! empty( $text ) ) {
 				$this->options[ $index ]['text'] = array(
 					'selectors' => $this->manager->sections[ $section['type'] ]['customization']['colors']['text-color']['selectors'],
-					'value'     => reset( $text )
+					'value'     => reset( $text ),
 				);
 			}
 			if ( ! empty( $heading ) ) {
 				$this->options[ $index ]['headings'] = array(
 					'selectors' => $this->manager->sections[ $section['type'] ]['customization']['colors']['heading-color']['selectors'],
-					'value'     => reset( $heading )
+					'value'     => reset( $heading ),
 				);
 			}
 		}
@@ -139,7 +140,7 @@ class Epsilon_Section_Styling {
 			 * [data-section="1"] p, [data-section="1" a { css string goes here }
 			 * and concatenate it on the CSS variable
 			 */
-			$css .= implode( ',', $element['selectors'] ) . '{ color: ' . $element['value'] . '}' . "\n";
+			$css .= implode( ',', $element['selectors'] ) . '{ color: ' . ! empty( $element['value'] ) ? $element['value'] : 'inherit' . '}' . "\n";
 		}
 
 		return $css;
