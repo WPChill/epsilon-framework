@@ -306,6 +306,10 @@ class Epsilon_Section_Repeater_Helper {
 						'group'       => 'colors',
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_text_color' ] = $temp;
 					break;
 				case 'heading-color':
@@ -327,6 +331,10 @@ class Epsilon_Section_Repeater_Helper {
 						),
 						'group'       => 'colors',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
 
 					$arr[ $key . '_heading_color' ] = $temp;
 					break;
@@ -363,6 +371,10 @@ class Epsilon_Section_Repeater_Helper {
 						'group'       => 'styling',
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_background_color' ] = $temp;
 					break;
 				case 'background-color-opacity':
@@ -380,6 +392,10 @@ class Epsilon_Section_Repeater_Helper {
 						'group'       => 'styling',
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_background_color_opacity' ] = $temp;
 					break;
 				case 'background-image':
@@ -394,6 +410,10 @@ class Epsilon_Section_Repeater_Helper {
 						'sizeArray'   => $sizes,
 						'mode'        => 'url',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
 
 					$arr[ $key . '_background_image' ] = $temp;
 					break;
@@ -418,6 +438,10 @@ class Epsilon_Section_Repeater_Helper {
 						),
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_background_position' ] = $temp;
 					break;
 				case 'background-repeat':
@@ -436,6 +460,10 @@ class Epsilon_Section_Repeater_Helper {
 						),
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_background_repeat' ] = $temp;
 					break;
 				case 'background-size':
@@ -453,6 +481,10 @@ class Epsilon_Section_Repeater_Helper {
 						),
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_background_size' ] = $temp;
 					break;
 				case 'background-parallax':
@@ -465,6 +497,10 @@ class Epsilon_Section_Repeater_Helper {
 						'group'       => 'styling',
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$arr[ $key . '_background_parallax' ] = $temp;
 					break;
 				case 'background-video':
@@ -476,6 +512,10 @@ class Epsilon_Section_Repeater_Helper {
 						'type'        => 'text',
 						'group'       => 'styling',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
 
 					$arr[ $key . '_background_video' ] = $temp;
 					break;
@@ -533,6 +573,10 @@ class Epsilon_Section_Repeater_Helper {
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'center',
 					);
 
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_column_alignment' ] = $temp;
@@ -548,6 +592,11 @@ class Epsilon_Section_Repeater_Helper {
 						'choices'     => $this->create_choices_array( 'column_vertical_alignment', $values['choices'] ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'middle',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_column_vertical_alignment' ] = $temp;
@@ -563,6 +612,11 @@ class Epsilon_Section_Repeater_Helper {
 						'choices'     => $this->create_choices_array( 'column_stretch', $values['choices'] ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'boxedin',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_column_stretch' ] = $temp;
@@ -577,6 +631,11 @@ class Epsilon_Section_Repeater_Helper {
 						'choices' => $this->create_choices_array( 'column_spacing', $values['choices'] ),
 						'default' => isset( $values['default'] ) ? $values['default'] : 'spaced',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_column_spacing' ] = $temp;
@@ -592,6 +651,11 @@ class Epsilon_Section_Repeater_Helper {
 						'choices'     => $this->create_choices_array( 'column_group', $values['choices'] ),
 						'default'     => isset( $values['default'] ) ? absint( $values['default'] ) : 4,
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_column_group' ] = $temp;
@@ -599,14 +663,19 @@ class Epsilon_Section_Repeater_Helper {
 
 				case 'row-spacing-top':
 					$temp              = array(
-						'id'      => $key . '_row_spacing_top',
-						'type'    => 'epsilon-button-group',
-						'label'   => esc_html__( 'Padding Top', 'epsilon-framework' ),
+						'id'          => $key . '_row_spacing_top',
+						'type'        => 'epsilon-button-group',
+						'label'       => esc_html__( 'Padding Top', 'epsilon-framework' ),
 						'description' => esc_html( 'Adds padding top. ', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'row_spacing', $values['choices'] ),
-						'default' => isset( $values['default'] ) ? $values['default'] : 'none',
+						'group'       => 'layout',
+						'choices'     => $this->create_choices_array( 'row_spacing', $values['choices'] ),
+						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_row_spacing_top' ] = $temp;
@@ -621,6 +690,11 @@ class Epsilon_Section_Repeater_Helper {
 						'choices'     => $this->create_choices_array( 'row_spacing_bottom', $values['choices'] ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_row_spacing_bottom' ] = $temp;
@@ -635,24 +709,29 @@ class Epsilon_Section_Repeater_Helper {
 						'choices'     => $this->create_choices_array( 'title_align', $values['choices'] ),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
 					$temp['groupType'] = $this->set_group_type( $temp['choices'] );
 
 					$arr[ $key . '_row_title_align' ] = $temp;
 					break;
-					/*
-				case 'template-selector':
-					$temp = array(
-						'id'      => $key . '_template_selector',
-						'type'    => 'epsilon-template-select',
-						'label'   => __( 'Template selector', 'epsilon-framework' ),
-						'group'   => 'layout',
-						'choices' => $values['choices'],
-						'default' => isset( $values['default'] ) ? esc_attr( $values['default'] ) : 'normal',
-					);
+				/*
+			case 'template-selector':
+				$temp = array(
+					'id'      => $key . '_template_selector',
+					'type'    => 'epsilon-template-select',
+					'label'   => __( 'Template selector', 'epsilon-framework' ),
+					'group'   => 'layout',
+					'choices' => $values['choices'],
+					'default' => isset( $values['default'] ) ? esc_attr( $values['default'] ) : 'normal',
+				);
 
-					$arr[ $key . '_template_selector' ] = $temp;
-					break;
-					*/
+				$arr[ $key . '_template_selector' ] = $temp;
+				break;
+				*/
 				default:
 					break;
 			}// End switch().

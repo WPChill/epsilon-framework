@@ -49,12 +49,7 @@ export class EpsilonRepeaterAddons {
    * Init all plugins
    */
   public initPlugins() {
-    if ( 'epsilon-section-repeater' === this.control.control.params.type ) {
-      this.initRangeSlidersSectionRepeater();
-    } else {
-      this.initRangeSliders();
-    }
-
+    this.initRangeSliders();
     this.initImageUploads();
     this.initIconPicker();
     this.initTextEditor();
@@ -295,38 +290,6 @@ export class EpsilonRepeaterAddons {
   }
 
   /**
-   * Initiate range sliders in the section repeater
-   */
-  private initRangeSlidersSectionRepeater() {
-    let sliders = _.filter( this.proxy.fields, ( element: any ) => { return element.type === 'epsilon-slider'; } );
-
-    sliders.map( ( element: any ) => {
-      let sliderSettings: any = {
-        container: this.row.container.find( 'input[data-field="' + element.id + '"]' ).parent(),
-        params: {
-          id: element.id,
-          sliderControls: {
-            min: element.choices.min,
-            max: element.choices.max,
-            step: element.choices.step,
-          },
-        }
-      };
-
-      if ( this.row.hasOwnProperty( 'type' ) ) {
-        sliderSettings.params.value = parseFloat( element.default );
-
-        if ( 'undefined' !== typeof this.control.control.params.value[ this.row.index ] ) {
-          sliderSettings.params.value = parseFloat( this.control.control.params.value[ this.row.index ][ element.id ] );
-        }
-      }
-
-      new EpsilonRangeSlider( sliderSettings );
-    } );
-
-  }
-
-  /**
    * initiate range sliders
    */
   private initRangeSliders() {
@@ -350,18 +313,12 @@ export class EpsilonRepeaterAddons {
           }
         };
 
-        if ( self.row.hasOwnProperty( 'type' ) ) {
-          sliderSettings.params.value = parseFloat( self.proxy.fields[ k ].default );
-          if ( 'undefined' !== typeof self.control.control.params.value[ self.row.index ] ) {
-            sliderSettings.params.value = parseFloat( self.control.control.params.value[ self.row.index ][ k ] );
-          }
-
-          new EpsilonRangeSlider( sliderSettings );
-          return;
-        }
-
         if ( 'undefined' !== typeof self.proxy.value[ self.row.index ] ) {
           sliderSettings.params.value = parseFloat( self.proxy.value[ self.row.index ][ k ] );
+        }
+
+        if ( isNaN( sliderSettings.params.value ) ) {
+          sliderSettings.params.value = sliderSettings.params.sliderControls.min;
         }
 
         sliderSettings.container = jQuery( sliderSettings.container ).find( '.epsilon-slider:not(.initiated)' ).first().addClass( 'initiated' );

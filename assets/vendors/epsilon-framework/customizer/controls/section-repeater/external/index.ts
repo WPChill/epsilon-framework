@@ -6,6 +6,7 @@ import SectionRepeaterNavigation from './navigation';
 import SectionRepeaterSlider from './slider';
 import SectionRepeaterButtonGroup from './button-group';
 import SectionRepeaterIconPicker from './iconpicker';
+import ConditionalFields from './conditional-fields';
 
 export {
   SectionRepeaterEditor,
@@ -16,4 +17,5 @@ export {
   SectionRepeaterSlider,
   SectionRepeaterButtonGroup,
   SectionRepeaterIconPicker,
+  ConditionalFields,
 };
