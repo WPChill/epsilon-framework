@@ -7,6 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Color_Scheme
  */
 class Epsilon_Control_Button_Group extends WP_Customize_Control {
+
 	/**
 	 * The type of customize control being rendered.
 	 *
@@ -73,6 +74,8 @@ class Epsilon_Control_Button_Group extends WP_Customize_Control {
 			2 => 'two',
 			3 => 'three',
 			4 => 'four',
+			5 => 'five',
+			6 => 'six',
 		);
 
 		return $arr[ count( $this->choices ) ];
@@ -99,19 +102,19 @@ class Epsilon_Control_Button_Group extends WP_Customize_Control {
 			<div class="epsilon-control-set">
 				<div class="epsilon-control-group epsilon-group-{{ data.groupType }}">
 					<# for( var i in data.choices ) { #>
-						<a href="#" data-value="{{ data.choices[i].value }}" <# if( data.value === data.choices[i].value ) { #> class="active" <# } #> >
-							<# if( ! _.isUndefined( data.choices[i].icon ) ) { #>
-								<i class="dashicons {{ data.choices[i].icon }}"/>
-							<# } #>
+					<a href="#" data-value="{{ data.choices[i].value }}" <# if( data.value === data.choices[i].value ) { #> class="active" <# } #> >
+					<# if( ! _.isUndefined( data.choices[i].icon ) ) { #>
+					<i class="dashicons {{ data.choices[i].icon }}" />
+					<# } #>
 
-							<# if( ! _.isUndefined( data.choices[i].png ) ) { #>
-								<img src="{{ data.choices[i].png }}" />
-							<# } #>
-						</a>
+					<# if( ! _.isUndefined( data.choices[i].png ) ) { #>
+					<img src="{{ data.choices[i].png }}" />
+					<# } #>
+					</a>
 					<# } #>
 				</div>
 			</div>
 		</div>
-	<?php //@formatter: on
+		<?php //@formatter: on
 	}
 }

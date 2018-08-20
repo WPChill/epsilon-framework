@@ -11,8 +11,7 @@
     display: block;
     float: left;
     margin: 0;
-    height: 22px;
-    line-height: 22px;
+    height: 20px;
 }
 
 .onoffswitch_label {
@@ -37,9 +36,8 @@
     display: block;
     overflow: hidden;
     cursor: pointer;
-    height: 22px;
+    height: 20px;
     padding: 0;
-    line-height: 19px;
     transition: background-color 0.2s ease-in;
     -webkit-border-radius: 11px;
     -moz-border-radius: 11px;
@@ -55,7 +53,7 @@
         height: 20px;
         margin: 0;
         position: absolute;
-        top: 1px;
+        top: 0;
         bottom: 0;
         right: 32px;
         background-color: #fff;
@@ -74,9 +72,8 @@
         position: absolute;
         top: 2px;
         bottom: 2px;
-        right: 6px;
-        font-size: 11px;
-        font-family: 'Arial';
+        right: 9px;
+        font-size: 9px;
     }
 }
 
@@ -90,7 +87,7 @@
 }
 
 .onoffswitch-checkbox:checked+.onoffswitch-label:before {
-    right: 1px;
+    right: 0;
 }
 
 .onoffswitch-checkbox:checked+.onoffswitch-label:after {
@@ -102,7 +99,6 @@
     bottom: 2px;
     right: 27px;
     font-size: 11px;
-    font-family: 'Arial';
 }
 
 .widget-content .customize-control-title {

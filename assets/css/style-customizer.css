@@ -1,4 +1,7 @@
 /* Variables */
+body.wp-customizer {
+  font-size: 13px; }
+
 /* Start Controls */
 .epsilon-upsell-container {
   background: #fff;
@@ -234,8 +237,7 @@ ui-slider:hover {
   display: block;
   float: left;
   margin: 0;
-  height: 22px;
-  line-height: 22px; }
+  height: 20px; }
 
 .onoffswitch_label {
   display: block; }
@@ -256,9 +258,8 @@ ui-slider:hover {
   display: block;
   overflow: hidden;
   cursor: pointer;
-  height: 22px;
+  height: 20px;
   padding: 0;
-  line-height: 19px;
   transition: background-color 0.2s ease-in;
   -webkit-border-radius: 11px;
   -moz-border-radius: 11px;
@@ -274,7 +275,7 @@ ui-slider:hover {
     height: 20px;
     margin: 0;
     position: absolute;
-    top: 1px;
+    top: 0;
     bottom: 0;
     right: 32px;
     background-color: #fff;
@@ -292,9 +293,8 @@ ui-slider:hover {
     position: absolute;
     top: 2px;
     bottom: 2px;
-    right: 6px;
-    font-size: 11px;
-    font-family: 'Arial'; }
+    right: 9px;
+    font-size: 9px; }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label {
   background-color: #3caf0e; }
@@ -304,7 +304,7 @@ ui-slider:hover {
   border-color: #3caf0e; }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  right: 1px; }
+  right: 0; }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:after {
   content: "ON";
@@ -314,8 +314,7 @@ ui-slider:hover {
   top: 2px;
   bottom: 2px;
   right: 27px;
-  font-size: 11px;
-  font-family: 'Arial'; }
+  font-size: 11px; }
 
 .widget-content .customize-control-title {
   font-weight: 400; }
@@ -327,8 +326,8 @@ ui-slider:hover {
 .mte-tooltip {
   width: 150px;
   position: absolute;
-  background: #55AAD3;
-  color: #EEE;
+  background: #55aad3;
+  color: #eee;
   font-size: 12px;
   min-height: 50px;
   border-radius: 5px;
@@ -339,7 +338,7 @@ ui-slider:hover {
   display: none;
   padding: 12px;
   line-height: 1.5;
-  font-family: 'Arial', sans-serif; }
+  font-family: sans-serif; }
 
 .accordion-section-content > li:nth-of-type(2) .mte-tooltip {
   bottom: initial;
@@ -347,7 +346,10 @@ ui-slider:hover {
 
 .dashicons.dashicons-editor-help {
   cursor: pointer;
-  color: #55AAD3; }
+  color: #55aad3;
+  width: 16px;
+  height: 16px;
+  font-size: 16px; }
 
 .dashicons.dashicons-editor-help:hover > .mte-tooltip {
   display: block; }
@@ -915,16 +917,15 @@ ui-slider:hover {
       .customize-control-epsilon-repeater .repeater-row .repeater-field.repeater-field-radio-image input:checked + label img {
         -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
         box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
-        border: 1px solid #3498DB; }
+        border: 1px solid #3498db; }
     .customize-control-epsilon-repeater .repeater-row .repeater-field.repeater-field-epsilon-button-group label {
       margin: 0; }
     .customize-control-epsilon-repeater .repeater-row .repeater-field:last-child {
       border-bottom: none; }
   .customize-control-epsilon-repeater .repeater-row-header {
     position: relative;
-    padding: 12px 0 12px 5px;
+    padding: 12px 0 12px 12px;
     height: 20px;
-    line-height: 20px;
     font-weight: 600;
     transition: .15s background-color ease-in-out;
     cursor: all-scroll; }
@@ -934,7 +935,6 @@ ui-slider:hover {
       width: 20px;
       height: 20px;
       line-height: 20px;
-      margin-left: 5px;
       font-size: 18px;
       cursor: pointer;
       color: #555;
@@ -945,10 +945,10 @@ ui-slider:hover {
     .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove {
       border-right: 1px solid #DDD;
       margin-top: -12px;
-      padding: 12px; }
+      padding: 12px 6px; }
     .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize {
       margin-top: -12px;
-      padding: 12px; }
+      padding: 12px 6px; }
     .customize-control-epsilon-repeater .repeater-row-header:hover:before {
       opacity: 1;
       visibility: visible; }
@@ -998,10 +998,8 @@ ui-slider:hover {
   .customize-control-epsilon-repeater .upload-button {
     width: 48%; }
 
-.repeater-field.repeater-field-textarea .customize-control-title {
-  display: block; }
-
 .repeater-field.repeater-field-textarea textarea {
+  min-height: 150px;
   display: block;
   width: 100%;
   resize: vertical; }
@@ -1010,7 +1008,7 @@ ui-slider:hover {
   padding: 3px;
   border-radius: 3px; }
   .limit.highlight {
-    background: #D32F2F;
+    background: #d32f2f;
     color: #fff; }
 
 .button-holder {
@@ -1104,7 +1102,6 @@ ui-slider:hover {
     .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header {
       position: relative;
       padding: 12px 0 12px 12px;
-      line-height: 20px;
       font-weight: 600;
       transition: .20s all ease-in-out;
       cursor: pointer; }
@@ -1207,7 +1204,6 @@ ui-slider:hover {
             border-color: #DDD;
             border-bottom-color: #fff;
             background: #fff;
-            padding: 8px 14px 8px 10px;
             position: relative;
             -webkit-box-shadow: none;
             box-shadow: none; }
@@ -1961,6 +1957,7 @@ body.adding-doubled-section .doubled-section-parent {
   .epsilon-button-control-group:hover {
     opacity: 1; }
   .epsilon-button-control-group .epsilon-control-button {
+    display: inline-block;
     background-color: #0085ba;
     color: #fff;
     padding: 0 3px;
@@ -2010,7 +2007,7 @@ body.adding-doubled-section .doubled-section-parent {
     line-height: 26px; }
   .epsilon-pencil-button-group a {
     color: #fff;
-    padding: 4px;
+    padding: 0 4px;
     border-right: 1px solid rgba(255, 255, 255, 0.4); }
     .epsilon-pencil-button-group a:last-of-type {
       margin-right: 0;
@@ -2081,8 +2078,7 @@ body.adding-doubled-section .doubled-section-parent {
 
 .epsilon-control-container label {
   line-height: 20px;
-  display: block;
-  margin-bottom: 5px; }
+  display: block; }
 
 .epsilon-control-dropdown,
 .epsilon-control-advanced {
@@ -2235,15 +2231,14 @@ body.adding-doubled-section .doubled-section-parent {
 .repeater-field {
   padding: 10px 0 10px 0;
   margin: 0; }
-  .repeater-field:first-child {
-    padding-top: 10px; }
   .repeater-field.repeater-field-epsilon-text-editor {
     padding-top: 10px; }
   .repeater-field select {
-    display: block;
+    display: inline-block;
+    width: 150px;
+    max-width: 100%;
+    float: right;
     margin: 0;
-    line-height: 35px;
-    height: 35px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -2266,30 +2261,6 @@ body.adding-doubled-section .doubled-section-parent {
 .repeater-field .tmce-active iframe {
   min-height: 150px; }
 
-/* Debug Colors */
-/*
-.customize-control:nth-child(even),
-.repeater-field:nth-child(even) {
-    background: $debug-field-background-even !important;
-}
-
-.customize-control:nth-child(odd),
-.repeater-field:nth-child(odd) {
-    background: $debug-field-background-odd !important;
-}
-
-.customize-control-title,
-.repeater-field-epsilon-slider .slider-container,
-.epsilon-controller-image-container .actions {
-    background: $debug-field-title-background !important;
-}
-
-.repeater-minimize,
-.repeater-row-remove,
-.repeater-row-hide {
-    background: $debug-field-title-background;
-}
-*/
 .epsilon-is-loadable {
   -webkit-transition: all .3s;
   transition: all .3s; }

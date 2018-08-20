@@ -64,7 +64,7 @@ class Epsilon_Section_Styling {
 			$text    = $this->preg_grep_keys( '/text_color/', $section );
 			$heading = $this->preg_grep_keys( '/heading_color/', $section );
 
-			if ( ! empty( $text ) ) {
+			if ( ! empty( $text )  ) {
 				$this->options[ $index ]['text'] = array(
 					'selectors' => $this->manager->sections[ $section['type'] ]['customization']['colors']['text-color']['selectors'],
 					'value'     => reset( $text ),

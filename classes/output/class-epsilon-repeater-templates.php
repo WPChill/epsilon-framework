@@ -92,7 +92,7 @@ class Epsilon_Repeater_Templates {
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.styling) ) { #>
 						<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span>
-							<span class="label"><?php echo __( 'Style', 'epsilon-framework' ); ?></span></a>
+							<span class="label"><?php echo __( 'Background', 'epsilon-framework' ); ?></span></a>
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.layout) ) { #>
 						<a href="#" data-item="layout"><span class="dashicons dashicons-layout"></span>
@@ -100,7 +100,7 @@ class Epsilon_Repeater_Templates {
 						<# } #>
 						<# if( ! _.isEmpty(data.customization.colors) ) { #>
 						<a href="#" data-item="colors"><span class="dashicons dashicons-admin-appearance"></span>
-							<span class="label"><?php echo __( 'Colors', 'epsilon-framework' ); ?></span></a>
+							<span class="label"><?php echo __( 'Style', 'epsilon-framework' ); ?></span></a>
 						<# } #>
 						<# } #>
 					</nav>
@@ -337,7 +337,7 @@ class Epsilon_Repeater_Templates {
 			<div class="actions">
 				<button class="button image-upload-remove-button"
 				<# if( '' === field.default ) { #> style="display:none;" <# } #>>
-					<i class="dashicons dashicons-trash"></i>
+				<i class="dashicons dashicons-trash"></i>
 				</button>
 
 				<button type="button" class="button-primary image-upload-button">
@@ -472,7 +472,7 @@ class Epsilon_Repeater_Templates {
 		?>
 		<label>
 			<# if ( field.label ) { #>
-				<span class="customize-control-title">{{ field.label }}</span>
+			<span class="customize-control-title">{{ field.label }}</span>
 			<# } #>
 			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
@@ -482,16 +482,18 @@ class Epsilon_Repeater_Templates {
 			</i>
 			<# } #>
 			<select class="epsilon-selectize" data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
-				<# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
-				<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>
-					{{ choice }}
-				</option>
-				<# } else { #>
-				<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>
-					{{ choice }}
-				</option>
-				<# } #> <#
-				}); #>
+			<# _.each( field.choices, function( choice, i ) { #> <# if( field.multiple ) { #>
+			<option value="{{{ i }}}"
+			<# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>
+			{{ choice }}
+			</option>
+			<# } else { #>
+			<option value="{{{ i }}}"
+			<# if ( field.default == i ) { #> selected="selected" <# } #>>
+			{{ choice }}
+			</option>
+			<# } #> <#
+			}); #>
 			</select>
 		</label>
 		<?php

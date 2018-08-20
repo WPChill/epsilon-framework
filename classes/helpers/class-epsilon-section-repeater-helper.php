@@ -7,6 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Class Epsilon_Section_Repeater_Helper
  */
 class Epsilon_Section_Repeater_Helper {
+
 	/**
 	 * @var null
 	 */
@@ -191,6 +192,14 @@ class Epsilon_Section_Repeater_Helper {
 				'value' => 4,
 				'png'   => EPSILON_URI . '/assets/img/four-column.png',
 			),
+			5 => array(
+				'value' => 5,
+				'png'   => EPSILON_URI . '/assets/img/five-column.png',
+			),
+			6 => array(
+				'value' => 6,
+				'png'   => EPSILON_URI . '/assets/img/six-column.png',
+			),
 		);
 	}
 
@@ -276,6 +285,8 @@ class Epsilon_Section_Repeater_Helper {
 			2 => 'two',
 			3 => 'three',
 			4 => 'four',
+			5 => 'five',
+			6 => 'six',
 		);
 
 		return $arr[ count( $choices ) ];
@@ -296,7 +307,7 @@ class Epsilon_Section_Repeater_Helper {
 				case 'text-color':
 					$temp = array(
 						'id'          => $key . '_text_color',
-						'label'       => __( 'Text Color', 'epsilon-framework' ),
+						'label'       => __( 'Section Body Text Color', 'epsilon-framework' ),
 						'description' => '',
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'epsilon-color-picker',
@@ -315,19 +326,14 @@ class Epsilon_Section_Repeater_Helper {
 				case 'heading-color':
 					$temp = array(
 						'id'          => $key . '_heading_color',
-						'label'       => __( 'Heading Color', 'epsilon-framework' ),
+						'label'       => __( 'Section Title Color', 'epsilon-framework' ),
 						'description' => '',
 						'default'     => isset( $values['default'] ) ? $values['default'] : '',
 						'type'        => 'epsilon-color-picker',
 						'mode'        => 'hex',
 						'defaultVal'  => isset( $values['default'] ) ? $values['default'] : '',
 						'selectors'   => ! empty( $values['selectors'] ) ? $values['selectors'] : array(
-							'h1',
-							'h2',
-							'h3',
-							'h4',
-							'h5',
-							'h6',
+							'div[class*="ewf-like-"]',
 						),
 						'group'       => 'colors',
 					);
@@ -359,16 +365,31 @@ class Epsilon_Section_Repeater_Helper {
 		$arr   = array();
 		foreach ( $styling as $prop => $values ) {
 			switch ( $prop ) {
+				case 'background-type':
+					$temp = array(
+						'id'      => $key . '_background_type',
+						'label'   => esc_html__( 'Background Type', 'epsilon-framework' ),
+						'default' => isset( $values['default'] ) ? $values['default'] : '',
+						'type'    => 'epsilon-toggle',
+						'group'   => 'styling',
+					);
+
+					if ( is_array( $values['condition'] ) ) {
+						$temp['condition'] = $values['condition'];
+					}
+
+					$arr[ $key . '_background_type' ] = $temp;
+					break;
 				case 'background-color':
 					$temp = array(
-						'id'          => $key . '_background_color',
-						'label'       => esc_html__( 'Background Color', 'epsilon-framework' ),
-						'description' => esc_html__( 'Setting a value for this field will create a color overlay on top of background image/videos.', 'epsilon-framework' ),
-						'default'     => isset( $values['default'] ) ? $values['default'] : '',
-						'type'        => 'epsilon-color-picker',
-						'mode'        => 'hex',
-						'defaultVal'  => isset( $values['default'] ) ? $values['default'] : '',
-						'group'       => 'styling',
+						'id'         => $key . '_background_color',
+						'label'      => esc_html__( 'Background Color', 'epsilon-framework' ),
+						//'description' => esc_html__( 'Setting a value for this field will create a color overlay on top of background image/videos.', 'epsilon-framework' ),
+						'default'    => isset( $values['default'] ) ? $values['default'] : '',
+						'type'       => 'epsilon-color-picker',
+						'mode'       => 'hex',
+						'defaultVal' => isset( $values['default'] ) ? $values['default'] : '',
+						'group'      => 'styling',
 					);
 
 					if ( is_array( $values['condition'] ) ) {
@@ -565,11 +586,15 @@ class Epsilon_Section_Repeater_Helper {
 				case 'column-alignment':
 					$temp = array(
 						'id'          => $key . '_column_alignment',
-						'type'        => 'epsilon-button-group',
+						'type'        => 'select',
 						'label'       => esc_html__( 'Horizontal Alignment', 'epsilon-framework' ),
 						'description' => esc_html__( 'Center/Left/Right align all of a sections content.', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'column_alignment', $values['choices'] ),
+						'choices'     => array(
+							'left'   => esc_html__( 'Left', 'epsilon-framework' ),
+							'center' => esc_html__( 'Center', 'epsilon-framework' ),
+							'right'  => esc_html__( 'Right', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'center',
 					);
 
@@ -583,13 +608,17 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 
 				case 'column-vertical-alignment':
-					$temp              = array(
+					$temp = array(
 						'id'          => $key . '_column_vertical_alignment',
-						'type'        => 'epsilon-button-group',
+						'type'        => 'select',
 						'label'       => esc_html__( 'Vertical Alignment', 'epsilon-framework' ),
 						'description' => esc_html__( 'We recommend leaving this to center, but feel free to experiment with the options. Top/Bottom align can be useful when you have a layout of text + image on the same line.', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'column_vertical_alignment', $values['choices'] ),
+						'choices'     => array(
+							'top'    => esc_html__( 'Top', 'epsilon-framework' ),
+							'middle' => esc_html__( 'Middle', 'epsilon-framework' ),
+							'bottom' => esc_html__( 'Bottom', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'middle',
 					);
 
@@ -603,13 +632,16 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 
 				case 'column-stretch':
-					$temp              = array(
+					$temp = array(
 						'id'          => $key . '_column_stretch',
-						'type'        => 'epsilon-button-group',
-						'label'       => esc_html__( 'Content Stretch', 'epsilon-framework' ),
+						'type'        => 'select',
+						'label'       => esc_html__( 'Section Width', 'epsilon-framework' ),
 						'description' => esc_html__( 'Make the section stretch to full-width. Contained is default. There\'s also the option of boxed center. ', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'column_stretch', $values['choices'] ),
+						'choices'     => array(
+							'fullwidth' => esc_html__( 'Fullwidth (100% width)', 'epsilon-framework' ),
+							'boxedin'   => esc_html__( 'Contained (1170px width)', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'boxedin',
 					);
 
@@ -623,12 +655,17 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 
 				case 'column-spacing':
-					$temp              = array(
+					$temp = array(
 						'id'      => $key . '_column_spacing',
-						'type'    => 'epsilon-button-group',
+						'type'    => 'select',
 						'label'   => esc_html__( 'Item Spacing', 'epsilon-framework' ),
 						'group'   => 'layout',
-						'choices' => $this->create_choices_array( 'column_spacing', $values['choices'] ),
+						'choices' => array(
+							'none' => esc_html__( 'None', 'epsilon-framework' ),
+							'sm'   => esc_html__( 'Small', 'epsilon-framework' ),
+							'md'   => esc_html__( 'Medium', 'epsilon-framework' ),
+							'lg'   => esc_html__( 'Large', 'epsilon-framework' ),
+						),
 						'default' => isset( $values['default'] ) ? $values['default'] : 'spaced',
 					);
 
@@ -642,13 +679,19 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 
 				case 'column-group':
-					$temp              = array(
+					$temp = array(
 						'id'          => $key . '_column_group',
-						'type'        => 'epsilon-button-group',
-						'label'       => __( 'Item Group', 'epsilon-framework' ),
+						'type'        => 'select',
+						'label'       => esc_html__( 'Item Group', 'epsilon-framework' ),
 						'description' => esc_html__( 'Number of items to display at once. Example: 2, 3 or 4 pricing tables. The width of the content will be equally split among the number of elements you select.', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'column_group', $values['choices'] ),
+						'choices'     => array(
+							1 => esc_html__( 'One', 'epsilon-framework' ),
+							2 => esc_html__( 'Two', 'epsilon-framework' ),
+							3 => esc_html__( 'Three', 'epsilon-framework' ),
+							4 => esc_html__( 'Four', 'epsilon-framework' ),
+							6 => esc_html__( 'Six', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? absint( $values['default'] ) : 4,
 					);
 
@@ -662,13 +705,18 @@ class Epsilon_Section_Repeater_Helper {
 					break;
 
 				case 'row-spacing-top':
-					$temp              = array(
+					$temp = array(
 						'id'          => $key . '_row_spacing_top',
-						'type'        => 'epsilon-button-group',
+						'type'        => 'select',
 						'label'       => esc_html__( 'Padding Top', 'epsilon-framework' ),
-						'description' => esc_html( 'Adds padding top. ', 'epsilon-framework' ),
+						'description' => esc_html__( 'Adds padding top. ', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'row_spacing', $values['choices'] ),
+						'choices'     => array(
+							'lg'   => esc_html__( 'Large (105px)', 'epsilon-framework' ),
+							'md'   => esc_html__( 'Medium (75px)', 'epsilon-framework' ),
+							'sm'   => esc_html__( 'Small (35px)', 'epsilon-framework' ),
+							'none' => esc_html__( 'None (0px)', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
 
@@ -681,13 +729,18 @@ class Epsilon_Section_Repeater_Helper {
 					$arr[ $key . '_row_spacing_top' ] = $temp;
 					break;
 				case 'row-spacing-bottom':
-					$temp              = array(
+					$temp = array(
 						'id'          => $key . '_row_spacing_bottom',
-						'type'        => 'epsilon-button-group',
-						'label'       => __( 'Padding Bottom', 'epsilon-framework' ),
-						'description' => esc_html( 'Adds padding bottom.', 'epsilon-framework' ),
+						'type'        => 'select',
+						'label'       => esc_html__( 'Padding Bottom', 'epsilon-framework' ),
+						'description' => esc_html__( 'Adds padding bottom.', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'row_spacing_bottom', $values['choices'] ),
+						'choices'     => array(
+							'lg'   => esc_html__( 'Large (105px)', 'epsilon-framework' ),
+							'md'   => esc_html__( 'Medium (75px)', 'epsilon-framework' ),
+							'sm'   => esc_html__( 'Small (35px)', 'epsilon-framework' ),
+							'none' => esc_html__( 'None (0px)', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
 
@@ -700,13 +753,17 @@ class Epsilon_Section_Repeater_Helper {
 					$arr[ $key . '_row_spacing_bottom' ] = $temp;
 					break;
 				case 'row-title-align':
-					$temp              = array(
+					$temp = array(
 						'id'          => $key . '_row_title_align',
-						'type'        => 'epsilon-button-group',
-						'label'       => esc_html__( 'Content Alignment', 'epsilon-framework' ),
+						'type'        => 'select',
+						'label'       => esc_html__( 'Section Layout', 'epsilon-framework' ),
 						'description' => esc_html__( 'All sections support an alternating layout. The layout changes based on a section\'s title position. Currently available options are: title left / content right -- title center / content center -- title right / content left ', 'epsilon-framework' ),
 						'group'       => 'layout',
-						'choices'     => $this->create_choices_array( 'title_align', $values['choices'] ),
+						'choices'     => array(
+							'left'  => esc_html__( 'Left', 'epsilon-framework' ),
+							'top'   => esc_html__( 'Top', 'epsilon-framework' ),
+							'right' => esc_html__( 'Right', 'epsilon-framework' ),
+						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);
 
