@@ -29,6 +29,10 @@ $repeat_field_dropdown_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 // Repeater Icon picker
 $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 
+body.wp-customizer {
+	font-size: 13px;
+}
+
 /* Start Controls */
 @import "scss/controls/upsell";
 @import "scss/controls/slider";
@@ -105,7 +109,6 @@ $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 .epsilon-control-container label {
   line-height: 20px;
   display: block;
-  margin-bottom: 5px;
 }
 
 .epsilon-control-dropdown,
@@ -294,17 +297,15 @@ $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 .repeater-field {
   padding: 10px 0 10px 0;
   margin: 0;
-  &:first-child {
-    padding-top: 10px;
-  }
   &.repeater-field-epsilon-text-editor {
     padding-top: 10px;
   }
   select {
-    display: block;
+    display: inline-block;
+    width: 150px;
+    max-width: 100%;
+    float: right;
     margin: 0;
-    line-height: 35px;
-    height: 35px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -339,35 +340,6 @@ $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
   }
 }
 
-/* Debug Colors */
-
-$debug-field-background-even: rgba(0, 135, 255, 0.3) !default;
-$debug-field-background-odd: rgba(0, 135, 255, 0.1) !default;
-$debug-field-title-background: rgba(255, 165, 0, 0.4) !default;
-
-/*
-.customize-control:nth-child(even),
-.repeater-field:nth-child(even) {
-    background: $debug-field-background-even !important;
-}
-
-.customize-control:nth-child(odd),
-.repeater-field:nth-child(odd) {
-    background: $debug-field-background-odd !important;
-}
-
-.customize-control-title,
-.repeater-field-epsilon-slider .slider-container,
-.epsilon-controller-image-container .actions {
-    background: $debug-field-title-background !important;
-}
-
-.repeater-minimize,
-.repeater-row-remove,
-.repeater-row-hide {
-    background: $debug-field-title-background;
-}
-*/
 
 
 .epsilon-is-loadable {

@@ -462,7 +462,7 @@ class Epsilon_Customizer {
 			return $actions;
 		}
 
-		if ( !self::is_page_or_frontpage( $post ) ) {
+		if ( ! self::is_page_or_frontpage( $post ) ) {
 			return $actions;
 		}
 
@@ -483,13 +483,13 @@ class Epsilon_Customizer {
 			}
 		}
 
-		$actions['epsilon_builder_link'] = '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" />' . esc_html__( 'Edit with Epsilon Page Builder', 'epsilon-framework' ) . '</a>';
+		$actions['epsilon_builder_link'] = '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" />' . esc_html__( 'Edit with Alpha Page Builder', 'epsilon-framework' ) . '</a>';
 
 		return $actions;
 	}
 
 	/**
-	 * Add Epsilon Page Builder post state.
+	 * Add Alpha Page Builder post state.
 	 *
 	 * Adds a new "Epsilon" post state to the post table.
 	 *
@@ -507,7 +507,7 @@ class Epsilon_Customizer {
 
 
 		// check if it's a page type or if it's the front-page
-		if ( !self::is_page_or_frontpage( $post ) ) {
+		if ( ! self::is_page_or_frontpage( $post ) ) {
 			return $post_states;
 		}
 
@@ -528,7 +528,7 @@ class Epsilon_Customizer {
 
 			// output our placeholder
 			echo '<div class="epsilon-builder">';
-			echo '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" target="_blank" class="button button-primary button-hero epsilon-go-to-link">' . __( 'Edit with Epsilon Page Builder', 'epsilon-framework' ) . '</a>';
+			echo '<a href="' . esc_url( self::_get_focus_panel( $post ) ) . '" target="_blank" class="button button-primary button-hero epsilon-go-to-link">' . __( 'Edit with Alpha Page Builder', 'epsilon-framework' ) . '</a>';
 			echo '</div>';
 		}
 	}
@@ -575,7 +575,7 @@ class Epsilon_Customizer {
 	 * Function that checks if WooCommerce exists and if it does,
 	 * it compares the current page ID with what users set in the back-end.
 	 *
-	 * This basically disables Epsilon Page Builder on the following Woo (user set) pages:
+	 * This basically disables Alpha Page Builder on the following Woo (user set) pages:
 	 *
 	 * shop, cart, checkout, my account, terms
 	 *

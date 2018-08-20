@@ -82,7 +82,6 @@
     .repeater-row-header {
       position: relative;
       padding: 12px 0 12px 12px;
-      line-height: 20px;
       font-weight: 600;
       transition: .20s all ease-in-out;
       cursor: pointer;
@@ -204,7 +203,6 @@
             border-color: $repeater_row_nav_tab_border;
             border-bottom-color: $repeater_row_background;
             background: $repeater_row_background;
-            padding: 8px 14px 8px 10px;
             position: relative;
             -webkit-box-shadow: none;
             box-shadow: none;
