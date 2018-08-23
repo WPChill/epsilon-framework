@@ -256,15 +256,18 @@ class Epsilon_Section_Repeater_Helper {
 	 */
 	public function set_title_align() {
 		$this->title_align = array(
-			'left'  => array(
-				'value' => 'left',
-				'png'   => EPSILON_URI . '/assets/img/epsilon-section-titleleft.jpg',
-			),
-			'top'   => array(
+			'top'    => array(
 				'value' => 'top',
 				'png'   => EPSILON_URI . '/assets/img/epsilon-section-titletop.jpg',
 			),
-			'right' => array(
+			'bottom' => array(
+				'value' => 'bottom',
+			),
+			'left'   => array(
+				'value' => 'left',
+				'png'   => EPSILON_URI . '/assets/img/epsilon-section-titleleft.jpg',
+			),
+			'right'  => array(
 				'value' => 'right',
 				'png'   => EPSILON_URI . '/assets/img/epsilon-section-titleright.jpg',
 			),
@@ -760,9 +763,10 @@ class Epsilon_Section_Repeater_Helper {
 						'description' => esc_html__( 'All sections support an alternating layout. The layout changes based on a section\'s title position. Currently available options are: title left / content right -- title center / content center -- title right / content left ', 'epsilon-framework' ),
 						'group'       => 'layout',
 						'choices'     => array(
-							'left'  => esc_html__( 'Left', 'epsilon-framework' ),
-							'top'   => esc_html__( 'Top', 'epsilon-framework' ),
-							'right' => esc_html__( 'Right', 'epsilon-framework' ),
+							'top'    => esc_html__( 'Top', 'epsilon-framework' ),
+							'bottom' => esc_html__( 'Bottom', 'epsilon-framework' ),
+							'left'   => esc_html__( 'Left', 'epsilon-framework' ),
+							'right'  => esc_html__( 'Right', 'epsilon-framework' ),
 						),
 						'default'     => isset( $values['default'] ) ? $values['default'] : 'none',
 					);

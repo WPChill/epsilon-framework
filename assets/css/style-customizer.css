@@ -1683,7 +1683,7 @@ body.adding-section .epsilon-add-new-section:before {
 .repeater-field-selectize {
   background-color: #eff5f8;
   padding: 10px !important;
-  margin: 10px auto; }
+  margin: 10px auto !important; }
   .repeater-field-selectize .selectize-input {
     display: block; }
 
