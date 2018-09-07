@@ -1,4 +1,4 @@
-declare var wp: any;
+declare var wp: any, _: any;
 
 export default class SectionRepeaterSelectize {
   /**
@@ -77,24 +77,24 @@ export default class SectionRepeaterSelectize {
     this.oldOptions = _.sortBy( this.instance.options, e => e.$order );
 
     /**
-     * Row removal
-     */
-    container.on( 'row:remove', ( e, data ) => this._rowRemove( e, data ) );
-
-    /**
      * Row edit
      */
-    container.on( 'row:update', _.debounce( ( e, rowIndex, fieldName, proxyTarget ) => this._rowEdit( e, rowIndex, fieldName, proxyTarget ), 500 ) );
+    container.on( 'row:updated-text-field', _.debounce( ( e, data ) => this._rowEdit( e, data ), 300 ) );
+
+    /**
+     * Row removal
+     */
+    container.on( 'row:deleted-repeater-field', ( e, data ) => this._rowRemove( e, data ) );
 
     /**
      * Row add
      */
-    container.on( 'row:add', ( e, rowIndex, data ) => this._rowAdd( e, rowIndex, data ) );
+    container.on( 'row:added-repeater-field', ( e, data ) => this._rowAdd( e, data ) );
 
     /**
      * Row stopped draggin
      */
-    container.on( 'row:stopped-dragging', ( e: JQueryEventConstructor, data: any ) => this._sortExistingOptions( data ) );
+    container.on( 'row:stopped-sorting', ( e, data ) => this._sortExistingOptions( data ) );
   }
 
   /**
@@ -104,12 +104,17 @@ export default class SectionRepeaterSelectize {
    * @private
    */
   private _rowRemove( e: JQueryEventConstructor, data: any ) {
-    let index = data + 2;
     _.each( this.instance.options, ( el, idx ) => {
-      if ( el.$order === index ) {
+      if ( el.$order === data.index + 2 ) {
         this.instance.removeOption( el.value, false );
       }
     } );
+
+    let j = 1;
+    for ( let i in this.instance.options ) {
+      this.instance.options[ i ].$order = j;
+      j ++;
+    }
 
     this._resetOptions();
   }
@@ -117,28 +122,27 @@ export default class SectionRepeaterSelectize {
   /**
    * Row edit event
    * @param e
-   * @param rowIndex
-   * @param fieldName
-   * @param proxyTarget
+   * @param data
    * @private
    */
-  private _rowEdit( e: JQueryEventConstructor, rowIndex: number, fieldName: any, proxyTarget: any ) {
-    if ( fieldName !== this.props.linking[ 1 ] ) {
+  private _rowEdit( e: JQueryEventConstructor, data: any ) {
+    if ( data.id !== this.props.linking[ 1 ] ) {
       return;
     }
-    /**
-     * Add 2 to take in account "all" option & selectize counts from 1
-     */
-    let index = rowIndex + 2,
-        newValue = proxyTarget.value;
 
-    let itemToEdit = this._determineIfItemExists( index );
-
-    if ( itemToEdit !== null ) this._updateOption( itemToEdit, newValue );
+    let itemToEdit = this._determineIfItemExists( data.index + 2 );
+    if ( itemToEdit !== null ) this._updateOption( itemToEdit, data.value );
 
   }
 
-  private _rowAdd( e: JQueryEventConstructor, rowIndex: number, data: any ) {
+  /**
+   * Adds a row
+   *
+   * @param e
+   * @param data
+   * @private
+   */
+  private _rowAdd( e: JQueryEventConstructor, data: any ) {
     if ( data.hasOwnProperty( this.props.linking[ 1 ] ) ) {
       this._createOption( data[ this.props.linking[ 1 ] ] );
     }
@@ -164,18 +168,23 @@ export default class SectionRepeaterSelectize {
    */
   private _sortExistingOptions( data ) {
     let temp = [];
-    data.map( e => temp.push( e + 2 ) );
-    let i = 0;
-    _.each( this.instance.options, ( value, key, obj ) => {
-      if ( obj[ key ].value === 'all' ) {
-        return false;
-      }
 
-      obj[ key ].$order = temp[ i ];
-      i ++;
+    data.rows.map( e => {
+      let value = e.container.find( `[data-field="${this.props.linking[ 1 ]}"]` ).val();
+      temp.push( {
+        value: value,
+        text: value,
+        $order: e.index + 2,
+      } );
     } );
 
-    this._resetOptions();
+    temp.map( e => {
+      _.each( this.instance.options, ( el, idx, obj ) => {
+        if ( el.value === e.value ) {
+          obj[ idx ].$order = e.$order;
+        }
+      } );
+    } );
   }
 
   /**

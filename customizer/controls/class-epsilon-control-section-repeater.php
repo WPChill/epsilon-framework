@@ -175,40 +175,47 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 		foreach ( $this->repeatable_sections as $key => $value ) {
 			/**
+			 * Create a shortcut cuz was going hectic
+			 */
+			$shortcut = &$this->repeatable_sections[ $key ]['fields'];
+			/**
 			 * Adds the new section class
 			 */
-			$this->repeatable_sections[ $key ]['fields'][ $key . '_section_class' ] = array(
+			$shortcut[ $key . '_section_class' ] = array(
 				'label'   => esc_html__( 'Section Class', 'epsilon-framework' ),
 				'type'    => 'epsilon-section-class',
 				'default' => 'section-' . $key . '-' . mt_rand( 1, mt_getrandmax() ),
 			);
 
-			$this->repeatable_sections[ $key ]['fields'][ $key . '_section_visibility' ] = array(
+			$shortcut[ $key . '_section_visibility' ] = array(
 				'type'    => 'hidden',
 				'default' => 'visible',
 				'id'      => $key . '_section_visibility',
 			);
 
+
 			foreach ( $value['fields'] as $k => $v ) {
-				$this->repeatable_sections[ $key ]['fields'][ $k ]['metaId'] = ! empty( $this->save_as_meta ) ? $this->save_as_meta : '';
+				$currentField = &$shortcut[ $k ];
+
+				$currentField['metaId'] = ! empty( $this->save_as_meta ) ? $this->save_as_meta : '';
 
 				if ( ! isset( $v['default'] ) ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = '';
+					$currentField['default'] = '';
 				}
 
 				if ( ! isset( $v['label'] ) ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['label'] = '';
+					$currentField['label'] = '';
 				}
 
 				if ( 'epsilon-customizer-navigation' === $v['type'] ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['opensDouble'] = false;
+					$currentField['opensDouble'] = false;
 				}
 				/**
 				 * Range Slider defaults
 				 */
 				if ( 'epsilon-slider' === $v['type'] ) {
-					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] ) ) {
-						$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = array();
+					if ( ! isset( $currentField['choices'] ) ) {
+						$currentField['choices'] = array();
 					}
 
 					$default = array(
@@ -217,55 +224,54 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						'step' => 1,
 					);
 
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = wp_parse_args( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'], $default );
+					$currentField['choices'] = wp_parse_args( $currentField['choices'], $default );
 				}
 				/**
 				 * Epsilon Button Group defaults
 				 */
 				if ( 'epsilon-button-group' === $v['type'] ) {
-					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] ) ) {
-						$this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] = array();
+					if ( ! isset( $currentField['choices'] ) ) {
+						$currentField['choices'] = array();
 					}
 
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['groupType'] = $this->repeater_helper->set_group_type( $this->repeatable_sections[ $key ]['fields'][ $k ]['choices'] );
+					$currentField['groupType'] = $this->repeater_helper->set_group_type( $currentField['choices'] );
 				}
 
 				/**
 				 * Epsilon Image
 				 */
 				if ( 'epsilon-image' === $v['type'] ) {
-					if ( ! isset( $this->repeatable_sections[ $key ]['fields'][ $k ]['default'] ) ) {
-						$this->repeatable_sections[ $key ]['fields'][ $k ]['default'] = '';
+					if ( ! isset( $currentField['default'] ) ) {
+						$currentField['default'] = '';
 					}
 
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['size']      = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['size'] : 'full';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['sizeArray'] = $sizes;
-
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'url';
+					$currentField['size']      = ! empty( $currentField['size'] ) ? $currentField['size'] : 'full';
+					$currentField['sizeArray'] = $sizes;
+					$currentField['mode']      = ! empty( $currentField['mode'] ) ? $currentField['mode'] : 'url';
 				}
 
 				/**
 				 * Color picker defaults
 				 */
 				if ( 'epsilon-color-picker' === $v['type'] ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['mode']       = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['mode'] : 'hex';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['defaultVal'] : '';
+					$currentField['mode']       = ! empty( $currentField['mode'] ) ? $currentField['mode'] : 'hex';
+					$currentField['defaultVal'] = ! empty( $currentField['defaultVal'] ) ? $currentField['defaultVal'] : '';
 				}
 
 				/**
 				 * Epsilon Upsell
 				 */
 				if ( 'epsilon-upsell' === $v['type'] ) {
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['label']              = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['label'] : __( 'See what\'s in the PRO version', 'epsilon-framework' );
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['separator']          = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['separator'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['separator'] : '';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['button_text']        = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['button_text'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['button_text'] : '';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['button_url']         = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['button_url'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['button_url'] : '';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_text'] = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_text'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_text'] : '';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_url']  = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_url'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['second_button_url'] : '';
-					$this->repeatable_sections[ $key ]['fields'][ $k ]['options']            = ! empty( $this->repeatable_sections[ $key ]['fields'][ $k ]['options'] ) ? $this->repeatable_sections[ $key ]['fields'][ $k ]['options'] : array();
+					$currentField['label']              = ! empty( $currentField['label'] ) ? $currentField['label'] : __( 'See what\'s in the PRO version', 'epsilon-framework' );
+					$currentField['separator']          = ! empty( $currentField['separator'] ) ? $currentField['separator'] : '';
+					$currentField['button_text']        = ! empty( $currentField['button_text'] ) ? $currentField['button_text'] : '';
+					$currentField['button_url']         = ! empty( $currentField['button_url'] ) ? $currentField['button_url'] : '';
+					$currentField['second_button_text'] = ! empty( $currentField['second_button_text'] ) ? $currentField['second_button_text'] : '';
+					$currentField['second_button_url']  = ! empty( $currentField['second_button_url'] ) ? $currentField['second_button_url'] : '';
+					$currentField['options']            = ! empty( $currentField['options'] ) ? $currentField['options'] : array();
 				}
 
-				$this->repeatable_sections[ $key ]['fields'][ $k ]['id'] = $k;
+				$currentField['id'] = $k;
 			} // End foreach().
 
 			if ( ! isset( $this->repeatable_sections[ $key ]['image'] ) ) {
@@ -338,25 +344,18 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						</span>
 					</i>
 				<# } #>
-			</span> </label>
-		<ul class="repeater-sections"></ul>
-		<# if(!_.isUndefined(data.choices.limit)){ #>
-		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ', 'epsilon-framework' ); ?>
-			{{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
-		<# } #>
-		<div class="epsilon-add-section-buttons">
-			<input type="hidden" {{{ data.link }}} />
-
-			<!--
-			<button type="button" class="button epsilon-import-sections">
-				<?php //esc_html_e( 'Import', 'epsilon-framework' ); ?>
-			</button>
-			-->
-
+			</span>
 
 			<button type="button" class="button button-secondary epsilon-sort-sections" aria-expanded="false" aria-controls="available-sections">
 				<?php esc_html_e( 'Reorder', 'epsilon-framework' ); ?>
+			</button>
+		</label>
+		<ul class="repeater-sections"></ul>
+		<div class="epsilon-add-section-buttons">
+			<input type="hidden" {{{ data.link }}} />
+
+			<button type="button" class="button button-secondary epsilon-import-sections">
+				<?php esc_html_e( 'Import', 'epsilon-framework' ); ?>
 			</button>
 
 			<button type="button" class="button button-primary epsilon-add-new-section" aria-expanded="false" aria-controls="available-sections">
@@ -399,47 +398,56 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					</nav>
 					<# } #>
 
-					<# if ( data.integrations ) { #>
-					<div data-tab-id="normal" class="normal-sections available-sections-tab-content active">
-						<# } #>
+					<# if ( data.integrations ) { #> <div data-tab-id="normal" class="normal-sections available-sections-tab-content active"> <# } #>
 						<# for (section in data.sections) { #>
 						<# var temp = JSON.stringify(data.sections[section].fields); #>
 						<# if ( _.isUndefined(data.sections[section].integration) ) { #>
-						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-							<div class="epsilon-section-image-description">
-								<img src="{{ data.sections[section].image }}" />
-								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+							<div class="epsilon-section" data-id="{{ data.sections[section].id }}" data-upsell="{{ data.sections[section].upsell }}">
+								<div class="epsilon-section-image-description">
+									<img src="{{ data.sections[section].image }}" />
+									<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+								</div>
+								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+								<button class="button button-primary" data-action="add">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+								<button class="button button-info" data-action="info">
+									<i class="fa fa-question" aria-hidden="true"></i>
+								</button>
+								<# if ( data.sections[section].upsell ) { #>
+									<a href="#">Hello World</a>
+								<# } #>
+								<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
 							</div>
-							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-							<button class="button button-primary" data-action="add">
-								<i class="fa fa-plus" aria-hidden="true"></i></button>
-							<button class="button button-info" data-action="info">
-								<i class="fa fa-question" aria-hidden="true"></i></button>
-							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
-						</div>
 						<# } #>
 						<# } #>
 
-						<# if ( data.integrations ) { #>
-					</div>
-					<div data-tab-id="integrations" class="integrations-sections available-sections-tab-content">
-						<# for (section in data.sections) { #>
-						<# if ( ! _.isUndefined(data.sections[section].integration) ) { #>
-						<div class="epsilon-section" data-id="{{ data.sections[section].id }}">
-							<div class="epsilon-section-image-description">
-								<img src="{{ data.sections[section].image }}" />
-								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-							</div>
-							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-							<button class="button button-primary" data-action="add">
-								<i class="fa fa-plus" aria-hidden="true"></i></button>
-							<button class="button button-info" data-action="info">
-								<i class="fa fa-question" aria-hidden="true"></i></button>
-							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
+						<# if ( data.integrations ) { #> </div> <# } #>
+
+					<# if ( data.integrations ) { #>
+						<div data-tab-id="integrations" class="integrations-sections available-sections-tab-content">
+							<# for (section in data.sections) { #>
+								<# if ( ! _.isUndefined(data.sections[section].integration) ) { #>
+								<div class="epsilon-section" data-id="{{ data.sections[section].id }}" data-upsell="{{ data.sections[section].upsell }}">
+									<div class="epsilon-section-image-description">
+										<img src="{{ data.sections[section].image }}" />
+										<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+									</div>
+									<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+									<button class="button button-primary" data-action="add">
+										<i class="fa fa-plus" aria-hidden="true"></i>
+									</button>
+									<button class="button button-info" data-action="info">
+										<i class="fa fa-question" aria-hidden="true"></i>
+									</button>
+									<# if ( data.sections[section].upsell ) { #>
+										<a href="#">Hello World</a>
+									<# } #>
+									<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
+								</div>
+								<# } #>
+							<# } #>
 						</div>
-						<# } #>
-						<# } #>
-					</div>
 					<# } #>
 				</div>
 			</div>

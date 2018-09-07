@@ -1,7 +1,7 @@
 declare var require: any;
 declare var wp: any;
 
-import '../../../css/style-customizer.scss'
+import '../../../css/style-customizer.scss';
 
 /**
  * Settings

@@ -12,27 +12,48 @@ export default {
         return;
       }
 
-      /**
-       * Iterate over the controls, minimize everything
-       */
-      this.state.rows.map( e => {
-        if ( ! e.container.hasClass( 'minimized' ) && e.index != data.section ) {
-          e.minimizeToggle();
-        }
-      } );
+      data.sectionTab === 'delete' ? this.$events._deleteSection.call( this, data ) : this.$events._focusSection.call( this, data );
+    } );
+  },
 
-      wp.customize.section( data.customizerSection ).focus();
-
-      /**
-       * Focus repeatable section
-       */
-      if ( ! _.isUndefined( this.state.rows[ data.section ] ) && this.state.rows[ data.section ].container.hasClass( 'minimized' ) ) {
-        this.state.rows[ data.section ].minimizeToggle();
+  /**
+   * Focuses a given section
+   * @param data
+   * @private
+   */
+  _focusSection( data ) {
+    /**
+     * Iterate over the controls, minimize everything
+     */
+    this.state.rows.map( e => {
+      if ( ! e.container.hasClass( 'minimized' ) && e.index != data.section ) {
+        e.minimizeToggle();
       }
+    } );
 
-      if ( typeof data.sectionTab === 'string' ) {
-        this.state.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).trigger( 'click' );
-      }
+    wp.customize.section( data.customizerSection ).focus();
+
+    /**
+     * Focus repeatable section
+     */
+    if ( ! _.isUndefined( this.state.rows[ data.section ] ) && this.state.rows[ data.section ].container.hasClass( 'minimized' ) ) {
+      this.state.rows[ data.section ].minimizeToggle();
+    }
+
+    if ( typeof data.sectionTab === 'string' ) {
+      this.state.rows[ data.section ].container.find( 'nav' ).find( 'a[data-item=' + data.sectionTab + ']' ).trigger( 'click' );
+    }
+  },
+
+  /**
+   * Deletes a given section
+   * @param data
+   * @private
+   */
+  _deleteSection( data ) {
+    this.state.rows[ data.section ].container.slideUp( 300, () => {
+      this.state.rows[ data.section ].container.detach();
+      this.$actions.removeSection( this.state.rows[ data.section ] );
     } );
   },
 

@@ -17,6 +17,11 @@
       transition: margin-top .15s, margin-bottom .15s;
       position: relative;
 
+      /* Needs further attention */
+      &.epsilon-upsell-section {
+        background: darken($repeater_row_background, 5%);
+      }
+
       &.epsilon-section-is-loading {
         .repeater-row-content {
           &:after {
@@ -151,6 +156,7 @@
       border-top: 1px solid $repeater_row_separator_color;
       padding: 0 10px 10px 10px;
       position: relative;
+      width: 95%;
       &:after {
         background: #fff;
         opacity: 0;
@@ -418,6 +424,11 @@ body.adding-section {
     padding: 10px 10px 6px;
     position: relative;
     background: #eee;
+    /* Needs further attention */
+    &[data-upsell="true"] {
+      background: darken(#eee, 5%)
+    }
+
     &:first-of-type {
       padding-top: 12px;
     }
@@ -531,7 +542,7 @@ body.adding-section {
     border-bottom: 1px solid #d3d3d4;
     text-align: center;
     box-sizing: border-box;
-    span{
+    span {
       pointer-events: none;
     }
     .available-sections-tab-toggler {

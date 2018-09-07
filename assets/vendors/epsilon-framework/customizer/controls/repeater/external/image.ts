@@ -2,7 +2,7 @@ import { EpsilonAjaxRequest } from '../../../../utils/epsilon-ajax-request';
 
 declare var wp: any, EpsilonTranslations: any, EpsilonWPUrls: any;
 
-export default class SectionRepeaterImage {
+export default class RepeaterImage {
   /**
    * Props
    */

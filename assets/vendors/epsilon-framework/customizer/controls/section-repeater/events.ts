@@ -61,6 +61,29 @@ export default {
   },
 
   /**
+   * Imports sections from list
+   */
+  importSections() {
+    this.importableSections.on( 'click', '.epsilon-sections-import', ( e: JQueryEventConstructor ) => {
+      e.preventDefault();
+      const body = jQuery( 'body' );
+      let importer = jQuery( e.target ).attr( 'data-import' );
+      if ( this.$_instance.params.hasOwnProperty( 'importable' ) && this.$_instance.params.importable.hasOwnProperty( importer ) ) {
+        this.$_instance.params.importable[ importer ].sections.map( e => {
+          e.imported = true;
+          this.$actions.addSection( e );
+        } );
+      }
+
+      body.removeClass( 'importing-section' );
+      body.removeClass( 'adding-section' );
+
+      this.availableSections.removeClass( 'opened' );
+      this.importableSections.toggleClass( 'opened' );
+    } );
+  },
+
+  /**
    * Close on back
    */
   closeOnCustomizerBack() {

@@ -1,10 +1,8 @@
-export default class SectionRepeaterButtonGroup {
+export default class RepeaterButtonGroup {
   /**
    * Props
    */
   public props: any;
-
-  public input: any;
 
   /**
    * Main constructor
@@ -20,16 +18,12 @@ export default class SectionRepeaterButtonGroup {
    * Initiator
    */
   public init() {
-    this.input = this.props.container.find( `[data-field="${this.props.id}"]` );
-
-    this.input.parent().on( 'click', 'a', ( e: JQueryEventConstructor ) => {
+    this.props.container.find( `[data-field="${this.props.id}"]` ).parent().on( 'click', 'a', ( e: JQueryEventConstructor ) => {
       e.preventDefault();
       let value: any = jQuery( e.target ).attr( 'data-value' );
-
       jQuery( e.target ).siblings().removeClass( 'active' );
       jQuery( e.target ).addClass( 'active' );
-
-      this.input.val( value ).trigger( 'change' );
+      jQuery( e.target ).parent().find( 'input' ).val( value ).trigger( 'change' );
     } );
   }
 }

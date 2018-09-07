@@ -1,5 +1,4 @@
 declare var wp: any, _: any;
-import * as $ from 'jquery';
 
 import EpsilonSectionRepeaterEvents from './section-repeater/events';
 import EpsilonSectionRepeaterPreviewerEvents from './section-repeater/previewer-events';
@@ -213,6 +212,7 @@ export class EpsilonSectionRepeater {
     this.$events.addMoreSectionButton.call( this );
     this.$events.importSectionButton.call( this );
     this.$events.addSectionButton.call( this );
+    this.$events.importSections.call( this );
     this.$events.handleSectionDescription.call( this );
     /**
      * Handle integration event

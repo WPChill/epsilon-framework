@@ -173,8 +173,9 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 			 */
 			if ( 'epsilon-image' === $value['type'] ) {
 				if ( ! isset( $this->fields[ $key ]['default'] ) ) {
-					$this->fields[ $key ]['default'] = array();
+					$this->fields[ $key ]['default'] = '';
 				}
+
 				$this->fields[ $key ]['sizeArray'] = $sizes;
 				$this->fields[ $key ]['size']      = ! empty( $this->fields[ $key ]['size'] ) ? $this->fields[ $key ]['size'] : 'full';
 				$this->fields[ $key ]['mode']      = ! empty( $this->fields[ $key ]['mode'] ) ? $this->fields[ $key ]['mode'] : 'url';
@@ -263,12 +264,9 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		</label>
 
 		<ul class="repeater-fields"></ul>
-		<# if(!_.isUndefined(data.choices.limit)){ #>
-		<?php /* Translators: Section limit */ ?>
-		<p class="limit"><?php echo esc_html__( 'Limit: ','epsilon-framework' ); ?> {{{ data.choices.limit }}} <?php echo esc_html__( 'sections', 'epsilon-framework' ); ?></p>
-		<# } #>
 		<div class="button-holder">
 			<input type="hidden" value="" {{{ data.link }}} />
+			<button class="button epsilon-sort-rows"><?php echo esc_html__('Reorder', 'epsilon-framework'); ?></button>
 			<button class="button-primary epsilon-repeater-add">{{ data.buttonLabel }}</button>
 		</div>
 		<?php //@formatter:on

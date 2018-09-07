@@ -31,6 +31,16 @@ class Epsilon_Framework {
 		'page-changer',
 		'image-dimensions',
 	);
+
+	/**
+	 * Private controls
+	 *
+	 * @var array
+	 */
+	private $pro_controls = array(
+		'onlypro'
+	);
+
 	/**
 	 * By default, it loads all sections
 	 *
@@ -146,6 +156,18 @@ class Epsilon_Framework {
 				require_once EPSILON_PATH . '/customizer/settings/class-epsilon-setting-' . $control . '.php';
 			}
 		}
+
+		if ( defined( 'PORTUM_PRO_VERSION' ) ) {
+			foreach ( $this->pro_controls as $control ) {
+				if ( file_exists( PORTUM_PRO_BASE . '/inc/customizer/controls/class-epsilon-control-' . $control . '.php' ) ) {
+					require_once PORTUM_PRO_BASE . '/inc/customizer/controls/class-epsilon-control-' . $control . '.php';
+				}
+				if ( file_exists( PORTUM_PRO_BASE . '/inc/customizer/settings/class-epsilon-setting-' . $control . '.php' ) ) {
+					require_once PORTUM_PRO_BASE . '/inc/customizer/settings/class-epsilon-setting-' . $control . '.php';
+				}
+			}
+		}
+
 
 		foreach ( $this->sections as $section ) {
 			if ( file_exists( EPSILON_PATH . '/customizer/sections/class-epsilon-section-' . $section . '.php' ) ) {
@@ -300,6 +322,7 @@ class Epsilon_Framework {
 			$dir_uri = $this->plugin_uri;
 			$dir     = $this->plugin_path;
 		}
+
 		/**
 		 * Define URI and PATH for the framework
 		 */

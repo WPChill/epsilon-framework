@@ -190,7 +190,38 @@ class Epsilon_Page_Generator {
 		$template_variant = isset( $this->sections[ $section_id ][ $args['type'] . '_template_selector' ] ) ? $this->sections[ $section_id ][ $args['type'] . '_template_selector' ] : null;
 
 		set_query_var( 'section_id', $section_id );
+
+		if ( defined( 'PORTUM_PRO_VERSION' ) ) {
+			$file = $this->select_template( $template_part, $template_variant );
+			if ( ! empty( $file ) ) {
+				require $file;
+
+				return;
+			}
+		}
+
 		get_template_part( 'template-parts/frontpage/' . $template_part, $template_variant );
+	}
+
+	/**
+	 * If epsilon pro is installed, select a template from there
+	 *
+	 * @param $template
+	 * @param $variant
+	 *
+	 * @return mixed
+	 */
+	public function select_template( $template, $variant ) {
+		$file = false;
+		if ( file_exists( PORTUM_PRO_BASE . '/inc/templates/' . $template . '.php' ) ) {
+			$file = PORTUM_PRO_BASE . '/inc/templates/' . $template . '.php';
+		}
+
+		if ( $variant !== null && file_exists( PORTUM_PRO_BASE . '/inc/templates/' . $template . '-' . $variant . '.php' ) ) {
+			$file = PORTUM_PRO_BASE . '/inc/templates/' . $template . '-' . $variant . '.php';
+		}
+
+		return $file;
 	}
 
 	/**

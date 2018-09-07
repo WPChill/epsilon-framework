@@ -7,6 +7,7 @@ import {
   SectionRepeaterSlider,
   SectionRepeaterButtonGroup,
   SectionRepeaterIconPicker,
+  SectionRepeaterMarginsPaddings,
   ConditionalFields
 } from './external/index';
 
@@ -32,10 +33,6 @@ export class EpsilonSectionRepeaterRow {
    */
   public footer: JQuery;
   /**
-   * Label
-   */
-  public label: any;
-  /**
    * Section type
    */
   public type: string;
@@ -53,6 +50,10 @@ export class EpsilonSectionRepeaterRow {
    */
   public initiated: Array<any> = [];
   /**
+   * Label
+   */
+  private _label: any;
+  /**
    * Row state
    */
   private _state: {
@@ -60,11 +61,13 @@ export class EpsilonSectionRepeaterRow {
     updatingValues: boolean,
     toggled: boolean,
     sorting: boolean,
+    isUpsell: boolean,
   } = {
     loading: false,
     updatingValues: false,
     toggled: false,
     sorting: false,
+    isUpsell: false,
   };
   /**
    * External libraries
@@ -73,7 +76,7 @@ export class EpsilonSectionRepeaterRow {
   /**
    * External initiators
    */
-  private externalInits: {} = {
+  private externalInits = {
     selectize: 'SectionRepeaterSelectize',
     epsilon_text_editor: 'SectionRepeaterEditor',
     epsilon_color_picker: 'SectionRepeaterColorPicker',
@@ -81,7 +84,9 @@ export class EpsilonSectionRepeaterRow {
     epsilon_customizer_navigation: 'SectionRepeaterNavigation',
     epsilon_slider: 'SectionRepeaterSlider',
     epsilon_button_group: 'SectionRepeaterButtonGroup',
-    epsilon_icon_picker: 'SectionRepeaterIconPicker'
+    epsilon_icon_picker: 'SectionRepeaterIconPicker',
+    epsilon_margins_paddings: 'SectionRepeaterMarginsPaddings',
+    epsilon_template_select: 'SectionRepeaterButtonGroup',
   };
 
   /**
@@ -108,20 +113,66 @@ export class EpsilonSectionRepeaterRow {
     }
   }
 
+  /**
+   * Toggled getter
+   */
   get toggled() {
     return this._state.toggled;
   }
 
+  /**
+   * Toggled setter
+   * @param state
+   */
   set toggled( state ) {
     this._state.toggled = state;
   }
 
+  /**
+   * Sorting getter
+   */
   get sorting() {
     return this._state.sorting;
   }
 
+  /**
+   * Sorting setter
+   * @param state
+   */
   set sorting( state ) {
     this._state.sorting = state;
+  }
+
+  /**
+   * Sets label
+   * @param state
+   */
+  set label( state ) {
+    this._label = state;
+    this.header.find( '.repeater-row-label' ).html( this._label );
+  }
+
+  /**
+   * Gets label
+   */
+  get label() {
+    return this._label;
+  }
+
+  /**
+   * Sets upsell flag
+   * @param state
+   */
+  set isUpsell( state ) {
+    this._state.isUpsell = state;
+    this._state.isUpsell ? this.container.addClass( 'epsilon-upsell-section' ) : this.container.removeClass( 'epsilon-upsell-section' );
+  }
+
+  /**
+   * Gets upsell
+   */
+  get isUpsell() {
+    return this._state.isUpsell;
   }
 
   /**
@@ -136,18 +187,19 @@ export class EpsilonSectionRepeaterRow {
     this.index = obj.index;
     this.type = type;
     this.$ID = that.$ID;
-    this.label = that.$_instance.params.sections[ this.type ].title;
 
     this.container = rowContainer;
     this.header = this.container.find( '.repeater-row-header' );
     this.content = this.container.find( '.repeater-row-content' );
     this.footer = this.container.find( '.repeater-row-footer' );
 
+    this.label = that.$_instance.params.sections[ this.type ].title;
+    this.isUpsell = that.$_instance.params.sections[ this.type ].upsell;
+
     this.loading = true;
 
     this.initiateExternalLibraries();
     this.handleVisibility();
-    this.updateLabel();
 
     this.addTabs();
     this.handleEvents( that );
@@ -219,7 +271,6 @@ export class EpsilonSectionRepeaterRow {
       if ( this.data[ obj.id ].hasOwnProperty( 'linking' ) ) {
         obj = { ...obj, ...{ linking: this.data[ obj.id ].linking } };
       }
-
       switch ( constructor ) {
         case 'SectionRepeaterEditor':
           this.initiated.push(
@@ -238,7 +289,7 @@ export class EpsilonSectionRepeaterRow {
           break;
         case 'SectionRepeaterImage':
           this.initiated.push(
-              new SectionRepeaterImage( obj )
+              new SectionRepeaterImage( { ...obj, ...{ allSizes: this.data[ obj.id ].sizeArray } } )
           );
           break;
         case 'SectionRepeaterNavigation':
@@ -267,6 +318,11 @@ export class EpsilonSectionRepeaterRow {
               new SectionRepeaterIconPicker( { ...obj, ...{ icons: this.data[ obj.id ].icons } } )
           );
           break;
+        case 'SectionRepeaterMarginsPaddings':
+          this.initiated.push(
+              new SectionRepeaterMarginsPaddings( { ...obj, ...{ value: this.data[ obj.id ].default } } )
+          );
+          break;
         default:
           break;
       }
@@ -287,13 +343,6 @@ export class EpsilonSectionRepeaterRow {
     }
 
     this.header.addClass( `epsilon-section-${v}` );
-  }
-
-  /**
-   * Updates label
-   */
-  public updateLabel() {
-    this.header.find( '.repeater-row-label' ).html( this.label );
   }
 
   /**
@@ -364,7 +413,7 @@ export class EpsilonSectionRepeaterRow {
   public updateEvent( control ) {
     this.container.on(
         'keyup change',
-        'input, select, textarea, checkbox',
+        'input:not(.epsilon-delegates), select:not(.epsilon-delegates), textarea:not(.epsilon-delegates), checkbox:not(.epsilon-delegates)',
         ( e: any ) => {
           let value = control.$connectors.getValue(),
               type = jQuery( e.target ).attr( 'type' );

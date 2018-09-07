@@ -40,6 +40,7 @@ class Epsilon_Helper {
 			'styling' => ! empty( $sections->sections[ $section_type ]['customization']['styling'] ),
 			'layout'  => ! empty( $sections->sections[ $section_type ]['customization']['layout'] ),
 			'colors'  => ! empty( $sections->sections[ $section_type ]['customization']['colors'] ),
+			'delete'  => true,
 		);
 
 		$icons = array(
@@ -47,6 +48,7 @@ class Epsilon_Helper {
 			'layout'  => 'layout',
 			'colors'  => 'admin-appearance',
 			'styling' => 'admin-customizer',
+			'delete'  => 'trash'
 		);
 
 		$customization = array_filter( $customization );
@@ -270,10 +272,10 @@ class Epsilon_Helper {
 
 		if ( '' != $page_name ) {
 			$args = array(
-			  	'post_title'    => wp_strip_all_tags( $page_name ),
-			  	'post_content'  => '',
-			  	'post_status'   => 'publish',
-			  	'post_type'     => 'page',
+				'post_title'   => wp_strip_all_tags( $page_name ),
+				'post_content' => '',
+				'post_status'  => 'publish',
+				'post_type'    => 'page',
 			);
 
 			$page = wp_insert_post( $args );
@@ -290,8 +292,9 @@ class Epsilon_Helper {
 
 				$instance = Epsilon_Content_Backup::get_instance();
 				$instance->add_pages( $page, $params['epsilon_control_id'] . '_' . $page, $args );
-				
+
 				$url = get_permalink( $page );
+
 				return array( 'status' => true, 'url' => $url, 'id' => $page );
 
 			}
@@ -299,5 +302,5 @@ class Epsilon_Helper {
 
 		return 'nok';
 
-	} 
+	}
 }

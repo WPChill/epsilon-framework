@@ -71,6 +71,7 @@ class Epsilon_Customizer {
 	 * @since 1.0.0
 	 *
 	 * @param $id
+	 * @param $args
 	 */
 	private static function add_setting( $id, array $args = array() ) {
 		/**
@@ -299,6 +300,7 @@ class Epsilon_Customizer {
 		switch ( $type ) {
 			case 'text':
 				$sanitizer = 'sanitize_text_field';
+				break;
 			case 'url':
 				$sanitizer = 'esc_url_raw';
 				break;
@@ -341,11 +343,11 @@ class Epsilon_Customizer {
 				$sanitizer = 'sanitize_text_field';
 				break;
 			case 'epsilon-color-picker':
-				$sanitizer    = 'sanitize_hex_color';
-				$args['mode'] = isset( $args['mode'] ) ? $args['mode'] : 'hex';
-				if ( 'rgba' === $args['mode'] ) {
-					$sanitizer = array( 'Epsilon_Sanitizers', 'rgba' );
-				}
+				$sanitizer = 'sanitize_hex_color';
+//				$args['mode'] = isset( $args['mode'] ) ? $args['mode'] : 'hex';
+//				if ( 'rgba' === $args['mode'] ) {
+//					$sanitizer = array( 'Epsilon_Sanitizers', 'rgba' );
+//				}
 				break;
 			case 'epsilon-button-group':
 				$sanitizer = array( 'Epsilon_Sanitizers', 'radio_buttons' );
@@ -364,17 +366,20 @@ class Epsilon_Customizer {
 	/**
 	 * Page builder functionality
 	 *
+	 * @param $id
+	 * @param $args
+	 *
 	 * @since 1.2.0
 	 */
 	public static function add_page_builder( $id, $args ) {
 		$pages = new WP_Query( array(
-			'post_type'        => 'page',
-			'nopaging'         => true,
-			'suppress_filters' => true,
-			'post__not_in'     => array(
-				Epsilon_Content_Backup::get_instance()->setting_page,
-			),
-		) );
+			                       'post_type'        => 'page',
+			                       'nopaging'         => true,
+			                       'suppress_filters' => true,
+			                       'post__not_in'     => array(
+				                       Epsilon_Content_Backup::get_instance()->setting_page,
+			                       ),
+		                       ) );
 
 		$ids = array();
 

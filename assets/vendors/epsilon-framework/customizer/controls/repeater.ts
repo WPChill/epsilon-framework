@@ -1,216 +1,190 @@
-declare var wp: any;
-declare var _: any;
-
-import { EpsilonRepeaterRow } from './repeater/repeater-row';
-import { EpsilonRepeaterAddons } from './repeater/repeater-addons';
-import { EpsilonRepeaterUtils } from './repeater/repeater-utils';
+declare var wp: any, _: any;
+import EpsilonRepeaterActions from './repeater/actions';
+import EpsilonRepeaterEvents from './repeater/events';
+import EpsilonRepeaterUtils from './repeater/utils';
+import EpsilonRepeaterConnectors from './repeater/connectors';
 
 export class EpsilonFieldRepeater {
   /**
-   * Repeater control
+   * Control instance
    */
-  public control: any;
+  public $_instance: any;
   /**
-   * Context ( container )
+   * Generic ID
    */
-  public context: JQuery | any;
+  public $ID: string;
   /**
-   * Repeater container ( where fields are stored );
+   * Repeater container
    */
   public repeaterContainer: JQuery;
   /**
-   * Setting field (where we'll save)
+   * Repeater template
    */
-  public settingField: JQuery;
+  public template: any;
   /**
-   * Rows
-   * @type {Array}
+   * Handles adding/deleting new fields
    */
-  public rows: Array<EpsilonRepeaterRow> = [];
+  public $actions = {
+    ...EpsilonRepeaterActions
+  };
   /**
-   * Current index
+   * Event handling
    */
-  public currentIndex: number = 0;
+  public $events = {
+    ...EpsilonRepeaterEvents,
+  };
   /**
-   * Field limit
+   * Utilities
    */
-  public limit: number | boolean;
+  public $utils = {
+    ...EpsilonRepeaterUtils
+  };
   /**
-   * Memoize template
+   * WP Api connectors
    */
-  public template: string;
+  public $connectors = {
+    ...EpsilonRepeaterConnectors
+  };
   /**
-   * Utilities object
-   * @type {EpsilonRepeaterUtils}
+   * Initial state
    */
-  public utils: any;
+  public state: {
+    loading: boolean,
+    addingRow: boolean,
+    currentIndex: number,
+    sorting: boolean,
+    rows: Array<any>,
+  } = {
+    loading: true,
+    addingRow: false,
+    currentIndex: 0,
+    sorting: false,
+    rows: [],
+  };
+
+  /**
+   * Get loading state
+   */
+  get loading() {
+    return this.state.loading;
+  }
+
+  /**
+   * Set loading state
+   * @param state
+   */
+  set loading( state: boolean ) {
+    this.state.loading = state;
+  }
+
+  /**
+   * Get sorting
+   */
+  get sorting() {
+    return this.state.sorting;
+  }
+
+  /**
+   * Sorting setter
+   * @param state
+   */
+  set sorting( state: boolean ) {
+    this.state.sorting = state;
+
+    switch ( this.state.sorting ) {
+      case true:
+        this.state.rows.map( e => {
+          e.forceMinimize();
+          e.sorting = true;
+        } );
+        this.repeaterContainer.addClass( 'epsilon-repeater-is-sorting' );
+        break;
+      default:
+        this.state.rows.map( e => e.sorting = false );
+        this.repeaterContainer.removeClass( 'epsilon-repeater-is-sorting' );
+        break;
+    }
+  }
 
   /**
    * Object constructor
    * @param control
    */
-  public constructor( control: { container: JQuery, setting: void, params: { rowLabel: any, value: number, id: string, fields: object, choices: { limit: number } } } ) {
-    this.control = control;
-    this.context = control.container;
-    this.utils = this.loadUtils();
-    this.template = this.loadTemplate();
+  public constructor( control: any ) {
+    this.$_instance = control;
+    this.$ID = this.$_instance.params.id;
+    this.repeaterContainer = this.$_instance.container.find( '.repeater-fields' );
+    this.template = this.$utils.repeaterTemplate();
 
-    /**
-     * Create a reference of the container
-     */
-    this.repeaterContainer = this.getRepeaterContainer();
-    /**
-     * Setting field reference
-     */
-    this.settingField = this.context.find( '[data-customize-setting-link]' );
-    /**
-     * Setup Limit
-     *
-     * @type {boolean}
-     */
-    if ( ! _.isUndefined( this.control.params.choices.limit ) ) {
-      this.limit = (0 >= this.control.params.choices.limit) ? false : parseInt( this.control.params.choices.limit );
-    }
-    /**
-     * Handle events
-     */
-    this.handleEvents();
+    this.loading = false;
 
-    /**
-     * Create the existing rows
-     */
-    this.createExistingRows();
+    this._bindFunctions();
 
+    this._createExistingRows();
+    this._eventListener();
     /**
-     * Make rows sortable
+     * Init sorting functionality
      */
-    this.initSortable();
-    /**
-     * Handles field delete from previewer
-     */
-    this.handleFieldDelete();
+    this._initSorting();
   }
 
   /**
-   * Repeater container
-   * @returns {any}
+   * Binds this to certain functions
+   * @private
    */
-  public getRepeaterContainer() {
-    return this.context.find( '.repeater-fields' );
+  private _bindFunctions() {
+    this.$connectors.setValue = this.$connectors.setValue.bind( this );
+    this.$connectors.getValue = this.$connectors.getValue.bind( this );
+    this.$connectors.addNewRow = this.$connectors.addNewRow.bind( this );
+
+    this.$actions.addRow = this.$actions.addRow.bind( this );
+    this.$actions.removeRow = this.$actions.removeRow.bind( this );
+    this.$actions.sortRows = this.$actions.sortRows.bind( this );
   }
 
   /**
-   * Load utilities
-   * @public
+   * Creates the existing rows
+   * @private
    */
-  public loadUtils(): any {
-    return new EpsilonRepeaterUtils( this );
-  }
+  private _createExistingRows() {
+    this.loading = true;
 
-  /**
-   * Load template
-   */
-  public loadTemplate(): string {
-    return this.utils.repeaterTemplate();
-  }
-
-  /**
-   * Create existing rows
-   */
-  public createExistingRows(): void {
-    const control = this;
-    if ( this.control.params.value.length ) {
-      for ( let i = 0; i < this.control.params.value.length; i ++ ) {
-        let row: EpsilonRepeaterRow,
-            addons: EpsilonRepeaterAddons;
-
-        row = control.utils.add( this.control.params.value[ i ] );
-        addons = new EpsilonRepeaterAddons( control, row );
-        addons.initPlugins();
-      }
-    }
-  }
-
-  /**
-   * Handle click/saving/etc events
-   */
-  public handleEvents(): void {
-    const self = this;
-    /**
-     * 1. Add row button
-     */
-    this.context.on( 'click', 'button.epsilon-repeater-add', function( this: any, e: Event ) {
-      let newRow: EpsilonRepeaterRow,
-          addons: EpsilonRepeaterAddons;
-      e.preventDefault();
-      if ( ! self.limit || self.currentIndex < self.limit ) {
-        newRow = self.utils.add();
-        addons = new EpsilonRepeaterAddons( self, newRow );
-        addons.initPlugins();
-      } else {
-        jQuery( self.control.selector + ' .limit' ).addClass( 'highlight' );
-      }
+    this.$_instance.params.value.map( e => {
+      this.$actions.addRow( e );
     } );
 
-    /**
-     * 2. REMOVE Row button
-     */
-    this.context.on( 'click', '.repeater-row-remove', function( this: any, e: Event ) {
-      self.handleRowDecrementor();
-      if ( ! self.limit || self.currentIndex < self.limit ) {
+    this.loading = false;
+  }
 
-        jQuery( self.control.selector + ' .limit' ).removeClass( 'highlight' );
+  /**
+   * Start event listener
+   * @private
+   */
+  private _eventListener() {
+    this.$events.addRowButton.call( this );
+  }
+
+  /**
+   * Init sorting
+   * @private
+   */
+  private _initSorting() {
+    this.repeaterContainer.parent().on( 'click', '.epsilon-sort-rows', () => {
+      this.sorting = ! this.sorting;
+
+      switch ( this.sorting ) {
+        case true:
+          this.repeaterContainer.sortable( {
+            handle: '.repeater-row-header',
+            axis: 'y',
+            distance: 15,
+            stop: ( e, data ) => this.$actions.sortRows( e, data )
+          } );
+          break;
+        default:
+          this.repeaterContainer.sortable( 'destroy' );
+          break;
       }
-    } );
-  }
-
-  /**
-   * Initiate sortable functionality
-   */
-  public initSortable(): void {
-    const control = this;
-
-    this.repeaterContainer.sortable( {
-      handle: '.repeater-row-header',
-      axis: 'y',
-      distance: 15,
-      stop: function( e, data ) {
-        setTimeout( control.utils.sort( data ), 200 );
-      },
-    } );
-
-  }
-
-  /**
-   * Handles row addition
-   */
-  public handleRowIncrementor(): void {
-    /**
-     * Update index;
-     */
-    this.currentIndex ++;
-  }
-
-  /**
-   * Handles row addition
-   */
-  public handleRowDecrementor(): void {
-    /**
-     * Update index;
-     */
-    this.currentIndex --;
-  }
-
-  /**
-   * Handles deletion of field from the previewer
-   */
-  public handleFieldDelete() {
-    wp.customize.previewer.bind( 'epsilon-field-repeater-delete', ( data: any ) => {
-      if ( this.control.id !== data.control ) {
-        return;
-      }
-
-      this.utils.removeRow( this.rows[ data.field ] );
     } );
   }
 }

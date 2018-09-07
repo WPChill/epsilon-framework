@@ -1,11 +1,10 @@
-import { EpsilonSectionRepeaterRow } from './row';
+import { EpsilonRepeaterRow } from './row';
 
 export default {
   /**
-   * Adds a section to the repeater container
-   * @param obj
+   * Adds a row to the repeater container
    */
-  addSection( obj ) {
+  addRow( obj ) {
     let template = _.memoize( this.template ),
         fields;
 
@@ -13,36 +12,36 @@ export default {
       return false;
     }
 
-    if ( 'undefined' === typeof this.$_instance.params.sections[ obj.type ] ) {
-      return false;
-    }
-
-    fields = this.$utils.mergeData.call( this, obj.type );
+    fields = this.$utils.mergeData.call( this );
     fields = this.$utils.setTemplateDefaults( fields, obj );
     fields.index = this.state.currentIndex;
     this.state.currentIndex += 1;
 
-    template = template( fields );
-    this.state.rows.push(
-        new EpsilonSectionRepeaterRow( this, jQuery( template ).appendTo( this.repeaterContainer ), fields, obj.type )
-    );
-
-    if ( 1 === _.size( obj ) && obj.hasOwnProperty( 'type' ) ) {
-      this.$connectors.addNewSection( this.$utils.pluckValues( { ...fields, ...obj } ) );
+    if ( ! obj ) {
+      for ( let key in fields ) {
+        if ( typeof fields[ key ].default !== 'undefined' ) {
+          fields[ key ].default = fields[ key ].randomize ? `${fields[ key ].default} ${this.state.currentIndex}` : fields[ key ].default;
+        }
+      }
     }
 
-    if ( obj.hasOwnProperty( 'imported' ) ) {
-      this.$connectors.addNewSection( this.$utils.pluckValues( { ...obj, ...fields } ) );
+    template = template( fields );
+    this.state.rows.push(
+        new EpsilonRepeaterRow( this, jQuery( template ).appendTo( this.repeaterContainer ), fields )
+    );
+
+    if ( ! obj ) {
+      this.$connectors.addNewRow( this.$utils.pluckValues( fields ) );
     }
 
     return this.state.rows[ fields.index ];
   },
 
   /**
-   * Removes a section from the container
+   * Removes a row from the container
    * @param obj
    */
-  removeSection( obj ) {
+  removeRow( obj ) {
     this.loading = true;
     this.state.rows.splice( obj.index, 1 );
     let value = this.$connectors.getValue();
@@ -59,7 +58,7 @@ export default {
    * @param e
    * @param data
    */
-  sortSections( e, data ) {
+  sortRows( e, data ) {
     /**
      * small hack, wp editor needs to be destroyed/initiated when dom changes
      */
@@ -79,6 +78,8 @@ export default {
 
     this.state.rows = _.sortBy( this.state.rows, ( e ) => e.index );
     value = _.sortBy( value, ( e ) => e.index );
+
+    this.repeaterContainer.trigger( 'row:stopped-sorting', { rows: this.state.rows } );
 
     this.$connectors.setValue( value );
   },

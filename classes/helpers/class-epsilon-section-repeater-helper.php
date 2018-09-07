@@ -779,20 +779,19 @@ class Epsilon_Section_Repeater_Helper {
 
 					$arr[ $key . '_row_title_align' ] = $temp;
 					break;
-				/*
-			case 'template-selector':
-				$temp = array(
-					'id'      => $key . '_template_selector',
-					'type'    => 'epsilon-template-select',
-					'label'   => __( 'Template selector', 'epsilon-framework' ),
-					'group'   => 'layout',
-					'choices' => $values['choices'],
-					'default' => isset( $values['default'] ) ? esc_attr( $values['default'] ) : 'normal',
-				);
+				case 'template-selector':
+					$temp = array(
+						'id'      => $key . '_template_selector',
+						'type'    => 'epsilon-template-select',
+						'label'   => esc_html__( 'Template selector', 'epsilon-framework' ),
+						'group'   => 'layout',
+						'choices' => $values['choices'],
+						'default' => isset( $values['default'] ) ? esc_attr( $values['default'] ) : 'normal',
+					);
 
-				$arr[ $key . '_template_selector' ] = $temp;
-				break;
-				*/
+					$arr[ $key . '_template_selector' ] = $temp;
+					break;
+
 				default:
 					break;
 			}// End switch().

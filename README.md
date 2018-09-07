@@ -1,4 +1,4 @@
-# Epsilon Framework v1.2.3
+# Epsilon Framework v1.3.0
 
 Built by Macho Themes.
 

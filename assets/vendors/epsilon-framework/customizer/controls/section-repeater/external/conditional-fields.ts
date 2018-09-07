@@ -47,7 +47,11 @@ export default class ConditionalFields {
    */
   public setInitialState( field, condition ) {
     let conditioner = this.container.find( `[data-field="${condition[ 0 ]}"]` );
-    field[ this._getFieldValue( conditioner ) === condition[ 1 ] ? 'show' : 'hide' ]();
+
+    condition[ 1 ] instanceof Array
+        ? field[ _.contains( condition[ 1 ], this._getFieldValue( conditioner, null ) ) ? 'show' : 'hide' ]()
+        : field[ this._getFieldValue( conditioner, condition[ 1 ] ) === condition[ 1 ] ? 'show' : 'hide' ]();
+
   }
 
   /**
@@ -57,7 +61,9 @@ export default class ConditionalFields {
     _.each( this.conditionalFields, ( el, key ) => {
       this.container.find( `[data-field="${key}"]` ).on( 'change', ( event: JQueryEventConstructor ) => {
         el.map( e => {
-          e.field[ this._getFieldValue( jQuery( event.target ) ) === e.value ? 'slideDown' : 'slideUp' ]();
+          e.value instanceof Array
+              ? e.field[ _.contains( e.value, this._getFieldValue( jQuery( event.target ), null ) ) ? 'slideDown' : 'slideUp' ]()
+              : e.field[ this._getFieldValue( jQuery( event.target ), e.value ) === e.value ? 'slideDown' : 'slideUp' ]();
         } );
       } );
     } );
@@ -66,9 +72,10 @@ export default class ConditionalFields {
   /**
    * Returns field value
    * @param field
+   * @param coercion
    * @private
    */
-  private _getFieldValue( field ) {
+  private _getFieldValue( field, coercion ) {
     let type = field.attr( 'type' ),
         val;
     switch ( type ) {
@@ -79,6 +86,10 @@ export default class ConditionalFields {
       default:
         val = field.val();
         break;
+    }
+
+    if ( coercion === 'hasValue' && val !== '' ) {
+      val = 'hasValue';
     }
 
     return val;

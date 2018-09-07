@@ -927,8 +927,18 @@ ui-slider:hover {
     padding: 12px 0 12px 12px;
     height: 20px;
     font-weight: 600;
-    transition: .15s background-color ease-in-out;
-    cursor: all-scroll; }
+    transition: .20s all ease-in-out;
+    cursor: pointer; }
+    .customize-control-epsilon-repeater .repeater-row-header:before {
+      content: "\F545";
+      font-family: "Dashicons";
+      display: inline-block;
+      position: absolute;
+      left: -15px;
+      top: 13px;
+      font-size: 15px;
+      -webkit-transition: all .2s;
+      transition: all .2s; }
     .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize,
     .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove {
       float: right;
@@ -997,6 +1007,15 @@ ui-slider:hover {
   .customize-control-epsilon-repeater .remove-button,
   .customize-control-epsilon-repeater .upload-button {
     width: 48%; }
+  .customize-control-epsilon-repeater .epsilon-repeater-is-sorting .repeater-row .repeater-row-header {
+    padding-left: 40px;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    cursor: all-scroll; }
+    .customize-control-epsilon-repeater .epsilon-repeater-is-sorting .repeater-row .repeater-row-header:before {
+      left: 10px;
+      -webkit-transition: all .2s;
+      transition: all .2s; }
 
 .repeater-field.repeater-field-textarea textarea {
   min-height: 150px;
@@ -1058,7 +1077,10 @@ ui-slider:hover {
       box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
       background: #fff;
       transition: margin-top .15s, margin-bottom .15s;
-      position: relative; }
+      position: relative;
+      /* Needs further attention */ }
+      .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.epsilon-upsell-section {
+        background: #f2f2f2; }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.epsilon-section-is-loading .repeater-row-content:after {
         opacity: .7;
         visibility: visible;
@@ -1157,7 +1179,8 @@ ui-slider:hover {
     .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content {
       border-top: 1px solid #DDD;
       padding: 0 10px 10px 10px;
-      position: relative; }
+      position: relative;
+      width: 95%; }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content:after {
         background: #fff;
         opacity: 0;
@@ -1371,7 +1394,10 @@ body.adding-section .epsilon-add-new-section:before {
 .available-sections-list .epsilon-section {
   padding: 10px 10px 6px;
   position: relative;
-  background: #eee; }
+  background: #eee;
+  /* Needs further attention */ }
+  .available-sections-list .epsilon-section[data-upsell="true"] {
+    background: #e1e1e1; }
   .available-sections-list .epsilon-section:first-of-type {
     padding-top: 12px; }
   .available-sections-list .epsilon-section:last-of-type {
@@ -1998,7 +2024,7 @@ body.adding-doubled-section .doubled-section-parent {
   left: 0;
   right: 0;
   margin: 0 auto;
-  max-width: 120px;
+  max-width: 145px;
   z-index: 100;
   border: 1px solid #fff;
   -webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, 0.15);
@@ -2174,7 +2200,6 @@ body.adding-doubled-section .doubled-section-parent {
   height: 35px; }
 
 .epsilon-control-group a {
-  float: left;
   height: 33px;
   background: rgba(150, 180, 150, 0);
   text-align: center;
@@ -2198,14 +2223,26 @@ body.adding-doubled-section .doubled-section-parent {
 .epsilon-control-group a:nth-child(odd) {
   background: rgba(150, 180, 150, 0); }
 
-.epsilon-control-group.epsilon-group-four a {
+.epsilon-control-group.epsilon-group-five a, .epsilon-control-group.epsilon-group-five input {
+  width: 20%; }
+
+.epsilon-control-group.epsilon-group-four a, .epsilon-control-group.epsilon-group-four input {
   width: 25%; }
 
-.epsilon-control-group.epsilon-group-three a {
+.epsilon-control-group.epsilon-group-three a, .epsilon-control-group.epsilon-group-three input {
   width: 33.333333%; }
 
-.epsilon-control-group.epsilon-group-two a {
+.epsilon-control-group.epsilon-group-two a, .epsilon-control-group.epsilon-group-two input {
   width: 50%; }
+
+.epsilon-layout-select-set a {
+  display: inline-block;
+  border: 1px solid gray; }
+  .epsilon-layout-select-set a.active {
+    border-color: red; }
+
+.epsilon-layout-select-set img {
+  pointer-events: none; }
 
 .hidden-section-panel {
   opacity: .5;
