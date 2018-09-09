@@ -2033,7 +2033,7 @@ body.adding-doubled-section .doubled-section-parent {
     line-height: 26px; }
   .epsilon-pencil-button-group a {
     color: #fff;
-    padding: 0 4px;
+    padding: 2px 4px 3px 4px;
     border-right: 1px solid rgba(255, 255, 255, 0.4); }
     .epsilon-pencil-button-group a:last-of-type {
       margin-right: 0;
@@ -2046,6 +2046,8 @@ body.adding-doubled-section .doubled-section-parent {
     .epsilon-pencil-button-group a:hover, .epsilon-pencil-button-group a:focus {
       background: #00a6d0;
       color: #fff; }
+  .epsilon-pencil-button-group a[data-focus="delete"] {
+    background-color: #F86046; }
 
 .epsilon-section-editor {
   background: #0085ba !important;
