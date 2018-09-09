@@ -148,7 +148,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		foreach ( $this->repeatable_sections as $section ) {
 			if ( isset( $section['integration'] ) && $section['integration']['status'] && $section['integration']['check'] ) {
 				$integration = true;
-				$this->integration_count ++;
+				$this->integration_count++;
 			}
 		}
 
@@ -282,15 +282,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				$this->repeatable_sections[ $key ]['customization'] = array();
 			}
 
-			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args(
-				$this->repeatable_sections[ $key ]['customization'],
-				array(
-					'enabled' => false,
-					'styling' => array(),
-					'layout'  => array(),
-					'colors'  => array(),
-				)
-			);
+			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args( $this->repeatable_sections[ $key ]['customization'], array(
+				'enabled' => false,
+				'styling' => array(),
+				'layout'  => array(),
+				'colors'  => array(),
+			) );
 
 			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->repeater_helper->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
 			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->repeater_helper->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
@@ -344,11 +341,13 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 						</span>
 					</i>
 				<# } #>
+
+			<a href="#" class="button-link epsilon-sort-sections" aria-expanded="false" aria-controls="available-sections">
+				<?php esc_html_e( 'Reorder', 'epsilon-framework' ); ?>
+			</a>
+
 			</span>
 
-			<button type="button" class="button button-secondary epsilon-sort-sections" aria-expanded="false" aria-controls="available-sections">
-				<?php esc_html_e( 'Reorder', 'epsilon-framework' ); ?>
-			</button>
 		</label>
 		<ul class="repeater-sections"></ul>
 		<div class="epsilon-add-section-buttons">
@@ -398,56 +397,59 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 					</nav>
 					<# } #>
 
-					<# if ( data.integrations ) { #> <div data-tab-id="normal" class="normal-sections available-sections-tab-content active"> <# } #>
+					<# if ( data.integrations ) { #>
+					<div data-tab-id="normal" class="normal-sections available-sections-tab-content active"> <# } #>
 						<# for (section in data.sections) { #>
 						<# var temp = JSON.stringify(data.sections[section].fields); #>
 						<# if ( _.isUndefined(data.sections[section].integration) ) { #>
-							<div class="epsilon-section" data-id="{{ data.sections[section].id }}" data-upsell="{{ data.sections[section].upsell }}">
-								<div class="epsilon-section-image-description">
-									<img src="{{ data.sections[section].image }}" />
-									<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-								</div>
-								<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-								<button class="button button-primary" data-action="add">
-									<i class="fa fa-plus" aria-hidden="true"></i>
-								</button>
-								<button class="button button-info" data-action="info">
-									<i class="fa fa-question" aria-hidden="true"></i>
-								</button>
-								<# if ( data.sections[section].upsell ) { #>
-									<a href="#">Hello World</a>
-								<# } #>
-								<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
+						<div class="epsilon-section" data-id="{{ data.sections[section].id }}" data-upsell="{{ data.sections[section].upsell }}">
+							<div class="epsilon-section-image-description">
+								<img src="{{ data.sections[section].image }}" />
+								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
 							</div>
+							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+							<button class="button button-primary" data-action="add">
+								<i class="fa fa-plus" aria-hidden="true"></i>
+							</button>
+							<button class="button button-info" data-action="info">
+								<i class="fa fa-question" aria-hidden="true"></i>
+							</button>
+							<# if ( data.sections[section].upsell ) { #>
+							<a href="#">Hello World</a>
+							<# } #>
+							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
+						</div>
 						<# } #>
 						<# } #>
 
-						<# if ( data.integrations ) { #> </div> <# } #>
+						<# if ( data.integrations ) { #>
+					</div>
+					<# } #>
 
 					<# if ( data.integrations ) { #>
-						<div data-tab-id="integrations" class="integrations-sections available-sections-tab-content">
-							<# for (section in data.sections) { #>
-								<# if ( ! _.isUndefined(data.sections[section].integration) ) { #>
-								<div class="epsilon-section" data-id="{{ data.sections[section].id }}" data-upsell="{{ data.sections[section].upsell }}">
-									<div class="epsilon-section-image-description">
-										<img src="{{ data.sections[section].image }}" />
-										<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
-									</div>
-									<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
-									<button class="button button-primary" data-action="add">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-									</button>
-									<button class="button button-info" data-action="info">
-										<i class="fa fa-question" aria-hidden="true"></i>
-									</button>
-									<# if ( data.sections[section].upsell ) { #>
-										<a href="#">Hello World</a>
-									<# } #>
-									<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
-								</div>
-								<# } #>
+					<div data-tab-id="integrations" class="integrations-sections available-sections-tab-content">
+						<# for (section in data.sections) { #>
+						<# if ( ! _.isUndefined(data.sections[section].integration) ) { #>
+						<div class="epsilon-section" data-id="{{ data.sections[section].id }}" data-upsell="{{ data.sections[section].upsell }}">
+							<div class="epsilon-section-image-description">
+								<img src="{{ data.sections[section].image }}" />
+								<span class="epsilon-section-description">{{ data.sections[section].description }}</span>
+							</div>
+							<span class="epsilon-section-title">{{ data.sections[section].title }}</span>
+							<button class="button button-primary" data-action="add">
+								<i class="fa fa-plus" aria-hidden="true"></i>
+							</button>
+							<button class="button button-info" data-action="info">
+								<i class="fa fa-question" aria-hidden="true"></i>
+							</button>
+							<# if ( data.sections[section].upsell ) { #>
+							<a href="#">Hello World</a>
 							<# } #>
+							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
 						</div>
+						<# } #>
+						<# } #>
+					</div>
 					<# } #>
 				</div>
 			</div>

@@ -320,7 +320,7 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 			<span class="customize-control-title">
 				<# if( data.label ){ #>
 					<span>{{{ data.label }}}</span>
-					<a href="#" class="button-link add-new-toggle">{{{ data.add_new_page_label }}}</a>
+					<a href="#" class="page-title-action add-new-toggle">{{{ data.add_new_page_label }}}</a>
 				<# } #>
 
 				<# if( data.description ){ #>
