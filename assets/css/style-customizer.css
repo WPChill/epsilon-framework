@@ -1270,7 +1270,7 @@ ui-slider:hover {
 
 .epsilon-add-section-buttons {
   padding: 10px 0;
-  background-color: #fff;
+  background: linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.95));
   position: fixed;
   bottom: 46px;
   z-index: 9999;
@@ -1280,6 +1280,10 @@ ui-slider:hover {
   text-align: center;
   margin: 0;
   border-top: 1px solid #ccc; }
+  .epsilon-add-section-buttons:before {
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    content: ''; }
   .epsilon-add-section-buttons .epsilon-add-new-section,
   .epsilon-add-section-buttons .epsilon-sort-sections {
     animation-name: epsilon_button_pulse;

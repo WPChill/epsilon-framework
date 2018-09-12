@@ -264,8 +264,15 @@
 }
 
 .epsilon-add-section-buttons {
+
+	&:before {
+		-webkit-filter: blur(5px);
+		filter: blur(5px);
+		content: '';
+	}
+
 	padding: 10px 0;
-	background-color: #fff;
+	background: linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.95));
 	position: fixed;
 	bottom: 46px;
 	z-index: 9999;
