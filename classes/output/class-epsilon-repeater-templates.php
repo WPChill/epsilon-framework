@@ -138,18 +138,12 @@ class Epsilon_Repeater_Templates {
 						<# } else if ( 'epsilon-template-select' === field.type ) { #>
 						<?php self::epsilon_template_selector(); ?>
 						<# } else if ( 'epsilon-upsell' === field.type ) { #>
-						<?php  self::epsilon_upsell(); ?>
+						<?php self::epsilon_upsell(); ?>
 						<# } else if ( 'epsilon-margins-paddings' === field.type ) { #>
 						<?php self::epsilon_margins_paddings(); ?>
 						<# } #>
 					</div>
 					<# } ); #>
-
-					<div class="repeater-row-footer">
-						<button type="button" class="button-link repeater-row-remove"><?php esc_attr_e( 'Remove', 'epsilon-framework' ); ?></button>
-						|
-						<button type="button" class="button-link repeater-row-minimize"><?php esc_attr_e( 'Close', 'epsilon-framework' ); ?></button>
-					</div>
 				</div>
 			</li>
 		</script>
@@ -159,10 +153,10 @@ class Epsilon_Repeater_Templates {
 	/**
 	 * Margins and paddings
 	 */
-	public static function epsilon_margins_paddings(){ ?>
+	public static function epsilon_margins_paddings() { ?>
 		<label>
 			<# if ( field.label ) { #>
-				<span class="customize-control-title">{{ field.label }}</span>
+			<span class="customize-control-title">{{ field.label }}</span>
 			<# } #>
 			<# if( field.description ){ #>
 			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
@@ -173,24 +167,42 @@ class Epsilon_Repeater_Templates {
 			<# } #>
 			<input type="hidden" name="" value="{{ field.default }}" data-field="{{{ field.id }}}">
 		</label>
-		<div class="epsilon-control-set">
-			<div class="epsilon-control-group epsilon-group-five">
-				<input type="text" class="epsilon-delegates" data-target="top"/ >
-				<input type="text" class="epsilon-delegates" data-target="right" />
-				<input type="text" class="epsilon-delegates" data-target="bottom" />
-				<input type="text" class="epsilon-delegates" data-target="left" />
-				<a href="#" class="epsilon-equalizer">
-					<span class="dashicons dashicons-editor-unlink"></span>
-				</a>
-			</div>
+		<div class="epsilon-control-set epsilon-margin-paddings">
 			<div class="epsilon-additional-controls">
 				<a href="#" data-additional="PX">PX</a>
 				<a href="#" data-additional="EM">EM</a>
 				<a href="#" data-additional="REM">REM</a>
-				<a href="#" data-additional="PERCENT">&</a>
+				<a href="#" data-additional="PERCENT">%</a>
+			</div>
+			<div class="epsilon-control-group epsilon-group-five">
+				<div class="epsilon-spacing-section">
+					<input type="number" class="epsilon-delegates" data-target="top"/ >
+					<span class="description">Top</span>
+				</div>
+
+				<div class="epsilon-spacing-section">
+					<input type="number" class="epsilon-delegates" data-target="right" />
+					<span class="description">Right</span>
+				</div>
+
+				<div class="epsilon-spacing-section">
+					<input type="number" class="epsilon-delegates" data-target="bottom" />
+					<span class="description">Bottom</span>
+				</div>
+
+				<div class="epsilon-spacing-section">
+					<input type="number" class="epsilon-delegates" data-target="left" />
+					<span class="description">Left</span>
+				</div>
+
+				<div class="epsilon-spacing-section epsilon-link-spacing-section">
+					<a href="#" class="epsilon-equalizer">
+						<span class="dashicons dashicons-editor-unlink"></span>
+					</a><!--/.epsilon-equalizer-->
+				</div>
 			</div>
 		</div>
-	<?php
+		<?php
 	}
 
 	/**
@@ -218,7 +230,7 @@ class Epsilon_Repeater_Templates {
 		<#
 		var fieldExtras = '';
 		if ( 'link' === field.type ) {
-			field.type = 'url'
+		field.type = 'url'
 		} #>
 
 		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
@@ -241,19 +253,21 @@ class Epsilon_Repeater_Templates {
 			<span class="customize-control-title">{{ field.label }}</span>
 			<# } #>
 			<# if( field.description ){ #>
-				<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 					<span class="mte-tooltip">
 						{{{ field.description }}}
 					</span>
-				</i>
+			</i>
 			<# } #>
 			<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
 			<# _.each( field.choices, function( choice, i ) { #>
-				<# if( field.multiple ) { #>
-					<option value="{{{ i }}}" <# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
-				<# } else { #>
-					<option value="{{{ i }}}" <# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
-				<# } #>
+			<# if( field.multiple ) { #>
+			<option value="{{{ i }}}"
+			<# if ( _.contains( field.default , i) ) { #> selected="selected" <# } #>>{{ choice }}</option>
+			<# } else { #>
+			<option value="{{{ i }}}"
+			<# if ( field.default == i ) { #> selected="selected" <# } #>>{{ choice }}</option>
+			<# } #>
 			<# }); #>
 			</select>
 		</label>
@@ -288,7 +302,7 @@ class Epsilon_Repeater_Templates {
 						<span class="mte-tooltip">
 							{{{ field.description }}}
 						</span> </i>        <# } #>
-		<textarea rows="5" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
+		<textarea rows="3" data-field="{{{ field.id }}}">{{ field.default }}</textarea>
 		<?php
 	}
 
@@ -425,13 +439,13 @@ class Epsilon_Repeater_Templates {
 		<#
 		var fieldExtras = '';
 		if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.min ) ) {
-			fieldExtras += ' data-attr-min="' + field.choices.min + '"';
+		fieldExtras += ' data-attr-min="' + field.choices.min + '"';
 		}
 		if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.max ) ) {
-			fieldExtras += ' data-attr-max="' + field.choices.max + '"';
+		fieldExtras += ' data-attr-max="' + field.choices.max + '"';
 		}
 		if ( ! _.isUndefined( field.choices ) && ! _.isUndefined( field.choices.step ) ) {
-			fieldExtras += ' data-attr-step="' + field.choices.step + '"';
+		fieldExtras += ' data-attr-step="' + field.choices.step + '"';
 		} #>
 		<div class="epsilon-slider">
 			<span class="customize-control-title">
@@ -562,14 +576,14 @@ class Epsilon_Repeater_Templates {
 				<div class="epsilon-control-group epsilon-group-{{ field.groupType }}">
 					<input type="hidden" data-field={{{ field.id }}} value="{{{ field.default }}}">
 					<# for( var i in field.choices ) { #>
-						<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
-						<# if( ! _.isUndefined( field.choices[i].icon) ) { #>
-							<i class="dashicons {{ field.choices[i].icon }}" />
-						<# } #>
-						<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
-							<img src="{{ field.choices[i].png }}" />
-						<# } #>
-						</a>
+					<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
+					<# if( ! _.isUndefined( field.choices[i].icon) ) { #>
+					<i class="dashicons {{ field.choices[i].icon }}" />
+					<# } #>
+					<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
+					<img src="{{ field.choices[i].png }}" />
+					<# } #>
+					</a>
 					<# } #>
 				</div>
 			</div>
@@ -598,11 +612,11 @@ class Epsilon_Repeater_Templates {
 			<div class="epsilon-layout-select-set">
 				<input type="hidden" data-field="{{{ field.id }}}" value="{{{ field.default }}}">
 				<# for( var i in field.choices ) { #>
-					<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
-					<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
-						<img src="{{ field.choices[i].png }}" />
-					<# } #>
-					</a>
+				<a href="#" data-value="{{ field.choices[i].value }}" <# if( field.default == field.choices[i].value ) { #> class="active" <# } #> >
+				<# if( ! _.isUndefined( field.choices[i].png ) ) { #>
+				<img src="{{ field.choices[i].png }}" />
+				<# } #>
+				</a>
 				<# } #>
 			</div>
 		</div>

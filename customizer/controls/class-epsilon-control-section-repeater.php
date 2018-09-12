@@ -332,7 +332,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	public function content_template() {
 		//@formatter:off ?>
 		<label>
-			<span class="customize-control-title">
+			<span class="customize-control-title epsilon-page-title">
 				{{{ data.label }}}
 				<# if( data.description ){ #>
 					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">

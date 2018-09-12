@@ -3,12 +3,17 @@
 	width: calc(100% + 24px);
 	padding-bottom: 49px;
 	.customize-control-title {
-		padding-left: 13px;
-		margin-bottom: 8px;
+		display: inline-block;
+		&.epsilon-page-title {
+			padding-left: 13px;
+			margin-bottom: 8px;
+			display: block;
+		}
 		.epsilon-sort-sections {
 			float: right;
 			margin-right: 13px;
 		}
+
 	}
 	.repeater-sections {
 		width: 100%;
@@ -223,6 +228,7 @@
 			}
 			.customize-control-title {
 				padding: initial;
+				font-size: 13px;
 			}
 		}
 		.repeater-row-footer {
@@ -237,10 +243,6 @@
 			&:hover {
 				color: #f00;
 			}
-		}
-		.epsilon-upsell-container {
-			display: block;
-			padding: 15px;
 		}
 	}
 
