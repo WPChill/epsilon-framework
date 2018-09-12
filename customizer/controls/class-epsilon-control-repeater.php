@@ -253,6 +253,7 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		<label>
 			<span class="customize-control-title">
 				{{{ data.label }}}
+				<a href="#" class="button-link epsilon-sort-rows"><?php echo esc_html__('Reorder', 'epsilon-framework'); ?></a>
 				<# if( data.description ){ #>
 					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
 						<span class="mte-tooltip">
@@ -266,7 +267,6 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 		<ul class="repeater-fields"></ul>
 		<div class="button-holder">
 			<input type="hidden" value="" {{{ data.link }}} />
-			<button class="button epsilon-sort-rows"><?php echo esc_html__('Reorder', 'epsilon-framework'); ?></button>
 			<button class="button-primary epsilon-repeater-add">{{ data.buttonLabel }}</button>
 		</div>
 		<?php //@formatter:on

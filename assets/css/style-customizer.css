@@ -899,6 +899,8 @@ ui-slider:hover {
   .customize-control-epsilon-repeater .repeater-fields {
     margin-left: -20px;
     margin-right: -20px; }
+  .customize-control-epsilon-repeater .epsilon-sort-rows {
+    float: right; }
   .customize-control-epsilon-repeater .repeater-row {
     margin-bottom: 6px;
     margin-top: 6px;
