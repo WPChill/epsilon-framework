@@ -111,7 +111,7 @@ class Epsilon_Control_Upsell extends WP_Customize_Control {
 		//@formatter:off ?>
 		<# if ( data.allowed ) { #>
 		<div class="epsilon-upsell-label">
-			{{{ data.label }}} <i class="dashicons dashicons-arrow-down-alt2"></i>
+			{{{ data.label }}}
 		</div>
 		<div class="epsilon-upsell-container">
 			<# if ( data.options ) { #>

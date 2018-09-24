@@ -1,9 +1,9 @@
 .repeater-field-epsilon-upsell {
-	background-color: #FAFAFA;
-	border: 1px dashed #DDD;
+	background-color: #fafafa;
+	border: 1px dashed #ddd;
 	padding: 10px;
+	margin: 15px auto !important;
 }
-
 
 .epsilon-upsell-label {
 	text-transform: uppercase;
@@ -78,10 +78,6 @@
 		width: 100%;
 		font-size: 12px;
 		color: #8b9096;
-		i {
-			vertical-align: middle;
-			position: relative;
-		}
 		&:last-of-type {
 			margin-bottom: 20px;
 		}
@@ -89,60 +85,19 @@
 }
 
 .customize-control-epsilon-upsell {
-	margin: 0 -12px;
-	width: 105.5%;
-	margin-bottom: 40px;
+	background-color: #fafafa;
+	border: 1px dashed #ddd;
+	padding-top: 10px;
 
 	.epsilon-upsell-label {
-		background: #d54e21;
-		color: #fff;
-		padding: 14px 20px;
-		cursor: pointer;
-		-webkit-transition: all .2s;
-		transition: all .2s;
-		width: calc(100% - 20px);
-		margin-top: -20px;
-
-
-		&:hover,
-		&.opened {
-			-webkit-transition: all .2s;
-			transition: all .2s;
-			background: #008ec2;
-		}
-		i {
-			float: right;
-			margin-right: 20px;
-		}
+		text-transform: uppercase;
+		font-size: 14px;
+		font-weight: 600;
+		text-align: center;
+		display: block;
 	}
 
 	.mte-tooltip {
 		left: 0;
-	}
-}
-
-@media only screen and (max-width: 1680px) {
-
-	.epsilon-upsell-container {
-
-		.epsilon-button-group {
-
-			.button-separator {
-				margin: 5px auto;
-				text-align: center;
-				position: static;
-				-webkit-transform: none;
-				transform: none;
-				display: block;
-			}
-
-			.button {
-				display: block;
-				width: 100%;
-				float: none;
-			}
-
-		}
-
 	}
 }

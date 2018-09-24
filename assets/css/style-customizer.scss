@@ -243,7 +243,7 @@ body.wp-customizer {
 }
 
 .epsilon-control-group i {
-	margin-top: 5px;
+	margin-top: 4px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -255,25 +255,29 @@ body.wp-customizer {
 
 .epsilon-control-group.epsilon-group-five {
 	a, input {
-		width: 20%;
+		width: 18.95%;
+		display: inline-block;
 	}
 }
 
 .epsilon-control-group.epsilon-group-four {
 	a, input {
 		width: 25%;
+		display: inline-block;
 	}
 }
 
 .epsilon-control-group.epsilon-group-three {
 	a, input {
 		width: 33.333333%;
+		display: inline-block;
 	}
 }
 
 .epsilon-control-group.epsilon-group-two {
 	a, input {
 		width: 50%;
+		display: inline-block;
 	}
 }
 
@@ -405,4 +409,95 @@ body.wp-customizer {
 		-webkit-transition: all .3s;
 		transition: all .3s;
 	}
+}
+
+li#accordion-section-portum_repeatable_section > h3.accordion-section-title:before {
+	content: "\f155";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-section-portum_typography_section > h3.accordion-section-title:before {
+	content: "\f215";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-section-colors > h3.accordion-section-title:before {
+	content: "\f100";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-panel-nav_menus > h3.accordion-section-title:before {
+	content: "\f333";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-panel-widgets > h3.accordion-section-title:before {
+	content: "\f116";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-section-custom_css > h3.accordion-section-title:before {
+	content: "\f540";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-section-header_image > h3.accordion-section-title:before {
+	content: "\f105";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-section-title_tagline > h3.accordion-section-title:before {
+	content: "\f319";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-panel-portum_panel_general > h3.accordion-section-title:before {
+	content: "\f111";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
+}
+
+li#accordion-section-portum_header_section > h3.accordion-section-title:before,
+li#accordion-section-portum_footer_section > h3.accordion-section-title:before {
+	content: "\f308";
+	font-family: dashicons;
+	position: relative;
+	top: 4px;
+	margin-right: 5px;
+	font-size: 18px;
 }

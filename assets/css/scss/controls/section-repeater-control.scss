@@ -27,7 +27,9 @@
 
 			/* Needs further attention */
 			&.epsilon-upsell-section {
-				background: darken($repeater_row_background, 5%);
+				.repeater-row-header {
+					background: darken($repeater_row_background, 5%);
+				}
 			}
 
 			&.epsilon-section-is-loading {
@@ -438,7 +440,31 @@ body.adding-section {
 		background: #eee;
 		/* Needs further attention */
 		&[data-upsell="true"] {
-			background: darken(#eee, 5%)
+
+			.epsilon-section-ribbon {
+				position: absolute;
+				top: 13px;
+				background-color: #0085ba;
+				color: #fff;
+				right: 11px;
+				font-size: 8px;
+				text-transform: uppercase;
+				padding: 2px 9px 2px 4px;
+				font-weight: 600;
+				border-color: #0073aa #006799 #006799;
+				box-shadow: 0 1px 0 #006799;
+				text-decoration: none;
+				text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+
+				&:before {
+					content: "\f160";
+					font-family: 'dashicons';
+					font-size: 9px;
+					position: relative;
+					top: 1px;
+					margin-right: 5px;
+				}
+			}
 		}
 
 		&:first-of-type {

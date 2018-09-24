@@ -418,6 +418,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 							</button>
 							<# if ( data.sections[section].upsell ) { #>
 							<a href="#">Hello World</a>
+							<span class="epsilon-section-ribbon">PRO only</span>
 							<# } #>
 							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
 						</div>
@@ -446,6 +447,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 							</button>
 							<# if ( data.sections[section].upsell ) { #>
 							<a href="#">Hello World</a>
+							<span class="epsilon-section-ribbon">PRO only</span>
 							<# } #>
 							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
 						</div>
