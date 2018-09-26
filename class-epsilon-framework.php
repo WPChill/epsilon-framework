@@ -140,6 +140,15 @@ class Epsilon_Framework {
 		 * AJAX handling moved to a different class
 		 */
 		new Epsilon_Ajax_Controller();
+
+//		$opts = [
+//			'http' => [
+//				'method' => 'GET',
+//				'header' => 'AuthThemeApiLicense: 1234512123123123' . "\r\n" . "AuthThemeApiWebsite: www.local.com" . "\r\n"
+//			]
+//		];
+
+//		var_dump( file_get_contents( 'http://wpdevapi.local/wp-json/theme-demos-api/v1/demos/1', false, stream_context_create( $opts ) ) );
 	}
 
 	/**

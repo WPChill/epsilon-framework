@@ -36,22 +36,7 @@ export default {
          * First object containing regular fields
          */
         this.$_instance.params.sections[ type ].fields,
-        /**
-         * Styling fields ( hardcoded per section )
-         */
-        this.$_instance.params.sections[ type ].customization.styling,
-        /**
-         * Layout fields ( hardcoded per section )
-         */
-        this.$_instance.params.sections[ type ].customization.layout,
-        /**
-         * Color fields ( hardcoded per section )
-         */
-        this.$_instance.params.sections[ type ].customization.colors,
-        /**
-         * Concatenate a new customization object with the defaults
-         */
-        { customization: this.$_instance.params.sections[ type ].customization },
+        { groups: this.$_instance.params.sections[ type ].groups },
     );
   },
   /**

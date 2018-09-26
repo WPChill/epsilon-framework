@@ -81,26 +81,17 @@ class Epsilon_Repeater_Templates {
 					<i class="dashicons dashicons-hidden repeater-row-hide"></i>
 				</div>
 				<div class="repeater-row-content">
-					<# if( data.customization.enabled ) { #>
-					<nav>
-						<# if( data.customization.enabled ) { #>
-						<a href="#" class="active" data-item="regular"><span class="dashicons dashicons-welcome-write-blog"></span>
-							<span class="label"><?php echo __( 'Content', 'epsilon-framework' ); ?></span></a>
-						<# } #>
-						<# if( ! _.isEmpty(data.customization.styling) ) { #>
-						<a href="#" data-item="styling"><span class="dashicons dashicons-admin-customizer"></span>
-							<span class="label"><?php echo __( 'Background', 'epsilon-framework' ); ?></span></a>
-						<# } #>
-						<# if( ! _.isEmpty(data.customization.layout) ) { #>
-						<a href="#" data-item="layout"><span class="dashicons dashicons-layout"></span>
-							<span class="label"><?php echo __( 'Layout', 'epsilon-framework' ); ?></span></a>
-						<# } #>
-						<# if( ! _.isEmpty(data.customization.colors) ) { #>
-						<a href="#" data-item="colors"><span class="dashicons dashicons-admin-appearance"></span>
-							<span class="label"><?php echo __( 'Style', 'epsilon-framework' ); ?></span></a>
-						<# } #>
-						<# } #>
-					</nav>
+					<# if ( ! _.isUndefined( data.groups ) ) { #>
+						<nav>
+							<# _.each( data.groups, function( group, id ) { #>
+								<a href="#" data-item="{{{ id }}}" <# if( id === 'regular' ) { #> class="active" <# } #> >
+									<span class="{{{ group.icon }}}"></span>
+									<span class="label">{{{ group.label }}}</span>
+								</a>
+							<# }) #>
+						</nav>
+					<# } #>
+
 					<# _.each( data, function( field, i ) { #>
 					<div class="repeater-field repeater-field-{{{ field.type }}}" data-group="<# if(field.group){ #>{{{ field.group }}}<# } else { #>regular<# } #>">
 						<# if ( 'text' === field.type || 'url' === field.type || 'link' === field.type || 'email' === field.type || 'tel' === field.type || 'hidden' === field.type ) { #>

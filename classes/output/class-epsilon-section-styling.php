@@ -61,23 +61,51 @@ class Epsilon_Section_Styling {
 		}
 
 		foreach ( $frontpage->sections as $index => $section ) {
-			$text    = $this->preg_grep_keys( '/text_color/', $section );
-			$heading = $this->preg_grep_keys( '/heading_color/', $section );
+			$text    = $this->preg_grep_keys( '/_text_color/', $section );
+			$heading = $this->preg_grep_keys( '/_heading_color/', $section );
+			$others  = $this->preg_grep_keys( '/_misc_font_color/', $section );
 
-			if ( ! empty( $text )  ) {
-				$this->options[ $index ]['text'] = array(
-					'selectors' => $this->manager->sections[ $section['type'] ]['customization']['colors']['text-color']['selectors'],
-					'value'     => reset( $text ),
+			if ( ! empty( $others ) ) {
+				foreach ( $others as $k => $v ) {
+					$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $k ];
+
+					$this->options[ $index ][] = array(
+						'selectors'     => isset( $shortcut['selectors'] ) ? $shortcut['selectors'] : '',
+						'css-attribute' => isset( $shortcut['css-attribute'] ) ? $shortcut['css-attribute'] : 'color',
+						'value'         => $v
+					);
+				}
+			}
+
+			if ( ! empty( $text ) ) {
+				$key = array_keys( $text );
+				$key = reset( $key );
+
+				$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $key ];
+
+				$this->options[ $index ][] = array(
+					'selectors'     => isset( $shortcut['selectors'] )
+						? $shortcut['selectors']
+						: array( 'p' ),
+					'css-attribute' => isset( $shortcut['css-attribute'] ) ? $shortcut['css-attribute'] : 'color',
+					'value'         => reset( $text )
 				);
 			}
 			if ( ! empty( $heading ) ) {
-				$this->options[ $index ]['headings'] = array(
-					'selectors' => $this->manager->sections[ $section['type'] ]['customization']['colors']['heading-color']['selectors'],
-					'value'     => reset( $heading ),
+				$key = array_keys( $heading );
+				$key = reset( $key );
+
+				$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $key ];
+
+				$this->options[ $index ][] = array(
+					'selectors'     => isset( $shortcut['selectors'] )
+						? $shortcut['selectors']
+						: array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', ),
+					'css-attribute' => isset( $shortcut['css-attribute'] ) ? $shortcut['css-attribute'] : 'color',
+					'value'         => reset( $heading )
 				);
 			}
 		}
-
 	}
 
 	/**
@@ -130,17 +158,22 @@ class Epsilon_Section_Styling {
 			 */
 			$prefix = '[data-section="' . $index . '"] ';
 
+			if ( empty( $element['selectors'] ) ) {
+				continue;
+			}
+
 			/**
 			 * Run a simple preg_filter on the selector array to add the prefix created above
 			 */
 			$element['selectors'] = preg_filter( '/^/', $prefix, $element['selectors'] );
+			$selectors            = implode( ',', $element['selectors'] );
 
 			/**
 			 * Implode the array, glueing with ',' so we get a string similar to this:
 			 * [data-section="1"] p, [data-section="1" a { css string goes here }
 			 * and concatenate it on the CSS variable
 			 */
-			$css .= implode( ',', $element['selectors'] ) . '{ color: ' . ! empty( $element['value'] ) ? $element['value'] : 'inherit' . '}' . "\n";
+			$css .= ! empty( $element['value'] ) ? $selectors . '{ ' . $element['css-attribute'] . ': ' . $element['value'] . '}' . "\n" : '';
 		}
 
 		return $css;

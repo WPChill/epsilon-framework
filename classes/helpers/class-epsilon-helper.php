@@ -31,25 +31,25 @@ class Epsilon_Helper {
 			return '';
 		}
 
-		if ( isset( $sections->sections[ $section_type ]['customization'] ) && ! $sections->sections[ $section_type ]['customization']['enabled'] ) {
+		if ( ! isset( $sections->sections[ $section_type ]['groups'] ) ) {
 			return '<a href="#" class="epsilon-section-editor"><span class="dashicons dashicons-edit"></span></a>';
 		}
 
 		$customization = array(
 			'regular' => true,
-			'styling' => ! empty( $sections->sections[ $section_type ]['customization']['styling'] ),
-			'layout'  => ! empty( $sections->sections[ $section_type ]['customization']['layout'] ),
-			'colors'  => ! empty( $sections->sections[ $section_type ]['customization']['colors'] ),
-			'delete'  => true,
 		);
 
 		$icons = array(
 			'regular' => 'edit',
-			'layout'  => 'layout',
-			'colors'  => 'admin-appearance',
-			'styling' => 'admin-customizer',
 			'delete'  => 'trash'
 		);
+		foreach ( $sections->sections[ $section_type ]['groups'] as $k => $v ) {
+			$customization[ $k ] = true;
+			$icons[ $k ]         = str_replace( 'dashicons dashicons-', '', $v['icon'] );
+		}
+
+		$customization['delete'] = true;
+
 
 		$customization = array_filter( $customization );
 

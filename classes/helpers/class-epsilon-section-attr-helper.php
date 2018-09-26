@@ -30,24 +30,7 @@ class Epsilon_Section_Attr_Helper {
 	public function __construct( $fields = array(), $key = '', $section_manager = null ) {
 		$this->key             = $key;
 		$this->section_manager = $section_manager->sections;
-		$this->options         = $this->set_options( $fields );
-	}
-
-	/**
-	 * @param array $fields
-	 */
-	public function set_options( $fields = array() ) {
-		$defaults = array(
-			$this->key . '_background_parallax' => $this->section_manager[ $this->key ]['customization']['styling']['background-parallax']['default'],
-		);
-
-		foreach ( $this->section_manager[ $this->key ]['customization']['layout'] as $k => $v ) {
-			$defaults[ $this->key . '_' . str_replace( '-', '_', $k ) ] = $v['default'];
-		}
-
-		$fields = wp_parse_args( $fields, $defaults );
-
-		return $fields;
+		$this->options         = $fields;
 	}
 
 	/**
@@ -69,6 +52,8 @@ class Epsilon_Section_Attr_Helper {
 	 * I know that we can't have more than one IDS on a html tag
 	 *
 	 * @param array $element
+	 *
+	 * @return mixed
 	 */
 	public function id_attribute_generator( $element = array() ) {
 		if ( empty( $element ) ) {
@@ -98,9 +83,11 @@ class Epsilon_Section_Attr_Helper {
 	 *
 	 * @param string $wrap
 	 * @param array  $content
+	 *
+	 * @return string
 	 */
 	private function generate_attribute( $wrap = '', $content = array() ) {
-		$css  = $wrap . '="';
+		$css = $wrap . '="';
 		$css .= esc_attr( implode( ' ', $content ) );
 		$css .= '" ';
 
@@ -112,6 +99,8 @@ class Epsilon_Section_Attr_Helper {
 	 *
 	 * @param string $wrap
 	 * @param array  $content
+	 *
+	 * @return string
 	 */
 	private function generate_style_attribute( $wrap = 'style', $content = array() ) {
 		if ( in_array( 'background-image', $content ) && empty( $this->options[ $this->key . '_background_image' ] ) ) {
@@ -123,7 +112,10 @@ class Epsilon_Section_Attr_Helper {
 			$option = $this->key . '_' . str_replace( '-', '_', $key );
 
 			if ( 'background-position' === $key ) {
-				$this->options[ $option ] = str_replace( array( 'top', 'bottom' ), array( 'top ', 'bottom ' ), $this->options[ $option ] );
+				$this->options[ $option ] = str_replace( array( 'top', 'bottom' ), array(
+					'top ',
+					'bottom '
+				), $this->options[ $option ] );
 			}
 
 			if ( empty( $this->options[ $option ] ) ) {
@@ -142,8 +134,8 @@ class Epsilon_Section_Attr_Helper {
 	/**
 	 * Generate a set of classes to be applied on a section
 	 *
-	 * @param $key
-	 * @param $fields
+	 *
+	 * @return array
 	 */
 	public function generate_section_class() {
 		$additional = array();
@@ -212,6 +204,6 @@ class Epsilon_Section_Attr_Helper {
 			return '';
 		}
 
-		echo $this->generate_html_tag( 'div', $arr );
+		$this->generate_html_tag( 'div', $arr );
 	}
 }

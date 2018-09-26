@@ -271,6 +271,7 @@ export class EpsilonSectionRepeaterRow {
       if ( this.data[ obj.id ].hasOwnProperty( 'linking' ) ) {
         obj = { ...obj, ...{ linking: this.data[ obj.id ].linking } };
       }
+
       switch ( constructor ) {
         case 'SectionRepeaterEditor':
           this.initiated.push(
@@ -284,7 +285,7 @@ export class EpsilonSectionRepeaterRow {
           break;
         case 'SectionRepeaterColorPicker':
           this.initiated.push(
-              new SectionRepeaterColorPicker( obj )
+              new SectionRepeaterColorPicker( { ...obj, ...{ mode: this.data[ obj.id ].mode } } )
           );
           break;
         case 'SectionRepeaterImage':
@@ -511,10 +512,14 @@ export class EpsilonSectionRepeaterRow {
    * Add tabs functionality ( sections have layout/styling optional settings )
    */
   public addTabs() {
-    jQuery( this.container ).find( '[data-group="regular"]' ).wrapAll( '<div data-tab-id="regular" class="tab-panel regular active"></div>' );
-    jQuery( this.container ).find( '[data-group="styling"]' ).wrapAll( '<div data-tab-id="styling" class="tab-panel styling"></div>' );
-    jQuery( this.container ).find( '[data-group="layout"]' ).wrapAll( '<div data-tab-id="layout" class="tab-panel layout"></div>' );
-    jQuery( this.container ).find( '[data-group="colors"]' ).wrapAll( '<div data-tab-id="colors" class="tab-panel colors"></div>' );
+    const groups = [];
+    ! _.isUndefined( this.data.groups ) ? _.each( this.data.groups, ( group, id ) => groups.push( id ) ) : false;
+
+    groups.map( ( e, idx ) => {
+      let active = idx === 0 ? 'active' : '';
+      jQuery( this.container ).find( `[data-group="${e}"]` ).wrapAll( `<div data-tab-id="${e}" class="tab-panel ${e} ${active}"></div>` );
+    } );
+
     this._handleTabs();
   }
 

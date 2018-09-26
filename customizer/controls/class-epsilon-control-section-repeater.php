@@ -30,7 +30,12 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 	 * @var array
 	 */
 	public $choices = array();
-
+	/**
+	 * Field groups
+	 *
+	 * @var array
+	 */
+	public $groups = array();
 	/**
 	 * @since 1.0.0
 	 * @var bool
@@ -103,6 +108,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		$json['value']              = $this->value();
 		$json['sections']           = $this->set_repeatable_sections();
 		$json['integrations']       = $this->check_integrations();
+		$json['groups']             = $this->groups;
 		$json['integrations_count'] = $this->integration_count;
 		$json['default']            = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 		$json['sortable']           = $this->sortable;
@@ -148,7 +154,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 		foreach ( $this->repeatable_sections as $section ) {
 			if ( isset( $section['integration'] ) && $section['integration']['status'] && $section['integration']['check'] ) {
 				$integration = true;
-				$this->integration_count++;
+				$this->integration_count ++;
 			}
 		}
 
@@ -278,20 +284,6 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				$this->repeatable_sections[ $key ]['image'] = EPSILON_URI . '/assets/img/ewf-icon-section-default.png';
 			}
 
-			if ( ! isset( $this->repeatable_sections[ $key ]['customization'] ) ) {
-				$this->repeatable_sections[ $key ]['customization'] = array();
-			}
-
-			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args( $this->repeatable_sections[ $key ]['customization'], array(
-				'enabled' => false,
-				'styling' => array(),
-				'layout'  => array(),
-				'colors'  => array(),
-			) );
-
-			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->repeater_helper->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
-			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->repeater_helper->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
-			$this->repeatable_sections[ $key ]['customization']['colors']  = $this->repeater_helper->create_color_fields( $this->repeatable_sections[ $key ]['customization']['colors'], $key );
 		} // End foreach().
 
 		return $this->repeatable_sections;
@@ -420,7 +412,6 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 							<a href="#">Hello World</a>
 							<span class="epsilon-section-ribbon">PRO only</span>
 							<# } #>
-							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
 						</div>
 						<# } #>
 						<# } #>
@@ -449,7 +440,6 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 							<a href="#">Hello World</a>
 							<span class="epsilon-section-ribbon">PRO only</span>
 							<# } #>
-							<input type="hidden" value="{{ temp }}" data-customization="{{ data.sections[section].customization.enabled }}" />
 						</div>
 						<# } #>
 						<# } #>

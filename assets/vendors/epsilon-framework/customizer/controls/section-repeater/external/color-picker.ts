@@ -25,7 +25,7 @@ export default class SectionRepeaterColorPicker {
           changeDelay: 500,
           theme: 'default',
           change: this.changePallete,
-          format: 'rgb',
+          format: this.props.mode === 'rgba' ? 'rgb' : 'hex',
           opacity: true,
         };
 

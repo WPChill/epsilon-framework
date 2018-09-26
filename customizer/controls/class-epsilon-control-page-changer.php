@@ -260,23 +260,6 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 			if ( ! isset( $this->repeatable_sections[ $key ]['image'] ) ) {
 				$this->repeatable_sections[ $key ]['image'] = EPSILON_URI . '/assets/img/ewf-icon-section-default.png';
 			}
-
-			if ( ! isset( $this->repeatable_sections[ $key ]['customization'] ) ) {
-				$this->repeatable_sections[ $key ]['customization'] = array();
-			}
-
-			$this->repeatable_sections[ $key ]['customization'] = wp_parse_args(
-				$this->repeatable_sections[ $key ]['customization'], array(
-					'enabled' => false,
-					'styling' => array(),
-					'layout'  => array(),
-					'colors'  => array(),
-				)
-			);
-
-			$this->repeatable_sections[ $key ]['customization']['styling'] = $this->repeater_helper->create_styling_fields( $this->repeatable_sections[ $key ]['customization']['styling'], $key );
-			$this->repeatable_sections[ $key ]['customization']['layout']  = $this->repeater_helper->create_layout_fields( $this->repeatable_sections[ $key ]['customization']['layout'], $key );
-			$this->repeatable_sections[ $key ]['customization']['colors']  = $this->repeater_helper->create_color_fields( $this->repeatable_sections[ $key ]['customization']['colors'], $key );
 		} // End foreach().
 
 		return $this->repeatable_sections;
