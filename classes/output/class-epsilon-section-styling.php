@@ -61,6 +61,10 @@ class Epsilon_Section_Styling {
 		}
 
 		foreach ( $frontpage->sections as $index => $section ) {
+			if ( ! isset( $this->manager->sections[ $section['type'] ] ) ) {
+				continue;
+			}
+
 			$text    = $this->preg_grep_keys( '/_text_color/', $section );
 			$heading = $this->preg_grep_keys( '/_heading_color/', $section );
 			$others  = $this->preg_grep_keys( '/_misc_font_color/', $section );
@@ -78,9 +82,8 @@ class Epsilon_Section_Styling {
 			}
 
 			if ( ! empty( $text ) ) {
-				$key = array_keys( $text );
-				$key = reset( $key );
-
+				$key      = array_keys( $text );
+				$key      = reset( $key );
 				$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $key ];
 
 				$this->options[ $index ][] = array(
