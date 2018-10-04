@@ -111,6 +111,26 @@ export default class SectionRepeaterMarginsPaddings {
   }
 
   /**
+   * equalize toggler
+   */
+  private _toggler = false;
+
+  /**
+   * Toggle setter
+   */
+  set toggler( state: boolean ) {
+    this._toggler = state;
+    jQuery( '.epsilon-spacing-section > .epsilon-equalizer' ).toggleClass( 'active' );
+  }
+
+  /**
+   * Toggle getter
+   */
+  get toggler() {
+    return this._toggler;
+  }
+
+  /**
    * Main constructor
    * @param obj
    */
@@ -121,7 +141,7 @@ export default class SectionRepeaterMarginsPaddings {
 
     this.isJson( this.props.value )
         ? this.setInitialValues()
-        : this.init();
+        : this.init( true );
   }
 
   /**
@@ -133,20 +153,24 @@ export default class SectionRepeaterMarginsPaddings {
       if ( this.value.hasOwnProperty( key ) ) {
         this[ key ] = values[ key ];
         this.props.container.find( `.epsilon-additional-controls > a[data-additional="${this.unit}"]` ).addClass( 'selected' );
-        this.props.container.find( `.epsilon-control-group > input[data-target="${key}"]` ).val( values[ key ] );
+        this.props.container.find( `.epsilon-spacing-section > input[data-target="${key}"]` ).val( values[ key ] );
       }
     }
 
-    this.init();
+    this.init( false );
   }
 
   /**
    * Initiator
    */
-  public init() {
-    this.props.container.on( 'keyup', '.epsilon-control-group > input', _.debounce( e => this._handleValueChange( e ), 300 ) );
-    this.props.container.on( 'click', '.epsilon-control-group > .epsilon-equalizer', e => this._equalizeInputs() );
+  public init( defaultUnit: boolean ) {
+    this.props.container.on( 'change', '.epsilon-spacing-section > input', e => this._handleValueChange( e ) );
+    this.props.container.on( 'click', '.epsilon-spacing-section > .epsilon-equalizer', e => this._togglerClicked() );
     this.props.container.on( 'click', '.epsilon-additional-controls > a', e => this._setUnit( e ) );
+
+    if ( defaultUnit ) {
+      this.props.container.find( `.epsilon-additional-controls > a[data-additional="${this.unit}"]` ).addClass( 'selected' );
+    }
   }
 
   /**
@@ -172,7 +196,36 @@ export default class SectionRepeaterMarginsPaddings {
       this[ property ] = e.target.value;
     }
 
+    if ( this.toggler ) {
+      this._equalizeValues( e.target.value );
+    }
+
     this.input.val( JSON.stringify( this.value ) ).trigger( 'change' );
+  }
+
+  /**
+   * Equalize section margins/paddings
+   * @private
+   */
+  private _togglerClicked() {
+    this.toggler
+        ? this.toggler = false
+        : this._equalizeInputs();
+  }
+
+  /**
+   * Equalizez values
+   * @param value
+   * @private
+   */
+  private _equalizeValues( value ) {
+    for ( let key in this.value ) {
+      if ( 'unit' === key ) {
+        continue;
+      }
+      this[ key ] = value;
+      this.props.container.find( `.epsilon-spacing-section > input[data-target="${key}"]` ).val( value );
+    }
   }
 
   /**
@@ -200,8 +253,10 @@ export default class SectionRepeaterMarginsPaddings {
         continue;
       }
       this[ key ] = max;
-      this.props.container.find( `.epsilon-control-group > input[data-target="${key}"]` ).val( max ).trigger( 'keyup' );
+      this.props.container.find( `.epsilon-spacing-section > input[data-target="${key}"]` ).val( max ).trigger( 'change' );
     }
+
+    this.toggler = true;
   }
 
   /**

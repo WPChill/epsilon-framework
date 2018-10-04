@@ -160,10 +160,10 @@ class Epsilon_Repeater_Templates {
 		</label>
 		<div class="epsilon-control-set epsilon-margin-paddings">
 			<div class="epsilon-additional-controls">
-				<a href="#" data-additional="PX">PX</a>
-				<a href="#" data-additional="EM">EM</a>
-				<a href="#" data-additional="REM">REM</a>
-				<a href="#" data-additional="PERCENT">%</a>
+				<a href="#" data-additional="px">PX</a>
+				<a href="#" data-additional="em">EM</a>
+				<a href="#" data-additional="rem">REM</a>
+				<a href="#" data-additional="percent">%</a>
 			</div>
 			<div class="epsilon-control-group epsilon-group-five">
 				<div class="epsilon-spacing-section">
