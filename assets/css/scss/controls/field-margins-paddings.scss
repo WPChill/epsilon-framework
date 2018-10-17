@@ -56,6 +56,32 @@
 			color: #555d66;
 		}
 
+		.epsilon-equalizer {
+			width: 100%;
+		    height: 26px;
+		    display: block;
+		    border: 1px solid #ddd;
+		    box-shadow: none;
+
+		    &:focus {
+		    	box-shadow: none;
+		    }
+
+		    .dashicons {
+		    	border: 0 none;
+    			background: transparent;
+    			line-height: 28px;
+		    }
+
+		    &.active {
+		    	box-shadow: none;
+		    	.dashicons {
+		    		box-shadow: inset 0 3px 0px #57a7c9, inset 2px 0px 5px 0px rgba(0, 0, 0, 0.05), inset -2px 0px 5px 0px rgba(0, 0, 0, 0.05);
+   					 -webkit-box-shadow: inset 0 3px 0px #57a7c9, inset 2px 0px 5px 0px rgba(0, 0, 0, 0.05), inset -2px 0px 5px 0px rgba(0, 0, 0, 0.05);
+		    	}
+		    }
+		}
+
 	}
 
 	.epsilon-link-spacing-section {

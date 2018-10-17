@@ -286,6 +286,7 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 
 		} // End foreach().
 
+
 		return $this->repeatable_sections;
 	}
 
@@ -409,8 +410,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 								<i class="fa fa-question" aria-hidden="true"></i>
 							</button>
 							<# if ( data.sections[section].upsell ) { #>
-							<a href="#">Hello World</a>
-							<span class="epsilon-section-ribbon">PRO only</span>
+								<# if ( data.sections[section].upsell_text && data.sections[section].upsell_url ) { #>
+								<a href="{{ data.sections[section].upsell_url }}">{{ data.sections[section].upsell_text }}</a>
+								<# } #>
+								<span class="epsilon-section-ribbon">PRO only</span>
 							<# } #>
 						</div>
 						<# } #>
@@ -437,8 +440,10 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 								<i class="fa fa-question" aria-hidden="true"></i>
 							</button>
 							<# if ( data.sections[section].upsell ) { #>
-							<a href="#">Hello World</a>
-							<span class="epsilon-section-ribbon">PRO only</span>
+								<# if ( data.sections[section].upsell_text && data.sections[section].upsell_url ) { #>
+								<a href="{{ data.sections[section].upsell_url }}">{{ data.sections[section].upsell_text }}</a>
+								<# } #>
+								<span class="epsilon-section-ribbon">PRO only</span>
 							<# } #>
 						</div>
 						<# } #>

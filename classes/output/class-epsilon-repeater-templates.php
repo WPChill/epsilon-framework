@@ -241,15 +241,19 @@ class Epsilon_Repeater_Templates {
 	public static function select_field() { ?>
 		<label>
 			<# if ( field.label ) { #>
-			<span class="customize-control-title">{{ field.label }}</span>
+			<span class="customize-control-title">
+				{{ field.label }}
+
+				<# if( field.description ){ #>
+				<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+				</i>
+				<# } #>
+			</span>
 			<# } #>
-			<# if( field.description ){ #>
-			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-					<span class="mte-tooltip">
-						{{{ field.description }}}
-					</span>
-			</i>
-			<# } #>
+			
 			<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
 			<# _.each( field.choices, function( choice, i ) { #>
 			<# if( field.multiple ) { #>

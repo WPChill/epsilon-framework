@@ -186,6 +186,9 @@
 				border-bottom: 1px solid $repeater_row_nav_tab_border;
 				text-align: left;
 				box-sizing: border-box;
+				width: 110%;
+				display: flex;
+				
 				a {
 					color: $repeater_row_text_color;
 					box-sizing: border-box;
@@ -231,6 +234,18 @@
 			.customize-control-title {
 				padding: initial;
 				font-size: 13px;
+			}
+
+			.repeater-field-select {
+				label {
+					display: block;
+					
+					&::after {
+						display:block;
+						content: "";
+						clear: both;
+					}
+				}
 			}
 		}
 		.repeater-row-footer {

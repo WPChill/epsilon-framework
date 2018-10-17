@@ -151,12 +151,6 @@ class Epsilon_Section_Attr_Helper {
 		if ( ! empty( $this->options[ $this->key . '_column_alignment' ] ) ) {
 			$additional[] = 'ewf-text-align--' . $this->options[ $this->key . '_column_alignment' ];
 		}
-		if ( ! empty( $this->options[ $this->key . '_row_spacing_top' ] ) ) {
-			$additional[] = 'ewf-section--spacing-' . $this->options[ $this->key . '_row_spacing_top' ] . '-top';
-		}
-		if ( ! empty( $this->options[ $this->key . '_row_spacing_bottom' ] ) ) {
-			$additional[] = 'ewf-section--spacing-' . $this->options[ $this->key . '_row_spacing_bottom' ] . '-bottom';
-		}
 		if ( ! empty( $this->options[ $this->key . '_background_parallax' ] ) && 'false' !== $this->options[ $this->key . '_background_parallax' ] ) {
 			$additional[] = 'ewf-section--parallax';
 		}

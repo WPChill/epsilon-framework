@@ -218,6 +218,12 @@ body.wp-customizer {
 	-moz-box-shadow: 0 0 4px rgba(0, 0, 0, .06);
 	box-shadow: 0 0 4px rgba(0, 0, 0, .06);
 	height: 35px;
+
+	&:after {
+		content: "";
+		display: block;
+		clear:both;
+	}
 }
 
 .epsilon-control-group a {
@@ -278,6 +284,13 @@ body.wp-customizer {
 	a, input {
 		width: 50%;
 		display: inline-block;
+	}
+}
+
+.epsilon-control-group {
+	> a {
+		float: left;
+		display: block;
 	}
 }
 
