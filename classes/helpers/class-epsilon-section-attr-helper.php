@@ -199,6 +199,10 @@ class Epsilon_Section_Attr_Helper {
 			return '';
 		}
 
+		if ( 'bgcolor' == $this->options['about_background_type'] ) {
+			return '';
+		}
+
 		$this->generate_html_tag( 'div', $arr );
 	}
 }
