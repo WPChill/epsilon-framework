@@ -124,6 +124,8 @@ class Epsilon_Section_Attr_Helper {
 
 			$key = 'background-color-opacity' === $key ? 'opacity' : $key;
 
+			$key = 'background-image-color' === $key ? 'background-color' : $key;
+
 			$css .= 'background-image' === $key ? $key . ':url(' . esc_url( $this->options[ $option ] ) . ');' : $key . ':' . esc_attr( $this->options[ $option ] ) . ';';
 		}
 		$css .= '" ';
@@ -189,12 +191,11 @@ class Epsilon_Section_Attr_Helper {
 		$arr = array(
 			'class' => array( 'ewf-section__overlay-color' ),
 			'style' => array(
-				'background-color',
-				'background-color-opacity',
+				'background-image-color',
 			),
 		);
 
-		if ( empty( $this->options[ $this->key . '_background_color' ] ) ) {
+		if ( empty( $this->options[ $this->key . '_background_image_color' ] ) ) {
 			return '';
 		}
 
