@@ -45,6 +45,12 @@ class Epsilon_Typography {
 	protected $handler = null;
 
 	/**
+	 * Defaults
+	 * @var array|mixed
+	 */
+	protected $defaults = array();
+
+	/**
 	 * Epsilon_Typography constructor.
 	 *
 	 * @param array $args
@@ -57,8 +63,8 @@ class Epsilon_Typography {
 	 * defined as typography. After this, the inline scripts are enqueued.
 	 */
 	public function __construct( $args = array(), $handler = null ) {
-		$this->handler = $handler;
-		$this->options = $this->get_option( $args );
+		$this->handler  = $handler;
+		$this->options  = $this->get_option( $args );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 

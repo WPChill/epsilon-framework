@@ -194,9 +194,9 @@ export class EpsilonTypography {
               value: 0,
               id: '',
               sliderControls: {
-                min: 0,
-                max: 10,
-                step: 1
+                min: parseFloat( jQuery( element ).find( '.ss-slider' ).attr( 'data-attr-min' ) ),
+                max: parseFloat( jQuery( element ).find( '.ss-slider' ).attr( 'data-attr-max' ) ),
+                step: parseFloat( jQuery( element ).find( '.ss-slider' ).attr( 'data-attr-step' ) )
               }
             }
           };
@@ -205,23 +205,14 @@ export class EpsilonTypography {
         case 'letter-spacing':
           sliderSettings.params.value = self.control.params.inputs[ 'letter-spacing' ];
           sliderSettings.params.id = self.control.params.id + '-letter-spacing';
-          sliderSettings.params.sliderControls.min = 0;
-          sliderSettings.params.sliderControls.max = 5;
-          sliderSettings.params.sliderControls.step = 0.1;
           break;
         case 'line-height':
           sliderSettings.params.value = self.control.params.inputs[ 'line-height' ];
           sliderSettings.params.id = self.control.params.id + '-line-height';
-          sliderSettings.params.sliderControls.min = 0;
-          sliderSettings.params.sliderControls.max = 40;
-          sliderSettings.params.sliderControls.step = 1;
           break;
         default:
           sliderSettings.params.value = self.control.params.inputs[ 'font-size' ];
           sliderSettings.params.id = self.control.params.id + '-font-size';
-          sliderSettings.params.sliderControls.min = 0;
-          sliderSettings.params.sliderControls.max = 40;
-          sliderSettings.params.sliderControls.step = 1;
           break;
       }
 

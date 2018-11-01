@@ -393,7 +393,7 @@ body.wp-customizer {
 		right: 0;
 		opacity: 0;
 		content: '';
-		z-index: 10000;
+		z-index: 100000;
 		background: #fff;
 		visibility: hidden;
 		-webkit-transition: all .3s;
@@ -407,7 +407,7 @@ body.wp-customizer {
 	transition: all .3s;
 	&:before {
 		position: absolute;
-		z-index: 10001;
+		z-index: 100001;
 		background-image: url('/wp-admin/images/spinner.gif');
 		width: 20px;
 		height: 20px;

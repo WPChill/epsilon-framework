@@ -62,7 +62,7 @@ class Epsilon_Ajax_Controller {
 				)
 			);
 		}
-		
+
 		$method = $args_action[1];
 
 		if ( 'generate_partial_section' === $method ) {
@@ -99,10 +99,13 @@ class Epsilon_Ajax_Controller {
 		);
 	}
 
+
 	/**
-	 * Sanitize arguments
+	 * Sanitizes arguments
 	 *
 	 * @param $args
+	 *
+	 * @return array|string
 	 */
 	public static function sanitize_arguments( $args ) {
 		if ( is_array( $args ) ) {
@@ -113,23 +116,34 @@ class Epsilon_Ajax_Controller {
 	}
 
 	/**
-	 * Sanitize class name
+	 * Sanitizes class names
 	 *
-	 * @param $args
+	 * @param $class
+	 *
+	 * @return bool
 	 */
 	public static function sanitize_class_name( $class ) {
-		$allowed_classes = array( 'Epsilon_Helper', 'Epsilon_Notify_System', 'Epsilon_Page_Generator', 'Epsilon_Typography', 'Epsilon_Color_Scheme', 'Epsilon_Notifications' );
+		$allowed_classes = array(
+			'Epsilon_Helper',
+			'Epsilon_Notify_System',
+			'Epsilon_Page_Generator',
+			'Epsilon_Typography',
+			'Epsilon_Color_Scheme',
+			'Epsilon_Notifications'
+		);
 		if ( in_array( $class, $allowed_classes ) ) {
 			return $class;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
 	/**
-	 * Sanitize arguments for output
+	 * Sanitizes arguments for output
 	 *
 	 * @param $args
+	 *
+	 * @return array|string
 	 */
 	public static function sanitize_arguments_for_output( $args ) {
 		if ( is_array( $args ) ) {

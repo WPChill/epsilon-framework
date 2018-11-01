@@ -120,7 +120,7 @@ export default class SectionRepeaterMarginsPaddings {
    */
   set toggler( state: boolean ) {
     this._toggler = state;
-    jQuery( '.epsilon-spacing-section > .epsilon-equalizer' ).toggleClass( 'active' );
+    this.props.container.find( '.epsilon-spacing-section > .epsilon-equalizer' ).toggleClass( 'active' );
   }
 
   /**

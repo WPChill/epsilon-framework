@@ -46,7 +46,12 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 	 * @var int
 	 */
 	public $styleHelper = 'full';
-
+	/**
+	 * Ranges
+	 *
+	 * @var array
+	 */
+	public $ranges = array();
 	/**
 	 * @since  1.2.0
 	 * @access public
@@ -78,6 +83,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$json['link']         = $this->get_link();
 		$json['value']        = $this->value();
 		$json['choices']      = $this->choices;
+		$json['ranges']       = $this->set_ranges();
 		$json['default']      = $this->default;
 		$json['fontDefaults'] = $this->set_font_defaults();
 		$json['inputs']       = $this->get_values( $this->id );
@@ -113,6 +119,28 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 		$json['styleHelper'] = $arr[ $i ];
 
 		return $json;
+	}
+
+	public function set_ranges(){
+		$defaults = array(
+			'font-size'      => array(
+				'min'  => 0,
+				'max'  => 100,
+				'step' => 5,
+			),
+			'line-height'    => array(
+				'min'  => 0,
+				'max'  => 100,
+				'step' => 5,
+			),
+			'letter-spacing' => array(
+				'min'  => 0,
+				'max'  => 5,
+				'step' => 0.1,
+			)
+		);
+
+		return wp_parse_args($this->ranges, $defaults);
 	}
 
 	/**
@@ -300,7 +328,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						</label>
 						<div class="slider-container" data-slider-type="font-size">
 							<input data-default-font-size="{{{ data.fontDefaults[data.id]['font-size'] }}}" type="text" class="epsilon-typography-input rl-slider" id="{{{ data.id }}}-font-size" value="{{{ data.inputs['font-size'] }}}"/>
-							<div id="slider_{{{ data.id }}}-font-size" data-attr-min="0" data-attr-max="100" data-attr-step="5" class="ss-slider"></div>
+							<div id="slider_{{{ data.id }}}-font-size" data-attr-min="{{{ data.ranges['font-size']['min'] }}}" data-attr-max="{{{ data.ranges['font-size']['max'] }}}" data-attr-step="{{{ data.ranges['font-size']['step'] }}}" class="ss-slider"></div>
 						</div>
 					<# } #>
 					<# if( _.contains( data.choices, 'line-height' ) ) { #>
@@ -309,7 +337,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						</label>
 						<div class="slider-container" data-slider-type="line-height">
 							<input data-default-line-height="{{{ data.fontDefaults[data.id]['line-height'] }}}" type="text" class="epsilon-typography-input rl-slider" id="{{{ data.id }}}-line-height" value="{{{ data.inputs['line-height'] }}}"/>
-							<div id="slider_{{{ data.id }}}-line-height" data-attr-min="0" data-attr-max="100" data-attr-step="5" class="ss-slider"></div>
+							<div id="slider_{{{ data.id }}}-line-height" data-attr-min="{{{ data.ranges['line-height']['min'] }}}" data-attr-max="{{{ data.ranges['line-height']['max'] }}}" data-attr-step="{{{ data.ranges['line-height']['step'] }}}" class="ss-slider"></div>
 						</div>
 					<# } #>
 					<# if( _.contains( data.choices, 'letter-spacing' ) ) { #>
@@ -318,7 +346,7 @@ class Epsilon_Control_Typography extends WP_Customize_Control {
 						</label>
 						<div class="slider-container" data-slider-type="letter-spacing">
 							<input data-default-letter-spacing="{{{ data.fontDefaults[data.id]['letter-spacing'] }}}" type="text" class="epsilon-typography-input rl-slider" id="{{{ data.id }}}-letter-spacing" value="{{{ data.inputs['letter-spacing'] }}}"/>
-							<div id="slider_{{{ data.id }}}-letter-spacing" data-attr-min="0" data-attr-max="50" data-attr-step="0.1" class="ss-slider"></div>
+							<div id="slider_{{{ data.id }}}-letter-spacing" data-attr-min="{{{ data.ranges['letter-spacing']['min'] }}}" data-attr-max="{{{ data.ranges['letter-spacing']['max'] }}}" data-attr-step="{{{ data.ranges['letter-spacing']['step'] }}}" class="ss-slider"></div>
 						</div>
 					<# } #>
 				</div>

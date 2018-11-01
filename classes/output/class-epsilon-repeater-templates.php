@@ -253,7 +253,7 @@ class Epsilon_Repeater_Templates {
 				<# } #>
 			</span>
 			<# } #>
-			
+
 			<select data-field="{{{ field.id }}}"<# if ( ! _.isUndefined( field.multiple ) && false !== field.multiple ) { #> multiple="multiple" data-multiple="{{ field.multiple }}"<# } #>>
 			<# _.each( field.choices, function( choice, i ) { #>
 			<# if( field.multiple ) { #>
@@ -466,7 +466,7 @@ class Epsilon_Repeater_Templates {
 	 */
 	public static function epsilon_picker() { ?>
 		<label>
-			<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" maxlength="7" placeholder="{{ field.default }}" value="{{ field.default }}" />
+			<input class="epsilon-color-picker" data-attr-mode={{ field.mode }} data-field={{ field.id }} type="text" placeholder="{{ field.default }}" value="{{ field.default }}" />
 			<span class="customize-control-title epsilon-color-picker-title">
 				{{{ field.label }}}
 				<a href="#" data-default="{{ field.defaultVal }}" class="epsilon-color-picker-default"><?php echo esc_html__( '(clear)', 'epsilon-framework' ); ?></a>
