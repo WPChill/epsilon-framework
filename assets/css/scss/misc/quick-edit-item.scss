@@ -1,55 +1,57 @@
 .epsilon-button-control-group {
+	background: #0085ba;
+	border-radius: 30px;
 	display: inline-block;
-	line-height: 20px;
 	position: absolute;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
+	left: 50%;
+	top: 0;
+	transform: translateX(-50%);
 	z-index: 100;
-	top: 4px;
-	height: 100%;
-	opacity: .15;
-	border-radius: 15px;
+	box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.15);
+	animation: appear 0.8s cubic-bezier(1,.05,0,1.36);
 
+	a {
+		transition: all 0.2s ease-in-out;
+		position: relative;
+		display: inline-block;
 
-	&:hover {
-		opacity: 1;
+		&:last-of-type {
+			border-top-right-radius: inherit;
+			border-bottom-right-radius: inherit;
+			padding-right: 12px;
+		}
+
+		&:first-of-type {
+			padding-left: 12px;
+			border-top-left-radius: inherit;
+			border-bottom-left-radius: inherit;
+		}
+
+	 	&:hover,
+		&:focus {
+			background: #046d9d;
+			box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.2);
+
+			&.epsilon-field-repeater-delete-item {
+				background-color: #f86046;
+			}
+		}
 	}
 
-
-	.epsilon-control-button {
-		display: inline-block;
-		background-color: #0085ba;
+	.dashicons {
+		font-size: 18px;
+		padding: 8px 5px;
+		transition: all 0.2s ease-in-out;
 		color: #fff;
-		padding: 0 3px;
-		border: 1px solid #fff;
-		-webkit-box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
-		box-shadow: 0 2px 1px rgba(46, 68, 83, .15);
+		position: relative;
+	}
 
-		&.epsilon-control-button-edit {
-			background: #0085ba;
-			border-right: none;
-			border-top-left-radius: 15px;
-			border-bottom-left-radius: 15px;
+	a:hover .dashicons {
+		padding: 8px 8px;
+	}
 
-			&:hover {
-				background: #00a6d0;
-				color:#fff;
-			}
-		}
-
-		&.epsilon-control-button-delete {
-			background: #F86046;
-			border-left: none;
-			border-top-right-radius: 15px;
-			border-bottom-right-radius: 15px;
-
-			&:hover {
-				background: #F83921;
-				color:#fff;
-			}
-		}
+	a:active .dashicons{
+		top: 1px;
 	}
 }
 
