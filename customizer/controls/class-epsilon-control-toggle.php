@@ -57,8 +57,8 @@ class Epsilon_Control_Toggle extends WP_Customize_Control {
 	public function content_template() {
 		//@formatter:off
 		?>
-		<div class="checkbox_switch">
-			<span class="customize-control-title onoffswitch_label">
+		<div class="epsilon-toggle-control">
+			<span class="customize-control-title epsilon-toggle-control__title">
 				{{{ data.label }}}
 				<# if( data.description ){ #>
 					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
@@ -68,10 +68,17 @@ class Epsilon_Control_Toggle extends WP_Customize_Control {
 					</i>
 				<# } #>
 			</span>
-			<div class="onoffswitch">
-				<input type="checkbox" id="{{{ data.id }}}" name="{{{ data.id }}}" class="onoffswitch-checkbox" value="{{{ data.value }}}" {{{ data.link }}} <# if( data.value ) { #> checked="checked" <# } #> >
-				<label class="onoffswitch-label" for="{{{ data.id }}}"></label>
+
+			<div class="epsilon-toggle">
+				<input class="epsilon-toggle__input" type="checkbox" id="{{{ data.id }}}" name="{{{ data.id }}}" value="{{{ data.value }}}" {{{ data.link }}} <# if( data.value ) { #> checked="checked" <# } #> >
+				<div class="epsilon-toggle__items">
+					<span class="epsilon-toggle__track"></span>
+					<span class="epsilon-toggle__thumb"></span>
+					<svg class="epsilon-toggle__off" width="6" height="6" aria-hidden="true" role="img" focusable="false" viewBox="0 0 6 6"><path d="M3 1.5c.8 0 1.5.7 1.5 1.5S3.8 4.5 3 4.5 1.5 3.8 1.5 3 2.2 1.5 3 1.5M3 0C1.3 0 0 1.3 0 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"></path></svg>
+					<svg class="epsilon-toggle__on" width="2" height="6" aria-hidden="true" role="img" focusable="false" viewBox="0 0 2 6"><path d="M0 0h2v6H0z"></path></svg>
+				</div>
 			</div>
+
 		</div>
 		<?php
 		//@formatter:on
