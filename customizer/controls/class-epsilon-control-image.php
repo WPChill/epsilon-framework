@@ -99,6 +99,7 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 				<# } #>
 			</span>
 		</label>
+
 		<div class="epsilon-controller-image-container image-upload">
 			<input type="hidden" id="{{ data.id }}" {{{ data.link }}}  <# if ( '' !== data.stringifiedVal ) { #> value="{{ data.stringifiedVal }}" <# } #> />
 			<# if ( ! _.isEmpty( data.value ) && data.value.url ) { #>
@@ -109,21 +110,21 @@ class Epsilon_Control_Image extends WP_Customize_Control {
 			<div class="placeholder">
 				<?php echo esc_html__( 'Upload image', 'epsilon-framework' ); ?>
 				<# if ( ! _.isUndefined( data.sizeArray[data.size] ) ) { #>
-					<span class="recommended-size"><?php echo esc_html__('Recommended resolution:', 'epsilon-framework'); ?> {{{ data.sizeArray[data.size].width }}} x {{{ data.sizeArray[data.size].height }}}</span>
+					<span class="recommended-size"><?php echo esc_html__( 'Recommended resolution:', 'epsilon-framework' ); ?> {{{ data.sizeArray[data.size].width }}} x {{{ data.sizeArray[data.size].height }}}</span>
 				<# } #>
 			</div>
 			<# } #>
 			<div class="actions">
-				<button class="button image-upload-remove-button" <# if( '' === data.stringifiedVal ) { #> style="display:none;" <# } #>>
-					<i class="dashicons dashicons-trash"></i>
-				</button>
-
-				<button type="button" class="button-secondary image-default-button" <# if ( _.isEmpty( data.default ) ) { #> style="display:none;" <# } #>>
+				<button class="button-secondary image-default-button" <# if ( _.isEmpty( data.default ) ) { #> style="display:none;" <# } #>>
 					<?php echo esc_html__( 'Default', 'epsilon-framework' ); ?>
 				</button>
 
-				<button type="button" class="button-primary image-upload-button">
-					<?php echo esc_html__( 'Select File', 'epsilon-framework' ); ?>
+				<button class="button-secondary image-replace-button" <# if( '' === data.stringifiedVal ) { #> style="display:none;" <# } #>>
+					<?php echo esc_html__( 'Replace Image', 'epsilon-framework' ); ?>
+				</button>
+
+				<button class="button-secondary image-remove-button" <# if( '' === data.stringifiedVal ) { #> style="display:none;" <# } #>>
+					<?php echo esc_html__( 'Remove', 'epsilon-framework' ); ?>
 				</button>
 			</div>
 		</div>

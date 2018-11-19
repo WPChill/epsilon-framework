@@ -388,13 +388,12 @@ class Epsilon_Repeater_Templates {
 			</div>
 			<# } #>
 			<div class="actions">
-				<button class="button image-upload-remove-button"
-				<# if( '' === field.default ) { #> style="display:none;" <# } #>>
-				<i class="dashicons dashicons-trash"></i>
+				<button class="button-secondary image-replace-button" <# if( '' === field.default ) { #> style="display:none;" <# } #>>
+					<?php echo esc_html__( 'Replace Image', 'epsilon-framework' ); ?>
 				</button>
 
-				<button type="button" class="button-primary image-upload-button">
-					<?php echo esc_html__( 'Select File', 'epsilon-framework' ); ?>
+				<button class="button-secondary image-remove-button" <# if( '' === field.default ) { #> style="display:none;" <# } #>>
+					<?php echo esc_html__( 'Remove Image', 'epsilon-framework' ); ?>
 				</button>
 			</div>
 		</div>

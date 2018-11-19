@@ -1,45 +1,45 @@
 .epsilon-controller-image-container {
+
 	.placeholder {
 		width: 100%;
 		position: relative;
 		text-align: center;
-		cursor: default;
-		border: 1px dashed #b4b9be;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
+		cursor: pointer;
+		border: 1px dashed #a2aab2;
 		box-sizing: border-box;
-		padding: 6px 0;
+		padding: 8px 0;
 		line-height: 20px;
 		min-height: 40px;
-		margin-bottom: 6px;
+		margin-bottom: 1em;
+		background-color: #edeff0;
+		color: #000;
+		transition: all .1s ease-out;
+
+		&:hover {
+			background-color: #f8f9f9;
+		}
+
 		.recommended-size {
 			display: block;
-			font-style: italic;
 		}
 	}
+
 	.epsilon-image {
-		border: 1px dashed #eee;
-		padding: 6px;
-		margin-bottom: 6px;
+		margin-bottom: 1em;
 		min-height: 40px;
+		cursor: pointer;
+
 		img {
 			width: 100%;
 			display: block;
 		}
 	}
+
 	.actions {
-		display: block;
 		text-align: center;
-		padding-bottom: 1px;
-		.image-upload-button,
-		.image-default-button {
-			margin: 0;
-			display: inline-block;
-			min-width: 30%;
-		}
-		.image-upload-remove-button {
-			margin: 0;
-			display: inline-block;
-		}
+		padding-bottom: 10px;
+	 	display: flex;
+		justify-content: space-between;
 	}
+
 }

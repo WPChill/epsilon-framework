@@ -29,7 +29,8 @@ export default class RepeaterImage {
     /**
      * Image controls - Upload
      */
-    this.container.on( 'click keypress', '.image-upload-button', ( e: JQueryEventConstructor ) => {
+    this.container.on( 'click keypress', '.placeholder, .epsilon-image, .image-replace-button', ( e: JQueryEventConstructor ) => {
+
       e.preventDefault();
       if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
         return;
@@ -41,7 +42,7 @@ export default class RepeaterImage {
     /**
      * Image Controls - Removal
      */
-    this.container.on( 'click keypress', '.image-upload-remove-button', ( e: JQueryEventConstructor ) => {
+	this.container.on( 'click keypress', '.image-remove-button', ( e: JQueryEventConstructor ) => {
       e.preventDefault();
 
       if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
@@ -94,8 +95,10 @@ export default class RepeaterImage {
       val = ('url' === input.attr( 'data-save-mode' )) ? setting.url : setting.id;
       input.val( val );
 
-      this._setImage( setting.url );
-      this.container.find( '.actions .image-upload-remove-button' ).show();
+	  this._setImage( setting.url );
+
+	  this.container.find( '.actions .image-replace-button' ).show();
+	  this.container.find( '.actions .image-remove-button' ).show();
 
       jQuery( '#epsilon-image-size-selector' ).detach();
     } );
@@ -132,7 +135,9 @@ export default class RepeaterImage {
       } );
     }
 
-    this.container.find( '.actions .image-upload-remove-button' ).hide();
+	this.container.find( '.actions .image-replace-button' ).hide();
+	this.container.find( '.actions .image-remove-button' ).hide();
+
     this.container.find( 'input' ).attr( 'value', '' ).trigger( 'change' );
   }
 

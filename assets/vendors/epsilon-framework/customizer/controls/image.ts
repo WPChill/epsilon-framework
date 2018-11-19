@@ -43,7 +43,7 @@ export class EpsilonImage {
     /**
      * Image selection
      */
-    this.context.on( 'click', '.image-upload-button', function( e: Event ) {
+	this.context.on( 'click', '.placeholder, .epsilon-image, .image-replace-button', function( e: Event ) {
       /**
        * Open the wp.media frame
        */
@@ -71,7 +71,9 @@ export class EpsilonImage {
         /**
          * Show buttons
          */
-        self.context.find( '.actions .image-upload-remove-button' ).show();
+		self.context.find( '.actions .image-replace-button' ).show();
+		self.context.find( '.actions .image-remove-button' ).show();
+
         if ( ! _.isEmpty( self.control.params.default ) ) {
           self.context.find( '.actions .image-default-button' ).show();
         }
@@ -81,7 +83,7 @@ export class EpsilonImage {
     /**
      * Image deletion
      */
-    this.context.on( 'click', '.image-upload-remove-button', function( e: Event ) {
+	this.context.on( 'click', '.image-remove-button', function( e: Event ) {
       e.preventDefault();
       thumb = self.context.find( '.epsilon-image' );
       self.saveValue( { id: '', url: '' } );
@@ -110,7 +112,9 @@ export class EpsilonImage {
       /**
        * If we don`t have an image, we can hide these buttons
        */
-      jQuery( e.target ).hide();
+	  jQuery( e.target ).hide();
+	  self.context.find( '.actions .image-replace-button' ).hide();
+
       if ( ! _.isEmpty( self.control.params.default ) ) {
         self.context.find( '.actions .image-default-button' ).show();
       }
@@ -123,7 +127,8 @@ export class EpsilonImage {
       self.saveValue( self.control.params.default );
       self.setImage( self.control.params.default.url );
 
-      self.context.find( '.actions .image-upload-remove-button' ).show();
+	  self.context.find( '.actions .image-replace-button' ).show();
+	  self.context.find( '.actions .image-remove-button' ).show();
     } );
   }
 

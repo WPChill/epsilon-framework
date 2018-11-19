@@ -1595,40 +1595,34 @@ body.adding-section .epsilon-add-new-section:before {
   width: 100%;
   position: relative;
   text-align: center;
-  cursor: default;
-  border: 1px dashed #b4b9be;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
+  cursor: pointer;
+  border: 1px dashed #a2aab2;
   box-sizing: border-box;
-  padding: 6px 0;
+  padding: 8px 0;
   line-height: 20px;
   min-height: 40px;
-  margin-bottom: 6px; }
+  margin-bottom: 1em;
+  background-color: #edeff0;
+  color: #000;
+  transition: all .1s ease-out; }
+  .epsilon-controller-image-container .placeholder:hover {
+    background-color: #f8f9f9; }
   .epsilon-controller-image-container .placeholder .recommended-size {
-    display: block;
-    font-style: italic; }
+    display: block; }
 
 .epsilon-controller-image-container .epsilon-image {
-  border: 1px dashed #eee;
-  padding: 6px;
-  margin-bottom: 6px;
-  min-height: 40px; }
+  margin-bottom: 1em;
+  min-height: 40px;
+  cursor: pointer; }
   .epsilon-controller-image-container .epsilon-image img {
     width: 100%;
     display: block; }
 
 .epsilon-controller-image-container .actions {
-  display: block;
   text-align: center;
-  padding-bottom: 1px; }
-  .epsilon-controller-image-container .actions .image-upload-button,
-  .epsilon-controller-image-container .actions .image-default-button {
-    margin: 0;
-    display: inline-block;
-    min-width: 30%; }
-  .epsilon-controller-image-container .actions .image-upload-remove-button {
-    margin: 0;
-    display: inline-block; }
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between; }
 
 .epsilon-icon-container {
   display: inline-block;
