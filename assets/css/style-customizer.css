@@ -110,12 +110,12 @@ body.wp-customizer {
   .slider-container .ui-slider {
     position: relative;
     text-align: left;
-    height: 2px;
-    border-radius: 3px;
+    height: 4px;
+    border-radius: 4px;
     border: none;
     display: block;
     width: 100%;
-    background: #d6d6d6;
+    background: #e2e4e7;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
@@ -123,16 +123,14 @@ body.wp-customizer {
       outline: none;
       position: absolute;
       z-index: 2;
-      top: -10px;
-      cursor: pointer;
+      top: -4px;
+      cursor: grab;
       -ms-touch-action: none;
       touch-action: none;
-      width: 18px;
-      height: 18px;
-      -webkit-border-radius: 9px;
-      -moz-border-radius: 9px;
-      border-radius: 9px;
-      background-color: #fff;
+      width: 12px;
+      height: 12px;
+      border-radius: 12px;
+      background-color: #555d66;
       box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 1px 0px rgba(0, 0, 0, 0.12);
       transform: translateX(-50%); }
     .slider-container .ui-slider .ui-slider-range {
@@ -142,9 +140,10 @@ body.wp-customizer {
       display: block;
       border: 0;
       background-position: 0 0;
-      background: #E04D43;
+      background: #11a0d2;
       top: 0;
-      bottom: 0; }
+      bottom: 0;
+      border-radius: inherit; }
 
 .widget-content label.block {
   display: block;
@@ -169,15 +168,15 @@ body.wp-customizer {
 .widget-content .ui-slider {
   position: relative;
   text-align: left;
-  height: 2px;
-  border-radius: 3px;
+  height: 4px;
+  border-radius: 4px;
   border: none;
   margin-top: 10px;
   margin-left: 15px;
   display: inline-block;
   width: 175px;
   float: right;
-  background: #d6d6d6; }
+  background: #e2e4e7; }
   .widget-content .ui-slider .ui-slider-range {
     position: absolute;
     z-index: 1;
@@ -185,32 +184,24 @@ body.wp-customizer {
     display: block;
     border: 0;
     background-position: 0 0;
-    background: #E04D43;
+    background: #11a0d2;
     top: 0;
-    bottom: 0; }
+    bottom: 0;
+    border-radius: inherit; }
   .widget-content .ui-slider .ui-slider-handle {
+    outline: none;
     position: absolute;
     z-index: 2;
-    top: -10px;
-    cursor: default;
+    top: -4px;
+    cursor: grab;
     -ms-touch-action: none;
     touch-action: none;
-    width: 18px;
-    height: 18px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
-    background-color: #fff;
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    border: solid 1px #d7d7d7;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    background-color: #555d66;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.1), inset 0px 0px 1px 0px rgba(0, 0, 0, 0.12);
     transform: translateX(-50%); }
-
-.slider-container .ui-slider:hover,
-.widget-content,
-ui-slider:hover {
-  cursor: pointer; }
 
 .repeater-field-epsilon-toggle .epsilon-toggle-control {
   display: block;
