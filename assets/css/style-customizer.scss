@@ -29,9 +29,43 @@ $repeat_field_dropdown_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 // Repeater Icon picker
 $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 
+
+// General customizer styles
 body.wp-customizer {
 	font-size: 13px;
 }
+
+.customize-control  {
+	input {
+		padding: 6px 8px;
+	}
+
+	select {
+		padding: 2px;
+	}
+
+	textarea {
+		padding: 6px 8px;
+	}
+
+	input, select, textarea {
+		border-radius: 4px;
+		border: 1px solid #8d96a0;
+		box-shadow: 0 0 0 transparent;
+		background: #fff;
+		font-size: inherit;
+		transition: box-shadow .1s linear;
+
+		&:focus {
+			border-color: #00a0d2;
+			box-shadow: 0 0 0 1px #00a0d2;
+			color: #191e23;
+			outline: 2px solid transparent;
+			outline-offset: -2px;
+		}
+	}
+}
+
 
 /* Start Controls */
 @import "scss/controls/upsell";
@@ -351,9 +385,6 @@ body.wp-customizer {
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
-		border-radius: $repeat_field_dropdown_border_radius;
-		border-color: $repeat_field_dropdown_border;
-		box-shadow: $repeat_field_dropdown_inner_shadow;
 	}
 	&.repeater-field- {
 		display: none;
@@ -514,3 +545,4 @@ li#accordion-section-portum_footer_section > h3.accordion-section-title:before {
 	margin-right: 5px;
 	font-size: 18px;
 }
+
