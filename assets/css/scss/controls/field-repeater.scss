@@ -1,5 +1,11 @@
 .customize-control-epsilon-repeater {
 	position: relative;
+
+	> label .customize-control-title {
+		margin-left: -8px;
+		margin-right: -8px;
+	}
+
 	.repeater-fields {
 		margin-left: -20px;
 		margin-right: -20px;
@@ -12,14 +18,16 @@
 		margin-bottom: 6px;
 		margin-top: 6px;
 		position: relative;
-		box-shadow: $repeater_row_shadow;
+		box-shadow: none;
 		background: $repeater_row_background;
 		transition: margin-top .15s, margin-bottom .15s;
+		border-top: 1px solid $repeater_row_separator_color;
+
 		&:first-child {
 			margin-top: 0;
 		}
 		&.minimized {
-			margin-bottom: 2px;
+			margin-bottom: 0;
 			margin-top: 0;
 			.repeater-row-header {
 				&:hover {
@@ -68,7 +76,8 @@
 	}
 	.repeater-row-header {
 		position: relative;
-		padding: 12px 0 12px 12px;
+		padding: 14px 0 14px 12px;
+		color: #191e23;
 		height: 20px;
 		font-weight: 600;
 		transition: .20s all ease-in-out;
@@ -79,33 +88,32 @@
 			display: inline-block;
 			position: absolute;
 			left: -15px;
-			top: 13px;
+			top: 16px;
 			font-size: 15px;
 			-webkit-transition: all .2s;
 			transition: all .2s;
 		}
 		.repeater-minimize,
 		.repeater-row-remove {
+			vertical-align: middle;
 			float: right;
-			width: 20px;
-			height: 20px;
-			line-height: 20px;
+			color: #191e23;
+			width: 18px;
+			height: 18px;
+			line-height: 18px;
 			font-size: 18px;
 			cursor: pointer;
-			color: $repeater_row_text_color;
 			transition: color .15s;
+	 		margin-top: -14px;
+			padding: 15px 6px;
+
+
 			&:hover {
 				color: $repeater_row_text_hover_color;
 			}
 		}
 		.repeater-row-remove {
 			border-right: 1px solid $repeater_row_separator_color;
-			margin-top: -12px;
-			padding: 12px 6px;
-		}
-		.repeater-minimize {
-			margin-top: -12px;
-			padding: 12px 6px;
 		}
 
 		&:hover {
@@ -181,14 +189,16 @@
 		.repeater-row {
 			.repeater-row-header {
 				padding-left: 40px;
-				-webkit-transition: all .2s;
 				transition: all .2s;
-				cursor: all-scroll;
+				cursor: grab;
 				&:before {
 					left: 10px;
-					-webkit-transition: all .2s;
 					transition: all .2s;
 				}
+			}
+
+			&.ui-sortable-helper .repeater-row-header {
+				cursor: grabbing;
 			}
 		}
 	}

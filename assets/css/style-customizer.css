@@ -867,6 +867,9 @@ ui-slider:hover {
 
 .customize-control-epsilon-repeater {
   position: relative; }
+  .customize-control-epsilon-repeater > label .customize-control-title {
+    margin-left: -8px;
+    margin-right: -8px; }
   .customize-control-epsilon-repeater .repeater-fields {
     margin-left: -20px;
     margin-right: -20px; }
@@ -876,13 +879,14 @@ ui-slider:hover {
     margin-bottom: 6px;
     margin-top: 6px;
     position: relative;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     background: #fff;
-    transition: margin-top .15s, margin-bottom .15s; }
+    transition: margin-top .15s, margin-bottom .15s;
+    border-top: 1px solid #e2e4e7; }
     .customize-control-epsilon-repeater .repeater-row:first-child {
       margin-top: 0; }
     .customize-control-epsilon-repeater .repeater-row.minimized {
-      margin-bottom: 2px;
+      margin-bottom: 0;
       margin-top: 0; }
       .customize-control-epsilon-repeater .repeater-row.minimized .repeater-row-header:hover {
         color: #0073aa;
@@ -908,7 +912,8 @@ ui-slider:hover {
       border-bottom: none; }
   .customize-control-epsilon-repeater .repeater-row-header {
     position: relative;
-    padding: 12px 0 12px 12px;
+    padding: 14px 0 14px 12px;
+    color: #191e23;
     height: 20px;
     font-weight: 600;
     transition: .20s all ease-in-out;
@@ -919,35 +924,33 @@ ui-slider:hover {
       display: inline-block;
       position: absolute;
       left: -15px;
-      top: 13px;
+      top: 16px;
       font-size: 15px;
       -webkit-transition: all .2s;
       transition: all .2s; }
     .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize,
     .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove {
+      vertical-align: middle;
       float: right;
-      width: 20px;
-      height: 20px;
-      line-height: 20px;
+      color: #191e23;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
       font-size: 18px;
       cursor: pointer;
-      color: #555;
-      transition: color .15s; }
+      transition: color .15s;
+      margin-top: -14px;
+      padding: 15px 6px; }
       .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize:hover,
       .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove:hover {
         color: #0073aa; }
     .customize-control-epsilon-repeater .repeater-row-header .repeater-row-remove {
-      border-right: 1px solid #ddd;
-      margin-top: -12px;
-      padding: 12px 6px; }
-    .customize-control-epsilon-repeater .repeater-row-header .repeater-minimize {
-      margin-top: -12px;
-      padding: 12px 6px; }
+      border-right: 1px solid #e2e4e7; }
     .customize-control-epsilon-repeater .repeater-row-header:hover:before {
       opacity: 1;
       visibility: visible; }
   .customize-control-epsilon-repeater .repeater-row-content {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #e2e4e7;
     padding: 0 10px 10px 10px; }
   .customize-control-epsilon-repeater .repeater-field {
     margin: 0;
@@ -993,13 +996,13 @@ ui-slider:hover {
     width: 48%; }
   .customize-control-epsilon-repeater .epsilon-repeater-is-sorting .repeater-row .repeater-row-header {
     padding-left: 40px;
-    -webkit-transition: all .2s;
     transition: all .2s;
-    cursor: all-scroll; }
+    cursor: grab; }
     .customize-control-epsilon-repeater .epsilon-repeater-is-sorting .repeater-row .repeater-row-header:before {
       left: 10px;
-      -webkit-transition: all .2s;
       transition: all .2s; }
+  .customize-control-epsilon-repeater .epsilon-repeater-is-sorting .repeater-row.ui-sortable-helper .repeater-row-header {
+    cursor: grabbing; }
 
 .repeater-field.repeater-field-textarea textarea {
   display: block;
@@ -1051,7 +1054,7 @@ ui-slider:hover {
   .customize-control-epsilon-section-repeater .customize-control-title {
     display: inline-block; }
     .customize-control-epsilon-section-repeater .customize-control-title.epsilon-page-title {
-      padding-left: 13px;
+      padding-left: 12px;
       margin-bottom: 8px;
       display: block; }
     .customize-control-epsilon-section-repeater .customize-control-title .epsilon-sort-sections {
@@ -1062,10 +1065,11 @@ ui-slider:hover {
     .customize-control-epsilon-section-repeater .repeater-sections .repeater-row {
       margin-bottom: 6px;
       margin-top: 6px;
-      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+      box-shadow: none;
       background: #fff;
       transition: margin-top .15s, margin-bottom .15s;
       position: relative;
+      border-top: 1px solid #e2e4e7;
       /* Needs further attention */ }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.epsilon-upsell-section .repeater-row-header {
         background: #f2f2f2; }
@@ -1086,7 +1090,7 @@ ui-slider:hover {
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row:first-child {
         margin-top: 0; }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized {
-        margin-bottom: 2px;
+        margin-bottom: 0;
         margin-top: 0; }
         .customize-control-epsilon-section-repeater .repeater-sections .repeater-row.minimized .repeater-row-header:hover {
           color: #0073aa;
@@ -1111,7 +1115,8 @@ ui-slider:hover {
           display: none; }
     .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header {
       position: relative;
-      padding: 12px 0 12px 12px;
+      padding: 14px 0 14px 12px;
+      color: #191e23;
       font-weight: 600;
       transition: .20s all ease-in-out;
       cursor: pointer; }
@@ -1121,7 +1126,7 @@ ui-slider:hover {
         display: inline-block;
         position: absolute;
         left: -15px;
-        top: 13px;
+        top: 16px;
         font-size: 15px;
         -webkit-transition: all .2s;
         transition: all .2s; }
@@ -1129,10 +1134,12 @@ ui-slider:hover {
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide,
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-remove {
         vertical-align: middle;
-        color: #555;
+        color: #191e23;
         float: right;
         font-size: 18px;
         cursor: pointer;
+        margin-top: -14px;
+        padding: 13px 6px;
         transition: color .15s; }
         .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-minimize:hover,
         .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide:hover,
@@ -1141,14 +1148,10 @@ ui-slider:hover {
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-minimize,
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide {
         display: block;
-        margin-top: -12px;
-        padding: 12px 6px;
         visibility: visible; }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-remove {
-        border-right: 1px solid #ddd;
-        border-left: 1px solid #ddd;
-        margin-top: -12px;
-        padding: 12px 6px;
+        border-right: 1px solid #e2e4e7;
+        border-left: 1px solid #e2e4e7;
         visibility: visible; }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-header .repeater-row-hide {
         transition: opacity .25s; }
@@ -1165,10 +1168,10 @@ ui-slider:hover {
     .customize-control-epsilon-section-repeater .repeater-sections .repeater-index {
       display: none; }
     .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content {
-      border-top: 1px solid #ddd;
+      border-top: 1px solid #e2e4e7;
       padding: 0 10px 10px 10px;
       position: relative;
-      width: 95%; }
+      width: calc(100% - 20px); }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content:after {
         background: #fff;
         opacity: 0;
@@ -1182,43 +1185,56 @@ ui-slider:hover {
         z-index: 100000;
         content: ''; }
       .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav {
+        background: yellow;
         margin: 0 -10px 0 -10px;
         background: #f2f2f2;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #e2e4e7;
         text-align: left;
         box-sizing: border-box;
-        width: 110%;
-        display: flex; }
+        width: calc(100% + 20px);
+        display: flex;
+        justify-content: space-between; }
         .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a {
+          flex-grow: 1;
+          text-align: center;
           color: #555;
           box-sizing: border-box;
-          padding: 8px 5px 8px 5px;
+          padding: 10px 5px;
           display: inline-block;
           text-decoration: none;
           outline: none;
-          margin-right: 2px;
           border-left: 1px solid transparent;
           border-right: 1px solid transparent;
-          border-bottom: 1px solid #ddd;
-          margin-bottom: -1px; }
+          border-bottom: 1px solid transparent;
+          margin-bottom: -1px;
+          transition: all 0.4s ease-in-out; }
+          .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a .dashicons {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            margin: 2px 0 2px 0; }
           .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a span {
             pointer-events: none; }
           .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a .label {
-            display: none; }
+            display: none;
+            font-weight: 600; }
+          .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a:first-of-type {
+            border-left: none; }
           .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a:last-of-type {
-            margin-right: 0; }
+            border-right: none; }
           .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a:hover, .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a:focus {
             color: #0073aa;
             outline: 0 !important;
-            box-shadow: none; }
+            box-shadow: none;
+            background: #fff; }
           .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a.active {
+            flex-grow: 2;
             outline: 0 !important;
             color: #0073aa;
-            border-color: #ddd;
+            border-color: #e2e4e7;
             border-bottom-color: #fff;
             background: #fff;
             position: relative;
-            -webkit-box-shadow: none;
             box-shadow: none; }
             .customize-control-epsilon-section-repeater .repeater-sections .repeater-row-content nav a.active .label {
               display: inline-block; }
@@ -1241,11 +1257,13 @@ ui-slider:hover {
     padding-left: 40px;
     -webkit-transition: all .2s;
     transition: all .2s;
-    cursor: all-scroll; }
+    cursor: grab; }
     .customize-control-epsilon-section-repeater .epsilon-section-repeater-is-sorting .repeater-row .repeater-row-header:before {
       left: 10px;
       -webkit-transition: all .2s;
       transition: all .2s; }
+  .customize-control-epsilon-section-repeater .epsilon-section-repeater-is-sorting .repeater-row.ui-sortable-helper .repeater-row-header {
+    cursor: grabbing; }
 
 .epsilon-add-section-buttons {
   padding: 10px 0;
@@ -1581,7 +1599,8 @@ body.adding-section .epsilon-add-new-section:before {
   text-align: center; }
 
 .tab-panel {
-  display: none; }
+  display: none;
+  padding: 10px 0; }
   .tab-panel.active {
     display: block; }
 

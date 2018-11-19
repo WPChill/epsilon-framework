@@ -5,7 +5,7 @@
 	.customize-control-title {
 		display: inline-block;
 		&.epsilon-page-title {
-			padding-left: 13px;
+			padding-left: 12px;
 			margin-bottom: 8px;
 			display: block;
 		}
@@ -20,10 +20,11 @@
 		.repeater-row {
 			margin-bottom: 6px;
 			margin-top: 6px;
-			box-shadow: $repeater_row_shadow;
+			box-shadow: none;
 			background: $repeater_row_background;
 			transition: margin-top .15s, margin-bottom .15s;
 			position: relative;
+			border-top: 1px solid $repeater_row_separator_color;
 
 			/* Needs further attention */
 			&.epsilon-upsell-section {
@@ -56,7 +57,7 @@
 				margin-top: 0;
 			}
 			&.minimized {
-				margin-bottom: 2px;
+				margin-bottom: 0;
 				margin-top: 0;
 				.repeater-row-header {
 					&:hover {
@@ -94,9 +95,11 @@
 				}
 			}
 		}
+
 		.repeater-row-header {
 			position: relative;
-			padding: 12px 0 12px 12px;
+			padding: 14px 0 14px 12px;
+			color: #191e23;
 			font-weight: 600;
 			transition: .20s all ease-in-out;
 			cursor: pointer;
@@ -106,7 +109,7 @@
 				display: inline-block;
 				position: absolute;
 				left: -15px;
-				top: 13px;
+				top: 16px;
 				font-size: 15px;
 				-webkit-transition: all .2s;
 				transition: all .2s;
@@ -115,10 +118,12 @@
 			.repeater-row-hide,
 			.repeater-row-remove {
 				vertical-align: middle;
-				color: $repeater_row_text_color;
+				color: #191e23;
 				float: right;
 				font-size: 18px;
 				cursor: pointer;
+				margin-top: -14px;
+				padding: 13px 6px;
 				transition: color .15s;
 				&:hover {
 					color: $repeater_row_text_hover_color;
@@ -127,15 +132,11 @@
 			.repeater-minimize,
 			.repeater-row-hide {
 				display: block;
-				margin-top: -12px;
-				padding: 12px 6px;
 				visibility: visible;
 			}
 			.repeater-row-remove {
 				border-right: 1px solid $repeater_row_separator_color;
 				border-left: 1px solid $repeater_row_separator_color;
-				margin-top: -12px;
-				padding: 12px 6px;
 				visibility: visible;
 			}
 			.repeater-row-hide {
@@ -159,6 +160,7 @@
 				}
 			}
 		}
+
 		.repeater-index {
 			display: none;
 		}
@@ -166,7 +168,8 @@
 			border-top: 1px solid $repeater_row_separator_color;
 			padding: 0 10px 10px 10px;
 			position: relative;
-			width: 95%;
+			width: calc(100% - 20px);
+
 			&:after {
 				background: #fff;
 				opacity: 0;
@@ -181,49 +184,66 @@
 				content: '';
 			}
 			nav {
+				background: yellow;
 				margin: 0 -10px 0 -10px;
 				background: #f2f2f2;
-				border-bottom: 1px solid $repeater_row_nav_tab_border;
+				border-bottom: 1px solid $repeater_row_separator_color;
 				text-align: left;
 				box-sizing: border-box;
-				width: 110%;
+				width: calc(100% + 20px);
 				display: flex;
-				
+				justify-content: space-between;
+
 				a {
+					flex-grow: 1;
+					text-align: center;
 					color: $repeater_row_text_color;
 					box-sizing: border-box;
-					padding: 8px 5px 8px 5px;
+					padding: 10px 5px;
 					display: inline-block;
 					text-decoration: none;
 					outline: none;
-					margin-right: 2px;
 					border-left: 1px solid transparent;
 					border-right: 1px solid transparent;
-					border-bottom: 1px solid $repeater_row_nav_tab_border;
+					border-bottom: 1px solid transparent;
 					margin-bottom: -1px;
+					transition: all 0.4s ease-in-out;
+
+					.dashicons {
+						font-size: 18px;
+						width: 18px;
+						height: 18px;
+						margin: 2px 0 2px 0;
+					}
+
 					span {
 						pointer-events: none;
 					}
 					.label {
 						display: none;
+						font-weight: 600;
+					}
+					&:first-of-type {
+						border-left: none;
 					}
 					&:last-of-type {
-						margin-right: 0;
+						border-right: none;
 					}
 					&:hover,
 					&:focus {
 						color: $repeater_row_nav_tab_hover;
 						outline: 0 !important;
 						box-shadow: none;
+						background: #fff;
 					}
 					&.active {
+						flex-grow: 2;
 						outline: 0 !important;
 						color: $repeater_row_nav_tab_hover;
-						border-color: $repeater_row_nav_tab_border;
+						border-color: $repeater_row_separator_color;
 						border-bottom-color: $repeater_row_background;
 						background: $repeater_row_background;
 						position: relative;
-						-webkit-box-shadow: none;
 						box-shadow: none;
 						.label {
 							display: inline-block;
@@ -239,7 +259,7 @@
 			.repeater-field-select {
 				label {
 					display: block;
-					
+
 					&::after {
 						display:block;
 						content: "";
@@ -269,13 +289,18 @@
 				padding-left: 40px;
 				-webkit-transition: all .2s;
 				transition: all .2s;
-				cursor: all-scroll;
+				cursor: grab;
 				&:before {
 					left: 10px;
 					-webkit-transition: all .2s;
 					transition: all .2s;
 				}
 			}
+
+			&.ui-sortable-helper .repeater-row-header {
+				cursor: grabbing;
+			}
+
 		}
 	}
 }
@@ -690,6 +715,7 @@ body.adding-section {
 
 .tab-panel {
 	display: none;
+	padding: 10px 0;
 	&.active {
 		display: block;
 	}
