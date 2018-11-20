@@ -2083,7 +2083,8 @@ body.adding-doubled-section .doubled-section-parent {
   display: inline-block;
   position: absolute;
   left: 50%;
-  top: 0;
+  bottom: 100%;
+  margin-bottom: 5px;
   transform: translateX(-50%);
   z-index: 100;
   box-shadow: 0px 4px 7px 1px rgba(0, 0, 0, 0.15);
