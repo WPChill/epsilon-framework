@@ -224,12 +224,23 @@ class Epsilon_Repeater_Templates {
 		field.type = 'url'
 		} #>
 
-		<label> <# if ( field.label ) { #><span class="customize-control-title">{{ field.label }}</span><# } #> <# if(
-			field.description ){ #>
-			<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
-				<span class="mte-tooltip">
+		<label>
+			<# if ( field.label ) { #>
+				<span class="customize-control-title">{{ field.label }}</span>
+			<# } #>
+			<# if( field.description && 'standard' !== field.description_type ){ #>
+				<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+					<span class="mte-tooltip">
+						{{{ field.description }}}
+					</span>
+				</i>
+			<# } #>
+
+			<# if( field.description && 'standard' === field.description_type ){ #>
+				<div style="margin-bottom:5px;">
 					{{{ field.description }}}
-				</span> </i> <# } #>
+				</div>
+			<# } #>
 			<input type="{{field.type}}" name="" value="{{{ field.default }}}" data-field="{{{ field.id }}}" {{ fieldExtras }}>
 		</label>
 		<?php
