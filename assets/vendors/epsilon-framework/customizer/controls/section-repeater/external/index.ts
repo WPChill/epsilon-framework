@@ -7,6 +7,7 @@ import SectionRepeaterSlider from './slider';
 import SectionRepeaterButtonGroup from './button-group';
 import SectionRepeaterIconPicker from './iconpicker';
 import SectionRepeaterMarginsPaddings from './margins-paddings';
+import SectionRepeaterVideo from './video';
 import ConditionalFields from './conditional-fields';
 
 export {
@@ -18,6 +19,7 @@ export {
   SectionRepeaterSlider,
   SectionRepeaterButtonGroup,
   SectionRepeaterIconPicker,
+  SectionRepeaterVideo,
   ConditionalFields,
   SectionRepeaterMarginsPaddings,
 };

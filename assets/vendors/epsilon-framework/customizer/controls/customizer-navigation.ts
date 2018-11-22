@@ -40,7 +40,7 @@ export class EpsilonCustomizerNavigation {
   public initMultiple() {
     let containers = this.context.find( '.epsilon-customizer-navigation-container:not(.initiated)' ).first().addClass( 'initiated' );
     containers.map( function( index: number, element: any ) {
-      jQuery( element ).find( 'a' ).on( 'click', function( this: any, e: JQueryEventConstructor ) {
+      jQuery( element ).find( 'a' ).on( 'click', function( this: any, e: JQuery.Event ) {
         e.preventDefault();
         if ( 'undefined' !== typeof(wp.customize.section( jQuery( this ).attr( 'data-customizer-section' ) )) ) {
           if ( jQuery( e.target ).attr( 'data-doubled' ) ) {

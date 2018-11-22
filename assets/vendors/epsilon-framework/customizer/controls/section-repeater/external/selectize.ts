@@ -103,7 +103,7 @@ export default class SectionRepeaterSelectize {
    * @param data
    * @private
    */
-  private _rowRemove( e: JQueryEventConstructor, data: any ) {
+  private _rowRemove( e: JQuery.Event, data: any ) {
     _.each( this.instance.options, ( el, idx ) => {
       if ( el.$order === data.index + 2 ) {
         this.instance.removeOption( el.value, false );
@@ -125,7 +125,7 @@ export default class SectionRepeaterSelectize {
    * @param data
    * @private
    */
-  private _rowEdit( e: JQueryEventConstructor, data: any ) {
+  private _rowEdit( e: JQuery.Event, data: any ) {
     if ( data.id !== this.props.linking[ 1 ] ) {
       return;
     }
@@ -142,7 +142,7 @@ export default class SectionRepeaterSelectize {
    * @param data
    * @private
    */
-  private _rowAdd( e: JQueryEventConstructor, data: any ) {
+  private _rowAdd( e: JQuery.Event, data: any ) {
     if ( data.hasOwnProperty( this.props.linking[ 1 ] ) ) {
       this._createOption( data[ this.props.linking[ 1 ] ] );
     }

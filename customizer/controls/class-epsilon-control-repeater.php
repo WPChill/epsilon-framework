@@ -60,6 +60,13 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	protected $icons = array();
 
 	/**
+	 * Selective refresh
+	 *
+	 * @var bool
+	 */
+	protected $selective_refresh = false;
+
+	/**
 	 * Epsilon_Control_Repeater constructor.
 	 *
 	 * @since 1.0.0
@@ -95,15 +102,16 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 	public function json() {
 		$json = parent::json();
 
-		$json['id']           = $this->id;
-		$json['link']         = $this->get_link();
-		$json['value']        = $this->value();
-		$json['choices']      = $this->choices;
-		$json['fields']       = $this->get_fields();
-		$json['rowLabel']     = $this->get_row_label();
-		$json['save_as_meta'] = $this->save_as_meta;
-		$json['buttonLabel']  = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'epsilon-framework' );
-		$json['default']      = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
+		$json['id']                = $this->id;
+		$json['link']              = $this->get_link();
+		$json['value']             = $this->value();
+		$json['choices']           = $this->choices;
+		$json['fields']            = $this->get_fields();
+		$json['rowLabel']          = $this->get_row_label();
+		$json['save_as_meta']      = $this->save_as_meta;
+		$json['buttonLabel']       = ( isset( $this->button_label ) ) ? $this->button_label : __( 'Add', 'epsilon-framework' );
+		$json['selective_refresh'] = $this->selective_refresh;
+		$json['default']           = ( isset( $this->default ) ) ? $this->default : $this->setting->default;
 
 		return $json;
 	}
@@ -166,6 +174,15 @@ class Epsilon_Control_Repeater extends WP_Customize_Control {
 				}
 
 				$this->fields[ $key ]['groupType'] = $this->set_group_type( $this->fields[ $key ]['choices'] );
+			}
+
+			/**
+			 * Epsilon video
+			 */
+			if ( 'epsilon-video' === $value['type'] ) {
+				if ( ! isset( $this->fields[ $key ]['default'] ) ) {
+					$this->fields[ $key ]['default'] = '';
+				}
 			}
 
 			/**

@@ -51,6 +51,11 @@ export default {
     this.$connectors.setValue( value );
     this.loading = false;
     this.state.currentIndex = this.state.rows.length;
+
+    if ( this.$_instance.params.selective_refresh ) {
+      wp.customize.previewer.refresh();
+    }
+
     return obj.index;
   },
 
@@ -81,5 +86,9 @@ export default {
     value = _.sortBy( value, ( e ) => e.index );
 
     this.$connectors.setValue( value );
+
+    if ( this.$_instance.params.selective_refresh ) {
+      wp.customize.previewer.refresh();
+    }
   },
 };

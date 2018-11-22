@@ -107,5 +107,29 @@ export default {
     }
 
     return label;
+  },
+  /**
+   * Returns section index
+   *
+   * @param control
+   * @return section index
+   */
+  decideWhereWeAre( control ) {
+    const mainControl = jQuery( '.customize-control-epsilon-section-repeater' );
+    let id: any = mainControl.attr( 'id' );
+    id = id.replace( 'customize-', '' );
+    id = id.replace( 'control-', '' );
+    id = id.replace( '-', '_' );
+    id = id.split( '_' );
+
+    const postId = parseInt( id[ id.length - 1 ] );
+    const controlId = id.join( '_' );
+    const section = mainControl.find( '.repeater-row:not(.minimized)' );
+
+    return {
+      sectionIndex: section.attr( 'data-row' ),
+      postId: postId,
+      controlId: controlId,
+    };
   }
 };

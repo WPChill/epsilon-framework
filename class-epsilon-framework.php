@@ -259,6 +259,7 @@ class Epsilon_Framework {
 				               'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
 				               'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
 				               'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+				               'themeSlug'  => get_stylesheet(),
 			               )
 		);
 		wp_enqueue_style( 'epsilon-admin', EPSILON_URI . '/assets/css/style-admin.css' );
@@ -282,6 +283,7 @@ class Epsilon_Framework {
 			                    'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
 			                    'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
 			                    'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+			                    'themeSlug'  => get_stylesheet(),
 		                    ) );
 	}
 
@@ -304,14 +306,16 @@ class Epsilon_Framework {
 			                    'ajax_nonce' => wp_create_nonce( 'epsilon_nonce' ),
 			                    'post_page'  => Epsilon_Helper::get_blogpage_permalink(),
 			                    'front_page' => Epsilon_Helper::get_static_frontpage_permalink(),
+			                    'themeSlug'  => get_stylesheet(),
 		                    ) );
 
 		wp_localize_script( 'epsilon-object',
 		                    'EpsilonTranslations', array(
-			                    'remove'     => esc_html__( 'Remove', 'epsilon-framework' ),
-			                    'add'        => esc_html__( 'Add', 'epsilon-framework' ),
-			                    'selectFile' => esc_html__( 'Upload image', 'epsilon-framework' ),
-			                    'row'        => esc_html__( 'Row', 'epsilon-framework' ),
+			                    'remove'      => esc_html__( 'Remove', 'epsilon-framework' ),
+			                    'add'         => esc_html__( 'Add', 'epsilon-framework' ),
+			                    'selectFile'  => esc_html__( 'Upload image', 'epsilon-framework' ),
+			                    'selectVideo' => esc_html__( 'Upload video', 'epsilon-framework' ),
+			                    'row'         => esc_html__( 'Row', 'epsilon-framework' ),
 		                    ) );
 
 		wp_enqueue_style( 'font-awesome', EPSILON_URI . '/assets/vendors/fontawesome/font-awesome.css' );

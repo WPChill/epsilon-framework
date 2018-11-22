@@ -22,7 +22,7 @@ export default class SectionRepeaterButtonGroup {
   public init() {
     this.input = this.props.container.find( `[data-field="${this.props.id}"]` );
 
-    this.input.parent().on( 'click', 'a', ( e: JQueryEventConstructor ) => {
+    this.input.parent().on( 'click', 'a', ( e: JQuery.Event ) => {
       e.preventDefault();
       let value: any = jQuery( e.target ).attr( 'data-value' );
 

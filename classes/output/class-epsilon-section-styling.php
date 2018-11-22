@@ -32,22 +32,70 @@ class Epsilon_Section_Styling {
 	 * @var object
 	 */
 	public $manager;
-
+	/**
+	 * @var
+	 */
+	static $_instance;
 	/**
 	 * Epsilon_Section_Styling constructor.
 	 *
-	 * @param string $handle
-	 * @param        $option
-	 * @param        $section_manager
+	 * @param string  $handle
+	 * @param         $option
+	 * @param         $section_manager
+	 * @param boolean $render_styles
 	 */
-	public function __construct( $handle = '', $option, $section_manager ) {
+	public function __construct( $handle, $option = '', $section_manager = '', $render_styles = true ) {
 		$this->manager = $section_manager;
 		$this->option  = $option;
 
-		$this->gather_options();
+		if ( $render_styles ) {
+			$this->gather_options();
+			$this->_render_css();
+			wp_add_inline_style( $handle, $this->css );
+
+			return;
+		}
+	}
+
+	/**
+	 * @param        $handle
+	 * @param string $option
+	 * @param string $section_manager
+	 *
+	 * @return Epsilon_Section_Styling
+	 */
+	public static function get_instance( $handle, $option = '', $section_manager = '' ) {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self( $handle, $option, $section_manager, false );
+		}
+
+		return self::$_instance;
+	}
+
+	/**
+	 * @param $fields
+	 *
+	 * @return string
+	 */
+	public function gather_static_options( $fields ) {
+		$section = $this->manager->sections[ $fields['type'] ]['fields'];
+		$others  = $this->preg_grep_keys( '/_misc_font_color/', $section );
+
+		if ( ! empty( $others ) ) {
+			foreach ( $others as $k => $v ) {
+				$shortcut = $this->manager->sections[ $fields['type'] ]['fields'][ $k ];
+
+				$this->options[ $fields['index'] ][] = array(
+					'selectors'     => isset( $shortcut['selectors'] ) ? $shortcut['selectors'] : '',
+					'css-attribute' => isset( $shortcut['css-attribute'] ) ? $shortcut['css-attribute'] : 'color',
+					'value'         => $fields[ $k ]
+				);
+			}
+		}
+
 		$this->_render_css();
 
-		wp_add_inline_style( $handle, $this->css );
+		return $this->css;
 	}
 
 	/**
@@ -65,10 +113,7 @@ class Epsilon_Section_Styling {
 				continue;
 			}
 
-			$text    = $this->preg_grep_keys( '/_text_color/', $section );
-			$heading = $this->preg_grep_keys( '/_heading_color/', $section );
-			$others  = $this->preg_grep_keys( '/_misc_font_color/', $section );
-
+			$others = $this->preg_grep_keys( '/_misc_font_color/', $section );
 			if ( ! empty( $others ) ) {
 				foreach ( $others as $k => $v ) {
 					$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $k ];
@@ -79,34 +124,6 @@ class Epsilon_Section_Styling {
 						'value'         => $v
 					);
 				}
-			}
-
-			if ( ! empty( $text ) ) {
-				$key      = array_keys( $text );
-				$key      = reset( $key );
-				$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $key ];
-
-				$this->options[ $index ][] = array(
-					'selectors'     => isset( $shortcut['selectors'] )
-						? $shortcut['selectors']
-						: array( 'p' ),
-					'css-attribute' => isset( $shortcut['css-attribute'] ) ? $shortcut['css-attribute'] : 'color',
-					'value'         => reset( $text )
-				);
-			}
-			if ( ! empty( $heading ) ) {
-				$key = array_keys( $heading );
-				$key = reset( $key );
-
-				$shortcut = $this->manager->sections[ $section['type'] ]['fields'][ $key ];
-
-				$this->options[ $index ][] = array(
-					'selectors'     => isset( $shortcut['selectors'] )
-						? $shortcut['selectors']
-						: array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', ),
-					'css-attribute' => isset( $shortcut['css-attribute'] ) ? $shortcut['css-attribute'] : 'color',
-					'value'         => reset( $heading )
-				);
 			}
 		}
 	}

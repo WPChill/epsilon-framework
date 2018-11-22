@@ -32,6 +32,16 @@ export default {
 
     if ( ! obj ) {
       this.$connectors.addNewRow( this.$utils.pluckValues( fields ) );
+
+      if ( this.$_instance.params.selective_refresh ) {
+        const needed = this.$utils.decideWhereWeAre( this );
+        wp.customize.previewer.send( 'updated-field-repeater', {
+          control: this.$ID,
+          sectionIndex: needed.sectionIndex,
+          postId: needed.postId,
+          controlId: needed.controlId,
+        } );
+      }
     }
 
     return this.state.rows[ fields.index ];
@@ -50,6 +60,17 @@ export default {
     this.$connectors.setValue( value );
     this.loading = false;
     this.state.currentIndex = this.state.rows.length;
+
+    if ( this.$_instance.params.selective_refresh ) {
+      const needed = this.$utils.decideWhereWeAre( this );
+      wp.customize.previewer.send( 'updated-field-repeater', {
+        control: this.$ID,
+        sectionIndex: needed.sectionIndex,
+        postId: needed.postId,
+        controlId: needed.controlId,
+      } );
+    }
+
     return obj.index;
   },
 
@@ -82,5 +103,15 @@ export default {
     this.repeaterContainer.trigger( 'row:stopped-sorting', { rows: this.state.rows } );
 
     this.$connectors.setValue( value );
+
+    if ( this.$_instance.params.selective_refresh ) {
+      const needed = this.$utils.decideWhereWeAre( this );
+      wp.customize.previewer.send( 'updated-field-repeater', {
+        control: this.$ID,
+        sectionIndex: needed.sectionIndex,
+        postId: needed.postId,
+        controlId: needed.controlId,
+      } );
+    }
   },
 };

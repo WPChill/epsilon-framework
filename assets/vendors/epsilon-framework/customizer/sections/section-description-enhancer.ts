@@ -25,7 +25,7 @@ export class EpsilonSectionDescriptionEnhancer {
   public handleCloseEvent() {
     this.objects.map( ( element ) => {
       element.show();
-      element.on( 'click', '.epsilon-button-link-close-section', ( e: JQueryEventConstructor ) => {
+      element.on( 'click', '.epsilon-button-link-close-section', ( e: JQuery.Event ) => {
         element.hide( 200 );
       } );
     } );

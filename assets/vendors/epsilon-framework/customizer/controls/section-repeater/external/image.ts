@@ -29,7 +29,7 @@ export default class SectionRepeaterImage {
     /**
      * Image controls - Upload
      */
-    this.container.on( 'click keypress', '.placeholder, .epsilon-image, .image-replace-button', ( e: JQueryEventConstructor ) => {
+    this.container.on( 'click keypress', '.placeholder, .epsilon-image, .image-replace-button', ( e: JQuery.Event ) => {
       e.preventDefault();
       if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
         return;
@@ -41,7 +41,7 @@ export default class SectionRepeaterImage {
     /**
      * Image Controls - Removal
      */
-	this.container.on( 'click keypress', '.image-remove-button', ( e: JQueryEventConstructor ) => {
+	this.container.on( 'click keypress', '.image-remove-button', ( e: JQuery.Event ) => {
       e.preventDefault();
 
       if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
@@ -125,7 +125,7 @@ export default class SectionRepeaterImage {
         Ajax = new EpsilonAjaxRequest( data );
         Ajax.request();
 
-        jQuery( Ajax ).on( 'epsilon-received-success', ( e: JQueryEventConstructor ) => {
+        jQuery( Ajax ).on( 'epsilon-received-success', ( e: JQuery.Event ) => {
           if ( ! _.isUndefined( Ajax.result[ size ] ) ) {
             thumb.find( '.recommended-size' ).text( Ajax.result[ size ].width + ' x ' + Ajax.result[ size ].height );
           }

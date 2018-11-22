@@ -110,8 +110,8 @@ export class EpsilonColorSchemes {
           data: {}
         };
 
-    jQuery.each( json, function( index, value ) {
-      colorSettings.push( index );
+    jQuery.each( json, ( index, value ) => {
+      colorSettings.push( index.toString() );
     } );
 
     _.each( colorSettings, function( setting: string ) {
@@ -148,14 +148,14 @@ export class EpsilonColorSchemes {
       /**
        * Find the customizer options
        */
-      jQuery.each( json, function( index, value ) {
+      jQuery.each( json, ( index, value ) => {
         /**
          * Set values
          */
-        jQuery( '#customize-control-' + index + ' .epsilon-color-picker' ).minicolors( 'value', value );
+        jQuery( `#customize-control-${String(index)}-epsilon-color-picker` ).minicolors( 'value', value );
         api( index ).set( value );
 
-        self.context.siblings( '.epsilon-color-scheme-selected' ).find( '.epsilon-color-scheme-palette' ).find( '*[data-field-id="' + index + '"]' ).css( 'background', value );
+        self.context.siblings( '.epsilon-color-scheme-selected' ).find( '.epsilon-color-scheme-palette' ).find( `*[data-field-id="${String(index)}"]` ).css( 'background', value );
       } );
 
       /**

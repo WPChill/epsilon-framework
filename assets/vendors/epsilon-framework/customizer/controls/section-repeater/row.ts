@@ -8,6 +8,7 @@ import {
   SectionRepeaterButtonGroup,
   SectionRepeaterIconPicker,
   SectionRepeaterMarginsPaddings,
+  SectionRepeaterVideo,
   ConditionalFields
 } from './external/index';
 
@@ -87,6 +88,7 @@ export class EpsilonSectionRepeaterRow {
     epsilon_icon_picker: 'SectionRepeaterIconPicker',
     epsilon_margins_paddings: 'SectionRepeaterMarginsPaddings',
     epsilon_template_select: 'SectionRepeaterButtonGroup',
+    epsilon_video: 'SectionRepeaterVideo',
   };
 
   /**
@@ -293,6 +295,11 @@ export class EpsilonSectionRepeaterRow {
               new SectionRepeaterImage( { ...obj, ...{ allSizes: this.data[ obj.id ].sizeArray } } )
           );
           break;
+        case 'SectionRepeaterVideo':
+          this.initiated.push(
+              new SectionRepeaterVideo( obj )
+          );
+          break;
         case 'SectionRepeaterNavigation':
           this.initiated.push(
               new SectionRepeaterNavigation( obj )
@@ -437,7 +444,7 @@ export class EpsilonSectionRepeaterRow {
               break;
           }
 
-          if ( control.$_instance.params[ 'selective_refresh' ] ) {
+          if ( control.$_instance.params.selective_refresh ) {
             wp.customize.previewer.send( 'updated-section-repeater', {
               control: this.$ID,
               postId: control.$_instance.params[ 'save_as_meta' ],
@@ -532,7 +539,7 @@ export class EpsilonSectionRepeaterRow {
         tabs = this.container.find( '[data-tab-id]' ),
         tab: JQuery;
 
-    jQuery( wrapper ).on( 'click', 'a', ( event: JQueryEventConstructor ) => {
+    jQuery( wrapper ).on( 'click', 'a', ( event: JQuery.Event ) => {
       event.preventDefault();
       jQuery( event.target ).siblings().removeClass( 'active' );
       jQuery( event.target ).addClass( 'active' );

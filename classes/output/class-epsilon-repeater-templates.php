@@ -39,6 +39,8 @@ class Epsilon_Repeater_Templates {
 						<?php self::checkbox_field(); ?>
 						<# } else if ( 'radio' === field.type ) { #>
 						<?php self::radio_field(); ?>
+						<# } else if ( 'epsilon-video' === field.type ) { #>
+						<?php self::epsilon_video(); ?>
 						<# } else if ( 'textarea' === field.type ) { #>
 						<?php self::textarea_field(); ?>
 						<# } else if ( 'epsilon-text-editor' === field.type ) { #>
@@ -120,6 +122,8 @@ class Epsilon_Repeater_Templates {
 						<?php self::epsilon_icon_picker(); ?>
 						<# } else if ( 'epsilon-image' === field.type ) { #>
 						<?php self::epsilon_image(); ?>
+						<# } else if ( 'epsilon-video' === field.type ) { #>
+						<?php self::epsilon_video(); ?>
 						<# } else if ( 'epsilon-button-group' === field.type ) { #>
 						<?php self::epsilon_button_group(); ?>
 						<# } else if ( 'epsilon-customizer-navigation' === field.type ) { #>
@@ -405,6 +409,47 @@ class Epsilon_Repeater_Templates {
 
 				<button class="button-secondary image-remove-button" <# if( '' === field.default ) { #> style="display:none;" <# } #>>
 					<?php echo esc_html__( 'Remove Image', 'epsilon-framework' ); ?>
+				</button>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Epsilon Video
+	 */
+	public static function epsilon_video() { ?>
+		<label>
+			<span class="customize-control-title">
+				{{{ field.label }}}
+				<# if( field.description ){ #>
+					<i class="dashicons dashicons-editor-help" style="vertical-align: text-bottom; position: relative;">
+						<span class="mte-tooltip">
+							{{{ field.description }}}
+						</span>
+					</i>
+				<# } #>
+			</span> </label>
+		<div class="epsilon-controller-video-container video-upload">
+			<input type="hidden" data-field="{{ field.id }}" data-size="{{ field.size }}" data-save-mode="{{ field.mode }}" />
+			<# if ( field.default ) { #>
+			<div class="epsilon-video">
+				<# var temp = JSON.parse( field.default ); #>
+				{{ temp.label }}
+			</div>
+			<# } else { #>
+			<div class="placeholder">
+				<?php echo esc_html__( 'Upload video', 'epsilon-framework' ); ?>
+			</div>
+			<# } #>
+			<div class="actions">
+				<button class="button video-upload-remove-button"
+				<# if( '' === field.default ) { #> style="display:none;" <# } #>>
+				<i class="dashicons dashicons-trash"></i>
+				</button>
+
+				<button type="button" class="button-primary video-upload-button">
+					<?php echo esc_html__( 'Select File', 'epsilon-framework' ); ?>
 				</button>
 			</div>
 		</div>

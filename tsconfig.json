@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "./built/",
     "sourceMap": false,
     "strict": false,
     "noImplicitAny": false,
     "noImplicitReturns": false,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "ES5",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -18,5 +17,5 @@
   },
   "include": [
     "./assets/vendors/epsilon-framework/**/*"
-  ],
+  ]
 }

@@ -27,10 +27,10 @@ export class EpsilonPartialRefresh {
    */
   public registerSections() {
     const self = this;
-    var $sections = jQuery( '[data-customizer-section-id]' );
+    let $sections = jQuery( '[data-customizer-section-id]' );
     for ( let i = 0; i < $sections.length; i ++ ) {
-      var id: any = jQuery( $sections[ i ] ).attr( 'data-section' );
-      var section = {
+      let id: any = jQuery( $sections[ i ] ).attr( 'data-section' );
+      let section = {
         id: parseInt( id ),
         section: jQuery( $sections[ i ] ),
       };
@@ -43,10 +43,43 @@ export class EpsilonPartialRefresh {
    * Handle events
    */
   public handleEvents() {
-    const self = this;
-    wp.customize.preview.bind( 'updated-section-repeater', _.debounce( function( object: any ) {
-      self.changeSection( object );
+    wp.customize.preview.bind( 'updated-section-repeater', _.debounce( ( object: any ) => {
+      this.changeSection( object );
     }, 300 ) );
+
+    wp.customize.preview.bind( 'updated-field-repeater', _.debounce( ( object: any ) => {
+      this.changeSectionDeeper( object );
+    }, 300 ) );
+  }
+
+  /**
+   * Changes the section based on the field repeater
+   * @param object
+   */
+  public changeSectionDeeper( object: any ) {
+    let args: {
+          action: Array<string>,
+          nonce: string,
+          args: any,
+        } = {
+          action: [ 'Epsilon_Page_Generator', 'refresh_partial_section' ],
+          nonce: EpsilonWPUrls.ajax_nonce,
+          args: {
+            control: object.controlId,
+            postId: object.postId,
+            id: object.sectionIndex,
+          }
+        },
+        Ajax: EpsilonAjaxRequest;
+
+    Ajax = new EpsilonAjaxRequest( args );
+    Ajax.request();
+    this.standBySection( this.sections[ object.sectionIndex ].section );
+
+    jQuery( Ajax ).on( 'epsilon-received-success', ( e: JQuery.Event ) => {
+      this.liveSection( object.sectionIndex, this.sections[ object.sectionIndex ].section, Ajax.result.section );
+      jQuery( document ).trigger( 'epsilon-selective-refresh-ready' );
+    } );
   }
 
   /**
@@ -54,7 +87,6 @@ export class EpsilonPartialRefresh {
    * @param object
    */
   public changeSection( object: any ) {
-    const self = this;
     let args: {
           action: Array<string>,
           nonce: string,
@@ -73,17 +105,17 @@ export class EpsilonPartialRefresh {
 
     Ajax = new EpsilonAjaxRequest( args );
     Ajax.request();
-    this.standBySection( self.sections[ object.index ].section );
+    this.standBySection( this.sections[ object.index ].section );
 
-    jQuery( Ajax ).on( 'epsilon-received-success', function( e: JQueryEventConstructor ) {
-      self.liveSection( object.index, self.sections[ object.index ].section, Ajax.result.section );
+    jQuery( Ajax ).on( 'epsilon-received-success', ( e: JQuery.Event ) => {
+      this.liveSection( object.index, this.sections[ object.index ].section, Ajax.result.section );
       jQuery( document ).trigger( 'epsilon-selective-refresh-ready' );
     } );
   }
 
   /**
-   * Stand by section
-   * @param {JQuery} section
+   *
+   * @param section
    */
   public standBySection( section: JQuery ) {
     section.animate( { opacity: .5 } );
@@ -91,7 +123,9 @@ export class EpsilonPartialRefresh {
 
   /**
    *
-   * @param {JQuery} section
+   * @param sectionIndex
+   * @param section
+   * @param result
    */
   public liveSection( sectionIndex: number, section: JQuery, result: any ) {
     const self = this;

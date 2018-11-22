@@ -22,7 +22,7 @@ export class EpsilonColorSchemesPreviewer {
       Ajax = new EpsilonAjaxRequest( data );
       Ajax.request();
 
-      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQuery.Event ) {
         let sufix = object.action + object.id,
             style = jQuery( '#epsilon-stylesheet-' + sufix );
 

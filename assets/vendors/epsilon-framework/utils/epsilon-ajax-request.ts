@@ -36,9 +36,9 @@ export class EpsilonAjaxRequest {
       data: { action: 'epsilon_framework_ajax_action', args: self.args },
       dataType: 'json',
       url: EpsilonWPUrls.ajaxurl,
-      success: function( data ) {
-        self.result = data;
-        jQuery( self ).trigger( 'epsilon-received-success' );
+      success: ( data ) => {
+        this.result = data;
+        jQuery( this ).trigger( 'epsilon-received-success' );
       },
       /**
        * Throw errors

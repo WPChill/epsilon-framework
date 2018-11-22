@@ -244,6 +244,15 @@ class Epsilon_Control_Section_Repeater extends WP_Customize_Control {
 				}
 
 				/**
+				 * Epsilon video
+				 */
+				if ( 'epsilon-video' === $v['type'] ) {
+					if ( ! isset( $currentField['default'] ) ) {
+						$currentField['default'] = '';
+					}
+				}
+
+				/**
 				 * Epsilon Image
 				 */
 				if ( 'epsilon-image' === $v['type'] ) {

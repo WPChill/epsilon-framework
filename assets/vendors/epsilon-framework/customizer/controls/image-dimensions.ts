@@ -111,7 +111,7 @@ export class EpsilonImageDimensions {
    * Toggle aspect ratio
    */
   public handleAspectRatio() {
-    this.control.container.find( 'input[type="checkbox"]' ).on( 'change', ( event: JQueryEventConstructor ) => {
+    this.control.container.find( 'input[type="checkbox"]' ).on( 'change', ( event: JQuery.Event ) => {
       this.value.ratio = jQuery( event.target ).prop( 'checked' );
       this.saveData();
     } );
@@ -121,7 +121,7 @@ export class EpsilonImageDimensions {
    * Handles changes inside the
    */
   public handleInputChanges() {
-    this.control.container.find( 'input[type="text"]' ).on( 'keyup', _.debounce( ( element: JQueryEventConstructor ) => {
+    this.control.container.find( 'input[type="text"]' ).on( 'keyup', _.debounce( ( element: JQuery.Event ) => {
       let key = jQuery( element.target ).attr( 'data-type' ),
           val = jQuery( element.target ).val();
 

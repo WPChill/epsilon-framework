@@ -20,7 +20,7 @@ export default class SectionRepeaterNavigation {
    * Initator
    */
   public init() {
-    this.props.container.find( `[data-field="${this.props.id}"]` ).on( 'click', ( e: JQueryEventConstructor ) => {
+    this.props.container.find( `[data-field="${this.props.id}"]` ).on( 'click', ( e: JQuery.Event ) => {
       e.preventDefault();
       if ( 'undefined' !== typeof(wp.customize.section( jQuery( e.target ).attr( 'data-customizer-section' ) )) ) {
 

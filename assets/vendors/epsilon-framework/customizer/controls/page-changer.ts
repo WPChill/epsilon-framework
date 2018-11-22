@@ -63,7 +63,7 @@ export class EpsilonPageChanger {
    * Handle menu change
    */
   public handleEvents() {
-    this.control.container.on( 'change', 'select', ( event: JQueryEventConstructor ) => {
+    this.control.container.on( 'change', 'select', ( event: JQuery.Event ) => {
       wp.customize.previewer.previewUrl.set( jQuery( event.target ).val() );
     } );
   }
@@ -73,7 +73,7 @@ export class EpsilonPageChanger {
   */
   public addNewPage() {
     let control:any = this.control;
-    
+
     let toggle:any = control.container.find( '.add-new-toggle' );
     let container:any = control.container.find( '.new-content-item' );
     let input:any = control.container.find( '.create-item-input' );

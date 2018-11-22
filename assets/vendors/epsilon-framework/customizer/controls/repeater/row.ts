@@ -6,8 +6,9 @@ import {
   RepeaterSlider,
   RepeaterButtonGroup,
   RepeaterIconPicker,
+  RepeaterVideo,
+  ConditionalFields,
 } from './external/index';
-import ConditionalFields from '../section-repeater/external/conditional-fields';
 
 export class EpsilonRepeaterRow {
   /**
@@ -145,7 +146,8 @@ export class EpsilonRepeaterRow {
     epsilon_image: 'RepeaterImage',
     epsilon_slider: 'RepeaterSlider',
     epsilon_button_group: 'RepeaterButtonGroup',
-    epsilon_icon_picker: 'RepeaterIconPicker'
+    epsilon_icon_picker: 'RepeaterIconPicker',
+    epsilon_video: 'RepeaterVideo'
   };
 
   /**
@@ -248,6 +250,11 @@ export class EpsilonRepeaterRow {
               new RepeaterImage( { ...obj, ...{ allSizes: this.data[ obj.id ].sizeArray } } )
           );
           break;
+        case 'RepeaterVideo':
+          this.initiated.push(
+              new RepeaterVideo( obj )
+          );
+          break;
         case 'RepeaterSlider':
           this.initiated.push(
               new RepeaterSlider(
@@ -312,7 +319,7 @@ export class EpsilonRepeaterRow {
     /**
      * Click event on header to toggle minimize
      */
-    this.header.on( 'click', ( event: JQueryEventConstructor ) => {
+    this.header.on( 'click', ( event: JQuery.Event ) => {
       if ( jQuery( event.target ).is( '.repeater-row-hide' ) ) {
         return;
       }
@@ -368,6 +375,18 @@ export class EpsilonRepeaterRow {
           }
 
           this.label = `${control.$utils.getLabel( control, this.container )}`;
+
+          if ( control.$_instance.params.selective_refresh ) {
+            const needed = control.$utils.decideWhereWeAre( control );
+            wp.customize.previewer.send( 'updated-field-repeater', {
+              control: this.$ID,
+              sectionIndex: needed.sectionIndex,
+              postId: needed.postId,
+              controlId: needed.controlId,
+              value: value[ this.index ],
+            } );
+          }
+
           control.$connectors.setValue( value );
         }
     );

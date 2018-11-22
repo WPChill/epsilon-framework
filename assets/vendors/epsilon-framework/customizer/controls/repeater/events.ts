@@ -3,7 +3,7 @@ export default {
    * Adds a row to the repeater
    */
   addRowButton() {
-    this.$_instance.container.find( 'button.epsilon-repeater-add' ).on( 'click keydown', ( e: JQueryEventConstructor ) => {
+    this.$_instance.container.find( 'button.epsilon-repeater-add' ).on( 'click keydown', ( e: JQuery.Event ) => {
       e.preventDefault();
       this.$actions.addRow( false );
     } );

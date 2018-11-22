@@ -15,7 +15,7 @@ export class EpsilonSectionEditorPreviewer {
    * Normal section focus ( single button )
    */
   normalSectionFocus() {
-    jQuery( document ).on( 'click', '.epsilon-section-editor', function( this: any, e: JQueryEventConstructor ) {
+    jQuery( document ).on( 'click', '.epsilon-section-editor', function( this: any, e: JQuery.Event ) {
       e.preventDefault();
       let object = {
         section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),
@@ -30,7 +30,7 @@ export class EpsilonSectionEditorPreviewer {
    * Repeater field focus
    */
   repeaterFieldFocus() {
-    jQuery( document ).on( 'click', '.epsilon-field-repeater-editor', function( this: any, event: JQueryEventConstructor ) {
+    jQuery( document ).on( 'click', '.epsilon-field-repeater-editor', function( this: any, event: JQuery.Event ) {
       event.preventDefault();
       let object = {
         section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),
@@ -43,7 +43,7 @@ export class EpsilonSectionEditorPreviewer {
       wp.customize.preview.send( 'epsilon-field-repeater-edit', object );
     } );
 
-    jQuery( document ).on( 'click', '.epsilon-field-repeater-delete-item', function( this: any, event: JQueryEventConstructor ) {
+    jQuery( document ).on( 'click', '.epsilon-field-repeater-delete-item', function( this: any, event: JQuery.Event ) {
       event.preventDefault();
       let object = {
         control: jQuery( this ).attr( 'data-control' ),
@@ -58,7 +58,7 @@ export class EpsilonSectionEditorPreviewer {
    * Multiple buttons, should focus the tab coresponding to the icon
    */
   advancedSectionFocus() {
-    jQuery( document ).on( 'click', '.epsilon-pencil-button-group > a', function( this: any, e: JQueryEventConstructor ) {
+    jQuery( document ).on( 'click', '.epsilon-pencil-button-group > a', function( this: any, e: JQuery.Event ) {
       e.preventDefault();
       let object = {
         section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),

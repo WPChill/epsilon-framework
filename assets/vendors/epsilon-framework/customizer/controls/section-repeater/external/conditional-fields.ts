@@ -59,7 +59,7 @@ export default class ConditionalFields {
    */
   public bindEvents() {
     _.each( this.conditionalFields, ( el, key ) => {
-      this.container.find( `[data-field="${key}"]` ).on( 'change', ( event: JQueryEventConstructor ) => {
+      this.container.find( `[data-field="${key}"]` ).on( 'change', ( event: JQuery.Event ) => {
         el.map( e => {
           e.value instanceof Array
               ? e.field[ _.contains( e.value, this._getFieldValue( jQuery( event.target ), null ) ) ? 'slideDown' : 'slideUp' ]()

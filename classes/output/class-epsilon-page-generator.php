@@ -67,7 +67,12 @@ class Epsilon_Page_Generator {
 	}
 
 	/**
-	 * Get an instance of the frontpage renderer
+	 * Get an instance of the frontend renderer
+	 *
+	 * @param string $option
+	 * @param string $id
+	 *
+	 * @return Epsilon_Page_Generator
 	 */
 	public static function get_instance( $option = '', $id = '' ) {
 		static $inst;
@@ -263,6 +268,19 @@ class Epsilon_Page_Generator {
 		$self->set_manual_value( $args['id'], $args['value'] );
 		ob_start();
 		$self->section_template( $args['value']['type'], $args['value'], $args['id'] );
+
+		return array(
+			'message' => 'ok',
+			'section' => ob_get_clean(),
+		);
+	}
+
+	public static function refresh_partial_section( $args ) {
+		$self = self::get_instance( $args['control'], $args['postId'] );
+		$section = $self->sections[$args['id']];
+
+		ob_start();
+		$self->section_template( $section['type'], $section, $args['id'] );
 
 		return array(
 			'message' => 'ok',
