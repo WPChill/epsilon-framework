@@ -47,7 +47,7 @@ export class EpsilonSectionEditorPreviewer {
       event.preventDefault();
       let object = {
         control: jQuery( this ).attr( 'data-control' ),
-        field: jQuery( this ).attr( 'data-index' )
+        index: jQuery( this ).attr( 'data-index' )
       };
 
       wp.customize.preview.send( 'epsilon-field-repeater-delete', object );

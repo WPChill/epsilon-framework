@@ -162,6 +162,7 @@ export class EpsilonFieldRepeater {
    */
   private _eventListener() {
     this.$events.addRowButton.call( this );
+    this.$events.handleFieldDeletion.call( this );
   }
 
   /**
