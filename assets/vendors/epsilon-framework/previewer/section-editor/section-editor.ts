@@ -46,8 +46,11 @@ export class EpsilonSectionEditorPreviewer {
     jQuery( document ).on( 'click', '.epsilon-field-repeater-delete-item', function( this: any, event: JQuery.Event ) {
       event.preventDefault();
       let object = {
+        section: jQuery( this ).parents( '[data-section]' ).attr( 'data-section' ),
+        doubledSection: jQuery( this ).attr( 'data-doubled-section' ),
         control: jQuery( this ).attr( 'data-control' ),
-        index: jQuery( this ).attr( 'data-index' )
+        index: jQuery( this ).attr( 'data-index' ),
+        customizerSection: jQuery( this ).parents( '[data-section]' ).attr( 'data-customizer-section-id' )
       };
 
       wp.customize.preview.send( 'epsilon-field-repeater-delete', object );

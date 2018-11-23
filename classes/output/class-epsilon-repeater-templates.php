@@ -132,8 +132,6 @@ class Epsilon_Repeater_Templates {
 						<?php self::epsilon_upsell(); ?>
 						<# } else if ( 'epsilon-template-select' === field.type ) { #>
 						<?php self::epsilon_template_selector(); ?>
-						<# } else if ( 'epsilon-upsell' === field.type ) { #>
-						<?php self::epsilon_upsell(); ?>
 						<# } else if ( 'epsilon-margins-paddings' === field.type ) { #>
 						<?php self::epsilon_margins_paddings(); ?>
 						<# } #>

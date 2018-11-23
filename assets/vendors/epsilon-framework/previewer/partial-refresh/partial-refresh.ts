@@ -57,6 +57,9 @@ export class EpsilonPartialRefresh {
    * @param object
    */
   public changeSectionDeeper( object: any ) {
+    if ( typeof this.sections[ object.sectionIndex ] === 'undefined' ) {
+      return wp.customize.preview.send( 'epsilon-refresh-page' );
+    }
     let args: {
           action: Array<string>,
           nonce: string,
