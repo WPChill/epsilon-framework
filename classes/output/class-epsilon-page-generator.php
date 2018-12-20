@@ -276,15 +276,33 @@ class Epsilon_Page_Generator {
 	}
 
 	public static function refresh_partial_section( $args ) {
-		$self = self::get_instance( $args['control'], $args['postId'] );
-		$section = $self->sections[$args['id']];
+		$self    = self::get_instance( $args['control'], $args['postId'] );
+		$section = $self->sections[ $args['id'] ];
+		if ( $section === null ) {
+			$self->sections[ $args['id'] ] = array();
 
+			$class    = EPSILON_REPEATABLE_SECTIONS_CLASS;
+			$instance = $class::get_instance();
+			$fields   = $instance->sections[ $args['sectionType'] ]['fields'];
+			$defaults = array(
+				'type'  => $args['sectionType'],
+				'index' => $args['id'],
+			);
+
+			foreach ( $fields as $k => $v ) {
+				$defaults[ $k ] = $v['default'];
+			}
+
+			$self->set_manual_value( $args['id'], $defaults );
+			$section = $self->sections[ $args['id'] ];
+		}
 		ob_start();
-		$self->section_template( $section['type'], $section, $args['id'] );
+		$self->section_template( $args['sectionType'], $section, $args['id'] );
+		$string = ob_get_clean();
 
 		return array(
 			'message' => 'ok',
-			'section' => ob_get_clean(),
+			'section' => $string,
 		);
 	}
 }

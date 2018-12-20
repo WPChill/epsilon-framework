@@ -9,7 +9,7 @@ export class EpsilonPartialRefresh {
   /**
    * Frontend sections
    */
-  public sections: Array<{ id: number | any, section: JQuery }> = [];
+  public sections: Array<{ id: number | any, section: JQuery, stringId: string | any }> = [];
 
   /**
    * Handle the section partial refresh
@@ -26,16 +26,16 @@ export class EpsilonPartialRefresh {
    * Register sectiosn
    */
   public registerSections() {
-    const self = this;
     let $sections = jQuery( '[data-customizer-section-id]' );
     for ( let i = 0; i < $sections.length; i ++ ) {
       let id: any = jQuery( $sections[ i ] ).attr( 'data-section' );
       let section = {
         id: parseInt( id ),
         section: jQuery( $sections[ i ] ),
+        stringId: jQuery( $sections[ i ] ).attr( 'data-customizer-section-string-id' ),
       };
 
-      self.sections.push( section );
+      this.sections.push( section );
     }
   }
 
@@ -57,6 +57,9 @@ export class EpsilonPartialRefresh {
    * @param object
    */
   public changeSectionDeeper( object: any ) {
+    if ( typeof this.sections[ object.sectionIndex ] === 'undefined' ) {
+      return wp.customize.preview.send( 'epsilon-refresh-page' );
+    }
     let args: {
           action: Array<string>,
           nonce: string,
@@ -68,12 +71,14 @@ export class EpsilonPartialRefresh {
             control: object.controlId,
             postId: object.postId,
             id: object.sectionIndex,
+            sectionType: this.sections[ object.sectionIndex ].stringId
           }
         },
         Ajax: EpsilonAjaxRequest;
 
     Ajax = new EpsilonAjaxRequest( args );
     Ajax.request();
+
     this.standBySection( this.sections[ object.sectionIndex ].section );
 
     jQuery( Ajax ).on( 'epsilon-received-success', ( e: JQuery.Event ) => {
