@@ -199,7 +199,7 @@ class Epsilon_Section_Attr_Helper {
 			return '';
 		}
 
-		if ( 'bgcolor' == $this->options['about_background_type'] ) {
+		if ( 'bgcolor' == $this->options[ $this->key . '_background_type'] ) {
 			return '';
 		}
 
