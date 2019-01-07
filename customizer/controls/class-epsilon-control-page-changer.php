@@ -84,9 +84,9 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 		$json['importable']         = $this->importable();
 
 		// Labels
-		$json['add_newpage_label'] = esc_html__( '+ Add New Page', 'epsilon-framework' );
-		$json['add_newpage_button_label'] = esc_html__( 'Add', 'epsilon-framework' );
-		$json['add_newpage_input_placeholder'] = esc_html__( 'New page title…', 'epsilon-framework' );
+		$json['add_new_page_label'] = esc_html__( '+ Add New Page', 'epsilon-framework' );
+		$json['add_new_page_button_label'] = esc_html__( 'Add', 'epsilon-framework' );
+		$json['add_new_page_input_placeholder'] = esc_html__( 'New page title…', 'epsilon-framework' );
 
 		// Fields needed for ajax
 		$json['page_builder_id'] = $this->page_builder_id;
@@ -303,7 +303,7 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 			<span class="customize-control-title">
 				<# if( data.label ){ #>
 					<span>{{{ data.label }}}</span>
-					<a href="#" class="page-title-action add-new-toggle">{{{ data.add_newpage_label }}}</a>
+					<a href="#" class="page-title-action add-new-toggle">{{{ data.add_new_page_label }}}</a>
 				<# } #>
 
 				<# if( data.description ){ #>
@@ -318,8 +318,8 @@ class Epsilon_Control_Page_Changer extends WP_Customize_Control {
 		</label>
 
 		<div class="new-content-item" style="display: none;">
-			<input type="text" class="create-item-input" placeholder="{{{ data.add_newpage_input_placeholder }}}">
-			<button type="button" class="button add-content">{{{ data.add_newpage_button_label }}}</button>
+			<input type="text" class="create-item-input" placeholder="{{{ data.add_new_page_input_placeholder }}}">
+			<button type="button" class="button add-content">{{{ data.add_new_page_button_label }}}</button>
 		</div>
 		<?php //@formatter:on
 	}
