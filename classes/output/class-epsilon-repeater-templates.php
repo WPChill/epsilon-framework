@@ -45,6 +45,8 @@ class Epsilon_Repeater_Templates {
 						<?php self::textarea_field(); ?>
 						<# } else if ( 'epsilon-text-editor' === field.type ) { #>
 						<?php self::epsilon_text_editor(); ?>
+						<# } else if ( 'epsilon-code-editor' === field.type ) { #>
+						<?php self::epsilon_code_editor(); ?>
 						<# } else if ( 'epsilon-icon-picker' === field.type ) { #>
 						<?php self::epsilon_icon_picker(); ?>
 						<# } else if ( 'epsilon-image' === field.type ) { #>
@@ -118,6 +120,8 @@ class Epsilon_Repeater_Templates {
 						<?php self::textarea_field(); ?>
 						<# } else if ( 'epsilon-text-editor' === field.type ) { #>
 						<?php self::epsilon_text_editor(); ?>
+						<# } else if ( 'epsilon-code-editor' === field.type ) { #>
+						<?php self::epsilon_code_editor(); ?>
 						<# } else if ( 'epsilon-icon-picker' === field.type ) { #>
 						<?php self::epsilon_icon_picker(); ?>
 						<# } else if ( 'epsilon-image' === field.type ) { #>
@@ -572,6 +576,26 @@ class Epsilon_Repeater_Templates {
 				<# } #>
 			</span>
 			<textarea id="{{{ field.id }}}-{{ index }}<# if( '' !== field.metaId ){ #>-{{ field.metaId }}<# } #>" data-field="{{{ field.id }}}" class="widefat text wp-editor-area">{{{ field.default }}}</textarea>
+		</label>
+		<?php
+	}
+
+	/**
+	 * Epsilon Code Editor
+	 */
+	public static function epsilon_code_editor() {
+		?>
+		<label>
+			<span class="customize-control-title">
+				<# if( field.label ){ #>
+					{{ field.label }}
+				<# } #>
+
+				<# if( field.description ){ #>
+					<span class="description customize-control-description">{{ field.description }}</span>
+				<# } #>
+			</span>
+			<textarea id="{{{ field.id }}}-{{ index }}<# if( '' !== field.metaId ){ #>-{{ field.metaId }}<# } #>" data-field="{{{ field.id }}}" data-mode="{{{ field.mode }}}" class="code">{{{ field.default }}}</textarea>
 		</label>
 		<?php
 	}

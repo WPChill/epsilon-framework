@@ -1,4 +1,5 @@
 import SectionRepeaterEditor from './editor';
+import SectionRepeaterCodeEditor from './code-editor';
 import SectionRepeaterSelectize from './selectize';
 import SectionRepeaterColorPicker from './color-picker';
 import SectionRepeaterImage from './image';
@@ -12,6 +13,7 @@ import ConditionalFields from './conditional-fields';
 
 export {
   SectionRepeaterEditor,
+  SectionRepeaterCodeEditor,
   SectionRepeaterSelectize,
   SectionRepeaterColorPicker,
   SectionRepeaterImage,

@@ -23,6 +23,7 @@ class Epsilon_Framework {
 		'section-repeater',
 		'image',
 		'text-editor',
+		'code-editor',
 		'icon-picker',
 		'customizer-navigation',
 		'color-scheme',

@@ -1,5 +1,6 @@
 import {
   SectionRepeaterEditor,
+  SectionRepeaterCodeEditor,
   SectionRepeaterSelectize,
   SectionRepeaterColorPicker,
   SectionRepeaterImage,
@@ -79,7 +80,8 @@ export class EpsilonSectionRepeaterRow {
    */
   private externalInits = {
     selectize: 'SectionRepeaterSelectize',
-    epsilon_text_editor: 'SectionRepeaterEditor',
+	epsilon_text_editor: 'SectionRepeaterEditor',
+	epsilon_code_editor: 'SectionRepeaterCodeEditor',
     epsilon_color_picker: 'SectionRepeaterColorPicker',
     epsilon_image: 'SectionRepeaterImage',
     epsilon_customizer_navigation: 'SectionRepeaterNavigation',
@@ -278,6 +280,11 @@ export class EpsilonSectionRepeaterRow {
         case 'SectionRepeaterEditor':
           this.initiated.push(
               new SectionRepeaterEditor( obj )
+          );
+		  break;
+		case 'SectionRepeaterCodeEditor':
+          this.initiated.push(
+              new SectionRepeaterCodeEditor( obj )
           );
           break;
         case 'SectionRepeaterSelectize':
