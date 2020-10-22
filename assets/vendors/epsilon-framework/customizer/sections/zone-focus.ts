@@ -65,7 +65,7 @@ export class EpsilonZoneFocus {
    */
   public handleEvents(): void {
     this.sections.map( element => {
-      jQuery( `#${element.section}` ).on( 'click', 'h3', ( event: JQueryEventConstructor ) => {
+      jQuery( `#${element.section}` ).on( 'click', 'h3', ( event: JQuery.Event ) => {
         element.changePage ? this._changePage( element ) : this._scrollTo( element );
       } );
     } );

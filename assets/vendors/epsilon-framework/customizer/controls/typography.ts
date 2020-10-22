@@ -113,7 +113,7 @@ export class EpsilonTypography {
    * Clear choices
    */
   public clearButton() {
-    this.context.on( 'click', '.set-default', ( event: JQueryEventConstructor ) => {
+    this.context.on( 'click', '.set-default', ( event: JQuery.Event ) => {
       this.setDefaults();
     } );
   }

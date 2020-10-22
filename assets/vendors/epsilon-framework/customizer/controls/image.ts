@@ -99,7 +99,7 @@ export class EpsilonImage {
           thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( html );
           Ajax = new EpsilonAjaxRequest( data );
           Ajax.request();
-          jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+          jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQuery.Event ) {
             if ( ! _.isUndefined( Ajax.result[ size ] ) ) {
               thumb.find( '.recommended-size' ).text( Ajax.result[ size ].width + ' x ' + Ajax.result[ size ].height );
             }

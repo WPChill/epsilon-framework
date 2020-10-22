@@ -30,35 +30,45 @@ $repeat_field_dropdown_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 $repeat_field_icon_picker_inner_shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
 
 body.wp-customizer {
-	font-size: 13px;
+  font-size: 13px;
+}
+
+body {
+  #customize-theme-controls {
+    .customize-pane-child {
+      &.open {
+        height: 100% !important;
+      }
+    }
+  }
 }
 
 /* Start Controls */
-@import "scss/controls/upsell";
-@import "scss/controls/slider";
-@import "scss/controls/toggle";
-@import "scss/controls/tooltip";
-@import "scss/controls/color-picker";
-@import "scss/controls/color-schemes";
-@import "scss/controls/typography";
-@import "scss/controls/layouts";
-@import "scss/controls/field-repeater";
-@import "scss/controls/section-repeater-control";
-@import "scss/controls/image";
-@import "scss/controls/icon-picker";
-@import "scss/controls/customizer-navigation";
-@import "scss/controls/repeater-field-selectize.scss";
-@import "scss/controls/image-dimensions";
-@import "scss/controls/page-changer";
+@import "controls/upsell";
+@import "controls/slider";
+@import "controls/toggle";
+@import "controls/tooltip";
+@import "controls/color-picker";
+@import "controls/color-schemes";
+@import "controls/typography";
+@import "controls/layouts";
+@import "controls/field-repeater";
+@import "controls/section-repeater-control";
+@import "controls/image";
+@import "controls/icon-picker";
+@import "controls/customizer-navigation";
+@import "controls/repeater-field-selectize.scss";
+@import "controls/image-dimensions";
+@import "controls/page-changer";
 
 /* Start Sections */
-@import "scss/sections/pro-section";
-@import "scss/sections/recommended-actions";
-@import "scss/sections/section-doubled";
+@import "sections/pro-section";
+@import "sections/recommended-actions";
+@import "sections/section-doubled";
 
 /* Start Previewer CSS */
-@import "scss/misc/quick-edit-item.scss";
-@import "scss/misc/quick-edit-section.scss";
+@import "misc/quick-edit-item.scss";
+@import "misc/quick-edit-section.scss";
 
 .in-sub-panel #customize-theme-controls .customize-pane-child.current-panel-parent,
 #customize-theme-controls .customize-pane-child.current-section-parent {
@@ -103,8 +113,7 @@ body.wp-customizer {
   background: transparent;
 }
 
-.epsilon-control-container {
-}
+.epsilon-control-container {}
 
 .epsilon-control-container label {
   line-height: 20px;
@@ -135,6 +144,7 @@ body.wp-customizer {
   -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .06);
   box-shadow: 0 0 4px rgba(0, 0, 0, .06);
   border-radius: 3px;
+
   &.active,
   &:hover {
     color: #57a7c9;
@@ -229,7 +239,10 @@ body.wp-customizer {
 
 .epsilon-control-group {
   a {
-    img, i, span {
+
+    img,
+    i,
+    span {
       pointer-events: none;
     }
   }
@@ -268,6 +281,7 @@ body.wp-customizer {
 .hidden-section-panel {
   opacity: .5;
   position: relative;
+
   &:before {
     position: absolute;
     top: 0;
@@ -284,6 +298,7 @@ body.wp-customizer {
   &.first-child {
     margin-top: 0;
   }
+
   margin-top: 30px;
 }
 
@@ -291,15 +306,16 @@ body.wp-customizer {
 	Controls Spacing Debug
 */
 
-.repeater-row-content {
-}
+.repeater-row-content {}
 
 .repeater-field {
   padding: 10px 0 10px 0;
   margin: 0;
+
   &.repeater-field-epsilon-text-editor {
     padding-top: 10px;
   }
+
   select {
     display: inline-block;
     width: 150px;
@@ -313,6 +329,7 @@ body.wp-customizer {
     border-color: $repeat_field_dropdown_border;
     box-shadow: $repeat_field_dropdown_inner_shadow;
   }
+
   &.repeater-field- {
     display: none;
   }
@@ -345,6 +362,7 @@ body.wp-customizer {
 .epsilon-is-loadable {
   -webkit-transition: all .3s;
   transition: all .3s;
+
   &:after {
     position: absolute;
     top: 0;
@@ -365,6 +383,7 @@ body.wp-customizer {
   position: relative;
   -webkit-transition: all .3s;
   transition: all .3s;
+
   &:before {
     position: absolute;
     z-index: 10001;
@@ -376,6 +395,7 @@ body.wp-customizer {
     transform: translate(-50%, 0);
     content: ''
   }
+
   &:after {
     opacity: .7;
     visibility: visible;

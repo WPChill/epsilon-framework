@@ -63,7 +63,7 @@ export class EpsilonPageChanger {
    * Handle menu change
    */
   public handleEvents() {
-    this.control.container.on( 'change', 'select', ( event: JQueryEventConstructor ) => {
+    this.control.container.on( 'change', 'select', ( event: Event ) => {
       wp.customize.previewer.previewUrl.set( jQuery( event.target ).val() );
     } );
   }
@@ -107,8 +107,6 @@ export class EpsilonPageChanger {
     });
 
     request.done( function( response ) {
-
-
       if ( response.status ) {
 
         let id:any = control.params.page_builder_id + '_' + response.id;

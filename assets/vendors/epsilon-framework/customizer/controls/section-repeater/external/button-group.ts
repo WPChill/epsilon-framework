@@ -18,7 +18,7 @@ export default class SectionRepeaterButtonGroup {
    * Initiator
    */
   public init() {
-    this.props.container.find( `[data-field="${this.props.id}"]` ).parent().on( 'click', 'a', ( e: JQueryEventConstructor ) => {
+    this.props.container.find( `[data-field="${this.props.id}"]` ).parent().on( 'click', 'a', ( e: Event ) => {
       e.preventDefault();
       let value: any = jQuery( e.target ).attr( 'data-value' );
       jQuery( e.target ).siblings().removeClass( 'active' );

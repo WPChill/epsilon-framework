@@ -104,7 +104,7 @@ export class EpsilonLayouts {
     /**
      * On clicking the advanced options toggler,
      */
-    this.context.on( 'click', '.epsilon-control-advanced', function( this: any, e: Event ) {
+    this.context.on( 'click', '.epsilon-control-advanced', function( this: any, e: JQuery.Event ) {
       e.preventDefault();
       jQuery( this ).toggleClass( 'active' );
       jQuery( '#' + jQuery( this ).attr( 'data-unique-id' ) ).slideToggle().addClass( 'active' );
@@ -121,7 +121,7 @@ export class EpsilonLayouts {
         elementToSubtractFrom,
         elementToAddOn;
 
-    this.context.on( 'click', '.epsilon-column > a', function( this: any, e: Event ) {
+    this.context.on( 'click', '.epsilon-column > a', function( this: any, e: JQuery.Event ) {
       elementToAddOn = jQuery( this ).parent();
       position = elementToAddOn.index();
 

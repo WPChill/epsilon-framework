@@ -3,7 +3,7 @@ export default {
    * Add a section to the repeater
    */
   addSectionButton() {
-    this.availableSections.on( 'click', '.epsilon-section [data-action="add"]', ( e: JQueryEventConstructor ) => {
+    this.availableSections.on( 'click', '.epsilon-section [data-action="add"]', ( e: Event ) => {
       e.preventDefault();
       this.$actions.addSection( { type: jQuery( e.target ).parent().attr( 'data-id' ) } );
 
@@ -21,7 +21,7 @@ export default {
    * and open the "available" sections list
    */
   addMoreSectionButton() {
-    this.$_instance.container.find( '.epsilon-add-new-section' ).on( 'click keydown', ( e: JQueryEventConstructor ) => {
+    this.$_instance.container.find( '.epsilon-add-new-section' ).on( 'click keydown', ( e: Event ) => {
       const body = jQuery( 'body' );
       if ( body.hasClass( 'adding-doubled-section' ) ) {
         return;
@@ -42,7 +42,7 @@ export default {
    * Import section button
    */
   importSectionButton() {
-    this.$_instance.container.find( '.epsilon-import-sections' ).on( 'click keydown', ( e: JQueryEventConstructor ) => {
+    this.$_instance.container.find( '.epsilon-import-sections' ).on( 'click keydown', ( e: Event ) => {
       const body = jQuery( 'body' );
       if ( body.hasClass( 'adding-doubled-section' ) ) {
         return;
@@ -65,7 +65,7 @@ export default {
    */
   closeOnCustomizerBack() {
     wp.customize[ 'section' ]( this.$_instance.params.section, ( instance: any ) => {
-      instance.container.find( '.accordion-section-title, .customize-section-back' ).on( 'click keydown', ( event: JQueryEventConstructor ) => {
+      instance.container.find( '.accordion-section-title, .customize-section-back' ).on( 'click keydown', ( event: JQuery.Event ) => {
         if ( wp.customize.utils.isKeydownButNotEnterEvent( event ) ) {
           return;
         }
@@ -116,7 +116,7 @@ export default {
    * Show section description on button click
    */
   handleSectionDescription() {
-    jQuery( '#sections-left-' + this.$_instance.params.id ).on( 'click', '.epsilon-section [data-action="info"]', ( e: JQueryEventConstructor ) => {
+    jQuery( '#sections-left-' + this.$_instance.params.id ).on( 'click', '.epsilon-section [data-action="info"]', ( e: Event ) => {
       e.preventDefault();
       jQuery( e.target ).parent().find( '.epsilon-section-image-description' ).toggleClass( 'active' );
       jQuery( e.target ).parent().find( '.epsilon-section-description' ).toggleClass( 'active' );

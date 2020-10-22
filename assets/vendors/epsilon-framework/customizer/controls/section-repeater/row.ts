@@ -478,7 +478,7 @@ export class EpsilonSectionRepeaterRow {
         tabs = this.container.find( '[data-tab-id]' ),
         tab: JQuery;
 
-    jQuery( wrapper ).on( 'click', 'a', ( event: JQueryEventConstructor ) => {
+    jQuery( wrapper ).on( 'click', 'a', ( event: Event ) => {
       event.preventDefault();
       jQuery( event.target ).siblings().removeClass( 'active' );
       jQuery( event.target ).addClass( 'active' );

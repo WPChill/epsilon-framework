@@ -94,7 +94,7 @@ export default class SectionRepeaterSelectize {
     /**
      * Row stopped draggin
      */
-    container.on( 'row:stopped-dragging', ( e: JQueryEventConstructor, data: any ) => this._sortExistingOptions( data ) );
+    container.on( 'row:stopped-dragging', ( e: JQuery.Event, data: any ) => this._sortExistingOptions( data ) );
   }
 
   /**
@@ -103,7 +103,7 @@ export default class SectionRepeaterSelectize {
    * @param data
    * @private
    */
-  private _rowRemove( e: JQueryEventConstructor, data: any ) {
+  private _rowRemove( e: JQuery.Event, data: any ) {
     let index = data + 2;
     _.each( this.instance.options, ( el, idx ) => {
       if ( el.$order === index ) {
@@ -122,7 +122,7 @@ export default class SectionRepeaterSelectize {
    * @param proxyTarget
    * @private
    */
-  private _rowEdit( e: JQueryEventConstructor, rowIndex: number, fieldName: any, proxyTarget: any ) {
+  private _rowEdit( e: JQuery.Event, rowIndex: number, fieldName: any, proxyTarget: any ) {
     if ( fieldName !== this.props.linking[ 1 ] ) {
       return;
     }
@@ -138,7 +138,7 @@ export default class SectionRepeaterSelectize {
 
   }
 
-  private _rowAdd( e: JQueryEventConstructor, rowIndex: number, data: any ) {
+  private _rowAdd( e: JQuery.Event, rowIndex: number, data: any ) {
     if ( data.hasOwnProperty( this.props.linking[ 1 ] ) ) {
       this._createOption( data[ this.props.linking[ 1 ] ] );
     }

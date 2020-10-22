@@ -102,7 +102,7 @@ export class EpsilonColorSchemes {
         input = this.context.parent().find( '[data-customize-setting-link]' ).first(),
         json = JSON.parse( options.first().find( 'input' ).val() ),
         api = wp.customize,
-        colorSettings: Array<string> = [],
+        colorSettings: Array<string|any> = [],
         css: { action: string, class: string, id: string, data: any } = {
           action: 'epsilon_generate_color_scheme_css',
           class: 'Epsilon_Color_Scheme',
@@ -148,7 +148,7 @@ export class EpsilonColorSchemes {
       /**
        * Find the customizer options
        */
-      jQuery.each( json, function( index, value ) {
+      jQuery.each( json, function( index:any, value ) {
         /**
          * Set values
          */
