@@ -23,7 +23,7 @@ export class EpsilonTypographyPreviewer {
           Ajax = new EpsilonAjaxRequest( data );
           Ajax.request();
 
-          jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+          jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQuery.Event ) {
             style = jQuery( '#' + Ajax.result.stylesheet + '-inline-css' );
             if ( ! style.length ) {
               style = jQuery( 'body' ).append( '<style type="text/css" id="' + Ajax.result.stylesheet + '-inline-css" />' ).find( '#' + Ajax.result.stylesheet + '-inline-css' );
@@ -36,6 +36,7 @@ export class EpsilonTypographyPreviewer {
             }
 
             style.html( Ajax.result.css );
+            wp.customize.preview.send( 'epsilon-set-typography-loading', false );
           } );
         } );
   }

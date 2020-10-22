@@ -10,7 +10,7 @@ wp.customize.controlConstructor[ 'epsilon-layouts' ] = wp.customize.Control.exte
     /**
      * Save layout
      */
-    control.container.on( 'change', 'input', ( e: JQueryEventConstructor ) => {
+    control.container.on( 'change', 'input', ( e: Event ) => {
       control.setting.set( jQuery( e.target ).val() );
     } );
   }

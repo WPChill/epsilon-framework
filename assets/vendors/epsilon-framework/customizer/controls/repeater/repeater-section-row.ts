@@ -20,7 +20,7 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
    * @param {string} type
    */
   public constructor(
-      instance: EpsilonSectionRepeater | EpsilonFieldRepeater,
+      instance: EpsilonSectionRepeater | EpsilonFieldRepeater | any,
       rowContainer: JQuery,
       type: string ) {
     super( instance, rowContainer );
@@ -80,7 +80,7 @@ export class EpsilonRepeaterSectionRow extends EpsilonRepeaterRow {
         tabs = self.container.find( '[data-tab-id]' ),
         tab: JQuery;
 
-    jQuery( wrapper ).on( 'click', 'a', function( this: any, event: JQueryEventConstructor ) {
+    jQuery( wrapper ).on( 'click', 'a', function( this: any, event: Event ) {
       event.preventDefault();
       jQuery( this ).siblings().removeClass( 'active' );
       jQuery( this ).addClass( 'active' );
