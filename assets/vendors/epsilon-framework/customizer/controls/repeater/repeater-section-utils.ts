@@ -14,7 +14,7 @@ export class EpsilonRepeaterSectionUtils extends EpsilonRepeaterUtils {
    * constructor
    * @param {EpsilonFieldRepeater | EpsilonSectionRepeater} control
    */
-  public constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater ) {
+  public constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater | any ) {
     super( control );
   }
 

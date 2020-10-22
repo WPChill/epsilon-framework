@@ -75,7 +75,7 @@ export class EpsilonPartialRefresh {
     Ajax.request();
     this.standBySection( self.sections[ object.index ].section );
 
-    jQuery( Ajax ).on( 'epsilon-received-success', function( e: JQueryEventConstructor ) {
+    jQuery( Ajax ).on( 'epsilon-received-success', function( e: JQuery.Event ) {
       self.liveSection( object.index, self.sections[ object.index ].section, Ajax.result.section );
       jQuery( document ).trigger( 'epsilon-selective-refresh-ready' );
     } );

@@ -1,6 +1,7 @@
 import { EpsilonTemplateSelector } from '../template-selector';
 
 declare var EpsilonTranslations: any;
+declare var EpsilonIconPack: any;
 declare var EpsilonWPUrls: any;
 declare var wp: any;
 declare var _: any;
@@ -13,18 +14,16 @@ import { EpsilonTextEditor } from '../text-editor';
 import { EpsilonColorPicker } from '../color-picker';
 import { EpsilonCustomizerNavigation } from '../customizer-navigation';
 import { EpsilonFieldRepeater } from '../repeater';
-import { EpsilonSectionRepeater } from '../section-repeater';
-import { EpsilonRepeaterSectionRow } from './repeater-section-row';
 
 export class EpsilonRepeaterAddons {
   /**
    * Control reference
    */
-  protected control: EpsilonFieldRepeater | EpsilonSectionRepeater;
+  protected control: EpsilonFieldRepeater;
   /**
    * Row
    */
-  public row: EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any;
+  public row: EpsilonRepeaterRow | any;
 
   /**
    * Proxy to retrieve fields
@@ -33,10 +32,10 @@ export class EpsilonRepeaterAddons {
 
   /**
    *
-   * @param {EpsilonFieldRepeater | EpsilonSectionRepeater} control
-   * @param {EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any} row
+   * @param {EpsilonFieldRepeater } control
+   * @param {EpsilonRepeaterSectionRow | any} row
    */
-  public constructor( control: EpsilonFieldRepeater | EpsilonSectionRepeater, row: EpsilonRepeaterSectionRow | EpsilonRepeaterRow | any ) {
+  public constructor( control: EpsilonFieldRepeater, row: EpsilonRepeaterRow | any ) {
     this.control = control;
     this.row = row;
     this.proxy = this.control.control.params;
@@ -50,12 +49,7 @@ export class EpsilonRepeaterAddons {
    * Init all plugins
    */
   public initPlugins() {
-    if ( 'epsilon-section-repeater' === this.control.control.params.type ) {
-      this.initRangeSlidersSectionRepeater();
-    } else {
-      this.initRangeSliders();
-    }
-
+    this.initRangeSliders();
     this.initImageUploads();
     this.initIconPicker();
     this.initTextEditor();
@@ -222,7 +216,7 @@ export class EpsilonRepeaterAddons {
         thumb.removeClass( 'epsilon-image' ).addClass( 'placeholder' ).html( html );
         Ajax = new EpsilonAjaxRequest( data );
         Ajax.request();
-        jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+        jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQuery.Event ) {
           if ( ! _.isUndefined( Ajax.result[ size ] ) ) {
             thumb.find( '.recommended-size' ).text( Ajax.result[ size ].width + ' x ' + Ajax.result[ size ].height );
           }
@@ -264,154 +258,12 @@ export class EpsilonRepeaterAddons {
    * Icon picker
    */
   public initIconPicker(): void {
-    const self = this;
-    let init: boolean = false,
-        temp: JQuery;
+    let pickers = _.filter( this.proxy.fields, ( element ) => { return element.type === 'epsilon-icon-picker'; } );
 
-    for ( let k in self.proxy.fields ) {
-      if ( 'epsilon-icon-picker' === self.proxy.fields[ k ].type ) {
-        init = true;
-
-        /***
-         * Toggle
-         */
-        self.row.container.on( 'click keypress', '.epsilon-icon-picker-repeater-container .epsilon-icon-container', function( this: any, e: any ) {
-          e.preventDefault();
-
-          if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
-            return;
-          }
-
-          jQuery( this ).toggleClass( 'opened-icon-picker' );
-          temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerToggle( temp );
-        } );
-
-        /**
-         * Selection
-         */
-        self.row.container.on( 'click keypress', '.epsilon-icon-picker-repeater-container .epsilon-icons-container .epsilon-icons > i', function( this: any, e: any ) {
-          e.preventDefault();
-
-          if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
-            return;
-          }
-
-          temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerSelection( this, temp );
-        } );
-
-        let sets = self.row.container.find( '.epsilon-icon-sets > select' );
-        if ( sets.length ) {
-          sets.selectize();
-        }
-
-        self.row.container.on( 'change', '.epsilon-icon-sets > select', ( e: JQueryEventConstructor ) => {
-          let grouping = jQuery( e.target ).val();
-          temp = jQuery( e.target ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerGrouping( grouping, temp );
-        } );
-
-        /**
-         * Filtering
-         */
-        self.row.container.on( 'keyup change', '.epsilon-icon-picker-repeater-container .search-container input', _.debounce( function( this: any, e: Event ) {
-          e.preventDefault();
-
-          if ( wp.customize.utils.isKeydownButNotEnterEvent( e ) ) {
-            return;
-          }
-
-          temp = jQuery( this ).parents( '.epsilon-icon-picker-repeater-container' );
-          self._iconPickerFilter( this, temp, self );
-
-        }, 1000 ) );
-      }
-    }
-  }
-
-  /**
-   * Toggle the icon picker dropdown
-   * @private
-   */
-  private _iconPickerToggle( container: JQuery ): void {
-    container.find( '.epsilon-icon-picker-container' ).toggleClass( 'opened' );
-  }
-
-  /**
-   * Icon pick
-   * @private
-   */
-  private _iconPickerSelection( clicked: JQuery, container: JQuery ): void {
-    let icon: string | any, label: string | any;
-
-    container.find( '.epsilon-icons > i.selected' ).removeClass( 'selected' );
-    icon = jQuery( clicked ).addClass( 'selected' ).attr( 'data-icon' );
-    label = jQuery( clicked ).attr( 'data-search' );
-    container.find( '.epsilon-icon-name > i' ).removeClass().addClass( icon );
-    container.find( '.epsilon-icon-name > .icon-label' ).html( label );
-
-    /**
-     * Set value
-     */
-    container.find( '.epsilon-icon-picker' ).attr( 'value', icon ).trigger( 'change' );
-  }
-
-  /**
-   *
-   * @param {string | any} group
-   * @param {JQuery} container
-   * @private
-   */
-  private _iconPickerGrouping( group: string | any, container: JQuery ): void {
-    let collection = jQuery( container ).find( '.epsilon-icons > i' );
-    jQuery.each( collection, function() {
-      let temp = jQuery( this ).attr( 'data-group' );
-      if ( 'undefined' !== typeof temp ) {
-        temp = temp.toLowerCase();
-      }
-
-      jQuery( this )[ temp.indexOf( group ) !== - 1 ? 'show' : 'hide' ]();
-    } );
-  }
-
-  /**
-   * Icon picker filtering
-   * @private
-   */
-  private _iconPickerFilter( input: JQuery, container: JQuery, instance: any ): void {
-    let filter: string | any, temp: string | any, group: string | any, grouping: string | any,
-        collection = jQuery( container ).find( '.epsilon-icons > i' );
-
-    filter = jQuery( input ).val();
-    if ( 'undefined' !== typeof filter ) {
-      filter = filter.toLowerCase();
-    }
-
-    group = jQuery( input ).parent().parent().find( '.epsilon-icon-sets > select' );
-    if ( group.length ) {
-      group = group.val();
-      if ( '' === filter ) {
-        this._iconPickerGrouping( group, container );
-        return;
-      }
-    }
-
-    jQuery.each( collection, function() {
-      if ( '' !== group ) {
-        grouping = jQuery( this ).attr( 'data-group' );
-        if ( grouping !== group ) {
-          jQuery( this )[ 'hide' ]();
-          return true;
-        }
-      }
-
-      temp = jQuery( this ).attr( 'data-search' );
-      if ( 'undefined' !== typeof temp ) {
-        temp = temp.toLowerCase();
-      }
-
-      jQuery( this )[ temp.indexOf( filter ) !== - 1 ? 'show' : 'hide' ]();
+    pickers.map( ( element ) => {
+      this.row.container.find( 'input[data-field="' + element.id + '"]' ).fontIconPicker( {
+        source: EpsilonIconPack,
+      } );
     } );
   }
 
@@ -438,38 +290,6 @@ export class EpsilonRepeaterAddons {
   }
 
   /**
-   * Initiate range sliders in the section repeater
-   */
-  private initRangeSlidersSectionRepeater() {
-    let sliders = _.filter( this.proxy.fields, ( element: any ) => { return element.type === 'epsilon-slider'; } );
-
-    sliders.map( ( element: any ) => {
-      let sliderSettings: any = {
-        container: this.row.container.find( 'input[data-field="' + element.id + '"]' ).parent(),
-        params: {
-          id: element.id,
-          sliderControls: {
-            min: element.choices.min,
-            max: element.choices.max,
-            step: element.choices.step,
-          },
-        }
-      };
-
-      if ( this.row.hasOwnProperty( 'type' ) ) {
-        sliderSettings.params.value = parseFloat( element.default );
-
-        if ( 'undefined' !== typeof this.control.control.params.value[ this.row.index ] ) {
-          sliderSettings.params.value = parseFloat( this.control.control.params.value[ this.row.index ][ element.id ] );
-        }
-      }
-
-      new EpsilonRangeSlider( sliderSettings );
-    } );
-
-  }
-
-  /**
    * initiate range sliders
    */
   private initRangeSliders() {
@@ -493,18 +313,12 @@ export class EpsilonRepeaterAddons {
           }
         };
 
-        if ( self.row.hasOwnProperty( 'type' ) ) {
-          sliderSettings.params.value = parseFloat( self.proxy.fields[ k ].default );
-          if ( 'undefined' !== typeof self.control.control.params.value[ self.row.index ] ) {
-            sliderSettings.params.value = parseFloat( self.control.control.params.value[ self.row.index ][ k ] );
-          }
-
-          new EpsilonRangeSlider( sliderSettings );
-          return;
-        }
-
         if ( 'undefined' !== typeof self.proxy.value[ self.row.index ] ) {
           sliderSettings.params.value = parseFloat( self.proxy.value[ self.row.index ][ k ] );
+        }
+
+        if ( isNaN( sliderSettings.params.value ) ) {
+          sliderSettings.params.value = sliderSettings.params.sliderControls.min;
         }
 
         sliderSettings.container = jQuery( sliderSettings.container ).find( '.epsilon-slider:not(.initiated)' ).first().addClass( 'initiated' );

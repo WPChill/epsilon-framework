@@ -113,7 +113,7 @@ export class EpsilonSectionRecommended {
       Ajax = new EpsilonAjaxRequest( args );
       Ajax.request();
 
-      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQuery.Event ) {
         section.ajax = false;
         if ( Ajax.result && 'ok' === Ajax.result.message ) {
           /**
@@ -215,7 +215,7 @@ export class EpsilonSectionRecommended {
       section.ajax = true;
       Ajax = new EpsilonAjaxRequest( args );
       Ajax.request();
-      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQueryEventConstructor ) {
+      jQuery( Ajax ).on( 'epsilon-received-success', function( this: any, e: JQuery.Event ) {
         section.ajax = false;
         if ( Ajax.result && 'ok' === Ajax.result.message ) {
           /**

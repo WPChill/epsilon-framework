@@ -20,7 +20,7 @@ export class EpsilonNavMenus {
   }
 
   public handleEvents() {
-    jQuery( '#submit-epsilon-section' ).on( 'click', ( evt: JQueryEventConstructor ) => {
+    jQuery( '#submit-epsilon-section' ).on( 'click', ( evt: JQuery.Event ) => {
       const self = this;
       const object = {
         label: this.context.find( '#epsilon-section-label' ).val(),

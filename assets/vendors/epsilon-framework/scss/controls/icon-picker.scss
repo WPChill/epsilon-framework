@@ -1,0 +1,107 @@
+.epsilon-icon-container {
+  display: inline-block;
+  background: #fff;
+  width: 100%;
+  border-radius: 4px;
+  border: solid 1px rgba(219, 219, 219, 0.9);
+  box-sizing: border-box;
+  box-shadow: $repeat_field_icon_picker_inner_shadow;
+  .epsilon-icon-name {
+    display: inline-block;
+    float: left;
+    padding: 6px;
+  }
+  i {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .icon-label {
+    display: inline-block;
+  }
+  .epsilon-open-icon-picker {
+    padding: 6px;
+    float: right;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-left: 1px solid $repeat_field_text_border;
+  }
+  &.opened-icon-picker {
+    .epsilon-open-icon-picker {
+      background-color: #f4f4f4;
+    }
+  }
+}
+
+.epsilon-icon-picker-container {
+  display: none;
+  background-color: #f4f4f4;
+  border-radius: 0 0 3px 3px;
+  border-top-right-radius: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  .search-container {
+    padding: 5px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eaeaea;
+    border-radius: $repeat_field_text_border_radius;
+    .text {
+      padding: 7px;
+    }
+  }
+  .epsilon-icons-container {
+    padding: 5px;
+    box-sizing: border-box;
+    border-top: 1px solid #fafafa;
+  }
+  .selectize-control {
+    padding: 0 5px;
+  }
+  &.opened {
+    display: block;
+  }
+}
+
+.epsilon-icon-picker-opened .epsilon-icon-container {
+  -webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.epsilon-icon-picker-opened .epsilon-icon-container > span {
+  border-bottom-right-radius: 0px;
+}
+
+.epsilon-icons-container .epsilon-icons {
+  background-color: #fefefe;
+  border: 1px solid #dddddd;
+  padding: 6px 0 6px 6px;
+  max-height: 164px;
+  min-height: 79px;
+  overflow-y: scroll;
+}
+
+.epsilon-icons > i {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 18px;
+  box-sizing: border-box;
+  border: 1px solid #eaeaea;
+  text-align: center;
+  margin-bottom: 5px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+
+.epsilon-icons > i:hover,
+.epsilon-icons > i.selected {
+  border-color: #57a7c9;
+  background-color: #eff6f9;
+}
+
+.icons-selector {
+  .selector-popup {
+    width: 280px;
+  }
+}

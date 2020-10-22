@@ -1,0 +1,24 @@
+.repeater-field-selectize {
+	background-color: #eff5f8;
+	padding: 10px !important;
+	margin: 10px auto !important;
+
+	.selectize-input {
+		display: block;
+	}
+}
+
+.repeater-field-selectize .selectize-input {
+	display: block;
+}
+
+.selectize-control.multi {
+	.selectize-input {
+		padding: 7px 5px;
+		display: block;
+		min-height: 25px;
+		&.has-items {
+			padding: 5px 5px 2px 5px;
+		}
+	}
+}

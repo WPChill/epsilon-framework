@@ -1,6 +1,11 @@
 declare var require: any;
 declare var wp: any;
-import * as $ from 'jquery';
+
+import './../scss/style-customizer.scss';
+/**
+ * Settings
+ */
+import './extenders/settings/section-repeater';
 
 /**
  * Controls

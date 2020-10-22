@@ -4,7 +4,6 @@ declare var _: any;
 import { EpsilonRepeaterRow } from './repeater/repeater-row';
 import { EpsilonRepeaterAddons } from './repeater/repeater-addons';
 import { EpsilonRepeaterUtils } from './repeater/repeater-utils';
-import { EpsilonRepeaterSectionRow } from './repeater/repeater-section-row';
 
 export class EpsilonFieldRepeater {
   /**
@@ -27,7 +26,7 @@ export class EpsilonFieldRepeater {
    * Rows
    * @type {Array}
    */
-  public rows: Array<EpsilonRepeaterRow | EpsilonRepeaterSectionRow> = [];
+  public rows: Array<EpsilonRepeaterRow> = [];
   /**
    * Current index
    */
@@ -55,6 +54,7 @@ export class EpsilonFieldRepeater {
     this.context = control.container;
     this.utils = this.loadUtils();
     this.template = this.loadTemplate();
+
     /**
      * Create a reference of the container
      */

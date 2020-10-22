@@ -27,7 +27,7 @@ export class EpsilonButtonGroup {
    */
   public handleEvents() {
     const self = this;
-    this.context.on( 'click', '.epsilon-control-group > a', function( this: any, e: JQueryEventConstructor ) {
+    this.context.on( 'click', '.epsilon-control-group > a', function( this: any, e: JQuery.Event ) {
       e.preventDefault();
       let value: any = jQuery( this ).attr( 'data-value' );
       jQuery( this ).siblings().removeClass( 'active' );

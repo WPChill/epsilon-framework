@@ -1,5 +1,5 @@
 interface JQuery {
-  minicolors( options?: any, callback?: Function ): any;
+  minicolors( options?: any, callback?: Function | any ): any;
 
-  selectize( options?: any, callback?: Function ): any;
+  selectize( options?: any, callback?: Function | any ): any;
 }

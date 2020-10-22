@@ -39,7 +39,6 @@ export class EpsilonTextEditor {
             tinymce: {
                 wpautop: true,
                 browser_spellcheck: true,
-                mediaButtons: false,
                 wp_autoresize_on: true,
                 toolbar1: 'link numlist bullist forecolor backcolor bold italic underline',
                 setup: function (editor: any) {
