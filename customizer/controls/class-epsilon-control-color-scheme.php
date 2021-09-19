@@ -119,7 +119,7 @@ class Epsilon_Control_Color_Scheme extends WP_Customize_Control {
 			</div>
 			<div class="epsilon-color-scheme-selected epsilon-control-set-dropdown">
 				<div class="epsilon-control-dropdown">
-					<i class="dashicons dashicons-arrow-down"/>
+					<i class="dashicons dashicons-arrow-down"></i>
 				</div>
 				<div class="epsilon-control-styles">
 					<# var i = 0; #>
